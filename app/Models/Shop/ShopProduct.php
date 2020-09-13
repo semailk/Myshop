@@ -2,7 +2,7 @@
 
 namespace App\Models\Shop;
 
-use App\Models;
+use App\Models\Comment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,6 +20,7 @@ class ShopProduct extends Model
 
     public function comments()
     {
-        return $this->morphMany(Models\Comment::class,'commentable');
+        return $this->morphMany(Comment::class,'commentable');
+
     }
 }
