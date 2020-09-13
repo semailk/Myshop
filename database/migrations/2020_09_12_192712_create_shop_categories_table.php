@@ -15,10 +15,12 @@ class CreateShopCategoriesTable extends Migration
     {
         Schema::create('shop_categories', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('parent_id');
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->string('name');
             $table->string('slug');
             $table->timestamps();
+
+            $table->foreign('parent_id')->on('shop_categories')->references('id');
         });
     }
 

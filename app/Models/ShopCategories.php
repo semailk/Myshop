@@ -10,7 +10,7 @@ class ShopCategories extends Model
     use HasFactory;
 
     protected $table = 'shop_categories';
-    protected $fillable = ['name'];
+    protected $fillable = ['parent_id','name','slug'];
 
     public function product()
     {

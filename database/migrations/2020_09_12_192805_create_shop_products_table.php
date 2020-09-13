@@ -15,9 +15,12 @@ class CreateShopProductsTable extends Migration
     {
         Schema::create('shop_products', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('category_id');
             $table->string('title');
             $table->longText('description');
             $table->timestamps();
+
+            $table->foreign('category_id')->on('shop_categories')->references('id');
         });
     }
 
