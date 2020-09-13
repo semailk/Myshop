@@ -40,7 +40,7 @@ class User extends Authenticatable
 
     public function comment()
     {
-        return $this->hasMany(ShopComments::class);
+        return $this->hasMany(Comments::class);
     }
 
     public function review()
@@ -48,8 +48,8 @@ class User extends Authenticatable
         return $this->hasMany(ShopReviews::class);
     }
 
-    public function rating()
+    public function basket()
     {
-        return $this->hasMany(ShopRating::class);
+        return $this->hasMany(ShopBasketItem::class);
     }
 }

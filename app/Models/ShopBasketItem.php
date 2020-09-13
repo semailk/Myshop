@@ -11,4 +11,14 @@ class ShopBasketItem extends Model
 
     protected $table = 'shop_basket_items';
     protected $fillable = ['user_id', 'product_id'];
+
+    public function usersBasket()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function productBasket()
+    {
+        return $this->belongsTo(ShopProducts::class);
+    }
 }

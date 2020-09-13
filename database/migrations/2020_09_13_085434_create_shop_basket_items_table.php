@@ -20,7 +20,7 @@ class CreateShopBasketItemsTable extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')->on('users')->references('id');
-            $table->foreign('products_id')->on('shop_products')->references('id');
+            $table->foreign('product_id')->on('shop_products')->references('id');
         });
     }
 
