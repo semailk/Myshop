@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateShopRatingsTable extends Migration
+class CreateImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateShopRatingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('shop_ratings', function (Blueprint $table) {
+        Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->integer('rating');
+            $table->string('src');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreateShopRatingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('shop_ratings');
+        Schema::dropIfExists('images');
     }
 }

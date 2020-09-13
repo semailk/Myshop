@@ -15,8 +15,10 @@ class CreateShopReviewsTable extends Migration
     {
         Schema::create('shop_reviews', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->text('reviews');
+            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('user_id');
+            $table->text('content');
+            $table->integer('rating');
             $table->timestamps();
 
             $table->foreign('user_id')->on('users')->references('id');

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateShopCommentsTable extends Migration
+class CreateCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateShopCommentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('shop_comments', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
             $table->string('comment');
@@ -28,6 +28,6 @@ class CreateShopCommentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('shop_comments');
+        Schema::dropIfExists('comments');
     }
 }

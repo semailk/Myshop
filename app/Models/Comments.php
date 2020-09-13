@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ShopComments extends Model
+class Comments extends Model
 {
     use HasFactory;
-    protected $table = 'shop_comments';
+
+    protected $table = 'comments';
     protected $fillable = ['user_id', 'comment'];
 
     public function userComment()
