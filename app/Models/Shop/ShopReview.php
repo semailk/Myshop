@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Shop\ShopReview;
+namespace App\Models\Shop;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
