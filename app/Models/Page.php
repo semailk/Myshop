@@ -11,4 +11,9 @@ class Page extends Model
 
     protected $table = 'pages';
     protected $fillable = ['title', 'slug','content'];
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class,'commentable');
+    }
 }

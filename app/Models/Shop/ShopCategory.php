@@ -17,4 +17,14 @@ class ShopCategory extends Model
     {
         return $this->hasMany(ShopProduct::class);
     }
+
+    public function children()
+    {
+        return $this->hasMany(ShopCategory::class,'parent_id');
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(ShopCategory::class,'parent_id');
+    }
 }

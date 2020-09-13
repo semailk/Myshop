@@ -17,4 +17,9 @@ class ShopProduct extends Model
     {
         return $this->belongsTo(ShopCategory::class);
     }
+
+    public function comments()
+    {
+        return $this->morphMany(Models\Comment::class,'commentable');
+    }
 }

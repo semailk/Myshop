@@ -44,7 +44,7 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
 
-    public function review()
+    public function reviews()
     {
         return $this->hasMany(ShopReview::class);
     }
@@ -52,5 +52,10 @@ class User extends Authenticatable
     public function basket()
     {
         return $this->hasMany(ShopBasketItem::class);
+    }
+
+    public function images()
+    {
+        return $this->hasMany(Image::class);
     }
 }
