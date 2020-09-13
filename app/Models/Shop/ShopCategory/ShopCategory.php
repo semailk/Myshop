@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Shop\ShopCategory;
 
+use App\Models\Shop\ShopProduct\ShopProduct;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ShopCategories extends Model
+class ShopCategory extends Model
 {
     use HasFactory;
 
@@ -14,6 +15,6 @@ class ShopCategories extends Model
 
     public function product()
     {
-        return $this->hasMany(ShopProducts::class);
+        return $this->hasMany(ShopProduct::class);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Shop\ShopProduct\ShopProduct;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,6 +20,6 @@ class ShopBasketItem extends Model
 
     public function productBasket()
     {
-        return $this->belongsTo(ShopProducts::class);
+        return $this->belongsTo(ShopProduct::class);
     }
 }

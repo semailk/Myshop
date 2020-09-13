@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Shop\ShopProduct;
 
+use App\Models\ShopCategory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ShopProducts extends Model
+class ShopProduct extends Model
 {
     use HasFactory;
 
@@ -14,6 +15,6 @@ class ShopProducts extends Model
 
     public function category()
     {
-        return $this->belongsTo(ShopCategories::class);
+        return $this->belongsTo(ShopCategory::class);
     }
 }
