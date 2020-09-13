@@ -13,7 +13,7 @@ class ShopReview extends Model
     protected $table = 'shop_reviews';
     protected $fillable = ['product_id','user_id','content','rating'];
 
-    public function userReviews()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }

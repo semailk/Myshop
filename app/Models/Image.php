@@ -12,7 +12,7 @@ class Image extends Model
     protected $table = 'images';
     protected $fillable = ['user_id','src'];
 
-    public function userImg()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }

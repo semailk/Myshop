@@ -19,7 +19,7 @@ class ShopBasketItem extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function productBasket()
+    public function product()
     {
         return $this->belongsTo(ShopProduct::class);
     }
