@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\View\Admin\ConsoleController;
+use App\Http\Controllers\View\Admin\Shop\ShopCategoryController;
 use App\Http\Controllers\View\Main\WelcomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\View\Admin\HomeController;
@@ -18,10 +19,15 @@ use Illuminate\Support\Facades\Auth;
 */
 Route::middleware(['auth'])->prefix('/admin')->group(function () {
     Route::get('/',[ConsoleController::class, 'index'])->name('console.index');
+    Route::resource('/categories', ShopCategoryController::class);
+
 });
+
 
 Route::get('/',[WelcomeController::class, 'index']);
 
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'home'])->name('home');
+
+

@@ -24,7 +24,7 @@ class ShopCategoryFactory extends Factory
     public function definition()
     {
         return [
-            'parent_id' => rand(1, 60),
+            'parent_id' => null,
             'name' => $this->faker->name,
             'slug' => $this->faker->streetName,
         ];

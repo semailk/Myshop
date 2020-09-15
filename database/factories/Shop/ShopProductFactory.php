@@ -23,7 +23,7 @@ class ShopProductFactory extends Factory
     public function definition()
     {
         return [
-            'category_id' => rand(1,10),
+            'category_id' => rand(1 , 60),
             'title' => $this->faker->streetName,
             'description' => $this->faker->name,
         ];
