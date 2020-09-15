@@ -5,18 +5,18 @@
  */
 
 require('./bootstrap');
-import('../js/admin/Corona/off-canvas')
-import('../js/admin/Corona/hoverable-collapse')
-import('../js/admin/Corona/misc')
-import('../js/admin/Corona/settings')
-import('../js/admin/Corona/todolist')
-import('../js/admin/Corona/dashboard')
+require('../js/admin/Corona/off-canvas')
+require('../js/admin/Corona/hoverable-collapse')
+require('../js/admin/Corona/misc')
+require('../js/admin/Corona/settings')
+require('../js/admin/Corona/todolist')
+require('../js/admin/Corona/dashboard')
 
-import('../js/admin/Corona/vendor.bundle.base')
-import('../js/admin/Corona/chart')
-import('../js/admin/Corona/jquery-jvectormap.min')
-import('../js/admin/Corona/jquery-jvectormap-world-mill-en')
-import('../js/admin/Corona/owl.carousel.min')
+require('../js/admin/Corona/vendor.bundle.base')
+require('../js/admin/Corona/chart')
+require('../js/admin/Corona/jquery-jvectormap.min')
+require('../js/admin/Corona/jquery-jvectormap-world-mill-en')
+require('../js/admin/Corona/owl.carousel.min')
 
 window.Vue = require('vue');
 

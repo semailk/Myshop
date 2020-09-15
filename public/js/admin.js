@@ -1,50 +1,6 @@
 /******/ (function(modules) { // webpackBootstrap
-/******/ 	// install a JSONP callback for chunk loading
-/******/ 	function webpackJsonpCallback(data) {
-/******/ 		var chunkIds = data[0];
-/******/ 		var moreModules = data[1];
-/******/
-/******/
-/******/ 		// add "moreModules" to the modules object,
-/******/ 		// then flag all "chunkIds" as loaded and fire callback
-/******/ 		var moduleId, chunkId, i = 0, resolves = [];
-/******/ 		for(;i < chunkIds.length; i++) {
-/******/ 			chunkId = chunkIds[i];
-/******/ 			if(Object.prototype.hasOwnProperty.call(installedChunks, chunkId) && installedChunks[chunkId]) {
-/******/ 				resolves.push(installedChunks[chunkId][0]);
-/******/ 			}
-/******/ 			installedChunks[chunkId] = 0;
-/******/ 		}
-/******/ 		for(moduleId in moreModules) {
-/******/ 			if(Object.prototype.hasOwnProperty.call(moreModules, moduleId)) {
-/******/ 				modules[moduleId] = moreModules[moduleId];
-/******/ 			}
-/******/ 		}
-/******/ 		if(parentJsonpFunction) parentJsonpFunction(data);
-/******/
-/******/ 		while(resolves.length) {
-/******/ 			resolves.shift()();
-/******/ 		}
-/******/
-/******/ 	};
-/******/
-/******/
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-/******/
-/******/ 	// object to store loaded and loading chunks
-/******/ 	// undefined = chunk not loaded, null = chunk preloaded/prefetched
-/******/ 	// Promise = chunk loading, 0 = chunk loaded
-/******/ 	var installedChunks = {
-/******/ 		"/js/admin": 0
-/******/ 	};
-/******/
-/******/
-/******/
-/******/ 	// script path function
-/******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".js"
-/******/ 	}
 /******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
@@ -70,67 +26,6 @@
 /******/ 		return module.exports;
 /******/ 	}
 /******/
-/******/ 	// This file contains only the entry chunk.
-/******/ 	// The chunk loading function for additional chunks
-/******/ 	__webpack_require__.e = function requireEnsure(chunkId) {
-/******/ 		var promises = [];
-/******/
-/******/
-/******/ 		// JSONP chunk loading for javascript
-/******/
-/******/ 		var installedChunkData = installedChunks[chunkId];
-/******/ 		if(installedChunkData !== 0) { // 0 means "already installed".
-/******/
-/******/ 			// a Promise means "currently loading".
-/******/ 			if(installedChunkData) {
-/******/ 				promises.push(installedChunkData[2]);
-/******/ 			} else {
-/******/ 				// setup Promise in chunk cache
-/******/ 				var promise = new Promise(function(resolve, reject) {
-/******/ 					installedChunkData = installedChunks[chunkId] = [resolve, reject];
-/******/ 				});
-/******/ 				promises.push(installedChunkData[2] = promise);
-/******/
-/******/ 				// start chunk loading
-/******/ 				var script = document.createElement('script');
-/******/ 				var onScriptComplete;
-/******/
-/******/ 				script.charset = 'utf-8';
-/******/ 				script.timeout = 120;
-/******/ 				if (__webpack_require__.nc) {
-/******/ 					script.setAttribute("nonce", __webpack_require__.nc);
-/******/ 				}
-/******/ 				script.src = jsonpScriptSrc(chunkId);
-/******/
-/******/ 				// create error before stack unwound to get useful stacktrace later
-/******/ 				var error = new Error();
-/******/ 				onScriptComplete = function (event) {
-/******/ 					// avoid mem leaks in IE.
-/******/ 					script.onerror = script.onload = null;
-/******/ 					clearTimeout(timeout);
-/******/ 					var chunk = installedChunks[chunkId];
-/******/ 					if(chunk !== 0) {
-/******/ 						if(chunk) {
-/******/ 							var errorType = event && (event.type === 'load' ? 'missing' : event.type);
-/******/ 							var realSrc = event && event.target && event.target.src;
-/******/ 							error.message = 'Loading chunk ' + chunkId + ' failed.\n(' + errorType + ': ' + realSrc + ')';
-/******/ 							error.name = 'ChunkLoadError';
-/******/ 							error.type = errorType;
-/******/ 							error.request = realSrc;
-/******/ 							chunk[1](error);
-/******/ 						}
-/******/ 						installedChunks[chunkId] = undefined;
-/******/ 					}
-/******/ 				};
-/******/ 				var timeout = setTimeout(function(){
-/******/ 					onScriptComplete({ type: 'timeout', target: script });
-/******/ 				}, 120000);
-/******/ 				script.onerror = script.onload = onScriptComplete;
-/******/ 				document.head.appendChild(script);
-/******/ 			}
-/******/ 		}
-/******/ 		return Promise.all(promises);
-/******/ 	};
 /******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
@@ -183,16 +78,6 @@
 /******/
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "/";
-/******/
-/******/ 	// on error function for async loading
-/******/ 	__webpack_require__.oe = function(err) { console.error(err); throw err; };
-/******/
-/******/ 	var jsonpArray = window["webpackJsonp"] = window["webpackJsonp"] || [];
-/******/ 	var oldJsonpFunction = jsonpArray.push.bind(jsonpArray);
-/******/ 	jsonpArray.push = webpackJsonpCallback;
-/******/ 	jsonpArray = jsonpArray.slice();
-/******/ 	for(var i = 0; i < jsonpArray.length; i++) webpackJsonpCallback(jsonpArray[i]);
-/******/ 	var parentJsonpFunction = oldJsonpFunction;
 /******/
 /******/
 /******/ 	// Load entry module and return exports
@@ -49837,17 +49722,28 @@ module.exports = function(module) {
  */
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-__webpack_require__.e(/*! import() */ 6).then(__webpack_require__.t.bind(null, /*! ../js/admin/Corona/off-canvas */ "./resources/js/admin/Corona/off-canvas.js", 7));
-__webpack_require__.e(/*! import() */ 2).then(__webpack_require__.t.bind(null, /*! ../js/admin/Corona/hoverable-collapse */ "./resources/js/admin/Corona/hoverable-collapse.js", 7));
-__webpack_require__.e(/*! import() */ 5).then(__webpack_require__.t.bind(null, /*! ../js/admin/Corona/misc */ "./resources/js/admin/Corona/misc.js", 7));
-__webpack_require__.e(/*! import() */ 8).then(__webpack_require__.t.bind(null, /*! ../js/admin/Corona/settings */ "./resources/js/admin/Corona/settings.js", 7));
-__webpack_require__.e(/*! import() */ 9).then(__webpack_require__.t.bind(null, /*! ../js/admin/Corona/todolist */ "./resources/js/admin/Corona/todolist.js", 7));
-__webpack_require__.e(/*! import() */ 1).then(__webpack_require__.t.bind(null, /*! ../js/admin/Corona/dashboard */ "./resources/js/admin/Corona/dashboard.js", 7));
-__webpack_require__.e(/*! import() */ 10).then(__webpack_require__.t.bind(null, /*! ../js/admin/Corona/vendor.bundle.base */ "./resources/js/admin/Corona/vendor.bundle.base.js", 7));
-__webpack_require__.e(/*! import() */ 0).then(__webpack_require__.t.bind(null, /*! ../js/admin/Corona/chart */ "./resources/js/admin/Corona/chart.js", 7));
-__webpack_require__.e(/*! import() */ 4).then(__webpack_require__.t.bind(null, /*! ../js/admin/Corona/jquery-jvectormap.min */ "./resources/js/admin/Corona/jquery-jvectormap.min.js", 7));
-__webpack_require__.e(/*! import() */ 3).then(__webpack_require__.t.bind(null, /*! ../js/admin/Corona/jquery-jvectormap-world-mill-en */ "./resources/js/admin/Corona/jquery-jvectormap-world-mill-en.js", 7));
-__webpack_require__.e(/*! import() */ 7).then(__webpack_require__.t.bind(null, /*! ../js/admin/Corona/owl.carousel.min */ "./resources/js/admin/Corona/owl.carousel.min.js", 7));
+__webpack_require__(/*! ../js/admin/Corona/off-canvas */ "./resources/js/admin/Corona/off-canvas.js");
+
+__webpack_require__(/*! ../js/admin/Corona/hoverable-collapse */ "./resources/js/admin/Corona/hoverable-collapse.js");
+
+__webpack_require__(/*! ../js/admin/Corona/misc */ "./resources/js/admin/Corona/misc.js");
+
+__webpack_require__(/*! ../js/admin/Corona/settings */ "./resources/js/admin/Corona/settings.js");
+
+__webpack_require__(/*! ../js/admin/Corona/todolist */ "./resources/js/admin/Corona/todolist.js");
+
+__webpack_require__(/*! ../js/admin/Corona/dashboard */ "./resources/js/admin/Corona/dashboard.js");
+
+__webpack_require__(/*! ../js/admin/Corona/vendor.bundle.base */ "./resources/js/admin/Corona/vendor.bundle.base.js");
+
+__webpack_require__(/*! ../js/admin/Corona/chart */ "./resources/js/admin/Corona/chart.js");
+
+__webpack_require__(/*! ../js/admin/Corona/jquery-jvectormap.min */ "./resources/js/admin/Corona/jquery-jvectormap.min.js");
+
+__webpack_require__(/*! ../js/admin/Corona/jquery-jvectormap-world-mill-en */ "./resources/js/admin/Corona/jquery-jvectormap-world-mill-en.js");
+
+__webpack_require__(/*! ../js/admin/Corona/owl.carousel.min */ "./resources/js/admin/Corona/owl.carousel.min.js");
+
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /**
  * The following block of code may be used to automatically register your
@@ -49869,6 +49765,11910 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
 var app = new Vue({
   el: '#app'
 });
+
+/***/ }),
+
+/***/ "./resources/js/admin/Corona/chart.js":
+/*!********************************************!*\
+  !*** ./resources/js/admin/Corona/chart.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(function () {
+  /* ChartJS
+   * -------
+   * Data and config for chartjs
+   */
+  'use strict';
+
+  var data = {
+    labels: ["2013", "2014", "2014", "2015", "2016", "2017"],
+    datasets: [{
+      label: '# of Votes',
+      data: [10, 19, 3, 5, 2, 3],
+      backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'],
+      borderColor: ['rgba(255,99,132,1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'],
+      borderWidth: 1,
+      fill: false
+    }]
+  };
+  var multiLineData = {
+    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+    datasets: [{
+      label: 'Dataset 1',
+      data: [12, 19, 3, 5, 2, 3],
+      borderColor: ['#587ce4'],
+      borderWidth: 2,
+      fill: false
+    }, {
+      label: 'Dataset 2',
+      data: [5, 23, 7, 12, 42, 23],
+      borderColor: ['#ede190'],
+      borderWidth: 2,
+      fill: false
+    }, {
+      label: 'Dataset 3',
+      data: [15, 10, 21, 32, 12, 33],
+      borderColor: ['#f44252'],
+      borderWidth: 2,
+      fill: false
+    }]
+  };
+  var options = {
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        },
+        gridLines: {
+          color: "rgba(204, 204, 204,0.1)"
+        }
+      }],
+      xAxes: [{
+        gridLines: {
+          color: "rgba(204, 204, 204,0.1)"
+        }
+      }]
+    },
+    legend: {
+      display: false
+    },
+    elements: {
+      point: {
+        radius: 0
+      }
+    }
+  };
+  var doughnutPieData = {
+    datasets: [{
+      data: [30, 40, 30],
+      backgroundColor: ['rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(75, 192, 192, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(255, 159, 64, 0.5)'],
+      borderColor: ['rgba(255,99,132,1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)']
+    }],
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+    labels: ['Pink', 'Blue', 'Yellow']
+  };
+  var doughnutPieOptions = {
+    responsive: true,
+    animation: {
+      animateScale: true,
+      animateRotate: true
+    }
+  };
+  var areaData = {
+    labels: ["2013", "2014", "2015", "2016", "2017"],
+    datasets: [{
+      label: '# of Votes',
+      data: [12, 19, 3, 5, 2, 3],
+      backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'],
+      borderColor: ['rgba(255,99,132,1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'],
+      borderWidth: 1,
+      fill: true // 3: no fill
+
+    }]
+  };
+  var areaOptions = {
+    plugins: {
+      filler: {
+        propagate: true
+      }
+    },
+    scales: {
+      yAxes: [{
+        gridLines: {
+          color: "rgba(204, 204, 204,0.1)"
+        }
+      }],
+      xAxes: [{
+        gridLines: {
+          color: "rgba(204, 204, 204,0.1)"
+        }
+      }]
+    }
+  };
+  var multiAreaData = {
+    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    datasets: [{
+      label: 'Facebook',
+      data: [8, 11, 13, 15, 12, 13, 16, 15, 13, 19, 11, 14],
+      borderColor: ['rgba(255, 99, 132, 0.5)'],
+      backgroundColor: ['rgba(255, 99, 132, 0.5)'],
+      borderWidth: 1,
+      fill: true
+    }, {
+      label: 'Twitter',
+      data: [7, 17, 12, 16, 14, 18, 16, 12, 15, 11, 13, 9],
+      borderColor: ['rgba(54, 162, 235, 0.5)'],
+      backgroundColor: ['rgba(54, 162, 235, 0.5)'],
+      borderWidth: 1,
+      fill: true
+    }, {
+      label: 'Linkedin',
+      data: [6, 14, 16, 20, 12, 18, 15, 12, 17, 19, 15, 11],
+      borderColor: ['rgba(255, 206, 86, 0.5)'],
+      backgroundColor: ['rgba(255, 206, 86, 0.5)'],
+      borderWidth: 1,
+      fill: true
+    }]
+  };
+  var multiAreaOptions = {
+    plugins: {
+      filler: {
+        propagate: true
+      }
+    },
+    elements: {
+      point: {
+        radius: 0
+      }
+    },
+    scales: {
+      xAxes: [{
+        gridLines: {
+          display: false
+        }
+      }],
+      yAxes: [{
+        gridLines: {
+          display: false
+        }
+      }]
+    }
+  };
+  var scatterChartData = {
+    datasets: [{
+      label: 'First Dataset',
+      data: [{
+        x: -10,
+        y: 0
+      }, {
+        x: 0,
+        y: 3
+      }, {
+        x: -25,
+        y: 5
+      }, {
+        x: 40,
+        y: 5
+      }],
+      backgroundColor: ['rgba(255, 99, 132, 0.2)'],
+      borderColor: ['rgba(255,99,132,1)'],
+      borderWidth: 1
+    }, {
+      label: 'Second Dataset',
+      data: [{
+        x: 10,
+        y: 5
+      }, {
+        x: 20,
+        y: -30
+      }, {
+        x: -25,
+        y: 15
+      }, {
+        x: -10,
+        y: 5
+      }],
+      backgroundColor: ['rgba(54, 162, 235, 0.2)'],
+      borderColor: ['rgba(54, 162, 235, 1)'],
+      borderWidth: 1
+    }]
+  };
+  var scatterChartOptions = {
+    scales: {
+      xAxes: [{
+        type: 'linear',
+        position: 'bottom',
+        gridLines: {
+          color: "rgba(204, 204, 204,0.1)"
+        }
+      }],
+      yAxes: [{
+        gridLines: {
+          color: "rgba(204, 204, 204,0.1)"
+        }
+      }]
+    }
+  }; // Get context with jQuery - using jQuery's .get() method.
+
+  if ($("#barChart").length) {
+    var barChartCanvas = $("#barChart").get(0).getContext("2d"); // This will get the first returned node in the jQuery collection.
+
+    var barChart = new Chart(barChartCanvas, {
+      type: 'bar',
+      data: data,
+      options: options
+    });
+  }
+
+  if ($("#lineChart").length) {
+    var lineChartCanvas = $("#lineChart").get(0).getContext("2d");
+    var lineChart = new Chart(lineChartCanvas, {
+      type: 'line',
+      data: data,
+      options: options
+    });
+  }
+
+  if ($("#linechart-multi").length) {
+    var multiLineCanvas = $("#linechart-multi").get(0).getContext("2d");
+    var lineChart = new Chart(multiLineCanvas, {
+      type: 'line',
+      data: multiLineData,
+      options: options
+    });
+  }
+
+  if ($("#areachart-multi").length) {
+    var multiAreaCanvas = $("#areachart-multi").get(0).getContext("2d");
+    var multiAreaChart = new Chart(multiAreaCanvas, {
+      type: 'line',
+      data: multiAreaData,
+      options: multiAreaOptions
+    });
+  }
+
+  if ($("#doughnutChart").length) {
+    var doughnutChartCanvas = $("#doughnutChart").get(0).getContext("2d");
+    var doughnutChart = new Chart(doughnutChartCanvas, {
+      type: 'doughnut',
+      data: doughnutPieData,
+      options: doughnutPieOptions
+    });
+  }
+
+  if ($("#pieChart").length) {
+    var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
+    var pieChart = new Chart(pieChartCanvas, {
+      type: 'pie',
+      data: doughnutPieData,
+      options: doughnutPieOptions
+    });
+  }
+
+  if ($("#areaChart").length) {
+    var areaChartCanvas = $("#areaChart").get(0).getContext("2d");
+    var areaChart = new Chart(areaChartCanvas, {
+      type: 'line',
+      data: areaData,
+      options: areaOptions
+    });
+  }
+
+  if ($("#scatterChart").length) {
+    var scatterChartCanvas = $("#scatterChart").get(0).getContext("2d");
+    var scatterChart = new Chart(scatterChartCanvas, {
+      type: 'scatter',
+      data: scatterChartData,
+      options: scatterChartOptions
+    });
+  }
+
+  if ($("#browserTrafficChart").length) {
+    var doughnutChartCanvas = $("#browserTrafficChart").get(0).getContext("2d");
+    var doughnutChart = new Chart(doughnutChartCanvas, {
+      type: 'doughnut',
+      data: browserTrafficData,
+      options: doughnutPieOptions
+    });
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/admin/Corona/dashboard.js":
+/*!************************************************!*\
+  !*** ./resources/js/admin/Corona/dashboard.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function ($) {
+  'use strict';
+
+  $.fn.andSelf = function () {
+    return this.addBack.apply(this, arguments);
+  };
+
+  $(function () {
+    if ($("#currentBalanceCircle").length) {
+      var bar = new ProgressBar.Circle(currentBalanceCircle, {
+        color: '#000',
+        // This has to be the same size as the maximum width to
+        // prevent clipping
+        strokeWidth: 12,
+        trailWidth: 12,
+        trailColor: '#0d0d0d',
+        easing: 'easeInOut',
+        duration: 1400,
+        text: {
+          autoStyleContainer: false
+        },
+        from: {
+          color: '#d53f3a',
+          width: 12
+        },
+        to: {
+          color: '#d53f3a',
+          width: 12
+        },
+        // Set default step function for all animate calls
+        step: function step(state, circle) {
+          circle.path.setAttribute('stroke', state.color);
+          circle.path.setAttribute('stroke-width', state.width);
+          var value = Math.round(circle.value() * 100);
+          circle.setText('');
+        }
+      });
+      bar.text.style.fontSize = '1.5rem';
+      bar.animate(0.4); // Number from 0.0 to 1.0
+    }
+
+    if ($('#audience-map').length) {
+      $('#audience-map').vectorMap({
+        map: 'world_mill_en',
+        backgroundColor: 'transparent',
+        panOnDrag: true,
+        focusOn: {
+          x: 0.5,
+          y: 0.5,
+          scale: 1,
+          animate: true
+        },
+        series: {
+          regions: [{
+            scale: ['#3d3c3c', '#f2f2f2'],
+            normalizeFunction: 'polynomial',
+            values: {
+              "BZ": 75.00,
+              "US": 56.25,
+              "AU": 15.45,
+              "GB": 25.00,
+              "RO": 10.25,
+              "GE": 33.25
+            }
+          }]
+        }
+      });
+    }
+
+    if ($("#transaction-history").length) {
+      var areaData = {
+        labels: ["Paypal", "Stripe", "Cash"],
+        datasets: [{
+          data: [55, 25, 20],
+          backgroundColor: ["#111111", "#00d25b", "#ffab00"]
+        }]
+      };
+      var areaOptions = {
+        responsive: true,
+        maintainAspectRatio: true,
+        segmentShowStroke: false,
+        cutoutPercentage: 70,
+        elements: {
+          arc: {
+            borderWidth: 0
+          }
+        },
+        legend: {
+          display: false
+        },
+        tooltips: {
+          enabled: true
+        }
+      };
+      var transactionhistoryChartPlugins = {
+        beforeDraw: function beforeDraw(chart) {
+          var width = chart.chart.width,
+              height = chart.chart.height,
+              ctx = chart.chart.ctx;
+          ctx.restore();
+          var fontSize = 1;
+          ctx.font = fontSize + "rem sans-serif";
+          ctx.textAlign = 'left';
+          ctx.textBaseline = "middle";
+          ctx.fillStyle = "#ffffff";
+          var text = "$1200",
+              textX = Math.round((width - ctx.measureText(text).width) / 2),
+              textY = height / 2.4;
+          ctx.fillText(text, textX, textY);
+          ctx.restore();
+          var fontSize = 0.75;
+          ctx.font = fontSize + "rem sans-serif";
+          ctx.textAlign = 'left';
+          ctx.textBaseline = "middle";
+          ctx.fillStyle = "#6c7293";
+          var texts = "Total",
+              textsX = Math.round((width - ctx.measureText(text).width) / 1.93),
+              textsY = height / 1.7;
+          ctx.fillText(texts, textsX, textsY);
+          ctx.save();
+        }
+      };
+      var transactionhistoryChartCanvas = $("#transaction-history").get(0).getContext("2d");
+      var transactionhistoryChart = new Chart(transactionhistoryChartCanvas, {
+        type: 'doughnut',
+        data: areaData,
+        options: areaOptions,
+        plugins: transactionhistoryChartPlugins
+      });
+    }
+
+    if ($("#transaction-history-arabic").length) {
+      var areaData = {
+        labels: ["Paypal", "Stripe", "Cash"],
+        datasets: [{
+          data: [55, 25, 20],
+          backgroundColor: ["#111111", "#00d25b", "#ffab00"]
+        }]
+      };
+      var areaOptions = {
+        responsive: true,
+        maintainAspectRatio: true,
+        segmentShowStroke: false,
+        cutoutPercentage: 70,
+        elements: {
+          arc: {
+            borderWidth: 0
+          }
+        },
+        legend: {
+          display: false
+        },
+        tooltips: {
+          enabled: true
+        }
+      };
+      var transactionhistoryChartPlugins = {
+        beforeDraw: function beforeDraw(chart) {
+          var width = chart.chart.width,
+              height = chart.chart.height,
+              ctx = chart.chart.ctx;
+          ctx.restore();
+          var fontSize = 1;
+          ctx.font = fontSize + "rem sans-serif";
+          ctx.textAlign = 'left';
+          ctx.textBaseline = "middle";
+          ctx.fillStyle = "#ffffff";
+          var text = "$1200",
+              textX = Math.round((width - ctx.measureText(text).width) / 2),
+              textY = height / 2.4;
+          ctx.fillText(text, textX, textY);
+          ctx.restore();
+          var fontSize = 0.75;
+          ctx.font = fontSize + "rem sans-serif";
+          ctx.textAlign = 'left';
+          ctx.textBaseline = "middle";
+          ctx.fillStyle = "#6c7293";
+          var texts = "مجموع",
+              textsX = Math.round((width - ctx.measureText(text).width) / 1.93),
+              textsY = height / 1.7;
+          ctx.fillText(texts, textsX, textsY);
+          ctx.save();
+        }
+      };
+      var transactionhistoryChartCanvas = $("#transaction-history-arabic").get(0).getContext("2d");
+      var transactionhistoryChart = new Chart(transactionhistoryChartCanvas, {
+        type: 'doughnut',
+        data: areaData,
+        options: areaOptions,
+        plugins: transactionhistoryChartPlugins
+      });
+    }
+
+    if ($('#owl-carousel-basic').length) {
+      $('#owl-carousel-basic').owlCarousel({
+        loop: true,
+        margin: 10,
+        dots: false,
+        nav: true,
+        autoplay: true,
+        autoplayTimeout: 4500,
+        navText: ["<i class='mdi mdi-chevron-left'></i>", "<i class='mdi mdi-chevron-right'></i>"],
+        responsive: {
+          0: {
+            items: 1
+          },
+          600: {
+            items: 1
+          },
+          1000: {
+            items: 1
+          }
+        }
+      });
+    }
+
+    var isrtl = $("body").hasClass("rtl");
+
+    if ($('#owl-carousel-rtl').length) {
+      $('#owl-carousel-rtl').owlCarousel({
+        loop: true,
+        margin: 10,
+        dots: false,
+        nav: true,
+        rtl: isrtl,
+        autoplay: true,
+        autoplayTimeout: 4500,
+        navText: ["<i class='mdi mdi-chevron-right'></i>", "<i class='mdi mdi-chevron-left'></i>"],
+        responsive: {
+          0: {
+            items: 1
+          },
+          600: {
+            items: 1
+          },
+          1000: {
+            items: 1
+          }
+        }
+      });
+    }
+  });
+})(jQuery);
+
+/***/ }),
+
+/***/ "./resources/js/admin/Corona/hoverable-collapse.js":
+/*!*********************************************************!*\
+  !*** ./resources/js/admin/Corona/hoverable-collapse.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function ($) {
+  'use strict'; //Open submenu on hover in compact sidebar mode and horizontal menu mode
+
+  $(document).on('mouseenter mouseleave', '.sidebar .nav-item', function (ev) {
+    var body = $('body');
+    var sidebarIconOnly = body.hasClass("sidebar-icon-only");
+    var sidebarFixed = body.hasClass("sidebar-fixed");
+
+    if (!('ontouchstart' in document.documentElement)) {
+      if (sidebarIconOnly) {
+        if (sidebarFixed) {
+          if (ev.type === 'mouseenter') {
+            body.removeClass('sidebar-icon-only');
+          }
+        } else {
+          var $menuItem = $(this);
+
+          if (ev.type === 'mouseenter') {
+            $menuItem.addClass('hover-open');
+          } else {
+            $menuItem.removeClass('hover-open');
+          }
+        }
+      }
+    }
+  });
+})(jQuery);
+
+/***/ }),
+
+/***/ "./resources/js/admin/Corona/jquery-jvectormap-world-mill-en.js":
+/*!**********************************************************************!*\
+  !*** ./resources/js/admin/Corona/jquery-jvectormap-world-mill-en.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+jQuery.fn.vectorMap('addMap', 'world_mill_en', {
+  "insets": [{
+    "width": 900,
+    "top": 0,
+    "height": 440.70631074413296,
+    "bbox": [{
+      "y": -12671671.123330014,
+      "x": -20004297.151525836
+    }, {
+      "y": 6930392.025135122,
+      "x": 20026572.39474939
+    }],
+    "left": 0
+  }],
+  "paths": {
+    "BD": {
+      "path": "M651.84,230.21l-0.6,-2.0l-1.36,-1.71l-2.31,-0.11l-0.41,0.48l0.2,0.94l-0.53,0.99l-0.72,-0.36l-0.68,0.35l-1.2,-0.36l-0.37,-2.0l-0.81,-1.86l0.39,-1.46l-0.22,-0.47l-1.14,-0.53l0.29,-0.5l1.48,-0.94l0.03,-0.65l-1.55,-1.22l0.55,-1.14l1.61,0.94l1.04,0.15l0.18,1.54l0.34,0.35l5.64,0.63l-0.84,1.64l-1.22,0.34l-0.77,1.51l0.07,0.47l1.37,1.37l0.67,-0.19l0.42,-1.39l1.21,3.84l-0.03,1.21l-0.33,-0.15l-0.4,0.28Z",
+      "name": "Bangladesh"
+    },
+    "BE": {
+      "path": "M429.29,144.05l1.91,0.24l2.1,-0.63l2.63,1.99l-0.21,1.66l-0.69,0.4l-0.18,1.2l-1.66,-1.13l-1.39,0.15l-2.73,-2.7l-1.17,-0.18l-0.16,-0.52l1.54,-0.5Z",
+      "name": "Belgium"
+    },
+    "BF": {
+      "path": "M421.42,247.64l-0.11,0.95l0.34,1.16l1.4,1.71l0.07,1.1l0.32,0.37l2.55,0.51l-0.04,1.28l-0.38,0.53l-1.07,0.21l-0.72,1.18l-0.63,0.21l-3.22,-0.25l-0.94,0.39l-5.4,-0.05l-0.39,0.38l0.16,2.73l-1.23,-0.43l-1.17,0.1l-0.89,0.57l-2.27,-1.72l-0.13,-1.11l0.61,-0.96l0.02,-0.93l1.87,-1.98l0.44,-1.81l0.43,-0.39l1.28,0.26l1.05,-0.52l0.47,-0.73l1.84,-1.09l0.55,-0.83l2.2,-1.0l1.15,-0.3l0.72,0.45l1.13,-0.01Z",
+      "name": "Burkina Faso"
+    },
+    "BG": {
+      "path": "M491.65,168.18l-0.86,0.88l-0.91,2.17l0.48,1.34l-1.6,-0.24l-2.55,0.95l-0.28,1.51l-1.8,0.22l-2.0,-1.0l-1.92,0.79l-1.42,-0.07l-0.15,-1.63l-1.05,-0.97l0.0,-0.8l1.2,-1.57l0.01,-0.56l-1.14,-1.23l-0.05,-0.94l0.88,0.97l0.88,-0.2l1.91,0.47l3.68,0.16l1.42,-0.81l2.72,-0.66l2.55,1.24Z",
+      "name": "Bulgaria"
+    },
+    "BA": {
+      "path": "M463.49,163.65l2.1,0.5l1.72,-0.03l1.52,0.68l-0.36,0.78l0.08,0.45l1.04,1.02l-0.25,0.98l-1.81,1.15l-0.38,1.38l-1.67,-0.87l-0.89,-1.2l-2.11,-1.83l-1.63,-2.22l0.23,-0.57l0.48,0.38l0.55,-0.06l0.43,-0.51l0.94,-0.06Z",
+      "name": "Bosnia and Herz."
+    },
+    "BN": {
+      "path": "M707.48,273.58l0.68,-0.65l1.41,-0.91l-0.15,1.63l-0.81,-0.05l-0.61,0.58l-0.53,-0.6Z",
+      "name": "Brunei"
+    },
+    "BO": {
+      "path": "M263.83,340.69l-3.09,-0.23l-0.38,0.23l-0.7,1.52l-1.31,-1.53l-3.28,-0.64l-2.37,2.4l-1.31,0.26l-0.88,-3.26l-1.3,-2.86l0.74,-2.37l-0.13,-0.43l-1.2,-1.01l-0.37,-1.89l-1.08,-1.55l1.45,-2.56l-0.96,-2.33l0.47,-1.06l-0.34,-0.73l0.91,-1.32l0.16,-3.84l0.5,-1.18l-1.81,-3.41l2.46,0.07l0.8,-0.85l3.4,-1.91l2.66,-0.35l-0.19,1.38l0.3,1.07l-0.05,1.97l2.72,2.27l2.88,0.49l0.89,0.86l1.79,0.58l0.98,0.7l1.71,0.05l1.17,0.61l0.6,2.7l-0.7,0.54l0.96,2.99l0.37,0.28l4.3,0.1l-0.25,1.2l0.27,1.02l1.43,0.9l0.5,1.35l-0.41,1.86l-0.65,1.08l0.12,1.35l-2.69,-1.65l-2.4,-0.03l-4.36,0.76l-1.49,2.5l-0.11,1.52l-0.75,2.37Z",
+      "name": "Bolivia"
+    },
+    "JP": {
+      "path": "M781.12,166.87l1.81,0.68l1.62,-0.97l0.39,2.42l-3.35,0.75l-2.23,2.88l-3.63,-1.9l-0.56,0.2l-1.26,3.05l-2.16,0.03l-0.29,-2.51l1.08,-2.03l2.45,-0.16l0.37,-0.33l1.25,-5.94l2.47,2.71l2.03,1.12ZM773.56,187.34l-0.91,2.22l0.37,1.52l-1.14,1.75l-3.02,1.26l-4.58,0.27l-3.34,3.01l-1.25,-0.8l-0.09,-1.9l-0.46,-0.38l-4.35,0.62l-3.0,1.32l-2.85,0.05l-0.37,0.27l0.13,0.44l2.32,1.89l-1.54,4.34l-1.26,0.9l-0.79,-0.7l0.56,-2.27l-0.21,-0.45l-1.47,-0.75l-0.74,-1.4l2.12,-0.84l1.26,-1.7l2.45,-1.42l1.83,-1.91l4.78,-0.81l2.6,0.57l0.44,-0.21l2.39,-4.66l1.29,1.06l0.5,0.01l5.1,-4.02l1.69,-3.73l-0.38,-3.4l0.9,-1.61l2.14,-0.44l1.23,3.72l-0.07,2.18l-2.23,2.84l-0.04,3.16ZM757.78,196.26l0.19,0.56l-1.01,1.21l-1.16,-0.68l-1.28,0.65l-0.69,1.45l-1.02,-0.5l0.01,-0.93l1.14,-1.38l1.57,0.14l0.85,-0.98l1.4,0.46Z",
+      "name": "Japan"
+    },
+    "BI": {
+      "path": "M495.45,295.49l-1.08,-2.99l1.14,-0.11l0.64,-1.19l0.76,0.09l0.65,1.83l-2.1,2.36Z",
+      "name": "Burundi"
+    },
+    "BJ": {
+      "path": "M429.57,255.75l-0.05,0.8l0.5,1.34l-0.42,0.86l0.17,0.79l-1.81,2.12l-0.57,1.76l-0.08,5.42l-1.41,0.2l-0.48,-1.36l0.11,-5.71l-0.52,-0.7l-0.2,-1.35l-1.48,-1.48l0.21,-0.9l0.89,-0.43l0.42,-0.92l1.27,-0.36l1.22,-1.34l0.61,-0.0l1.62,1.24Z",
+      "name": "Benin"
+    },
+    "BT": {
+      "path": "M650.32,213.86l0.84,0.71l-0.12,1.1l-3.76,-0.11l-1.57,0.4l-1.93,-0.87l1.48,-1.96l1.13,-0.57l1.63,0.57l1.33,0.08l0.99,0.65Z",
+      "name": "Bhutan"
+    },
+    "JM": {
+      "path": "M228.38,239.28l-0.8,0.4l-2.26,-1.06l0.84,-0.23l2.14,0.3l1.17,0.56l-1.08,0.03Z",
+      "name": "Jamaica"
+    },
+    "BW": {
+      "path": "M483.92,330.07l2.27,4.01l2.83,2.86l0.96,0.31l0.78,2.43l2.13,0.61l1.02,0.76l-3.0,1.64l-2.32,2.02l-1.54,2.69l-1.52,0.45l-0.64,1.94l-1.34,0.52l-1.85,-0.12l-1.21,-0.74l-1.35,-0.3l-1.22,0.62l-0.75,1.37l-2.31,1.9l-1.4,0.21l-0.35,-0.59l0.16,-1.75l-1.48,-2.54l-0.62,-0.43l-0.0,-7.1l2.08,-0.08l0.39,-0.4l0.07,-8.9l5.19,-0.93l0.8,0.89l0.51,0.07l1.5,-0.95l2.21,-0.49Z",
+      "name": "Botswana"
+    },
+    "BR": {
+      "path": "M259.98,275.05l3.24,0.7l0.65,-0.53l4.55,-1.32l1.08,-1.06l-0.02,-0.63l0.55,-0.05l0.28,0.28l-0.26,0.87l0.22,0.48l0.73,0.32l0.4,0.81l-0.62,0.86l-0.4,2.13l0.82,2.56l1.69,1.43l1.43,0.2l3.17,-1.68l3.18,0.3l0.65,-0.75l-0.27,-0.92l1.9,-0.09l2.39,0.99l1.06,-0.61l0.84,0.78l1.2,-0.18l1.18,-1.06l0.84,-1.94l1.36,-2.11l0.37,-0.05l1.89,5.45l1.33,0.59l0.05,1.28l-1.77,1.94l0.02,0.56l1.02,0.87l4.07,0.36l0.08,2.16l0.66,0.29l1.74,-1.5l6.97,2.32l1.02,1.22l-0.35,1.18l0.49,0.5l2.81,-0.74l4.77,1.3l3.75,-0.08l3.57,2.0l3.29,2.86l1.93,0.72l2.12,0.12l0.71,0.62l1.21,4.51l-0.95,3.98l-4.72,5.06l-1.64,2.92l-1.72,2.05l-0.8,0.3l-0.72,2.03l0.18,4.75l-0.94,5.53l-0.81,1.13l-0.43,3.36l-2.55,3.5l-0.4,2.51l-1.86,1.04l-0.67,1.53l-2.54,0.01l-3.94,1.01l-1.83,1.2l-2.87,0.82l-3.03,2.19l-2.2,2.83l-0.36,2.0l0.4,1.58l-0.44,2.6l-0.51,1.2l-1.77,1.54l-2.75,4.78l-3.83,3.42l-1.24,2.74l-1.18,1.15l-0.36,-0.83l0.95,-1.14l0.01,-0.5l-1.52,-1.97l-4.56,-3.32l-1.03,-0.0l-2.38,-2.02l-0.81,-0.0l5.34,-5.45l3.77,-2.58l0.22,-2.46l-1.35,-1.81l-0.91,0.07l0.58,-2.33l0.01,-1.54l-1.11,-0.83l-1.75,0.3l-0.44,-3.11l-0.52,-0.95l-1.88,-0.88l-1.24,0.47l-2.17,-0.41l0.15,-3.21l-0.62,-1.34l0.66,-0.73l-0.22,-1.34l0.66,-1.13l0.44,-2.04l-0.61,-1.83l-1.4,-0.86l-0.2,-0.75l0.34,-1.39l-0.38,-0.5l-4.52,-0.1l-0.72,-2.22l0.59,-0.42l-0.03,-1.1l-0.5,-0.87l-0.32,-1.7l-1.45,-0.76l-1.63,-0.02l-1.05,-0.72l-1.6,-0.48l-1.13,-0.99l-2.69,-0.4l-2.47,-2.06l0.13,-4.35l-0.45,-0.45l-3.46,0.5l-3.44,1.94l-0.6,0.74l-2.9,-0.17l-1.47,0.42l-0.72,-0.18l0.15,-3.52l-0.63,-0.34l-1.94,1.41l-1.87,-0.06l-0.83,-1.18l-1.37,-0.26l0.21,-1.01l-1.35,-1.49l-0.88,-1.91l0.56,-0.6l-0.0,-0.81l1.29,-0.62l0.22,-0.43l-0.22,-1.19l0.61,-0.91l0.15,-0.99l2.65,-1.58l1.99,-0.47l0.42,-0.36l2.06,0.11l0.42,-0.33l1.19,-8.0l-0.41,-1.56l-1.1,-1.0l0.01,-1.33l1.91,-0.42l0.08,-0.96l-0.33,-0.43l-1.14,-0.2l-0.02,-0.83l4.47,0.05l0.82,-0.67l0.82,1.81l0.8,0.07l1.15,1.1l2.26,-0.05l0.71,-0.83l2.78,-0.96l0.48,-1.13l1.6,-0.64l0.24,-0.47l-0.48,-0.82l-1.83,-0.19l-0.36,-3.22Z",
+      "name": "Brazil"
+    },
+    "BS": {
+      "path": "M226.4,223.87l-0.48,-1.15l-0.84,-0.75l0.36,-1.11l0.95,1.95l0.01,1.06ZM225.56,216.43l-1.87,0.29l-0.04,-0.22l0.74,-0.14l1.17,0.06Z",
+      "name": "Bahamas"
+    },
+    "BY": {
+      "path": "M493.84,128.32l0.29,0.7l0.49,0.23l1.19,-0.38l2.09,0.72l0.19,1.26l-0.45,1.24l1.57,2.26l0.89,0.59l0.17,0.81l1.58,0.56l0.4,0.5l-0.53,0.41l-1.87,-0.11l-0.73,0.38l-0.13,0.52l1.04,2.74l-1.91,0.26l-0.89,0.99l-0.11,1.18l-2.73,-0.04l-0.53,-0.62l-0.52,-0.08l-0.75,0.46l-0.91,-0.42l-1.92,-0.07l-2.75,-0.79l-2.6,-0.28l-2.0,0.07l-1.5,0.92l-0.67,0.07l-0.08,-1.22l-0.59,-1.19l1.36,-0.88l0.01,-1.35l-0.7,-1.41l-0.07,-1.0l2.16,-0.02l2.72,-1.3l0.75,-2.04l1.91,-1.04l0.2,-0.41l-0.19,-1.25l3.8,-1.78l2.3,0.77Z",
+      "name": "Belarus"
+    },
+    "BZ": {
+      "path": "M198.03,244.38l0.1,-4.49l0.69,-0.06l0.74,-1.3l0.34,0.28l-0.4,1.3l0.17,0.58l-0.34,2.25l-1.3,1.42Z",
+      "name": "Belize"
+    },
+    "RU": {
+      "path": "M491.55,115.25l2.55,-1.85l-0.01,-0.65l-2.2,-1.5l7.32,-6.76l1.03,-2.11l-0.13,-0.49l-3.46,-2.52l0.86,-2.7l-2.11,-2.81l1.56,-3.67l-2.77,-4.52l2.15,-2.99l-0.08,-0.55l-3.65,-2.73l0.3,-2.54l1.81,-0.37l4.26,-1.77l2.42,-1.45l4.06,2.61l6.79,1.04l9.34,4.85l1.78,1.88l0.14,2.46l-2.55,2.02l-3.9,1.06l-11.07,-3.14l-2.06,0.53l-0.13,0.7l3.94,2.94l0.31,5.86l0.26,0.36l5.14,2.24l0.58,-0.29l0.32,-1.94l-1.35,-1.78l1.13,-1.09l6.13,2.42l2.11,-0.98l0.18,-0.56l-1.51,-2.67l5.41,-3.76l2.07,0.22l2.26,1.41l0.57,-0.16l1.46,-2.87l-0.05,-0.44l-1.92,-2.32l1.12,-2.32l-1.32,-2.27l5.87,1.16l1.04,1.75l-2.59,0.43l-0.33,0.4l0.02,2.36l2.46,1.83l3.87,-0.91l0.86,-2.8l13.69,-5.65l0.99,0.11l-1.92,2.06l0.23,0.67l3.11,0.45l2.0,-1.48l4.56,-0.12l3.64,-1.73l2.65,2.44l0.56,-0.01l2.85,-2.88l-0.01,-0.57l-2.35,-2.29l0.9,-1.01l7.14,1.3l3.41,1.36l9.05,4.97l0.51,-0.11l1.67,-2.27l-0.05,-0.53l-2.43,-2.21l-0.06,-0.78l-0.34,-0.36l-2.52,-0.36l0.64,-1.93l-1.32,-3.46l-0.06,-1.21l4.48,-4.06l1.69,-4.29l1.6,-0.81l6.23,1.18l0.44,2.21l-2.29,3.64l0.06,0.5l1.47,1.39l0.76,3.0l-0.56,6.03l2.69,2.82l-0.96,2.57l-4.86,5.95l0.23,0.64l2.86,0.61l0.42,-0.17l0.93,-1.4l2.64,-1.03l0.87,-2.24l2.09,-1.96l0.07,-0.5l-1.36,-2.28l1.09,-2.69l-0.32,-0.55l-2.47,-0.33l-0.5,-2.06l1.94,-4.38l-0.06,-0.42l-2.96,-3.4l4.12,-2.88l0.16,-0.4l-0.51,-2.93l0.54,-0.05l1.13,2.25l-0.96,4.35l0.27,0.47l2.68,0.84l0.5,-0.51l-1.02,-2.99l3.79,-1.66l5.01,-0.24l4.53,2.61l0.48,-0.06l0.07,-0.48l-2.18,-3.82l-0.23,-4.67l3.98,-0.9l5.97,0.21l5.49,-0.64l0.27,-0.65l-1.83,-2.31l2.56,-2.9l2.87,-0.17l4.8,-2.47l6.54,-0.67l1.03,-1.42l6.25,-0.45l2.32,1.11l5.53,-2.7l4.5,0.08l0.39,-0.28l0.66,-2.15l2.26,-2.12l5.69,-2.11l3.21,1.29l-2.46,0.94l-0.25,0.42l0.34,0.35l5.41,0.77l0.61,2.33l0.58,0.25l2.2,-1.22l7.13,0.07l5.51,2.47l1.79,1.72l-0.53,2.24l-9.16,4.15l-1.97,1.52l0.16,0.71l6.77,1.91l2.16,-0.78l1.13,2.74l0.67,0.11l1.01,-1.15l3.81,-0.73l7.7,0.77l0.54,1.99l0.36,0.29l10.47,0.71l0.43,-0.38l0.13,-3.23l4.87,0.78l3.95,-0.02l3.83,2.4l1.03,2.71l-1.35,1.79l0.02,0.5l3.15,3.64l4.07,1.96l0.53,-0.18l2.23,-4.47l3.95,1.93l4.16,-1.21l4.73,1.39l2.05,-1.26l3.94,0.62l0.43,-0.55l-1.68,-4.02l2.89,-1.8l22.31,3.03l2.16,2.75l6.55,3.51l10.29,-0.81l4.82,0.73l1.85,1.66l-0.29,3.08l0.25,0.41l3.08,1.26l3.56,-0.88l4.35,-0.11l4.8,0.87l4.57,-0.47l4.23,3.79l0.43,0.07l3.1,-1.4l0.16,-0.6l-1.88,-2.62l0.85,-1.52l7.71,1.21l5.22,-0.26l7.09,2.09l9.59,5.22l6.35,4.11l-0.2,2.38l1.88,1.41l0.6,-0.42l-0.48,-2.53l6.15,0.57l4.4,3.51l-1.97,1.43l-4.0,0.41l-0.36,0.39l-0.06,3.79l-0.74,0.62l-2.07,-0.11l-1.91,-1.39l-3.14,-1.11l-0.78,-1.85l-2.72,-0.68l-2.63,0.49l-1.04,-1.1l0.46,-1.31l-0.5,-0.51l-3.0,0.98l-0.22,0.58l0.99,1.7l-1.21,1.48l-3.04,1.68l-3.12,-0.28l-0.4,0.23l0.09,0.46l2.2,2.09l1.46,3.2l1.15,1.1l0.24,1.33l-0.42,0.67l-4.63,-0.77l-6.96,2.9l-2.19,0.44l-7.6,5.06l-0.84,1.45l-3.61,-2.37l-6.24,2.82l-0.94,-1.15l-0.53,-0.08l-2.28,1.52l-3.2,-0.49l-0.44,0.27l-0.78,2.37l-3.05,3.78l0.09,1.47l0.29,0.36l2.54,0.72l-0.29,4.53l-1.97,0.11l-0.35,0.26l-1.07,2.94l0.8,1.45l-3.91,1.58l-1.05,3.95l-3.48,0.77l-0.3,0.3l-0.72,3.29l-3.09,2.65l-0.7,-1.74l-2.44,-12.44l1.16,-4.71l2.04,-2.06l0.22,-1.64l3.8,-0.86l4.46,-4.61l4.28,-3.81l4.48,-3.01l2.17,-5.63l-0.42,-0.54l-3.04,0.33l-1.77,3.31l-5.86,3.86l-1.86,-4.25l-0.45,-0.23l-6.46,1.3l-6.47,6.44l-0.01,0.55l1.58,1.74l-8.24,1.17l0.15,-2.2l-0.34,-0.42l-3.89,-0.56l-3.25,1.81l-7.62,-0.62l-8.45,1.19l-17.71,15.41l0.22,0.7l3.74,0.41l1.36,2.17l2.43,0.76l1.88,-1.68l2.4,0.2l3.4,3.54l0.08,2.6l-1.95,3.42l-0.21,3.9l-1.1,5.06l-3.71,4.54l-0.87,2.21l-8.29,8.89l-3.19,1.7l-1.32,0.03l-1.45,-1.36l-0.49,-0.04l-2.27,1.5l0.41,-3.65l-0.59,-2.47l1.75,-0.89l2.91,0.53l0.42,-0.2l1.68,-3.03l0.87,-3.46l0.97,-1.18l1.32,-2.88l-0.45,-0.56l-4.14,0.95l-2.19,1.25l-3.41,-0.0l-1.06,-2.93l-2.97,-2.3l-4.28,-1.06l-1.75,-5.07l-2.66,-5.01l-2.29,-1.29l-3.75,-1.01l-3.44,0.08l-3.18,0.62l-2.24,1.77l0.05,0.66l1.18,0.69l0.02,1.43l-1.33,1.05l-2.26,3.51l-0.04,1.43l-3.16,1.84l-2.82,-1.16l-3.01,0.23l-1.35,-1.07l-1.5,-0.35l-3.9,2.31l-3.22,0.52l-2.27,0.79l-3.05,-0.51l-2.21,0.03l-1.48,-1.6l-2.6,-1.63l-2.63,-0.43l-5.46,1.01l-3.23,-1.25l-0.72,-2.57l-5.2,-1.24l-2.75,-1.36l-0.5,0.12l-2.59,3.45l0.84,2.1l-2.06,1.93l-3.41,-0.77l-2.42,-0.12l-1.83,-1.54l-2.53,-0.05l-2.42,-0.98l-3.86,1.57l-4.72,2.78l-3.3,0.75l-1.55,-1.92l-3.0,0.41l-1.11,-1.33l-1.62,-0.59l-1.31,-1.94l-1.38,-0.6l-3.7,0.79l-3.31,-1.83l-0.51,0.11l-0.99,1.29l-5.29,-8.05l-2.96,-2.48l0.65,-0.77l0.01,-0.51l-0.5,-0.11l-6.2,3.21l-1.84,0.15l0.15,-1.39l-0.26,-0.42l-3.22,-1.17l-2.46,0.7l-0.69,-3.16l-0.32,-0.31l-4.5,-0.75l-2.47,1.47l-6.19,1.27l-1.29,0.86l-9.51,1.3l-1.15,1.17l-0.03,0.53l1.47,1.9l-1.89,0.69l-0.22,0.56l0.31,0.6l-2.11,1.44l0.03,0.68l3.75,2.12l-0.39,0.98l-3.23,-0.13l-0.86,0.86l-3.09,-1.59l-3.97,0.07l-2.66,1.35l-8.32,-3.56l-4.07,0.06l-5.39,3.68l-0.39,2.0l-2.03,-1.5l-0.59,0.13l-2.0,3.59l0.57,0.93l-1.28,2.16l0.06,0.48l2.13,2.17l1.95,0.04l1.37,1.82l-0.23,1.46l0.25,0.43l0.83,0.33l-0.8,1.31l-2.49,0.62l-2.49,3.2l0.0,0.49l2.17,2.78l-0.15,2.18l2.5,3.24l-1.58,1.59l-0.7,-0.13l-1.63,-1.72l-2.29,-0.84l-0.94,-1.31l-2.34,-0.63l-1.48,0.4l-0.43,-0.47l-3.51,-1.48l-5.76,-1.01l-0.45,0.19l-2.89,-2.34l-2.9,-1.2l-1.53,-1.29l1.29,-0.43l2.08,-2.61l-0.05,-0.55l-0.89,-0.79l3.05,-1.06l0.27,-0.42l-0.07,-0.69l-0.49,-0.35l-1.73,0.39l0.04,-0.68l1.04,-0.72l2.66,-0.48l0.4,-1.32l-0.5,-1.6l0.92,-1.54l0.03,-1.17l-0.29,-0.37l-3.69,-1.06l-1.41,0.02l-1.42,-1.41l-2.19,0.38l-2.77,-1.01l-0.03,-0.59l-0.89,-1.43l-2.0,-0.32l-0.11,-0.54l0.49,-0.53l0.01,-0.53l-1.6,-1.9l-3.58,0.02l-0.88,0.73l-0.46,-0.07l-1.0,-2.79l2.22,-0.02l0.97,-0.74l0.07,-0.57l-0.9,-1.04l-1.35,-0.48l-0.11,-0.7l-0.95,-0.58l-1.38,-1.99l0.46,-0.98l-0.51,-1.96l-2.45,-0.84l-1.21,0.3l-0.46,-0.76l-2.46,-0.83l-0.72,-1.87l-0.21,-1.69l-0.99,-0.85l0.85,-1.17l-0.7,-3.21l1.66,-1.97l-0.16,-0.79ZM749.2,170.72l-0.6,0.4l-0.13,0.16l-0.01,-0.51l0.74,-0.05ZM874.85,67.94l-5.63,0.48l-0.26,-0.84l3.15,-1.89l1.94,0.01l3.19,1.16l-2.39,1.09ZM797.39,48.49l-2.0,1.36l-3.8,-0.42l-4.25,-1.8l0.35,-0.97l9.69,1.83ZM783.67,46.12l-1.63,3.09l-8.98,-0.13l-4.09,1.14l-4.54,-2.97l1.16,-3.01l3.05,-0.89l6.5,0.22l8.54,2.56ZM778.2,134.98l-0.56,-0.9l0.27,-0.12l0.29,1.01ZM778.34,135.48l0.94,3.53l-0.05,3.38l1.05,3.39l2.18,5.0l-2.89,-0.83l-0.49,0.26l-1.54,4.65l2.42,3.5l-0.04,1.13l-1.24,-1.24l-0.61,0.06l-1.09,1.61l-0.28,-1.61l0.27,-3.1l-0.28,-3.4l0.58,-2.47l0.11,-4.39l-1.46,-3.36l0.21,-4.32l2.15,-1.46l0.07,-0.34ZM771.95,56.61l1.76,-1.42l2.89,-0.42l3.28,1.71l0.14,0.6l-3.27,0.03l-4.81,-0.5ZM683.76,31.09l-13.01,1.93l4.03,-6.35l1.82,-0.56l1.73,0.34l5.99,2.98l-0.56,1.66ZM670.85,27.93l-5.08,0.64l-6.86,-1.57l-3.99,-2.05l-2.1,-4.16l-2.6,-0.87l5.72,-3.5l5.2,-1.28l4.69,2.85l5.59,5.4l-0.56,4.53ZM564.15,68.94l-0.64,0.17l-7.85,-0.57l-0.86,-2.04l-4.28,-1.17l-0.28,-1.94l2.27,-0.89l0.25,-0.39l-0.08,-2.38l4.81,-3.97l-0.15,-0.7l-1.47,-0.38l5.3,-3.81l0.15,-0.44l-0.58,-1.94l5.28,-2.51l8.21,-3.27l8.28,-0.96l4.35,-1.94l4.6,-0.64l1.36,1.61l-1.34,1.28l-16.43,4.94l-7.97,4.88l-7.74,9.63l0.66,4.14l4.16,3.27ZM548.81,18.48l-5.5,1.18l-0.58,1.02l-2.59,0.84l-2.13,-1.07l1.12,-1.42l-0.3,-0.65l-2.33,-0.07l1.68,-0.36l3.47,-0.06l0.42,1.29l0.66,0.16l1.38,-1.34l2.15,-0.88l2.94,1.01l-0.39,0.36ZM477.37,133.15l-4.08,0.05l-2.56,-0.32l0.33,-0.87l3.17,-1.03l3.24,0.96l-0.09,1.23Z",
+      "name": "Russia"
+    },
+    "RW": {
+      "path": "M497.0,288.25l0.71,1.01l-0.11,1.09l-1.63,0.03l-1.04,1.39l-0.83,-0.11l0.51,-1.2l0.08,-1.34l0.42,-0.41l0.7,0.14l1.19,-0.61Z",
+      "name": "Rwanda"
+    },
+    "RS": {
+      "path": "M469.4,163.99l0.42,-0.5l-0.01,-0.52l-1.15,-1.63l1.43,-0.62l1.33,0.12l1.17,1.06l0.46,1.13l1.34,0.64l0.35,1.35l1.46,0.9l0.76,-0.29l0.2,0.69l-0.48,0.78l0.22,1.12l1.05,1.22l-0.77,0.8l-0.37,1.52l-1.21,0.08l0.24,-0.64l-0.39,-0.54l-2.08,-1.64l-0.9,0.05l-0.48,0.94l-2.12,-1.37l0.53,-1.6l-1.11,-1.37l0.51,-1.1l-0.41,-0.57Z",
+      "name": "Serbia"
+    },
+    "LT": {
+      "path": "M486.93,129.3l0.17,1.12l-1.81,0.98l-0.72,2.02l-2.47,1.18l-2.1,-0.02l-0.73,-1.05l-1.06,-0.3l-0.09,-1.87l-3.56,-1.13l-0.43,-2.36l2.48,-0.94l4.12,0.22l2.25,-0.31l0.52,0.69l1.24,0.21l2.19,1.56Z",
+      "name": "Lithuania"
+    },
+    "LU": {
+      "path": "M436.08,149.45l-0.48,-0.07l0.3,-1.28l0.27,0.4l-0.09,0.96Z",
+      "name": "Luxembourg"
+    },
+    "LR": {
+      "path": "M399.36,265.97l0.18,1.54l-0.48,0.99l0.08,0.47l2.47,1.8l-0.33,2.8l-2.65,-1.13l-5.78,-4.61l0.58,-1.32l2.1,-2.33l0.86,-0.22l0.77,1.14l-0.14,0.85l0.59,0.87l1.0,0.14l0.76,-0.99Z",
+      "name": "Liberia"
+    },
+    "RO": {
+      "path": "M487.53,154.23l0.6,0.24l2.87,3.98l-0.17,2.69l0.45,1.42l1.32,0.81l1.35,-0.42l0.76,0.36l0.02,0.31l-0.83,0.45l-0.59,-0.22l-0.54,0.3l-0.62,3.3l-1.0,-0.22l-2.07,-1.13l-2.95,0.71l-1.25,0.76l-3.51,-0.15l-1.89,-0.47l-0.87,0.16l-0.82,-1.3l0.29,-0.26l-0.06,-0.64l-1.09,-0.34l-0.56,0.5l-1.05,-0.64l-0.39,-1.39l-1.36,-0.65l-0.35,-1.0l-0.83,-0.75l1.54,-0.54l2.66,-4.21l2.4,-1.24l2.96,0.34l1.48,0.73l0.79,-0.45l1.78,-0.3l0.75,-0.74l0.79,0.0Z",
+      "name": "Romania"
+    },
+    "GW": {
+      "path": "M386.23,253.6l-0.29,0.84l0.15,0.6l-2.21,0.59l-0.86,0.96l-1.04,-0.83l-1.09,-0.23l-0.54,-1.06l-0.66,-0.49l2.41,-0.48l4.13,0.1Z",
+      "name": "Guinea-Bissau"
+    },
+    "GT": {
+      "path": "M195.08,249.77l-2.48,-0.37l-1.03,-0.45l-1.14,-0.89l0.3,-0.99l-0.24,-0.68l0.96,-1.66l2.98,-0.01l0.4,-0.37l-0.19,-1.28l-1.67,-1.4l0.51,-0.4l0.0,-1.05l3.85,0.02l-0.21,4.53l0.4,0.43l1.46,0.38l-1.48,0.98l-0.35,0.7l0.12,0.57l-2.2,1.96Z",
+      "name": "Guatemala"
+    },
+    "GR": {
+      "path": "M487.07,174.59l-0.59,1.43l-0.37,0.21l-2.84,-0.35l-3.03,0.77l-0.18,0.68l1.28,1.23l-0.61,0.23l-1.14,0.0l-1.2,-1.39l-0.63,0.03l-0.53,1.01l0.56,1.76l1.03,1.19l-0.56,0.38l-0.05,0.62l2.52,2.12l0.02,0.87l-1.78,-0.59l-0.48,0.56l0.5,1.0l-1.07,0.2l-0.3,0.53l0.75,2.01l-0.98,0.02l-1.84,-1.12l-1.37,-4.2l-2.21,-2.95l-0.11,-0.56l1.04,-1.28l0.2,-0.95l0.85,-0.66l0.03,-0.46l1.32,-0.21l1.01,-0.64l1.22,0.05l0.65,-0.56l2.26,-0.0l1.82,-0.75l1.85,1.0l2.28,-0.28l0.35,-0.39l0.01,-0.77l0.34,0.22ZM480.49,192.16l0.58,0.4l-0.68,-0.12l0.11,-0.28ZM482.52,192.82l2.51,0.06l0.24,0.32l-1.99,0.13l-0.77,-0.51Z",
+      "name": "Greece"
+    },
+    "GQ": {
+      "path": "M448.79,279.62l0.02,2.22l-4.09,0.0l0.69,-2.27l3.38,0.05Z",
+      "name": "Eq. Guinea"
+    },
+    "GY": {
+      "path": "M277.42,270.07l-0.32,1.83l-1.32,0.57l-0.23,0.46l-0.28,2.0l1.11,1.82l0.83,0.19l0.32,1.25l1.13,1.62l-1.21,-0.19l-1.08,0.71l-1.77,0.5l-0.44,0.46l-0.86,-0.09l-1.32,-1.01l-0.77,-2.27l0.36,-1.9l0.68,-1.23l-0.57,-1.17l-0.74,-0.43l0.12,-1.16l-0.9,-0.69l-1.1,0.09l-1.31,-1.48l0.53,-0.72l-0.04,-0.84l1.99,-0.86l0.05,-0.59l-0.71,-0.78l0.14,-0.57l1.66,-1.24l1.36,0.77l1.41,1.49l0.06,1.15l0.37,0.38l0.8,0.05l2.06,1.86Z",
+      "name": "Guyana"
+    },
+    "GE": {
+      "path": "M521.71,168.93l5.29,0.89l4.07,2.01l1.41,-0.44l2.07,0.56l0.68,1.1l1.07,0.55l-0.12,0.59l0.98,1.29l-1.01,-0.13l-1.81,-0.83l-0.94,0.47l-3.23,0.43l-2.29,-1.39l-2.33,0.05l0.21,-0.97l-0.76,-2.26l-1.45,-1.12l-1.43,-0.39l-0.41,-0.42Z",
+      "name": "Georgia"
+    },
+    "GB": {
+      "path": "M412.61,118.72l-2.19,3.22l-0.0,0.45l5.13,-0.3l-0.53,2.37l-2.2,3.12l0.29,0.63l2.37,0.21l2.33,4.3l1.76,0.69l2.2,5.12l2.94,0.77l-0.23,1.62l-1.15,0.88l-0.1,0.52l0.82,1.42l-1.86,1.43l-3.3,-0.02l-4.12,0.87l-1.04,-0.58l-0.47,0.06l-1.51,1.41l-2.12,-0.34l-1.86,1.18l-0.6,-0.29l3.19,-3.0l2.16,-0.69l0.28,-0.41l-0.34,-0.36l-3.73,-0.53l-0.4,-0.76l2.2,-0.87l0.17,-0.61l-1.26,-1.67l0.36,-1.7l3.38,0.28l0.43,-0.33l0.37,-1.99l-1.79,-2.49l-3.11,-0.72l-0.38,-0.59l0.79,-1.35l-0.04,-0.46l-0.82,-0.97l-0.61,0.01l-0.68,0.84l-0.1,-2.34l-1.23,-1.88l0.85,-3.47l1.77,-2.68l1.85,0.26l2.17,-0.22ZM406.26,132.86l-1.01,1.77l-1.57,-0.59l-1.16,0.01l0.37,-1.54l-0.39,-1.39l1.45,-0.1l2.3,1.84Z",
+      "name": "United Kingdom"
+    },
+    "GA": {
+      "path": "M453.24,279.52l-0.08,0.98l0.7,1.29l2.36,0.24l-0.98,2.63l1.18,1.79l0.25,1.78l-0.29,1.52l-0.6,0.93l-1.84,-0.09l-1.23,-1.11l-0.66,0.23l-0.15,0.84l-1.42,0.26l-1.02,0.7l-0.11,0.52l0.77,1.35l-1.34,0.97l-3.94,-4.3l-1.44,-2.45l0.06,-0.6l0.54,-0.81l1.05,-3.46l4.17,-0.07l0.4,-0.4l-0.02,-2.66l2.39,0.21l1.25,-0.27Z",
+      "name": "Gabon"
+    },
+    "GN": {
+      "path": "M391.8,254.11l0.47,0.8l1.11,-0.32l0.98,0.7l1.07,0.2l2.26,-1.22l0.64,0.44l1.13,1.56l-0.48,1.4l0.8,0.3l-0.08,0.48l0.46,0.68l-0.35,1.36l1.05,2.61l-1.0,0.69l0.03,1.41l-0.72,-0.06l-1.08,1.0l-0.24,-0.27l0.07,-1.11l-1.05,-1.54l-1.79,0.21l-0.35,-2.01l-1.6,-2.18l-2.0,-0.0l-1.31,0.54l-1.95,2.18l-1.86,-2.19l-1.2,-0.78l-0.3,-1.11l-0.8,-0.85l0.65,-0.72l0.81,-0.03l1.64,-0.8l0.23,-1.87l2.67,0.64l0.89,-0.3l1.21,0.15Z",
+      "name": "Guinea"
+    },
+    "GM": {
+      "path": "M379.31,251.39l0.1,-0.35l2.43,-0.07l0.74,-0.61l0.51,-0.03l0.77,0.49l-1.03,-0.3l-1.87,0.9l-1.65,-0.04ZM384.03,250.91l0.91,0.05l0.75,-0.24l-0.59,0.31l-1.08,-0.13Z",
+      "name": "Gambia"
+    },
+    "GL": {
+      "path": "M353.02,1.2l14.69,4.67l-3.68,1.89l-22.97,0.86l-0.36,0.27l0.12,0.43l1.55,1.18l8.79,-0.66l7.48,2.07l4.86,-1.77l1.66,1.73l-2.53,3.19l-0.01,0.48l0.46,0.15l6.35,-2.2l12.06,-2.31l7.24,1.13l1.09,1.99l-9.79,4.01l-1.44,1.32l-7.87,0.98l-0.35,0.41l0.38,0.38l5.07,0.24l-2.53,3.58l-2.07,3.81l0.08,6.05l2.57,3.11l-3.22,0.2l-4.12,1.66l-0.05,0.72l4.45,2.65l0.51,3.75l-2.3,0.4l-0.25,0.64l2.79,3.69l-4.82,0.31l-0.36,0.29l0.16,0.44l2.62,1.8l-0.59,1.22l-3.3,0.7l-3.45,0.01l-0.29,0.68l3.03,3.12l0.02,1.34l-4.4,-1.73l-1.72,1.35l0.15,0.66l3.31,1.15l3.13,2.71l0.81,3.16l-3.85,0.75l-4.89,-4.26l-0.47,-0.03l-0.17,0.44l0.79,2.86l-2.71,2.21l-0.13,0.44l0.37,0.27l8.73,0.34l-12.32,6.64l-7.24,1.48l-2.94,0.08l-2.69,1.75l-3.43,4.41l-5.24,2.84l-1.73,0.18l-7.12,2.1l-2.15,2.52l-0.13,2.99l-1.19,2.45l-4.01,3.09l-0.14,0.44l0.97,2.9l-2.28,6.48l-3.1,0.2l-3.83,-3.07l-4.86,-0.02l-2.25,-1.93l-1.7,-3.79l-4.3,-4.84l-1.21,-2.49l-0.44,-3.8l-3.32,-3.63l0.84,-2.86l-1.56,-1.7l2.28,-4.6l3.83,-1.74l1.03,-1.96l0.52,-3.47l-0.59,-0.41l-4.17,2.21l-2.07,0.58l-2.72,-1.28l-0.15,-2.71l0.85,-2.09l2.01,-0.06l5.06,1.2l0.46,-0.23l-0.14,-0.49l-6.54,-4.47l-2.67,0.55l-1.58,-0.86l2.56,-4.01l-0.03,-0.48l-1.5,-1.74l-4.98,-8.5l-3.13,-1.96l0.03,-1.88l-0.24,-0.37l-6.85,-3.02l-5.36,-0.38l-12.7,0.58l-2.78,-1.57l-3.66,-2.77l5.73,-1.45l5.0,-0.28l0.38,-0.38l-0.35,-0.41l-10.67,-1.38l-5.3,-2.06l0.25,-1.54l18.41,-5.26l1.22,-2.27l-0.25,-0.55l-6.14,-1.86l1.68,-1.77l8.55,-4.03l3.59,-0.63l0.3,-0.54l-0.88,-2.27l5.47,-1.47l7.65,-0.95l7.55,-0.05l3.04,1.85l6.48,-3.27l5.81,2.22l3.56,0.5l5.16,1.94l0.5,-0.21l-0.17,-0.52l-5.71,-3.13l0.28,-2.13l8.12,-3.6l8.7,0.28l3.35,-2.34l8.71,-0.6l19.93,0.8Z",
+      "name": "Greenland"
+    },
+    "KW": {
+      "path": "M540.81,207.91l0.37,0.86l-0.17,0.76l0.6,1.53l-0.95,0.04l-0.82,-1.28l-1.57,-0.18l1.31,-1.88l1.22,0.17Z",
+      "name": "Kuwait"
+    },
+    "GH": {
+      "path": "M420.53,257.51l-0.01,0.72l0.96,1.2l0.24,3.73l0.59,0.95l-0.51,2.1l0.19,1.41l1.02,2.21l-6.97,2.84l-1.8,-0.57l0.04,-0.89l-1.02,-2.04l0.61,-2.65l1.07,-2.32l-0.96,-6.47l5.01,0.07l0.94,-0.39l0.61,0.11Z",
+      "name": "Ghana"
+    },
+    "OM": {
+      "path": "M568.09,230.93l-0.91,1.67l-1.22,0.04l-0.6,0.76l-0.41,1.51l0.27,1.58l-1.16,0.05l-1.56,0.97l-0.76,1.74l-1.62,0.05l-0.98,0.65l-0.17,1.15l-0.89,0.52l-1.49,-0.18l-2.4,0.94l-2.47,-5.4l7.35,-2.71l1.67,-5.23l-1.12,-2.09l0.05,-0.83l0.67,-1.0l0.07,-1.05l0.9,-0.42l-0.05,-2.07l0.7,-0.01l1.0,1.62l1.51,1.08l3.3,0.84l1.73,2.29l0.81,0.37l-1.23,2.35l-0.99,0.79Z",
+      "name": "Oman"
+    },
+    "_2": {
+      "path": "M531.15,258.94l1.51,0.12l5.13,-0.95l5.3,-1.48l-0.01,4.4l-2.67,3.39l-1.85,0.01l-8.04,-2.94l-2.55,-3.17l1.12,-1.71l2.04,2.34Z",
+      "name": "Somaliland"
+    },
+    "_1": {
+      "path": "M472.77,172.64l-1.08,-1.29l0.96,-0.77l0.29,-0.83l1.98,1.64l-0.36,0.67l-1.79,0.58Z",
+      "name": "Kosovo"
+    },
+    "_0": {
+      "path": "M504.91,192.87l0.34,0.01l0.27,-0.07l-0.29,0.26l-0.31,-0.2Z",
+      "name": "N. Cyprus"
+    },
+    "JO": {
+      "path": "M518.64,201.38l-5.14,1.56l-0.19,0.65l2.16,2.39l-0.89,1.14l-1.71,0.34l-1.71,1.8l-2.34,-0.37l1.21,-4.32l0.56,-4.07l2.8,0.94l4.46,-2.71l0.79,2.66Z",
+      "name": "Jordan"
+    },
+    "HR": {
+      "path": "M455.59,162.84l1.09,0.07l-0.82,0.94l-0.27,-1.01ZM456.96,162.92l0.62,-0.41l1.73,0.45l0.42,-0.4l-0.01,-0.59l0.86,-0.52l0.2,-1.05l1.63,-0.68l2.57,1.68l2.07,0.6l0.87,-0.31l1.05,1.57l-0.52,0.63l-1.05,-0.56l-1.68,0.04l-2.1,-0.5l-1.29,0.06l-0.57,0.49l-0.59,-0.47l-0.62,0.16l-0.46,1.7l1.79,2.42l2.79,2.75l-1.18,-0.87l-2.21,-0.87l-1.67,-1.78l0.13,-0.63l-1.05,-1.19l-0.32,-1.27l-1.42,-0.43Z",
+      "name": "Croatia"
+    },
+    "HT": {
+      "path": "M237.05,238.38l-1.16,0.43l-0.91,-0.55l0.05,-0.2l2.02,0.31ZM237.53,238.43l1.06,0.12l-0.05,0.01l-1.01,-0.12ZM239.25,238.45l0.79,-0.51l0.06,-0.62l-1.02,-1.0l0.02,-0.82l-0.3,-0.4l-0.93,-0.32l3.16,0.45l0.02,1.84l-0.48,0.34l-0.08,0.58l0.54,0.72l-1.78,-0.26Z",
+      "name": "Haiti"
+    },
+    "HU": {
+      "path": "M462.08,157.89l0.65,-1.59l-0.09,-0.44l0.64,-0.0l0.39,-0.34l0.1,-0.69l1.75,0.87l2.32,-0.37l0.43,-0.66l3.49,-0.78l0.69,-0.78l0.57,-0.14l2.57,0.93l0.67,-0.23l1.03,0.65l0.08,0.37l-1.42,0.71l-2.59,4.14l-1.8,0.53l-1.68,-0.1l-2.74,1.23l-1.85,-0.54l-2.54,-1.66l-0.66,-1.1Z",
+      "name": "Hungary"
+    },
+    "HN": {
+      "path": "M199.6,249.52l-1.7,-1.21l0.06,-0.94l3.04,-2.14l2.37,0.28l1.27,-0.09l1.1,-0.52l1.3,0.28l1.14,-0.25l1.38,0.37l2.23,1.37l-2.36,0.93l-1.23,-0.39l-0.88,1.3l-1.28,0.99l-0.98,-0.22l-0.42,0.52l-0.96,0.05l-0.36,0.41l0.04,0.88l-0.52,0.6l-0.3,0.04l-0.3,-0.55l-0.66,-0.31l0.11,-0.67l-0.48,-0.65l-0.87,-0.26l-0.73,0.2Z",
+      "name": "Honduras"
+    },
+    "PR": {
+      "path": "M256.17,238.73l-0.26,0.27l-2.83,0.05l-0.07,-0.55l1.95,-0.1l1.22,0.33Z",
+      "name": "Puerto Rico"
+    },
+    "PS": {
+      "path": "M509.21,203.07l0.1,-0.06l-0.02,0.03l-0.09,0.03ZM509.36,202.91l-0.02,-0.63l-0.33,-0.16l0.31,-1.09l0.24,0.1l-0.2,1.78Z",
+      "name": "Palestine"
+    },
+    "PT": {
+      "path": "M401.84,187.38l-0.64,0.47l-1.13,-0.35l-0.91,0.17l0.28,-1.78l-0.24,-1.78l-1.25,-0.56l-0.45,-0.84l0.17,-1.66l1.01,-1.18l0.69,-2.92l-0.04,-1.39l-0.59,-1.9l1.3,-0.85l0.84,1.35l3.1,-0.3l0.46,0.99l-1.05,0.94l-0.03,2.16l-0.41,0.57l-0.08,1.1l-0.79,0.18l-0.26,0.59l0.91,1.6l-0.63,1.75l0.76,1.09l-1.1,1.52l0.07,1.05Z",
+      "name": "Portugal"
+    },
+    "PY": {
+      "path": "M274.9,336.12l0.74,1.52l-0.16,3.45l0.32,0.41l2.64,0.5l1.11,-0.47l1.4,0.59l0.36,0.6l0.53,3.42l1.27,0.4l0.98,-0.38l0.51,0.27l-0.0,1.18l-1.21,5.32l-2.09,1.9l-1.8,0.4l-4.71,-0.98l2.2,-3.63l-0.32,-1.5l-2.78,-1.28l-3.03,-1.94l-2.07,-0.44l-4.34,-4.06l0.91,-2.9l0.08,-1.42l1.07,-2.04l4.13,-0.72l2.18,0.03l2.05,1.17l0.03,0.59Z",
+      "name": "Paraguay"
+    },
+    "PA": {
+      "path": "M213.8,263.68l0.26,-1.52l-0.36,-0.26l-0.01,-0.49l0.44,-0.1l0.93,1.4l1.26,0.03l0.77,0.49l1.38,-0.23l2.51,-1.11l0.86,-0.72l3.45,0.85l1.4,1.18l0.41,1.74l-0.21,0.34l-0.53,-0.12l-0.47,0.29l-0.16,0.6l-0.68,-1.28l0.45,-0.49l-0.19,-0.66l-0.47,-0.13l-0.54,-0.84l-1.5,-0.75l-1.1,0.16l-0.75,0.99l-1.62,0.84l-0.18,0.96l0.85,0.97l-0.58,0.45l-0.69,0.08l-0.34,-1.18l-1.27,0.03l-0.71,-1.05l-2.59,-0.46Z",
+      "name": "Panama"
+    },
+    "PG": {
+      "path": "M808.58,298.86l2.54,2.56l-0.13,0.26l-0.33,0.12l-0.87,-0.78l-1.22,-2.16ZM801.41,293.04l0.5,0.29l0.26,0.27l-0.49,-0.35l-0.27,-0.21ZM803.17,294.58l0.59,0.5l0.08,1.06l-0.29,-0.91l-0.38,-0.65ZM796.68,298.41l0.52,0.75l1.43,-0.19l2.27,-1.81l-0.01,-1.43l1.12,0.16l-0.04,1.1l-0.7,1.28l-1.12,0.18l-0.62,0.79l-2.46,1.11l-1.17,-0.0l-3.08,-1.25l3.41,0.0l0.45,-0.68ZM789.15,303.55l2.31,1.8l1.59,2.61l1.34,0.13l-0.06,0.66l0.31,0.43l1.06,0.24l0.06,0.65l2.25,1.05l-1.22,0.13l-0.72,-0.63l-4.56,-0.65l-3.22,-2.87l-1.49,-2.34l-3.27,-1.1l-2.38,0.72l-1.59,0.86l-0.2,0.42l0.27,1.55l-1.55,0.68l-1.36,-0.4l-2.21,-0.09l-0.08,-15.41l8.39,2.93l2.95,2.4l0.6,1.64l4.02,1.49l0.31,0.68l-1.76,0.21l-0.33,0.52l0.55,1.68Z",
+      "name": "Papua New Guinea"
+    },
+    "PE": {
+      "path": "M244.96,295.21l-1.26,-0.07l-0.57,0.42l-1.93,0.45l-2.98,1.75l-0.36,1.36l-0.58,0.8l0.12,1.37l-1.24,0.59l-0.22,1.22l-0.62,0.84l1.04,2.27l1.28,1.44l-0.41,0.84l0.32,0.57l1.48,0.13l1.16,1.37l2.21,0.07l1.63,-1.08l-0.13,3.02l0.3,0.4l1.14,0.29l1.31,-0.34l1.9,3.59l-0.48,0.85l-0.17,3.85l-0.94,1.59l0.35,0.75l-0.47,1.07l0.98,1.97l-2.1,3.82l-0.98,0.5l-2.17,-1.28l-0.39,-1.16l-4.95,-2.58l-4.46,-2.79l-1.84,-1.51l-0.91,-1.84l0.3,-0.96l-2.11,-3.33l-4.82,-9.68l-1.04,-1.2l-0.87,-1.94l-3.4,-2.48l0.58,-1.18l-1.13,-2.23l0.66,-1.49l1.45,-1.15l-0.6,0.98l0.07,0.92l0.47,0.36l1.74,0.03l0.97,1.17l0.54,0.07l1.42,-1.03l0.6,-1.84l1.42,-2.02l3.04,-1.04l2.73,-2.62l0.86,-1.74l-0.1,-1.87l1.44,1.02l0.9,1.25l1.06,0.59l1.7,2.73l1.86,0.31l1.45,-0.61l0.96,0.39l1.36,-0.19l1.45,0.89l-1.4,2.21l0.31,0.61l0.59,0.05l0.47,0.5Z",
+      "name": "Peru"
+    },
+    "PK": {
+      "path": "M615.09,192.34l-1.83,1.81l-2.6,0.39l-3.73,-0.68l-1.58,1.33l-0.09,0.42l1.77,4.39l1.7,1.23l-1.69,1.27l-0.12,2.14l-2.33,2.64l-1.6,2.8l-2.46,2.67l-3.03,-0.07l-2.76,2.83l0.05,0.6l1.5,1.11l0.26,1.9l1.44,1.5l0.37,1.68l-5.01,-0.01l-1.78,1.7l-1.42,-0.52l-0.76,-1.87l-2.27,-2.15l-11.61,0.86l0.71,-2.34l3.43,-1.32l0.25,-0.44l-0.21,-1.24l-1.2,-0.65l-0.28,-2.46l-2.29,-1.14l-1.28,-1.94l2.82,0.94l2.62,-0.38l1.42,0.33l0.76,-0.56l1.71,0.19l3.25,-1.14l0.27,-0.36l0.08,-2.19l1.18,-1.32l1.68,0.0l0.58,-0.82l1.6,-0.3l1.19,0.16l0.98,-0.78l0.02,-1.88l0.93,-1.47l1.48,-0.66l0.19,-0.55l-0.66,-1.25l2.04,-0.11l0.69,-1.01l-0.02,-1.16l1.11,-1.06l-0.17,-1.78l-0.49,-1.03l1.15,-0.98l5.42,-0.91l2.6,-0.82l1.6,1.16l0.97,2.34l3.45,0.97Z",
+      "name": "Pakistan"
+    },
+    "PH": {
+      "path": "M737.01,263.84l0.39,2.97l-0.44,1.18l-0.55,-1.53l-0.67,-0.14l-1.17,1.28l0.65,2.09l-0.42,0.69l-2.48,-1.23l-0.57,-1.49l0.65,-1.03l-0.1,-0.54l-1.59,-1.19l-0.56,0.08l-0.65,0.87l-1.23,0.0l-1.58,0.97l0.83,-1.8l2.56,-1.42l0.65,0.84l0.45,0.13l1.9,-0.69l0.56,-1.11l1.5,-0.06l0.38,-0.43l-0.09,-1.19l1.21,0.71l0.36,2.02ZM733.59,256.58l0.05,0.75l0.08,0.26l-0.8,-0.42l-0.18,-0.71l0.85,0.12ZM734.08,256.1l-0.12,-1.12l-1.0,-1.27l1.36,0.03l0.53,0.73l0.51,2.04l-1.27,-0.4ZM733.76,257.68l0.38,0.98l-0.32,0.15l-0.07,-1.13ZM724.65,238.43l1.46,0.7l0.72,-0.31l-0.32,1.17l0.79,1.71l-0.57,1.84l-1.53,1.04l-0.39,2.25l0.56,2.04l1.63,0.57l1.16,-0.27l2.71,1.23l-0.19,1.08l0.76,0.84l-0.08,0.36l-1.4,-0.9l-0.88,-1.27l-0.66,0.0l-0.38,0.55l-1.6,-1.31l-2.15,0.36l-0.87,-0.39l0.07,-0.61l0.66,-0.55l-0.01,-0.62l-0.75,-0.59l-0.72,0.44l-0.74,-0.87l-0.39,-2.49l0.32,0.27l0.66,-0.28l0.26,-3.97l0.7,-2.02l1.14,0.0ZM731.03,258.87l-0.88,0.85l-1.19,1.94l-1.05,-1.19l0.93,-1.1l0.32,-1.47l0.52,-0.06l-0.27,1.15l0.22,0.45l0.49,-0.12l1.0,-1.32l-0.08,0.85ZM726.83,255.78l0.83,0.38l1.17,-0.0l-0.02,0.48l-2.0,1.4l0.03,-2.26ZM724.81,252.09l-0.38,1.27l-1.42,-1.95l1.2,0.05l0.6,0.63ZM716.55,261.82l1.1,-0.95l0.03,-0.03l-0.28,0.36l-0.85,0.61ZM719.22,259.06l0.04,-0.06l0.8,-1.53l0.16,0.75l-1.0,0.84Z",
+      "name": "Philippines"
+    },
+    "PL": {
+      "path": "M468.44,149.42l-1.11,-1.54l-1.86,-0.33l-0.48,-1.05l-1.72,-0.37l-0.65,0.69l-0.72,-0.36l0.11,-0.61l-0.33,-0.46l-1.75,-0.27l-1.04,-0.93l-0.94,-1.94l0.16,-1.22l-0.62,-1.8l-0.78,-1.07l0.57,-1.04l-0.48,-1.43l1.41,-0.83l6.91,-2.71l2.14,0.5l0.52,0.91l5.51,0.44l4.55,-0.05l1.07,0.31l0.48,0.84l0.15,1.58l0.65,1.2l-0.01,0.99l-1.27,0.58l-0.19,0.54l0.73,1.48l0.08,1.55l1.2,2.76l-0.17,0.58l-1.23,0.44l-2.27,2.72l0.18,0.95l-1.97,-1.03l-1.98,0.4l-1.36,-0.28l-1.24,0.58l-1.07,-0.97l-1.16,0.24Z",
+      "name": "Poland"
+    },
+    "ZM": {
+      "path": "M481.47,313.3l0.39,0.31l2.52,0.14l0.99,1.17l2.01,0.35l1.4,-0.64l0.69,1.17l1.78,0.33l1.84,2.35l2.23,0.18l0.4,-0.43l-0.21,-2.74l-0.62,-0.3l-0.48,0.32l-1.98,-1.17l0.72,-5.29l-0.51,-1.18l0.57,-1.3l3.68,-0.62l0.26,0.63l1.21,0.63l0.9,-0.22l2.16,0.67l1.33,0.71l1.07,1.02l0.56,1.87l-0.88,2.7l0.43,2.09l-0.73,0.87l-0.76,2.37l0.59,0.68l-6.6,1.83l-0.29,0.44l0.19,1.45l-1.68,0.35l-1.43,1.02l-0.38,0.87l-0.87,0.26l-3.48,3.69l-4.16,-0.53l-1.52,-1.0l-1.77,-0.13l-1.83,0.52l-3.04,-3.4l0.11,-7.59l4.82,0.03l0.39,-0.49l-0.18,-0.76l0.33,-0.83l-0.4,-1.36l0.24,-1.05Z",
+      "name": "Zambia"
+    },
+    "EH": {
+      "path": "M384.42,230.28l0.25,-0.79l1.06,-1.29l0.8,-3.51l3.38,-2.78l0.7,-1.81l0.06,4.84l-1.98,0.2l-0.94,1.59l0.39,3.56l-3.7,-0.01ZM392.01,218.1l0.7,-1.8l1.77,-0.24l2.09,0.34l0.95,-0.62l1.28,-0.07l-0.0,2.51l-6.79,-0.12Z",
+      "name": "W. Sahara"
+    },
+    "EE": {
+      "path": "M485.71,115.04l2.64,0.6l2.56,0.11l-1.6,1.91l0.61,3.54l-0.81,0.87l-1.78,-0.01l-3.22,-1.76l-1.8,0.45l0.21,-1.53l-0.58,-0.41l-0.69,0.34l-1.26,-1.03l-0.17,-1.63l2.83,-0.92l3.05,-0.52Z",
+      "name": "Estonia"
+    },
+    "EG": {
+      "path": "M492.06,205.03l1.46,0.42l2.95,-1.64l2.04,-0.21l1.53,0.3l0.59,1.19l0.69,0.04l0.41,-0.64l1.81,0.58l1.95,0.16l1.04,-0.51l1.42,4.08l-2.03,4.54l-1.66,-1.77l-1.76,-3.85l-0.64,-0.12l-0.36,0.67l1.04,2.88l3.44,6.95l1.78,3.04l2.03,2.65l-0.36,0.53l0.23,2.01l2.7,2.19l-28.41,0.0l0.0,-18.96l-0.73,-2.2l0.59,-1.56l-0.32,-1.26l0.68,-0.99l3.06,-0.04l4.82,1.52Z",
+      "name": "Egypt"
+    },
+    "ZA": {
+      "path": "M467.14,373.21l-0.13,-1.96l-0.68,-1.56l0.7,-0.68l-0.13,-2.33l-4.56,-8.19l0.77,-0.86l0.6,0.45l0.69,1.31l2.83,0.72l1.5,-0.26l2.24,-1.39l0.19,-9.55l1.35,2.3l-0.21,1.5l0.61,1.2l0.4,0.19l1.79,-0.27l2.6,-2.07l0.69,-1.32l0.96,-0.48l2.19,1.04l2.04,0.13l1.77,-0.65l0.85,-2.12l1.38,-0.33l1.59,-2.76l2.15,-1.89l3.41,-1.87l2.0,0.45l1.02,-0.28l0.99,0.2l1.75,5.29l-0.38,3.25l-0.81,-0.23l-1.0,0.46l-0.87,1.68l-0.05,1.16l1.97,1.84l1.47,-0.29l0.69,-1.18l1.09,0.01l-0.76,3.69l-0.58,1.09l-2.2,1.79l-3.17,4.76l-2.8,2.83l-3.57,2.88l-2.53,1.05l-1.22,0.14l-0.51,0.7l-1.18,-0.32l-1.39,0.5l-2.59,-0.52l-1.61,0.33l-1.18,-0.11l-2.55,1.1l-2.1,0.44l-1.6,1.07l-0.85,0.05l-0.93,-0.89l-0.93,-0.15l-0.97,-1.13l-0.25,0.05ZM491.45,364.19l0.62,-0.93l1.48,-0.59l1.18,-2.19l-0.07,-0.49l-1.99,-1.69l-1.66,0.56l-1.43,1.14l-1.34,1.73l0.02,0.51l1.88,2.11l1.31,-0.16Z",
+      "name": "South Africa"
+    },
+    "EC": {
+      "path": "M231.86,285.53l0.29,1.59l-0.69,1.45l-2.61,2.51l-3.13,1.11l-1.53,2.18l-0.49,1.68l-1.0,0.73l-1.02,-1.11l-1.78,-0.16l0.67,-1.15l-0.24,-0.86l1.25,-2.13l-0.54,-1.09l-0.67,-0.08l-0.72,0.87l-0.87,-0.64l0.35,-0.69l-0.36,-1.96l0.81,-0.51l0.45,-1.51l0.92,-1.57l-0.07,-0.97l2.65,-1.33l2.75,1.35l0.77,1.05l2.12,0.35l0.76,-0.32l1.96,1.21Z",
+      "name": "Ecuador"
+    },
+    "AL": {
+      "path": "M470.32,171.8l0.74,0.03l0.92,0.89l-0.17,1.95l0.36,1.28l1.01,0.82l-1.82,2.83l-0.19,-0.61l-1.25,-0.89l-0.18,-1.2l0.53,-2.82l-0.54,-1.47l0.6,-0.83Z",
+      "name": "Albania"
+    },
+    "AO": {
+      "path": "M461.55,300.03l1.26,3.15l1.94,2.36l2.47,-0.53l1.25,0.32l0.44,-0.18l0.93,-1.92l1.31,-0.08l0.41,-0.44l0.47,-0.0l-0.1,0.41l0.39,0.49l2.65,-0.02l0.03,1.19l0.48,1.01l-0.34,1.52l0.18,1.55l0.83,1.04l-0.13,2.85l0.54,0.39l3.96,-0.41l-0.1,1.79l0.39,1.05l-0.24,1.43l-4.7,-0.03l-0.4,0.39l-0.12,8.13l2.92,3.49l-3.83,0.88l-5.89,-0.36l-1.88,-1.24l-10.47,0.22l-1.3,-1.01l-1.85,-0.16l-2.4,0.77l-0.15,-1.06l0.33,-2.16l1.0,-3.45l1.35,-3.2l2.24,-2.8l0.33,-2.06l-0.13,-1.53l-0.8,-1.08l-1.21,-2.87l0.87,-1.62l-1.27,-4.12l-1.17,-1.53l2.47,-0.63l7.03,0.03ZM451.71,298.87l-0.47,-1.25l1.25,-1.11l0.32,0.3l-0.99,1.03l-0.12,1.03Z",
+      "name": "Angola"
+    },
+    "KZ": {
+      "path": "M552.8,172.89l0.46,-1.27l-0.48,-1.05l-2.96,-1.19l-1.06,-2.58l-1.37,-0.87l-0.03,-0.3l1.95,0.23l0.45,-0.38l0.08,-1.96l1.75,-0.41l2.1,0.45l0.48,-0.33l0.45,-3.04l-0.45,-2.09l-0.41,-0.31l-2.42,0.15l-2.36,-0.73l-2.87,1.37l-2.17,0.61l-0.85,-0.34l0.13,-1.61l-1.6,-2.12l-2.02,-0.08l-1.78,-1.82l1.29,-2.18l-0.57,-0.95l1.62,-2.91l2.21,1.63l0.63,-0.27l0.29,-2.22l4.92,-3.43l3.71,-0.08l8.4,3.6l2.92,-1.36l3.77,-0.06l3.11,1.66l0.51,-0.11l0.6,-0.81l3.31,0.13l0.39,-0.25l0.63,-1.57l-0.17,-0.5l-3.5,-1.98l1.87,-1.27l-0.13,-1.03l1.98,-0.72l0.18,-0.62l-1.59,-2.06l0.81,-0.82l9.23,-1.18l1.33,-0.88l6.18,-1.26l2.26,-1.42l4.08,0.68l0.73,3.33l0.51,0.3l2.48,-0.8l2.79,1.02l-0.17,1.56l0.43,0.44l2.55,-0.24l4.89,-2.53l0.03,0.32l3.15,2.61l5.56,8.47l0.65,0.02l1.12,-1.46l3.15,1.74l3.76,-0.78l1.15,0.49l1.14,1.8l1.84,0.76l0.99,1.29l3.35,-0.25l1.02,1.52l-1.6,1.81l-1.93,0.28l-0.34,0.38l-0.11,3.05l-1.13,1.16l-4.75,-1.0l-0.46,0.27l-1.76,5.47l-1.1,0.59l-4.91,1.23l-0.27,0.54l2.1,4.97l-1.37,0.63l-0.23,0.41l0.13,1.13l-0.88,-0.25l-1.42,-1.13l-7.89,-0.4l-0.92,0.31l-3.73,-1.22l-1.42,0.63l-0.53,1.66l-3.72,-0.94l-1.85,0.43l-0.76,1.4l-4.65,2.62l-1.13,2.08l-0.44,0.01l-0.92,-1.4l-2.87,-0.09l-0.45,-2.14l-0.38,-0.32l-0.8,-0.01l0.0,-2.96l-3.0,-2.22l-7.31,0.58l-2.35,-2.68l-6.71,-3.69l-6.45,1.83l-0.29,0.39l0.1,10.85l-0.7,0.08l-1.62,-2.17l-1.83,-0.96l-3.11,0.59l-0.64,0.51Z",
+      "name": "Kazakhstan"
+    },
+    "ET": {
+      "path": "M516.04,247.79l1.1,0.84l1.63,-0.45l0.68,0.47l1.63,0.03l2.01,0.94l1.73,1.66l1.64,2.07l-1.52,2.04l0.16,1.72l0.39,0.38l2.05,0.0l-0.36,1.03l2.86,3.58l8.32,3.08l1.31,0.02l-6.32,6.75l-3.1,0.11l-2.36,1.77l-1.47,0.04l-0.86,0.79l-1.38,-0.0l-1.32,-0.81l-2.29,1.05l-0.76,0.98l-3.29,-0.41l-3.07,-2.07l-1.8,-0.07l-0.62,-0.6l0.0,-1.24l-0.28,-0.38l-1.15,-0.37l-1.4,-2.59l-1.19,-0.68l-0.47,-1.0l-1.27,-1.23l-1.16,-0.22l0.43,-0.72l1.45,-0.28l0.41,-0.95l-0.03,-2.21l0.68,-2.44l1.05,-0.63l1.43,-3.06l1.57,-1.37l1.02,-2.51l0.35,-1.88l2.52,0.46l0.44,-0.24l0.58,-1.43Z",
+      "name": "Ethiopia"
+    },
+    "ZW": {
+      "path": "M498.91,341.09l-1.11,-0.22l-0.92,0.28l-2.09,-0.44l-1.5,-1.11l-1.89,-0.43l-0.62,-1.4l-0.01,-0.84l-0.3,-0.38l-0.97,-0.25l-2.71,-2.74l-1.92,-3.32l3.83,0.45l3.73,-3.82l1.08,-0.44l0.26,-0.77l1.25,-0.9l1.41,-0.26l0.5,0.89l1.99,-0.05l1.72,1.17l1.11,0.17l1.05,0.66l0.01,2.99l-0.59,3.76l0.38,0.86l-0.23,1.23l-0.39,0.35l-0.63,1.81l-2.43,2.75Z",
+      "name": "Zimbabwe"
+    },
+    "ES": {
+      "path": "M416.0,169.21l1.07,1.17l4.61,1.38l1.06,-0.57l2.6,1.26l2.71,-0.3l0.09,1.12l-2.14,1.8l-3.11,0.61l-0.31,0.31l-0.2,0.89l-1.54,1.69l-0.97,2.4l0.84,1.74l-1.32,1.27l-0.48,1.68l-1.88,0.65l-1.66,2.07l-5.36,-0.01l-1.79,1.08l-0.89,0.98l-0.88,-0.17l-0.79,-0.82l-0.68,-1.59l-2.37,-0.63l-0.11,-0.5l1.21,-1.82l-0.77,-1.13l0.61,-1.68l-0.76,-1.62l0.87,-0.49l0.09,-1.25l0.42,-0.6l0.03,-2.11l0.99,-0.69l0.13,-0.5l-1.03,-1.73l-1.46,-0.11l-0.61,0.38l-1.06,0.0l-0.52,-1.23l-0.53,-0.21l-1.32,0.67l-0.01,-1.49l-0.75,-0.96l3.03,-1.88l2.99,0.53l3.32,-0.02l2.63,0.51l6.01,-0.06Z",
+      "name": "Spain"
+    },
+    "ER": {
+      "path": "M520.38,246.23l3.42,2.43l3.5,3.77l0.84,0.54l-0.95,-0.01l-3.51,-3.89l-2.33,-1.15l-1.73,-0.07l-0.91,-0.51l-1.26,0.51l-1.34,-1.02l-0.61,0.17l-0.66,1.61l-2.35,-0.43l-0.17,-0.67l1.29,-5.29l0.61,-0.61l1.95,-0.53l0.87,-1.01l1.17,2.41l0.68,2.33l1.49,1.43Z",
+      "name": "Eritrea"
+    },
+    "ME": {
+      "path": "M468.91,172.53l-1.22,-1.02l0.47,-1.81l0.89,-0.72l2.26,1.51l-0.5,0.57l-0.75,-0.27l-1.14,1.73Z",
+      "name": "Montenegro"
+    },
+    "MD": {
+      "path": "M488.41,153.73l1.4,-0.27l1.72,0.93l1.07,0.15l0.85,0.65l-0.14,0.84l0.96,0.85l1.12,2.47l-1.15,-0.07l-0.66,-0.41l-0.52,0.25l-0.09,0.86l-1.08,1.89l-0.27,-0.86l0.25,-1.34l-0.16,-1.6l-3.29,-4.34Z",
+      "name": "Moldova"
+    },
+    "MG": {
+      "path": "M545.91,319.14l0.4,3.03l0.62,1.21l-0.21,1.02l-0.57,-0.8l-0.69,-0.01l-0.47,0.76l0.41,2.12l-0.18,0.87l-0.73,0.78l-0.15,2.14l-4.71,15.2l-1.06,2.88l-3.92,1.64l-3.12,-1.49l-0.6,-1.21l-0.19,-2.4l-0.86,-2.05l-0.21,-1.77l0.38,-1.62l1.21,-0.75l0.01,-0.76l1.19,-2.04l0.23,-1.66l-1.06,-2.99l-0.19,-2.21l0.81,-1.33l0.32,-1.46l4.63,-1.22l3.44,-3.0l0.85,-1.4l-0.08,-0.7l0.78,-0.04l1.38,-1.77l0.13,-1.64l0.45,-0.61l1.16,1.69l0.59,1.6Z",
+      "name": "Madagascar"
+    },
+    "MA": {
+      "path": "M378.78,230.02l0.06,-0.59l0.92,-0.73l0.82,-1.37l-0.09,-1.04l0.79,-1.7l1.31,-1.58l0.96,-0.59l0.66,-1.55l0.09,-1.47l0.81,-1.48l1.72,-1.07l1.55,-2.69l1.16,-0.96l2.44,-0.39l1.94,-1.82l1.31,-0.78l2.09,-2.28l-0.51,-3.65l1.24,-3.7l1.5,-1.75l4.46,-2.57l2.37,-4.47l1.44,0.01l1.68,1.21l2.32,-0.19l3.47,0.65l0.8,1.54l0.16,1.71l0.86,2.96l0.56,0.59l-0.26,0.61l-3.05,0.44l-1.26,1.05l-1.33,0.22l-0.33,0.37l-0.09,1.78l-2.68,1.0l-1.07,1.42l-4.47,1.13l-4.04,2.01l-0.54,4.64l-1.15,0.06l-0.92,0.61l-1.96,-0.35l-2.42,0.54l-0.74,1.9l-0.86,0.4l-1.14,3.26l-3.53,3.01l-0.8,3.55l-0.96,1.1l-0.29,0.82l-4.95,0.18Z",
+      "name": "Morocco"
+    },
+    "UZ": {
+      "path": "M598.64,172.75l-1.63,1.52l0.06,0.64l1.85,1.12l1.97,-0.64l2.21,1.17l-2.52,1.68l-2.59,-0.22l-0.18,-0.41l0.46,-1.23l-0.45,-0.53l-3.35,0.69l-2.1,3.51l-1.87,-0.12l-1.03,1.51l0.22,0.55l1.64,0.62l0.46,1.83l-1.19,2.49l-2.66,-0.53l0.05,-1.36l-0.26,-0.39l-3.3,-1.23l-2.56,-1.4l-4.4,-3.34l-1.34,-3.14l-1.08,-0.6l-2.58,0.13l-0.69,-0.44l-0.47,-2.52l-3.37,-1.6l-0.43,0.05l-2.07,1.72l-2.1,1.01l-0.21,0.47l0.28,1.01l-1.91,0.03l-0.09,-10.5l5.99,-1.7l6.19,3.54l2.71,2.84l7.05,-0.67l2.71,2.01l-0.17,2.81l0.39,0.42l0.9,0.02l0.44,2.14l0.38,0.32l2.94,0.09l0.95,1.42l1.28,-0.24l1.05,-2.04l4.43,-2.5Z",
+      "name": "Uzbekistan"
+    },
+    "MM": {
+      "path": "M673.9,230.21l-1.97,1.57l-0.57,0.96l-1.4,0.6l-1.36,1.05l-1.99,0.36l-1.08,2.66l-0.91,0.4l-0.19,0.55l1.21,2.27l2.52,3.43l-0.79,1.91l-0.74,0.41l-0.17,0.52l0.65,1.37l1.61,1.95l0.25,2.58l0.9,2.13l-1.92,3.57l0.68,-2.25l-0.81,-1.74l0.19,-2.65l-1.05,-1.53l-1.24,-6.17l-1.12,-2.26l-0.6,-0.13l-4.34,3.02l-2.39,-0.65l0.77,-2.84l-0.52,-2.61l-1.91,-2.96l0.25,-0.75l-0.29,-0.51l-1.33,-0.3l-1.61,-1.93l-0.1,-1.3l0.82,-0.24l0.04,-1.64l1.02,-0.52l0.21,-0.45l-0.23,-0.95l0.54,-0.96l0.08,-2.22l1.46,0.45l0.47,-0.2l1.12,-2.19l0.16,-1.35l1.33,-2.16l-0.0,-1.52l2.89,-1.66l1.63,0.44l0.5,-0.44l-0.17,-1.4l0.64,-0.36l0.08,-1.04l0.77,-0.11l0.71,1.35l1.06,0.69l-0.03,3.86l-2.38,2.37l-0.3,3.15l0.46,0.43l2.28,-0.38l0.51,2.08l1.47,0.67l-0.6,1.8l0.19,0.48l2.97,1.48l1.64,-0.55l0.02,0.32Z",
+      "name": "Myanmar"
+    },
+    "ML": {
+      "path": "M392.61,254.08l-0.19,-2.37l-0.99,-0.87l-0.44,-1.3l-0.09,-1.28l0.81,-0.58l0.35,-1.24l2.37,0.65l1.31,-0.47l0.86,0.15l0.66,-0.56l9.83,-0.04l0.38,-0.28l0.56,-1.8l-0.44,-0.65l-2.35,-21.95l3.27,-0.04l16.7,11.38l0.74,1.31l2.5,1.09l0.02,1.38l0.44,0.39l2.34,-0.21l0.01,5.38l-1.28,1.61l-0.26,1.49l-5.31,0.57l-1.07,0.92l-2.9,0.1l-0.86,-0.48l-1.38,0.36l-2.4,1.08l-0.6,0.87l-1.85,1.09l-0.43,0.7l-0.79,0.39l-1.44,-0.21l-0.81,0.84l-0.34,1.64l-1.91,2.02l-0.06,1.03l-0.67,1.22l0.13,1.16l-0.97,0.39l-0.23,-0.64l-0.52,-0.24l-1.35,0.4l-0.34,0.55l-2.69,-0.28l-0.37,-0.35l-0.02,-0.9l-0.65,-0.35l0.45,-0.64l-0.03,-0.53l-2.12,-2.44l-0.76,-0.01l-2.0,1.16l-0.78,-0.15l-0.8,-0.67l-1.21,0.23Z",
+      "name": "Mali"
+    },
+    "MN": {
+      "path": "M676.61,146.48l3.81,1.68l5.67,-1.0l2.37,0.41l2.34,1.5l1.79,1.75l2.29,-0.03l3.12,0.52l2.47,-0.81l3.41,-0.59l3.53,-2.21l1.25,0.29l1.53,1.13l2.27,-0.21l-2.66,5.01l0.64,1.68l0.47,0.21l1.32,-0.38l2.38,0.48l2.02,-1.11l1.76,0.89l2.06,2.02l-0.13,0.53l-1.72,-0.29l-3.77,0.46l-1.88,0.99l-1.76,1.99l-3.71,1.17l-2.45,1.6l-3.83,-0.87l-0.41,0.17l-1.31,1.99l1.04,2.24l-1.52,0.9l-1.74,1.57l-2.79,1.02l-3.78,0.13l-4.05,1.05l-2.77,1.52l-1.16,-0.85l-2.94,0.0l-3.62,-1.79l-2.58,-0.49l-3.4,0.41l-5.12,-0.67l-2.63,0.06l-1.31,-1.6l-1.4,-3.0l-1.48,-0.33l-3.13,-1.94l-6.16,-0.93l-0.71,-1.06l0.86,-3.82l-1.93,-2.71l-3.5,-1.18l-1.95,-1.58l-0.5,-1.72l2.34,-0.52l4.75,-2.8l3.62,-1.47l2.18,0.97l2.46,0.05l1.81,1.53l2.46,0.12l3.95,0.71l2.43,-2.28l0.08,-0.48l-0.9,-1.72l2.24,-2.98l2.62,1.27l4.94,1.17l0.43,2.24Z",
+      "name": "Mongolia"
+    },
+    "MK": {
+      "path": "M472.8,173.98l0.49,-0.71l3.57,-0.71l1.0,0.77l0.13,1.45l-0.65,0.53l-1.15,-0.05l-1.12,0.67l-1.39,0.22l-0.79,-0.55l-0.29,-1.03l0.19,-0.6Z",
+      "name": "Macedonia"
+    },
+    "MW": {
+      "path": "M505.5,309.31l0.85,1.95l0.15,2.86l-0.69,1.65l0.71,1.8l0.06,1.28l0.49,0.64l0.07,1.06l0.4,0.55l0.8,-0.23l0.55,0.61l0.69,-0.21l0.34,0.6l0.19,2.94l-1.04,0.62l-0.54,1.25l-1.11,-1.08l-0.16,-1.56l0.51,-1.31l-0.32,-1.3l-0.99,-0.65l-0.82,0.12l-2.36,-1.64l0.63,-1.96l0.82,-1.18l-0.46,-2.01l0.9,-2.86l-0.94,-2.51l0.96,0.18l0.29,0.4Z",
+      "name": "Malawi"
+    },
+    "MR": {
+      "path": "M407.36,220.66l-2.58,0.03l-0.39,0.44l2.42,22.56l0.36,0.43l-0.39,1.24l-9.75,0.04l-0.56,0.53l-0.91,-0.11l-1.27,0.45l-1.61,-0.66l-0.97,0.03l-0.36,0.29l-0.38,1.35l-0.42,0.23l-2.93,-3.4l-2.96,-1.52l-1.62,-0.03l-1.27,0.54l-1.12,-0.2l-0.65,0.4l-0.08,-0.49l0.68,-1.29l0.31,-2.43l-0.57,-3.91l0.23,-1.21l-0.69,-1.5l-1.15,-1.02l0.25,-0.39l9.58,0.02l0.4,-0.45l-0.46,-3.68l0.47,-1.04l2.12,-0.21l0.36,-0.4l-0.08,-6.4l7.81,0.13l0.41,-0.4l0.01,-3.31l7.76,5.35Z",
+      "name": "Mauritania"
+    },
+    "UG": {
+      "path": "M498.55,276.32l0.7,-0.46l1.65,0.5l1.96,-0.57l1.7,0.01l1.45,-0.98l0.91,1.33l1.33,3.95l-2.57,4.03l-1.46,-0.4l-2.54,0.91l-1.37,1.61l-0.01,0.81l-2.42,-0.01l-2.26,1.01l-0.17,-1.59l0.58,-1.04l0.14,-1.94l1.37,-2.28l1.78,-1.58l-0.17,-0.65l-0.72,-0.24l0.13,-2.43Z",
+      "name": "Uganda"
+    },
+    "MY": {
+      "path": "M717.47,273.46l-1.39,0.65l-2.12,-0.41l-2.88,-0.0l-0.38,0.28l-0.84,2.75l-0.99,0.96l-1.21,3.29l-1.73,0.45l-2.45,-0.68l-1.39,0.31l-1.33,1.15l-1.59,-0.14l-1.41,0.44l-1.44,-1.19l-0.18,-0.73l1.34,0.53l1.93,-0.47l0.75,-2.22l4.02,-1.03l2.75,-3.21l0.82,0.94l0.64,-0.05l0.4,-0.65l0.96,0.06l0.42,-0.36l0.24,-2.68l1.81,-1.64l1.21,-1.86l0.63,-0.01l1.07,1.05l0.34,1.28l3.44,1.35l-0.06,0.35l-1.37,0.1l-0.35,0.54l0.32,0.88ZM673.68,269.59l0.17,1.09l0.47,0.33l1.65,-0.3l0.87,-0.94l1.61,1.52l0.98,1.56l-0.12,2.81l0.41,2.29l0.95,0.9l0.88,2.44l-1.27,0.12l-5.1,-3.67l-0.34,-1.29l-1.37,-1.59l-0.33,-1.97l-0.88,-1.4l0.25,-1.68l-0.46,-1.05l1.63,0.84Z",
+      "name": "Malaysia"
+    },
+    "MX": {
+      "path": "M133.12,200.41l0.2,0.47l9.63,3.33l6.96,-0.02l0.4,-0.4l0.0,-0.74l3.77,0.0l3.55,2.93l1.39,2.83l1.52,1.04l2.08,0.82l0.47,-0.14l1.46,-2.0l1.73,-0.04l1.59,0.98l2.05,3.35l1.47,1.56l1.26,3.14l2.18,1.02l2.26,0.58l-1.18,3.72l-0.42,5.04l1.79,4.89l1.62,1.89l0.61,1.52l1.2,1.42l2.55,0.66l1.37,1.1l7.54,-1.89l1.86,-1.3l1.14,-4.3l4.1,-1.21l3.57,-0.11l0.32,0.3l-0.06,0.94l-1.26,1.45l-0.67,1.71l0.38,0.7l-0.72,2.27l-0.49,-0.3l-1.0,0.08l-1.0,1.39l-0.47,-0.11l-0.53,0.47l-4.26,-0.02l-0.4,0.4l-0.0,1.06l-1.1,0.26l0.1,0.44l1.82,1.44l0.56,0.91l-3.19,0.21l-1.21,2.09l0.24,0.72l-0.2,0.44l-2.24,-2.18l-1.45,-0.93l-2.22,-0.69l-1.52,0.22l-3.07,1.16l-10.55,-3.85l-2.86,-1.96l-3.78,-0.92l-1.08,-1.19l-2.62,-1.43l-1.18,-1.54l-0.38,-0.81l0.66,-0.63l-0.18,-0.53l0.52,-0.76l0.01,-0.91l-2.0,-3.82l-2.21,-2.63l-2.53,-2.09l-1.19,-1.62l-2.2,-1.17l-0.3,-0.43l0.34,-1.48l-0.21,-0.45l-1.23,-0.6l-1.36,-1.2l-0.59,-1.78l-1.54,-0.47l-2.44,-2.55l-0.16,-0.9l-1.33,-2.03l-0.84,-1.99l-0.16,-1.33l-1.81,-1.1l-0.97,0.05l-1.31,-0.7l-0.57,0.22l-0.4,1.12l0.72,3.77l3.51,3.89l0.28,0.78l0.53,0.26l0.41,1.43l1.33,1.73l1.58,1.41l0.8,2.39l1.43,2.41l0.13,1.32l0.37,0.36l1.04,0.08l1.67,2.28l-0.85,0.76l-0.66,-1.51l-1.68,-1.54l-2.91,-1.87l0.06,-1.82l-0.54,-1.68l-2.91,-2.03l-0.55,0.09l-1.95,-1.1l-0.88,-0.94l0.68,-0.08l0.93,-1.01l0.08,-1.78l-1.93,-1.94l-1.46,-0.77l-3.75,-7.56l4.88,-0.42Z",
+      "name": "Mexico"
+    },
+    "VU": {
+      "path": "M839.04,322.8l0.22,1.14l-0.44,0.03l-0.2,-1.45l0.42,0.27Z",
+      "name": "Vanuatu"
+    },
+    "FR": {
+      "path": "M444.48,172.62l-0.64,1.78l-0.58,-0.31l-0.49,-1.72l0.4,-0.89l1.0,-0.72l0.3,1.85ZM429.64,147.1l1.78,1.58l1.46,-0.13l2.1,1.42l1.35,0.27l1.23,0.83l3.04,0.5l-1.03,1.85l-0.3,2.12l-0.41,0.32l-0.95,-0.24l-0.5,0.43l0.06,0.61l-1.81,1.92l-0.04,1.42l0.55,0.38l0.88,-0.36l0.61,0.97l-0.03,1.0l0.57,0.91l-0.75,1.09l0.65,2.39l1.27,0.57l-0.18,0.82l-2.01,1.53l-4.77,-0.8l-3.82,1.0l-0.53,1.85l-2.49,0.34l-2.71,-1.31l-1.16,0.57l-4.31,-1.29l-0.72,-0.86l1.19,-1.78l0.39,-6.45l-2.58,-3.3l-1.9,-1.66l-3.72,-1.23l-0.19,-1.72l2.81,-0.61l4.12,0.81l0.47,-0.48l-0.6,-2.77l1.94,0.95l5.83,-2.54l0.92,-2.74l1.6,-0.49l0.24,0.78l1.36,0.33l1.05,1.19ZM289.01,278.39l-0.81,0.8l-0.78,0.12l-0.5,-0.66l-0.56,-0.1l-0.91,0.6l-0.46,-0.22l1.09,-2.96l-0.96,-1.77l-0.17,-1.49l1.07,-1.77l2.32,0.75l2.51,2.01l0.3,0.74l-2.14,3.96Z",
+      "name": "France"
+    },
+    "FI": {
+      "path": "M492.17,76.39l-0.23,3.5l3.52,2.63l-2.08,2.88l-0.02,0.44l2.8,4.56l-1.59,3.31l2.16,3.24l-0.94,2.39l0.14,0.47l3.44,2.51l-0.77,1.62l-7.52,6.95l-4.5,0.31l-4.38,1.37l-3.8,0.74l-1.44,-1.96l-2.17,-1.11l0.5,-3.66l-1.16,-3.33l1.09,-2.08l2.21,-2.42l5.67,-4.32l1.64,-0.83l0.21,-0.42l-0.46,-2.02l-3.38,-1.89l-0.75,-1.43l-0.22,-6.74l-6.79,-4.8l0.8,-0.62l2.54,2.12l3.46,-0.12l3.0,0.96l2.51,-2.11l1.17,-3.08l3.55,-1.38l2.76,1.53l-0.95,2.79Z",
+      "name": "Finland"
+    },
+    "FJ": {
+      "path": "M871.53,326.34l-2.8,1.05l-0.08,-0.23l2.97,-1.21l-0.1,0.39ZM867.58,329.25l0.43,0.37l-0.27,0.88l-1.24,0.28l-1.04,-0.24l-0.14,-0.66l0.63,-0.58l0.92,0.26l0.7,-0.31Z",
+      "name": "Fiji"
+    },
+    "FK": {
+      "path": "M274.36,425.85l1.44,1.08l-0.47,0.73l-3.0,0.89l-0.96,-1.0l-0.52,-0.05l-1.83,1.29l-0.73,-0.88l2.46,-1.64l1.93,0.76l1.67,-1.19Z",
+      "name": "Falkland Is."
+    },
+    "NI": {
+      "path": "M202.33,252.67l0.81,-0.18l1.03,-1.02l-0.04,-0.88l0.68,-0.0l0.63,-0.54l0.97,0.22l1.53,-1.26l0.58,-0.99l1.17,0.34l2.41,-0.94l0.13,1.32l-0.81,1.94l0.1,2.74l-0.36,0.37l-0.11,1.75l-0.47,0.81l0.18,1.14l-1.73,-0.85l-0.71,0.27l-1.47,-0.6l-0.52,0.16l-4.01,-3.81Z",
+      "name": "Nicaragua"
+    },
+    "NL": {
+      "path": "M430.31,143.39l0.6,-0.5l2.13,-4.8l3.2,-1.33l1.74,0.08l0.33,0.8l-0.59,2.92l-0.5,0.99l-1.26,0.0l-0.4,0.45l0.33,2.7l-2.2,-1.78l-2.62,0.58l-0.75,-0.11Z",
+      "name": "Netherlands"
+    },
+    "NO": {
+      "path": "M491.44,67.41l6.8,2.89l-2.29,0.86l-0.15,0.65l2.33,2.38l-4.98,1.79l0.84,-2.45l-0.18,-0.48l-3.55,-1.8l-3.89,1.52l-1.42,3.38l-2.12,1.72l-2.64,-1.0l-3.11,0.21l-2.66,-2.22l-0.5,-0.01l-1.41,1.1l-1.44,0.17l-0.35,0.35l-0.32,2.47l-4.32,-0.64l-0.44,0.29l-0.58,2.11l-2.45,0.2l-4.15,7.68l-3.88,5.76l0.78,1.62l-0.64,1.16l-2.24,-0.06l-0.38,0.24l-1.66,3.89l0.15,5.17l1.57,2.04l-0.78,4.16l-2.02,2.48l-0.85,1.63l-1.3,-1.75l-0.58,-0.07l-4.87,4.19l-3.1,0.79l-3.16,-1.7l-0.85,-3.77l-0.77,-8.55l2.14,-2.31l6.55,-3.27l5.02,-4.17l10.63,-13.84l10.98,-8.7l5.35,-1.91l4.34,0.12l3.69,-3.64l4.49,0.19l4.37,-0.89ZM484.55,20.04l4.26,1.75l-3.1,2.55l-7.1,0.65l-7.08,-0.9l-0.37,-1.31l-0.37,-0.29l-3.44,-0.1l-2.08,-2.0l6.87,-1.44l3.9,1.31l2.39,-1.64l6.13,1.4ZM481.69,33.93l-4.45,1.74l-3.54,-0.99l1.12,-0.9l0.05,-0.58l-1.06,-1.22l4.22,-0.89l1.09,1.97l2.57,0.87ZM466.44,24.04l7.43,3.77l-5.41,1.86l-1.58,4.08l-2.26,1.2l-1.12,4.11l-2.61,0.18l-4.79,-2.86l1.84,-1.54l-0.1,-0.68l-3.69,-1.53l-4.77,-4.51l-1.73,-3.89l6.11,-1.82l1.54,1.92l3.57,-0.08l1.2,-1.96l3.32,-0.18l3.05,1.92Z",
+      "name": "Norway"
+    },
+    "NA": {
+      "path": "M474.26,330.66l-0.97,0.04l-0.38,0.4l-0.07,8.9l-2.09,0.08l-0.39,0.4l-0.0,17.42l-1.98,1.23l-1.17,0.17l-2.44,-0.66l-0.48,-1.13l-0.99,-0.74l-0.54,0.05l-0.9,1.01l-1.53,-1.68l-0.93,-1.88l-1.99,-8.56l-0.06,-3.12l-0.33,-1.52l-2.3,-3.34l-1.91,-4.83l-1.96,-2.43l-0.12,-1.57l2.33,-0.79l1.43,0.07l1.81,1.13l10.23,-0.25l1.84,1.23l5.87,0.35ZM474.66,330.64l6.51,-1.6l1.9,0.39l-1.69,0.4l-1.31,0.83l-1.12,-0.94l-4.29,0.92Z",
+      "name": "Namibia"
+    },
+    "NC": {
+      "path": "M838.78,341.24l-0.33,0.22l-2.9,-1.75l-3.26,-3.37l1.65,0.83l4.85,4.07Z",
+      "name": "New Caledonia"
+    },
+    "NE": {
+      "path": "M454.75,226.53l1.33,1.37l0.48,0.07l1.27,-0.7l0.53,3.52l0.94,0.83l0.17,0.92l0.81,0.69l-0.44,0.95l-0.96,5.26l-0.13,3.22l-3.04,2.31l-1.22,3.57l1.02,1.24l-0.0,1.46l0.39,0.4l1.13,0.04l-0.9,1.25l-1.47,-2.42l-0.86,-0.29l-2.09,1.37l-1.74,-0.67l-1.45,-0.17l-0.85,0.35l-1.36,-0.07l-1.64,1.09l-1.06,0.05l-2.94,-1.28l-1.44,0.59l-1.01,-0.03l-0.97,-0.94l-2.7,-0.98l-2.69,0.3l-0.87,0.64l-0.47,1.6l-0.75,1.16l-0.12,1.53l-1.57,-1.1l-1.31,0.24l0.03,-0.81l-0.32,-0.41l-2.59,-0.52l-0.15,-1.16l-1.35,-1.6l-0.29,-1.0l0.13,-0.84l1.29,-0.08l1.08,-0.92l3.31,-0.22l2.22,-0.41l0.32,-0.34l0.2,-1.47l1.39,-1.88l-0.01,-5.66l3.36,-1.12l7.24,-5.12l8.42,-4.92l3.69,1.06Z",
+      "name": "Niger"
+    },
+    "NG": {
+      "path": "M456.32,253.89l0.64,0.65l-0.28,1.04l-2.11,2.01l-2.03,5.18l-1.37,1.16l-1.15,3.18l-1.33,0.66l-1.46,-0.97l-1.21,0.16l-1.38,1.36l-0.91,0.24l-1.79,4.06l-2.33,0.81l-1.11,-0.07l-0.86,0.5l-1.71,-0.05l-1.19,-1.39l-0.89,-1.89l-1.77,-1.66l-3.95,-0.08l0.07,-5.21l0.42,-1.43l1.95,-2.3l-0.14,-0.91l0.43,-1.18l-0.53,-1.41l0.25,-2.92l0.72,-1.07l0.32,-1.34l0.46,-0.39l2.47,-0.28l2.34,0.89l1.15,1.02l1.28,0.04l1.22,-0.58l3.03,1.27l1.49,-0.14l1.36,-1.0l1.33,0.07l0.82,-0.35l3.45,0.8l1.82,-1.32l1.84,2.67l0.66,0.16Z",
+      "name": "Nigeria"
+    },
+    "NZ": {
+      "path": "M857.8,379.65l1.86,3.12l0.44,0.18l0.3,-0.38l0.03,-1.23l0.38,0.27l0.57,2.31l2.02,0.94l1.81,0.27l1.57,-1.06l0.7,0.18l-1.15,3.59l-1.98,0.11l-0.74,1.2l0.2,1.11l-2.42,3.98l-1.49,0.92l-1.04,-0.85l1.21,-2.05l-0.81,-2.01l-2.63,-1.25l0.04,-0.57l1.82,-1.19l0.43,-2.34l-0.16,-2.03l-0.95,-1.82l-0.06,-0.72l-3.11,-3.64l-0.79,-1.52l1.56,1.45l1.76,0.66l0.65,2.34ZM853.83,393.59l0.57,1.24l0.59,0.16l1.42,-0.97l0.46,0.79l0.0,1.03l-2.47,3.48l-1.26,1.2l-0.06,0.5l0.55,0.87l-1.41,0.07l-2.33,1.38l-2.03,5.02l-3.02,2.16l-2.06,-0.06l-1.71,-1.04l-2.47,-0.2l-0.27,-0.73l1.22,-2.1l3.05,-2.94l1.62,-0.59l4.02,-2.82l1.57,-1.67l1.07,-2.16l0.88,-0.7l0.48,-1.75l1.24,-0.97l0.35,0.79Z",
+      "name": "New Zealand"
+    },
+    "NP": {
+      "path": "M641.14,213.62l0.01,3.19l-1.74,0.04l-4.8,-0.86l-1.58,-1.39l-3.37,-0.34l-7.65,-3.7l0.8,-2.09l2.33,-1.7l1.77,0.75l2.49,1.76l1.38,0.41l0.99,1.35l1.9,0.52l1.99,1.17l5.49,0.9Z",
+      "name": "Nepal"
+    },
+    "CI": {
+      "path": "M407.4,259.27l0.86,0.42l0.56,0.9l1.13,0.53l1.19,-0.61l0.97,-0.08l1.42,0.54l0.6,3.24l-1.03,2.08l-0.65,2.84l1.06,2.33l-0.06,0.53l-2.54,-0.47l-1.66,0.03l-3.06,0.46l-4.11,1.6l0.32,-3.06l-1.18,-1.31l-1.32,-0.66l0.42,-0.85l-0.2,-1.4l0.5,-0.67l0.01,-1.59l0.84,-0.32l0.26,-0.5l-1.15,-3.01l0.12,-0.5l0.51,-0.25l0.66,0.31l1.93,0.02l0.67,-0.71l0.71,-0.14l0.25,0.69l0.57,0.22l1.4,-0.61Z",
+      "name": "C\xC3\xB4te d'Ivoire"
+    },
+    "CH": {
+      "path": "M444.62,156.35l-0.29,0.87l0.18,0.53l1.13,0.58l1.0,0.1l-0.1,0.65l-0.79,0.38l-1.72,-0.37l-0.45,0.23l-0.45,1.04l-0.75,0.06l-0.84,-0.4l-1.32,1.0l-0.96,0.12l-0.88,-0.55l-0.81,-1.3l-0.49,-0.16l-0.63,0.26l0.02,-0.65l1.71,-1.66l0.1,-0.56l0.93,0.08l0.58,-0.46l1.99,0.02l0.66,-0.61l2.19,0.79Z",
+      "name": "Switzerland"
+    },
+    "CO": {
+      "path": "M242.07,254.93l-1.7,0.59l-0.59,1.18l-1.7,1.69l-0.38,1.93l-0.67,1.43l0.31,0.57l1.03,0.13l0.25,0.9l0.57,0.64l-0.04,2.34l1.64,1.42l3.16,-0.24l1.26,0.28l1.67,2.06l0.41,0.13l4.09,-0.39l0.45,0.22l-0.92,1.95l-0.2,1.8l0.52,1.83l0.75,1.05l-1.12,1.1l0.07,0.63l0.84,0.51l0.74,1.29l-0.39,-0.45l-0.59,-0.01l-0.71,0.74l-4.71,-0.05l-0.4,0.41l0.03,1.57l0.33,0.39l1.11,0.2l-1.68,0.4l-0.29,0.38l-0.01,1.82l1.16,1.14l0.34,1.25l-1.05,7.05l-1.04,-0.87l1.26,-1.99l-0.13,-0.56l-2.18,-1.23l-1.38,0.2l-1.14,-0.38l-1.27,0.61l-1.55,-0.26l-1.38,-2.46l-1.23,-0.75l-0.85,-1.2l-1.67,-1.19l-0.86,0.13l-2.11,-1.32l-1.01,0.31l-1.8,-0.29l-0.52,-0.91l-3.09,-1.68l0.77,-0.52l-0.1,-1.12l0.41,-0.64l1.34,-0.32l2.0,-2.88l-0.11,-0.57l-0.66,-0.43l0.39,-1.38l-0.52,-2.1l0.49,-0.83l-0.4,-2.13l-0.97,-1.35l0.17,-0.66l0.86,-0.08l0.47,-0.75l-0.46,-1.63l1.41,-0.07l1.8,-1.69l0.93,-0.24l0.3,-0.38l0.45,-2.76l1.22,-1.0l1.44,-0.04l0.45,-0.5l1.91,0.12l2.93,-1.84l1.15,-1.14l0.91,0.46l-0.25,0.45Z",
+      "name": "Colombia"
+    },
+    "CN": {
+      "path": "M740.23,148.97l4.57,1.3l2.8,2.17l0.98,2.9l0.38,0.27l3.8,0.0l2.32,-1.28l3.29,-0.75l-0.96,2.09l-1.02,1.28l-0.85,3.4l-1.52,2.73l-2.76,-0.5l-2.4,1.13l-0.21,0.45l0.64,2.57l-0.32,3.2l-0.94,0.06l-0.37,0.89l-0.91,-1.01l-0.64,0.07l-0.92,1.57l-3.73,1.25l-0.26,0.48l0.26,1.06l-1.5,-0.08l-1.09,-0.86l-0.56,0.06l-1.67,2.06l-2.7,1.56l-2.03,1.88l-3.4,0.83l-1.93,1.4l-1.15,0.34l0.33,-0.7l-0.41,-0.89l1.79,-1.79l0.02,-0.54l-1.32,-1.56l-0.48,-0.1l-2.24,1.09l-2.83,2.06l-1.51,1.83l-2.28,0.13l-1.55,1.49l-0.04,0.5l1.32,1.97l2.0,0.58l0.31,1.35l1.98,0.84l3.0,-1.96l2.0,1.02l1.49,0.11l0.22,0.83l-3.37,0.86l-1.12,1.48l-2.5,1.52l-1.29,1.99l0.14,0.56l2.57,1.48l0.97,2.7l3.17,4.63l-0.03,1.66l-1.35,0.65l-0.2,0.51l0.6,1.47l1.4,0.91l-0.89,3.82l-1.43,0.38l-3.85,6.44l-2.27,3.11l-6.78,4.57l-2.73,0.29l-1.45,1.04l-0.62,-0.61l-0.55,-0.01l-1.36,1.25l-3.39,1.27l-2.61,0.4l-1.1,2.79l-0.81,0.09l-0.49,-1.42l0.5,-0.85l-0.25,-0.59l-3.36,-0.84l-1.3,0.4l-2.31,-0.62l-0.94,-0.84l0.33,-1.28l-0.3,-0.49l-2.19,-0.46l-1.13,-0.93l-0.47,-0.02l-2.06,1.36l-4.29,0.28l-2.76,1.05l-0.28,0.43l0.32,2.53l-0.59,-0.03l-0.19,-1.34l-0.55,-0.34l-1.68,0.7l-2.46,-1.23l0.62,-1.87l-0.26,-0.51l-1.37,-0.44l-0.54,-2.22l-0.45,-0.3l-2.13,0.35l0.24,-2.48l2.39,-2.4l0.03,-4.31l-1.19,-0.92l-0.78,-1.49l-0.41,-0.21l-1.41,0.19l-1.98,-0.3l0.46,-1.07l-1.17,-1.7l-0.55,-0.11l-1.63,1.05l-2.25,-0.57l-2.89,1.73l-2.25,1.98l-1.75,0.29l-1.17,-0.71l-3.31,-0.65l-1.48,0.79l-1.04,1.27l-0.12,-1.17l-0.54,-0.34l-1.44,0.54l-5.55,-0.86l-1.98,-1.16l-1.89,-0.54l-0.99,-1.35l-1.34,-0.37l-2.55,-1.79l-2.01,-0.84l-1.21,0.56l-5.57,-3.45l-0.53,-2.31l1.19,0.25l0.48,-0.37l0.08,-1.42l-0.98,-1.56l0.15,-2.44l-2.69,-3.32l-4.12,-1.23l-0.67,-2.0l-1.92,-1.48l-0.38,-0.7l-0.51,-3.01l-1.52,-0.66l-0.7,0.13l-0.48,-2.05l0.55,-0.51l-0.09,-0.82l2.03,-1.19l1.6,-0.54l2.56,0.38l0.42,-0.22l0.85,-1.7l3.0,-0.33l1.1,-1.26l4.05,-1.77l0.39,-0.91l-0.17,-1.44l1.45,-0.67l0.2,-0.52l-2.07,-4.9l4.51,-1.12l1.37,-0.73l1.89,-5.51l4.98,0.86l1.51,-1.7l0.11,-2.87l1.99,-0.38l1.83,-2.06l0.49,-0.13l0.68,2.08l2.23,1.77l3.44,1.16l1.55,2.29l-0.92,3.49l0.96,1.67l6.54,1.13l2.95,1.87l1.47,0.35l1.06,2.62l1.53,1.91l3.05,0.08l5.14,0.67l3.37,-0.41l2.36,0.43l3.65,1.8l3.06,0.04l1.45,0.88l2.87,-1.59l3.95,-1.02l3.83,-0.14l3.06,-1.14l1.77,-1.6l1.72,-1.01l0.17,-0.49l-1.1,-2.05l1.02,-1.54l4.02,0.8l2.45,-1.61l3.76,-1.19l1.96,-2.13l1.63,-0.83l3.51,-0.4l1.92,0.34l0.46,-0.3l0.17,-1.5l-2.27,-2.22l-2.11,-1.09l-2.18,1.11l-2.32,-0.47l-1.29,0.32l-0.4,-0.82l2.73,-5.16l3.02,1.06l3.53,-2.06l0.18,-1.68l2.16,-3.35l1.49,-1.35l-0.03,-1.85l-1.07,-0.85l1.54,-1.26l2.98,-0.59l3.23,-0.09l3.64,0.99l2.04,1.16l3.29,6.71l0.92,3.19ZM696.92,237.31l-1.87,1.08l-1.63,-0.64l-0.06,-1.79l1.03,-0.98l2.58,-0.69l1.16,0.05l0.3,0.54l-0.98,1.06l-0.53,1.37Z",
+      "name": "China"
+    },
+    "CM": {
+      "path": "M457.92,257.49l1.05,1.91l-1.4,0.16l-1.05,-0.23l-0.45,0.22l-0.54,1.19l0.08,0.45l1.48,1.47l1.05,0.45l1.01,2.46l-1.52,2.99l-0.68,0.68l-0.13,3.69l2.38,3.84l1.09,0.8l0.24,2.48l-3.67,-1.14l-11.27,-0.13l0.23,-1.79l-0.98,-1.66l-1.19,-0.54l-0.44,-0.97l-0.6,-0.42l1.71,-4.27l0.75,-0.13l1.38,-1.36l0.65,-0.03l1.71,0.99l1.93,-1.12l1.14,-3.18l1.38,-1.17l2.0,-5.14l2.17,-2.13l0.3,-1.64l-0.86,-0.88l0.03,-0.33l0.94,1.28l0.07,3.22Z",
+      "name": "Cameroon"
+    },
+    "CL": {
+      "path": "M246.5,429.18l-3.14,1.83l-0.57,3.16l-0.64,0.05l-2.68,-1.06l-2.82,-2.33l-3.04,-1.89l-0.69,-1.85l0.63,-2.14l-1.21,-2.11l-0.31,-5.37l1.01,-2.91l2.57,-2.38l-0.18,-0.68l-3.16,-0.77l2.05,-2.47l0.77,-4.65l2.32,0.9l0.54,-0.29l1.31,-6.31l-0.22,-0.44l-1.68,-0.8l-0.56,0.28l-0.7,3.36l-0.81,-0.22l1.56,-9.41l1.15,-2.24l-0.71,-2.82l-0.18,-2.84l1.01,-0.33l3.26,-9.14l1.07,-4.22l-0.56,-4.21l0.74,-2.34l-0.29,-3.27l1.46,-3.34l2.04,-16.59l-0.66,-7.76l1.03,-0.53l0.54,-0.9l0.79,1.14l0.32,1.78l1.25,1.16l-0.69,2.55l1.33,2.9l0.97,3.59l0.46,0.29l1.5,-0.3l0.11,0.23l-0.76,2.44l-2.57,1.23l-0.23,0.37l0.08,4.33l-0.46,0.77l0.56,1.21l-1.58,1.51l-1.68,2.62l-0.89,2.47l0.2,2.7l-1.48,2.73l1.12,5.09l0.64,0.61l-0.01,2.29l-1.38,2.68l0.01,2.4l-1.89,2.04l0.02,2.75l0.69,2.57l-1.43,1.13l-1.26,5.68l0.39,3.51l-0.97,0.89l0.58,3.5l1.02,1.14l-0.65,1.02l0.15,0.57l1.0,0.53l0.16,0.69l-1.03,0.85l0.26,1.75l-0.89,4.03l-1.31,2.66l0.24,1.75l-0.71,1.83l-1.99,1.7l0.3,3.67l0.88,1.19l1.58,0.01l0.01,2.21l1.04,1.95l5.98,0.63ZM248.69,430.79l0.0,7.33l0.4,0.4l3.52,0.05l-0.44,0.75l-1.94,0.98l-2.49,-0.37l-1.88,-1.06l-2.55,-0.49l-5.59,-3.71l-2.38,-2.63l4.1,2.48l3.32,1.23l0.45,-0.12l1.29,-1.57l0.83,-2.32l2.05,-1.24l1.31,0.29Z",
+      "name": "Chile"
+    },
+    "CA": {
+      "path": "M280.06,145.6l-1.67,2.88l0.07,0.49l0.5,0.04l1.46,-0.98l1.0,0.42l-0.56,0.72l0.17,0.62l2.22,0.89l1.35,-0.71l1.95,0.78l-0.66,2.01l0.5,0.51l1.32,-0.42l0.98,3.17l-0.91,2.41l-0.8,0.08l-1.23,-0.45l0.47,-2.25l-0.89,-0.83l-0.48,0.06l-2.78,2.63l-0.34,-0.02l1.02,-0.85l-0.14,-0.69l-2.4,-0.77l-7.4,0.08l-0.17,-0.41l1.3,-0.94l0.02,-0.64l-0.73,-0.58l1.85,-1.74l2.57,-5.16l1.47,-1.79l1.99,-1.05l0.46,0.06l-1.53,2.45ZM68.32,74.16l4.13,0.95l4.02,2.14l2.61,0.4l2.47,-1.89l2.88,-1.31l3.85,0.48l3.71,-1.94l3.82,-1.04l1.56,1.68l0.49,0.08l1.87,-1.04l0.65,-1.98l1.24,0.35l4.16,3.94l0.54,0.01l2.75,-2.49l0.26,2.59l0.49,0.35l3.08,-0.73l1.04,-1.27l2.73,0.23l3.83,1.86l5.86,1.61l3.47,0.75l2.44,-0.26l2.73,1.78l-2.98,1.81l-0.19,0.41l0.31,0.32l4.53,0.92l6.87,-0.5l2.0,-0.69l2.49,2.39l0.53,0.02l2.72,-2.16l-0.02,-0.64l-2.16,-1.54l1.15,-1.06l4.83,-0.61l1.84,0.95l2.48,2.31l3.01,-0.23l4.55,1.92l3.85,-0.67l3.61,0.1l0.41,-0.44l-0.25,-2.36l1.79,-0.61l3.49,1.32l-0.01,3.77l0.31,0.39l0.45,-0.22l1.48,-3.16l1.74,0.1l0.41,-0.3l1.13,-4.37l-2.78,-3.11l-2.8,-1.74l0.19,-4.64l2.71,-3.07l2.98,0.67l2.41,1.95l3.19,4.8l-1.99,1.97l0.21,0.68l4.33,0.84l-0.01,4.15l0.25,0.37l0.44,-0.09l3.07,-3.15l2.54,2.39l-0.61,3.33l2.42,2.88l0.61,0.0l2.61,-3.08l1.88,-3.82l0.17,-4.58l6.72,0.94l3.13,2.04l0.13,1.82l-1.76,2.19l-0.01,0.49l1.66,2.16l-0.26,1.71l-4.68,2.8l-3.28,0.61l-2.47,-1.2l-0.55,0.23l-0.73,2.04l-2.38,3.43l-0.74,1.77l-2.74,2.57l-3.44,0.25l-2.21,1.78l-0.28,2.53l-2.82,0.55l-3.12,3.22l-2.72,4.31l-1.03,3.17l-0.14,4.31l0.33,0.41l3.44,0.57l2.24,5.95l0.45,0.23l3.4,-0.69l4.52,1.51l2.43,1.31l1.91,1.73l3.1,0.96l2.62,1.46l6.6,0.54l-0.35,2.74l0.81,3.53l1.81,3.78l3.83,3.3l0.45,0.04l2.1,-1.28l1.37,-3.69l-1.31,-5.38l-1.45,-1.58l3.57,-1.47l2.84,-2.46l1.52,-2.8l-0.25,-2.55l-1.7,-3.07l-2.85,-2.61l2.8,-3.95l-1.08,-3.37l-0.79,-5.67l1.36,-0.7l6.76,1.41l2.12,-0.96l5.12,3.36l1.05,1.61l4.08,0.26l-0.06,2.87l0.83,4.7l0.3,0.32l2.16,0.54l1.73,2.06l0.5,0.09l3.63,-2.03l2.52,-4.19l1.26,-1.32l7.6,11.72l-0.92,2.04l0.16,0.51l3.3,1.97l2.22,1.98l4.1,0.98l1.43,0.99l0.95,2.79l2.1,0.68l0.84,1.08l0.17,3.45l-3.37,2.26l-4.22,1.24l-3.06,2.63l-4.06,0.51l-5.35,-0.69l-6.39,0.2l-2.3,2.41l-3.26,1.51l-6.47,7.15l-0.06,0.48l0.44,0.19l2.13,-0.52l4.17,-4.24l5.12,-2.62l3.52,-0.3l1.69,1.21l-2.12,2.21l0.81,3.47l1.02,2.61l3.47,1.6l4.14,-0.45l2.15,-2.8l0.26,1.48l1.14,0.8l-2.56,1.69l-5.5,1.82l-2.54,1.27l-2.74,2.15l-1.4,-0.16l-0.07,-2.01l4.14,-2.44l0.18,-0.45l-0.39,-0.29l-6.63,0.45l-1.39,-1.49l-0.14,-4.43l-1.11,-0.91l-1.82,0.39l-0.66,-0.66l-0.6,0.03l-1.91,2.39l-0.82,2.52l-0.8,1.27l-1.67,0.56l-0.46,0.76l-8.31,0.07l-1.21,0.62l-2.35,1.97l-0.71,-0.14l-1.37,0.96l-1.12,-0.48l-4.74,1.26l-0.9,1.17l0.21,0.62l1.73,0.3l-1.81,0.31l-1.85,0.81l-2.11,-0.13l-2.95,1.78l-0.69,-0.09l1.39,-2.1l1.73,-1.21l0.1,-2.29l1.16,-1.99l0.49,0.53l2.03,0.42l1.2,-1.16l0.02,-0.47l-2.66,-3.51l-2.28,-0.61l-5.64,-0.71l-0.4,-0.57l-0.79,0.13l0.2,-0.41l-0.22,-0.55l-0.68,-0.26l0.19,-1.26l-0.78,-0.73l0.31,-0.64l-0.29,-0.57l-2.6,-0.44l-0.75,-1.63l-0.94,-0.66l-4.31,-0.65l-1.13,1.19l-1.48,0.59l-0.85,1.06l-2.83,-0.76l-2.09,0.39l-2.39,-0.97l-4.24,-0.7l-0.57,-0.4l-0.41,-1.63l-0.4,-0.3l-0.85,0.02l-0.39,0.4l-0.01,0.85l-69.13,-0.01l-6.51,-4.52l-4.5,-1.38l-1.26,-2.66l0.33,-1.93l-0.23,-0.43l-3.01,-1.35l-0.55,-2.77l-2.89,-2.38l-0.04,-1.45l1.39,-1.83l-0.28,-2.55l-4.16,-2.2l-4.07,-6.6l-4.02,-3.22l-1.3,-1.88l-0.5,-0.13l-2.51,1.21l-2.23,1.87l-3.85,-3.88l-2.44,-1.04l-2.22,-0.13l0.03,-37.49ZM260.37,148.65l3.04,0.76l2.26,1.2l-3.78,-0.95l-1.53,-1.01ZM249.4,3.81l6.68,0.49l5.32,0.79l4.26,1.57l-0.07,1.1l-5.85,2.53l-6.02,1.21l-2.39,1.39l-0.18,0.45l0.39,0.29l4.01,-0.02l-4.65,2.82l-4.2,1.74l-4.19,4.59l-5.03,0.92l-1.67,1.15l-7.47,0.59l-0.37,0.37l0.32,0.42l2.41,0.49l-0.81,0.47l-0.12,0.59l1.83,2.41l-2.02,1.59l-3.81,1.51l-1.32,2.16l-3.38,1.53l-0.22,0.48l0.35,1.19l0.4,0.29l3.88,-0.18l0.03,0.61l-6.33,2.95l-6.41,-1.4l-7.43,0.79l-3.72,-0.62l-4.4,-0.25l-0.23,-1.83l4.29,-1.11l0.28,-0.51l-1.1,-3.45l1.0,-0.25l6.58,2.28l0.47,-0.16l-0.05,-0.49l-3.41,-3.45l-3.58,-0.98l1.48,-1.55l4.34,-1.29l0.97,-2.19l-0.16,-0.48l-3.42,-2.13l-0.81,-2.26l6.2,0.22l2.24,0.58l3.91,-2.1l0.2,-0.43l-0.35,-0.32l-5.64,-0.67l-8.73,0.36l-4.26,-1.9l-2.12,-2.4l-2.78,-1.66l-0.41,-1.52l3.31,-1.03l2.93,-0.2l4.91,-0.99l3.7,-2.27l2.87,0.3l2.62,1.67l0.56,-0.14l1.82,-3.2l3.13,-0.94l4.44,-0.69l7.53,-0.26l1.48,0.67l7.19,-1.06l10.8,0.79ZM203.85,57.54l0.01,0.42l1.97,2.97l0.68,-0.02l2.24,-3.72l5.95,-1.86l4.01,4.64l-0.35,2.91l0.5,0.43l4.95,-1.36l2.32,-1.8l5.31,2.28l3.27,2.11l0.3,1.84l0.48,0.33l4.42,-0.99l2.64,2.87l5.97,1.77l2.06,1.72l2.11,3.71l-4.19,1.86l-0.01,0.73l5.9,2.83l3.94,0.94l3.78,3.95l3.46,0.25l-0.63,2.37l-4.11,4.47l-2.76,-1.56l-3.9,-3.94l-3.59,0.41l-0.33,0.34l-0.19,2.72l2.63,2.38l3.42,1.89l0.94,0.97l1.55,3.75l-0.7,2.29l-2.74,-0.92l-6.25,-3.15l-0.51,0.13l0.05,0.52l6.07,5.69l0.18,0.59l-6.09,-1.39l-5.31,-2.24l-2.63,-1.66l0.6,-0.77l-0.12,-0.6l-7.39,-4.01l-0.59,0.37l0.03,0.79l-6.73,0.6l-1.69,-1.1l1.36,-2.46l4.51,-0.07l5.15,-0.52l0.31,-0.6l-0.74,-1.3l0.78,-1.84l3.21,-4.05l-0.67,-2.35l-1.11,-1.6l-3.84,-2.1l-4.35,-1.28l0.91,-0.63l0.06,-0.61l-2.65,-2.75l-2.34,-0.36l-1.89,-1.46l-0.53,0.03l-1.24,1.23l-4.36,0.55l-9.04,-0.99l-9.26,-1.98l-1.6,-1.22l2.22,-1.77l0.13,-0.44l-0.38,-0.27l-3.22,-0.02l-0.72,-4.25l1.83,-4.04l2.42,-1.85l5.5,-1.1l-1.39,2.35ZM261.19,159.33l2.07,0.61l1.44,-0.04l-1.15,0.63l-2.94,-1.23l-0.4,-0.68l0.36,-0.37l0.61,1.07ZM230.83,84.39l-2.37,0.18l-0.49,-1.63l0.93,-2.09l1.94,-0.51l1.62,0.99l0.02,1.52l-1.66,1.54ZM229.43,58.25l0.11,0.65l-4.87,-0.21l-2.72,0.62l-3.1,-2.57l0.08,-1.26l0.86,-0.23l5.57,0.51l4.08,2.5ZM222.0,105.02l-0.72,1.49l-0.63,-0.19l-0.48,-0.84l0.81,-0.99l0.65,0.05l0.37,0.46ZM183.74,38.32l2.9,1.7l4.79,-0.01l1.84,1.46l-0.49,1.68l0.23,0.48l2.82,1.14l1.76,1.26l7.01,0.65l4.1,-1.1l5.03,-0.43l3.93,0.35l2.48,1.77l0.46,1.7l-1.3,1.1l-3.56,1.01l-3.23,-0.59l-7.17,0.76l-5.09,0.09l-3.99,-0.6l-6.42,-1.54l-0.79,-2.51l-0.3,-2.49l-2.64,-2.5l-5.32,-0.72l-2.52,-1.4l0.68,-1.57l4.78,0.31ZM207.38,91.35l0.4,1.56l0.56,0.26l1.06,-0.52l1.32,0.96l5.42,2.57l0.2,1.68l0.46,0.35l1.68,-0.28l1.15,0.85l-1.55,0.87l-3.61,-0.88l-1.32,-1.69l-0.57,-0.06l-2.45,2.1l-3.12,1.79l-0.7,-1.87l-0.42,-0.26l-2.16,0.24l1.39,-1.39l0.32,-3.14l0.76,-3.35l1.18,0.22ZM215.49,102.6l-2.67,1.95l-1.4,-0.07l-0.3,-0.58l1.53,-1.48l2.84,0.18ZM202.7,24.12l2.53,1.59l-2.87,1.4l-4.53,4.05l-4.25,0.38l-5.03,-0.68l-2.45,-2.04l0.03,-1.62l1.82,-1.37l0.14,-0.45l-0.38,-0.27l-4.45,0.04l-2.59,-1.76l-1.41,-2.29l1.57,-2.32l1.62,-1.66l2.44,-0.39l0.25,-0.65l-0.6,-0.74l4.86,-0.25l3.24,3.11l8.16,2.3l1.9,3.61ZM187.47,59.2l-2.76,3.49l-2.38,-0.15l-1.44,-3.84l0.04,-2.2l1.19,-1.88l2.3,-1.23l5.07,0.17l4.11,1.02l-3.24,3.72l-2.88,0.89ZM186.07,48.79l-1.08,1.53l-3.34,-0.34l-2.56,-1.1l1.03,-1.75l3.25,-1.23l1.95,1.58l0.75,1.3ZM185.71,35.32l-5.3,-0.2l-0.32,-0.71l4.31,0.07l1.3,0.84ZM180.68,32.48l-3.34,1.0l-1.79,-1.1l-0.98,-1.87l-0.15,-1.73l4.1,0.53l2.67,1.7l-0.51,1.47ZM180.9,76.31l-1.1,1.08l-3.13,-1.23l-2.12,0.43l-2.71,-1.57l1.72,-1.09l1.55,-1.72l3.81,1.9l1.98,2.2ZM169.74,54.87l2.96,0.97l4.17,-0.57l0.41,0.88l-2.14,2.11l0.09,0.64l3.55,1.92l-0.4,3.72l-3.79,1.65l-2.17,-0.35l-1.72,-1.74l-6.02,-3.5l0.03,-0.85l4.68,0.54l0.4,-0.21l-0.05,-0.45l-2.48,-2.81l2.46,-1.95ZM174.45,40.74l1.37,1.73l0.07,2.44l-1.05,3.45l-3.79,0.47l-2.32,-0.69l0.05,-2.64l-0.44,-0.41l-3.68,0.35l-0.12,-3.1l2.45,0.1l3.67,-1.73l3.41,0.29l0.37,-0.26ZM170.05,31.55l0.67,1.56l-3.33,-0.49l-4.22,-1.77l-4.35,-0.16l1.4,-0.94l-0.06,-0.7l-2.81,-1.23l-0.12,-1.39l4.39,0.68l6.62,1.98l1.81,2.47ZM134.5,58.13l-1.02,1.82l0.45,0.58l5.4,-1.39l3.33,2.29l0.49,-0.03l2.6,-2.23l1.94,1.32l2.0,4.5l0.7,0.06l1.3,-2.29l-1.63,-4.46l1.69,-0.54l2.31,0.71l2.65,1.81l2.49,7.92l8.48,4.27l-0.19,1.35l-3.79,0.33l-0.26,0.67l1.4,1.49l-0.58,1.1l-4.23,-0.64l-4.43,-1.19l-3.0,0.28l-4.66,1.47l-10.52,1.04l-1.43,-2.02l-3.42,-1.2l-2.21,0.43l-2.51,-2.86l4.84,-1.05l3.6,0.19l3.27,-0.78l0.31,-0.39l-0.31,-0.39l-4.84,-1.06l-8.79,0.27l-0.85,-1.07l5.26,-1.66l0.27,-0.45l-0.4,-0.34l-3.8,0.06l-3.81,-1.06l1.81,-3.01l1.66,-1.79l6.48,-2.81l1.97,0.71ZM158.7,56.61l-1.7,2.44l-3.2,-2.75l0.37,-0.3l3.11,-0.18l1.42,0.79ZM149.61,42.73l1.01,1.89l0.5,0.18l2.14,-0.82l2.23,0.19l0.36,2.04l-1.33,2.09l-8.28,0.76l-6.35,2.15l-3.41,0.1l-0.19,-0.96l4.9,-2.08l0.23,-0.46l-0.41,-0.31l-11.25,0.59l-2.89,-0.74l3.04,-4.44l2.14,-1.32l6.81,1.69l4.58,3.06l4.37,0.39l0.36,-0.63l-3.36,-4.6l1.85,-1.53l2.18,0.51l0.77,2.26ZM144.76,34.41l-4.36,1.44l-3.0,-1.4l1.46,-1.24l3.47,-0.52l2.96,0.71l-0.52,1.01ZM145.13,29.83l-1.9,0.66l-3.67,-0.0l2.27,-1.61l3.3,0.95ZM118.92,65.79l-6.03,2.02l-1.33,-1.9l-5.38,-2.28l2.59,-5.05l2.16,-3.14l-0.02,-0.48l-1.97,-2.41l7.64,-0.7l3.6,1.02l6.3,0.27l4.42,2.95l-2.53,0.98l-6.24,3.43l-3.1,3.28l-0.11,2.01ZM129.54,35.53l-0.28,3.37l-1.72,1.62l-2.33,0.28l-4.61,2.19l-3.86,0.76l-2.64,-0.87l3.72,-3.4l5.01,-3.34l3.72,0.07l3.0,-0.67ZM111.09,152.69l-0.67,0.24l-3.85,-1.37l-0.83,-1.17l-2.12,-1.07l-0.66,-1.02l-2.4,-0.55l-0.74,-1.71l6.02,1.45l2.0,2.55l2.52,1.39l0.73,1.27ZM87.8,134.64l0.89,0.29l1.86,-0.21l-0.65,3.34l1.69,2.33l-1.31,-1.33l-0.99,-1.62l-1.17,-0.98l-0.33,-1.82Z",
+      "name": "Canada"
+    },
+    "CG": {
+      "path": "M466.72,276.48l-0.1,1.03l-1.25,2.97l-0.19,3.62l-0.46,1.78l-0.23,0.63l-1.61,1.19l-1.21,1.39l-1.09,2.43l0.04,2.09l-3.25,3.24l-0.5,-0.24l-0.5,-0.83l-1.36,-0.02l-0.98,0.89l-1.68,-0.99l-1.54,1.24l-1.52,-1.96l1.57,-1.14l0.11,-0.52l-0.77,-1.35l2.1,-0.66l0.39,-0.73l1.05,0.82l2.21,0.11l1.12,-1.37l0.37,-1.81l-0.27,-2.09l-1.13,-1.5l1.0,-2.69l-0.13,-0.45l-0.92,-0.58l-1.6,0.17l-0.51,-0.94l0.1,-0.61l2.75,0.09l3.97,1.24l0.51,-0.33l0.17,-1.28l1.24,-2.21l1.28,-1.14l2.76,0.49Z",
+      "name": "Congo"
+    },
+    "CF": {
+      "path": "M461.16,278.2l-0.26,-1.19l-1.09,-0.77l-0.84,-1.17l-0.29,-1.0l-1.04,-1.15l0.08,-3.43l0.58,-0.49l1.16,-2.35l1.85,-0.17l0.61,-0.62l0.97,0.58l3.15,-0.96l2.48,-1.92l0.02,-0.96l2.81,0.02l2.36,-1.17l1.93,-2.85l1.16,-0.93l1.11,-0.3l0.27,0.86l1.34,1.47l-0.39,2.01l0.3,1.01l4.01,2.75l0.17,0.93l2.63,2.31l0.6,1.44l2.08,1.4l-3.84,-0.21l-1.94,0.88l-1.23,-0.49l-2.67,1.2l-1.29,-0.18l-0.51,0.36l-0.6,1.22l-3.35,-0.65l-1.57,-0.91l-2.42,-0.83l-1.45,0.91l-0.97,1.27l-0.26,1.56l-3.22,-0.43l-1.49,1.33l-0.94,1.62Z",
+      "name": "Central African Rep."
+    },
+    "CD": {
+      "path": "M487.01,272.38l2.34,-0.14l1.35,1.84l1.34,0.45l0.86,-0.39l1.21,0.12l1.07,-0.41l0.54,0.89l2.04,1.54l-0.14,2.72l0.7,0.54l-1.38,1.13l-1.53,2.54l-0.17,2.05l-0.59,1.08l-0.02,1.72l-0.72,0.84l-0.66,3.01l0.63,1.32l-0.44,4.26l0.64,1.47l-0.37,1.22l0.86,1.8l1.53,1.41l0.3,1.26l0.44,0.5l-4.08,0.75l-0.92,1.81l0.51,1.34l-0.74,5.43l0.17,0.38l2.45,1.46l0.54,-0.1l0.12,1.62l-1.28,-0.01l-1.85,-2.35l-1.94,-0.45l-0.48,-1.13l-0.55,-0.2l-1.41,0.74l-1.71,-0.3l-1.01,-1.18l-2.49,-0.19l-0.44,-0.77l-1.98,-0.21l-2.88,0.36l0.11,-2.41l-0.85,-1.13l-0.16,-1.36l0.32,-1.73l-0.46,-0.89l-0.04,-1.49l-0.4,-0.39l-2.53,0.02l0.1,-0.41l-0.39,-0.49l-1.28,0.01l-0.43,0.45l-1.62,0.32l-0.83,1.79l-1.09,-0.28l-2.4,0.52l-1.37,-1.91l-1.3,-3.3l-0.38,-0.27l-7.39,-0.03l-2.46,0.42l0.5,-0.45l0.37,-1.47l0.66,-0.38l0.92,0.08l0.73,-0.82l0.87,0.02l0.31,0.68l1.4,0.36l3.59,-3.63l0.01,-2.23l1.02,-2.29l2.69,-2.39l0.43,-0.99l0.49,-1.96l0.17,-3.51l1.25,-2.95l0.36,-3.14l0.86,-1.13l1.1,-0.66l3.57,1.73l3.65,0.73l0.46,-0.21l0.8,-1.46l1.24,0.19l2.61,-1.17l0.81,0.44l1.04,-0.03l0.59,-0.66l0.7,-0.16l1.81,0.25Z",
+      "name": "Dem. Rep. Congo"
+    },
+    "CZ": {
+      "path": "M458.46,144.88l1.22,1.01l1.47,0.23l0.13,0.93l1.36,0.68l0.54,-0.2l0.24,-0.55l1.15,0.25l0.53,1.09l1.68,0.18l0.6,0.84l-1.04,0.73l-0.96,1.28l-1.6,0.17l-0.55,0.56l-1.04,-0.46l-1.05,0.15l-2.12,-0.96l-1.05,0.34l-1.2,1.12l-1.56,-0.87l-2.57,-2.1l-0.53,-1.88l4.7,-2.52l0.71,0.26l0.9,-0.28Z",
+      "name": "Czech Rep."
+    },
+    "CY": {
+      "path": "M504.36,193.47l0.43,0.28l-1.28,0.57l-0.92,-0.28l-0.24,-0.46l2.01,-0.13Z",
+      "name": "Cyprus"
+    },
+    "CR": {
+      "path": "M211.34,258.05l0.48,0.99l1.6,1.6l-0.54,0.45l0.29,1.42l-0.25,1.19l-1.09,-0.59l-0.05,-1.25l-2.46,-1.42l-0.28,-0.77l-0.66,-0.45l-0.45,-0.0l-0.11,1.04l-1.32,-0.95l0.31,-1.3l-0.36,-0.6l0.31,-0.27l1.42,0.58l1.29,-0.14l0.56,0.56l0.74,0.17l0.55,-0.27Z",
+      "name": "Costa Rica"
+    },
+    "CU": {
+      "path": "M221.21,227.25l1.27,1.02l2.19,-0.28l4.43,3.33l2.08,0.43l-0.1,0.38l0.36,0.5l1.75,0.1l1.48,0.84l-3.11,0.51l-4.15,-0.03l0.77,-0.67l-0.04,-0.64l-1.2,-0.74l-1.49,-0.16l-0.7,-0.61l-0.56,-1.4l-0.4,-0.25l-1.34,0.1l-2.2,-0.66l-0.88,-0.58l-3.18,-0.4l-0.27,-0.16l0.58,-0.74l-0.36,-0.29l-2.72,-0.05l-1.7,1.29l-0.91,0.03l-0.61,0.69l-1.01,0.22l1.11,-1.29l1.01,-0.52l3.69,-1.01l3.98,0.21l2.21,0.84Z",
+      "name": "Cuba"
+    },
+    "SZ": {
+      "path": "M500.35,351.36l0.5,2.04l-0.38,0.89l-1.05,0.21l-1.23,-1.2l-0.02,-0.64l0.83,-1.57l1.34,0.27Z",
+      "name": "Swaziland"
+    },
+    "SY": {
+      "path": "M511.0,199.79l0.05,-1.33l0.54,-1.36l1.28,-0.99l0.13,-0.45l-0.41,-1.11l-1.14,-0.36l-0.19,-1.74l0.52,-1.0l1.29,-1.21l0.2,-1.18l0.59,0.23l2.62,-0.76l1.36,0.52l2.06,-0.01l2.95,-1.08l3.25,-0.26l-0.67,0.94l-1.28,0.66l-0.21,0.4l0.23,2.01l-0.88,3.19l-10.15,5.73l-2.15,-0.85Z",
+      "name": "Syria"
+    },
+    "KG": {
+      "path": "M621.35,172.32l-3.87,1.69l-0.96,1.18l-3.04,0.34l-1.13,1.86l-2.36,-0.35l-1.99,0.63l-2.39,1.4l0.06,0.95l-0.4,0.37l-4.52,0.43l-3.02,-0.93l-2.37,0.17l0.11,-0.79l2.32,0.42l1.13,-0.88l1.99,0.2l3.21,-2.14l-0.03,-0.69l-2.97,-1.57l-1.94,0.65l-1.22,-0.74l1.71,-1.58l-0.12,-0.67l-0.36,-0.15l0.32,-0.77l1.36,-0.35l4.02,1.02l0.49,-0.3l0.35,-1.59l1.09,-0.48l3.42,1.22l1.11,-0.31l7.64,0.39l1.16,1.0l1.23,0.39Z",
+      "name": "Kyrgyzstan"
+    },
+    "KE": {
+      "path": "M506.26,284.69l1.87,-2.56l0.93,-2.15l-1.38,-4.08l-1.06,-1.6l2.82,-2.75l0.79,0.26l0.12,1.41l0.86,0.83l1.9,0.11l3.28,2.13l3.57,0.44l1.05,-1.12l1.96,-0.9l0.82,0.68l1.16,0.09l-1.78,2.45l0.03,9.12l1.3,1.94l-1.37,0.78l-0.67,1.03l-1.08,0.46l-0.34,1.67l-0.81,1.07l-0.45,1.55l-0.68,0.56l-3.2,-2.23l-0.35,-1.58l-8.86,-4.98l0.14,-1.6l-0.57,-1.04Z",
+      "name": "Kenya"
+    },
+    "SS": {
+      "path": "M481.71,263.34l1.07,-0.72l1.2,-3.18l1.36,-0.26l1.61,1.99l0.87,0.34l1.1,-0.41l1.5,0.07l0.57,0.53l2.49,0.0l0.44,-0.63l1.07,-0.4l0.45,-0.84l0.59,-0.33l1.9,1.33l1.6,-0.2l2.83,-3.33l-0.32,-2.21l1.59,-0.52l-0.24,1.6l0.3,1.83l1.35,1.18l0.2,1.87l0.35,0.41l0.02,1.53l-0.23,0.47l-1.42,0.25l-0.85,1.44l0.3,0.6l1.4,0.16l1.11,1.08l0.59,1.13l1.03,0.53l1.28,2.36l-4.41,3.98l-1.74,0.01l-1.89,0.55l-1.47,-0.52l-1.15,0.57l-2.96,-2.62l-1.3,0.49l-1.06,-0.15l-0.79,0.39l-0.82,-0.22l-1.8,-2.7l-1.91,-1.1l-0.66,-1.5l-2.62,-2.32l-0.18,-0.94l-2.37,-1.6Z",
+      "name": "S. Sudan"
+    },
+    "SR": {
+      "path": "M283.12,270.19l2.1,0.53l-1.08,1.95l0.2,1.72l0.93,1.49l-0.59,2.03l-0.43,0.71l-1.12,-0.42l-1.32,0.22l-0.93,-0.2l-0.46,0.26l-0.25,0.73l0.33,0.7l-0.89,-0.13l-1.39,-1.97l-0.31,-1.34l-0.97,-0.31l-0.89,-1.47l0.35,-1.61l1.45,-0.82l0.33,-1.87l2.61,0.44l0.57,-0.47l1.75,-0.16Z",
+      "name": "Suriname"
+    },
+    "KH": {
+      "path": "M689.52,249.39l0.49,1.45l-0.28,2.74l-4.0,1.86l-0.16,0.6l0.68,0.95l-2.06,0.17l-2.05,0.97l-1.82,-0.32l-2.12,-3.7l-0.55,-2.85l1.4,-1.85l3.02,-0.45l2.23,0.35l2.01,0.98l0.51,-0.14l0.95,-1.48l1.74,0.74Z",
+      "name": "Cambodia"
+    },
+    "SV": {
+      "path": "M195.8,250.13l1.4,-1.19l2.24,1.45l0.98,-0.27l0.44,0.2l-0.27,1.05l-1.14,-0.03l-3.64,-1.21Z",
+      "name": "El Salvador"
+    },
+    "SK": {
+      "path": "M476.82,151.17l-1.14,1.9l-2.73,-0.92l-0.82,0.2l-0.74,0.8l-3.46,0.73l-0.47,0.69l-1.76,0.33l-1.88,-1.0l-0.18,-0.81l0.38,-0.75l1.87,-0.32l1.74,-1.89l0.83,0.16l0.79,-0.34l1.51,1.04l1.34,-0.63l1.25,0.3l1.65,-0.42l1.81,0.95Z",
+      "name": "Slovakia"
+    },
+    "KR": {
+      "path": "M737.51,185.84l0.98,-0.1l0.87,-1.17l2.69,-0.32l0.33,-0.29l1.76,2.79l0.58,1.76l0.02,3.12l-0.8,1.32l-2.21,0.55l-1.93,1.13l-1.8,0.19l-0.2,-1.1l0.43,-2.28l-0.95,-2.56l1.43,-0.37l0.23,-0.62l-1.43,-2.06Z",
+      "name": "Korea"
+    },
+    "SI": {
+      "path": "M456.18,162.07l-0.51,-1.32l0.18,-1.05l1.69,0.2l1.42,-0.71l2.09,-0.07l0.62,-0.51l0.21,0.47l-1.61,0.67l-0.44,1.34l-0.66,0.24l-0.26,0.82l-1.22,-0.49l-0.84,0.46l-0.69,-0.04Z",
+      "name": "Slovenia"
+    },
+    "KP": {
+      "path": "M736.77,185.16l-0.92,-0.42l-0.88,0.62l-1.21,-0.88l0.96,-1.15l0.59,-2.59l-0.46,-0.74l-2.09,-0.77l1.64,-1.52l2.72,-1.58l1.58,-1.91l1.11,0.78l2.17,0.11l0.41,-0.5l-0.3,-1.22l3.52,-1.18l0.94,-1.4l0.98,1.08l-2.19,2.18l0.01,2.14l-1.06,0.54l-1.41,1.4l-1.7,0.52l-1.25,1.09l-0.14,1.98l0.94,0.45l1.15,1.04l-0.13,0.26l-2.6,0.29l-1.13,1.29l-1.22,0.08Z",
+      "name": "Dem. Rep. Korea"
+    },
+    "SO": {
+      "path": "M525.13,288.48l-1.13,-1.57l-0.03,-8.86l2.66,-3.38l1.67,-0.13l2.13,-1.69l3.41,-0.23l7.08,-7.55l2.91,-3.69l0.08,-4.82l2.98,-0.67l1.24,-0.86l0.45,-0.0l-0.2,3.0l-1.21,3.62l-2.73,5.97l-2.13,3.65l-5.03,6.16l-8.56,6.4l-2.78,3.08l-0.8,1.56Z",
+      "name": "Somalia"
+    },
+    "SN": {
+      "path": "M390.09,248.21l0.12,1.55l0.49,1.46l0.96,0.82l0.05,1.28l-1.26,-0.19l-0.75,0.33l-1.84,-0.61l-5.84,-0.13l-2.54,0.51l-0.22,-1.03l1.77,0.04l2.01,-0.91l1.03,0.48l1.09,0.04l1.29,-0.62l0.14,-0.58l-0.51,-0.74l-1.81,0.25l-1.13,-0.63l-0.79,0.04l-0.72,0.61l-2.31,0.06l-0.92,-1.77l-0.81,-0.64l0.64,-0.35l2.46,-3.74l1.04,0.19l1.38,-0.56l1.19,-0.02l2.72,1.37l3.03,3.48Z",
+      "name": "Senegal"
+    },
+    "SL": {
+      "path": "M394.46,264.11l-1.73,1.98l-0.58,1.33l-2.07,-1.06l-1.22,-1.26l-0.65,-2.39l1.16,-0.96l0.67,-1.17l1.21,-0.52l1.66,0.0l1.03,1.64l0.52,2.41Z",
+      "name": "Sierra Leone"
+    },
+    "SB": {
+      "path": "M826.69,311.6l-0.61,0.09l-0.2,-0.33l0.37,0.15l0.44,0.09ZM824.18,307.38l-0.26,-0.3l-0.31,-0.91l0.03,0.0l0.54,1.21ZM823.04,309.33l-1.66,-0.22l-0.2,-0.52l1.16,0.28l0.69,0.46ZM819.28,304.68l1.14,0.65l0.02,0.03l-0.81,-0.44l-0.35,-0.23Z",
+      "name": "Solomon Is."
+    },
+    "SA": {
+      "path": "M537.53,210.34l2.0,0.24l0.9,1.32l1.49,-0.06l0.87,2.08l1.29,0.76l0.51,0.99l1.56,1.03l-0.1,1.9l0.32,0.9l1.58,2.47l0.76,0.53l0.7,-0.04l1.68,4.23l7.53,1.33l0.51,-0.29l0.77,1.25l-1.55,4.87l-7.29,2.52l-7.3,1.03l-2.34,1.17l-1.88,2.74l-0.76,0.28l-0.82,-0.78l-0.91,0.12l-2.88,-0.51l-3.51,0.25l-0.86,-0.56l-0.57,0.15l-0.66,1.27l0.16,1.11l-0.43,0.32l-0.93,-1.4l-0.33,-1.16l-1.23,-0.88l-1.27,-2.06l-0.78,-2.22l-1.73,-1.79l-1.14,-0.48l-1.54,-2.31l-0.21,-3.41l-1.44,-2.93l-1.27,-1.16l-1.33,-0.57l-1.31,-3.37l-0.77,-0.67l-0.97,-1.97l-2.8,-4.03l-1.06,-0.17l0.37,-1.96l0.2,-0.72l2.74,0.3l1.08,-0.84l0.6,-0.94l1.74,-0.35l0.65,-1.03l0.71,-0.4l0.1,-0.62l-2.06,-2.28l4.39,-1.22l0.48,-0.37l2.77,0.69l3.66,1.9l7.03,5.5l4.87,0.3Z",
+      "name": "Saudi Arabia"
+    },
+    "SE": {
+      "path": "M480.22,89.3l-4.03,1.17l-2.43,2.86l0.26,2.57l-8.77,6.64l-1.78,5.79l1.78,2.68l2.22,1.96l-2.07,3.77l-2.72,1.13l-0.95,6.04l-1.29,3.01l-2.74,-0.31l-0.4,0.22l-1.31,2.59l-2.34,0.13l-0.75,-3.09l-2.08,-4.03l-1.83,-4.96l1.0,-1.93l2.14,-2.7l0.83,-4.45l-1.6,-2.17l-0.15,-4.94l1.48,-3.39l2.58,-0.15l0.87,-1.59l-0.78,-1.57l3.76,-5.59l4.04,-7.48l2.17,0.01l0.39,-0.29l0.57,-2.07l4.37,0.64l0.46,-0.34l0.33,-2.56l1.1,-0.13l6.94,4.87l0.06,6.32l0.66,1.36Z",
+      "name": "Sweden"
+    },
+    "SD": {
+      "path": "M505.98,259.4l-0.34,-0.77l-1.17,-0.9l-0.26,-1.61l0.29,-1.81l-0.34,-0.46l-1.16,-0.17l-0.54,0.59l-1.23,0.11l-0.28,0.65l0.53,0.65l0.17,1.22l-2.44,3.0l-0.96,0.19l-2.39,-1.4l-0.95,0.52l-0.38,0.78l-1.11,0.41l-0.29,0.5l-1.94,0.0l-0.54,-0.52l-1.81,-0.09l-0.95,0.4l-2.45,-2.35l-2.07,0.54l-0.73,1.26l-0.6,2.1l-1.25,0.58l-0.75,-0.62l0.27,-2.65l-1.48,-1.78l-0.22,-1.48l-0.92,-0.96l-0.02,-1.29l-0.57,-1.16l-0.68,-0.16l0.69,-1.29l-0.18,-1.14l0.65,-0.62l0.03,-0.55l-0.36,-0.41l1.55,-2.97l1.91,0.16l0.43,-0.4l-0.1,-10.94l2.49,-0.01l0.4,-0.4l-0.0,-4.82l29.02,0.0l0.64,2.04l-0.49,0.66l0.36,2.69l0.93,3.16l2.12,1.55l-0.89,1.04l-1.72,0.39l-0.98,0.9l-1.43,5.65l0.24,1.15l-0.38,2.06l-0.96,2.38l-1.53,1.31l-1.32,2.91l-1.22,0.86l-0.37,1.34Z",
+      "name": "Sudan"
+    },
+    "DO": {
+      "path": "M241.8,239.2l0.05,-0.65l-0.46,-0.73l0.42,-0.44l0.19,-1.0l-0.09,-1.53l1.66,0.01l1.99,0.63l0.33,0.67l1.28,0.19l0.33,0.76l1.0,0.08l0.8,0.62l-0.45,0.51l-1.13,-0.47l-1.88,-0.01l-1.27,0.59l-0.75,-0.55l-1.01,0.54l-0.79,1.4l-0.23,-0.61Z",
+      "name": "Dominican Rep."
+    },
+    "DJ": {
+      "path": "M528.43,256.18l-0.45,0.66l-0.58,-0.25l-1.51,0.13l-0.18,-1.01l1.45,-1.95l0.83,0.17l0.77,-0.44l0.2,1.0l-1.2,0.51l-0.06,0.7l0.73,0.47Z",
+      "name": "Djibouti"
+    },
+    "DK": {
+      "path": "M452.28,129.07l-1.19,2.24l-2.13,-1.6l-0.23,-0.95l2.98,-0.95l0.57,1.26ZM447.74,126.31l-0.26,0.57l-0.88,-0.07l-1.8,2.53l0.48,1.69l-1.09,0.36l-1.61,-0.39l-0.89,-1.69l-0.07,-3.43l0.96,-1.73l2.02,-0.2l1.09,-1.07l1.33,-0.67l-0.05,1.06l-0.73,1.41l0.3,1.0l1.2,0.64Z",
+      "name": "Denmark"
+    },
+    "DE": {
+      "path": "M453.14,155.55l-0.55,-0.36l-1.2,-0.1l-1.87,0.57l-2.13,-0.13l-0.56,0.63l-0.86,-0.6l-0.96,0.09l-2.57,-0.93l-0.85,0.67l-1.47,-0.02l0.24,-1.75l1.23,-2.14l-0.28,-0.59l-3.52,-0.58l-0.92,-0.66l0.12,-1.2l-0.48,-0.88l0.27,-2.17l-0.37,-3.03l1.41,-0.22l0.63,-1.26l0.66,-3.19l-0.41,-1.18l0.26,-0.39l1.66,-0.15l0.33,0.54l0.62,0.07l1.7,-1.69l-0.54,-3.02l1.37,0.33l1.31,-0.37l0.31,1.18l2.25,0.71l-0.02,0.92l0.5,0.4l2.55,-0.65l1.34,-0.87l2.57,1.24l1.06,0.98l0.48,1.44l-0.57,0.74l-0.0,0.48l0.87,1.15l0.57,1.64l-0.14,1.29l0.82,1.7l-1.5,-0.07l-0.56,0.57l-4.47,2.15l-0.22,0.54l0.68,2.26l2.58,2.16l-0.66,1.11l-0.79,0.36l-0.23,0.43l0.32,1.87Z",
+      "name": "Germany"
+    },
+    "YE": {
+      "path": "M528.27,246.72l0.26,-0.42l-0.22,-1.01l0.19,-1.5l0.92,-0.69l-0.07,-1.35l0.39,-0.75l1.01,0.47l3.34,-0.27l3.76,0.41l0.95,0.81l1.36,-0.58l1.74,-2.62l2.18,-1.09l6.86,-0.94l2.48,5.41l-1.64,0.76l-0.56,1.9l-6.23,2.16l-2.29,1.8l-1.93,0.05l-1.41,1.02l-4.24,0.74l-1.72,1.49l-3.28,0.19l-0.52,-1.18l0.02,-1.51l-1.34,-3.29Z",
+      "name": "Yemen"
+    },
+    "AT": {
+      "path": "M462.89,152.8l0.04,2.25l-1.07,0.0l-0.33,0.63l0.36,0.51l-1.04,2.13l-2.02,0.07l-1.33,0.7l-5.29,-0.99l-0.47,-0.93l-0.44,-0.21l-2.47,0.55l-0.42,0.51l-3.18,-0.81l0.43,-0.91l1.12,0.78l0.6,-0.17l0.25,-0.58l1.93,0.12l1.86,-0.56l1.0,0.08l0.68,0.57l0.62,-0.15l0.26,-0.77l-0.3,-1.78l0.8,-0.44l0.68,-1.15l1.52,0.85l0.47,-0.06l1.34,-1.25l0.64,-0.17l1.81,0.92l1.28,-0.11l0.7,0.37Z",
+      "name": "Austria"
+    },
+    "DZ": {
+      "path": "M441.46,188.44l-0.32,1.07l0.39,2.64l-0.54,2.16l-1.58,1.82l0.37,2.39l1.91,1.55l0.18,0.8l1.42,1.03l1.84,7.23l0.12,1.16l-0.57,5.0l0.2,1.51l-0.87,0.99l-0.02,0.51l1.41,1.86l0.14,1.2l0.89,1.48l0.5,0.16l0.98,-0.41l1.73,1.08l0.82,1.23l-8.22,4.81l-7.23,5.11l-3.43,1.13l-2.3,0.21l-0.28,-1.59l-2.56,-1.09l-0.67,-1.25l-26.12,-17.86l0.01,-3.47l3.77,-1.88l2.44,-0.41l2.12,-0.75l1.08,-1.42l2.81,-1.05l0.35,-2.08l1.33,-0.29l1.04,-0.94l3.47,-0.69l0.46,-1.08l-0.1,-0.45l-0.58,-0.52l-0.82,-2.81l-0.19,-1.83l-0.78,-1.49l2.03,-1.31l2.63,-0.48l1.7,-1.22l2.31,-0.84l8.24,-0.73l1.49,0.38l2.28,-1.1l2.46,-0.02l0.92,0.6l1.35,-0.05Z",
+      "name": "Algeria"
+    },
+    "US": {
+      "path": "M892.72,99.2l1.31,0.53l1.41,-0.37l1.89,0.98l1.89,0.42l-1.32,0.58l-2.9,-1.53l-2.08,0.22l-0.26,-0.15l0.07,-0.67ZM183.22,150.47l0.37,1.47l1.12,0.85l4.23,0.7l2.39,0.98l2.17,-0.38l1.85,0.5l-1.55,0.65l-3.49,2.61l-0.16,0.77l0.5,0.39l2.33,-0.61l1.77,1.02l5.15,-2.4l-0.31,0.65l0.25,0.56l1.36,0.38l1.71,1.16l4.7,-0.88l0.67,0.85l1.31,0.21l0.58,0.58l-1.34,0.17l-2.18,-0.32l-3.6,0.89l-2.71,3.25l0.35,0.9l0.59,-0.0l0.55,-0.6l-1.36,4.65l0.29,3.09l0.67,1.58l0.61,0.45l1.77,-0.44l1.6,-1.96l0.14,-2.21l-0.82,-1.96l0.11,-1.13l1.19,-2.37l0.44,-0.33l0.48,0.75l0.4,-0.29l0.4,-1.37l0.6,-0.47l0.24,-0.8l1.69,0.49l1.65,1.08l-0.03,2.37l-1.27,1.13l-0.0,1.13l0.87,0.36l1.66,-1.29l0.5,0.17l0.5,2.6l-2.49,3.75l0.17,0.61l1.54,0.62l1.48,0.17l1.92,-0.44l4.72,-2.15l2.16,-1.8l-0.05,-1.24l0.75,-0.22l3.92,0.36l2.12,-1.05l0.21,-0.4l-0.28,-1.48l3.27,-2.4l8.32,-0.02l0.56,-0.82l1.9,-0.77l0.93,-1.51l0.74,-2.37l1.58,-1.98l0.92,0.62l1.47,-0.47l0.8,0.66l-0.0,4.09l1.96,2.6l-2.34,1.31l-5.37,2.09l-1.83,2.72l0.02,1.79l0.83,1.59l0.54,0.23l-6.19,0.94l-2.2,0.89l-0.23,0.48l0.45,0.29l2.99,-0.46l-2.19,0.56l-1.13,0.0l-0.15,-0.32l-0.48,0.08l-0.76,0.82l0.22,0.67l0.32,0.06l-0.41,1.62l-1.27,1.58l-1.48,-1.07l-0.49,-0.04l-0.16,0.46l0.52,1.58l0.61,0.59l0.03,0.79l-0.95,1.38l-1.21,-1.22l-0.27,-2.27l-0.35,-0.35l-0.42,0.25l-0.48,1.27l0.33,1.41l-0.97,-0.27l-0.48,0.24l0.18,0.5l1.52,0.83l0.1,2.52l0.79,0.51l0.52,3.42l-1.42,1.88l-2.47,0.8l-1.71,1.66l-1.31,0.25l-1.27,1.03l-0.43,0.99l-2.69,1.78l-2.64,3.03l-0.45,2.12l0.45,2.08l0.85,2.38l1.09,1.9l0.04,1.2l1.16,3.06l-0.18,2.69l-0.55,1.43l-0.47,0.21l-0.89,-0.23l-0.49,-1.18l-0.87,-0.56l-2.75,-5.16l0.48,-1.68l-0.72,-1.78l-2.01,-2.38l-1.12,-0.53l-2.72,1.18l-1.47,-1.35l-1.57,-0.68l-2.99,0.31l-2.17,-0.3l-2.0,0.19l-1.15,0.46l-0.19,0.58l0.39,0.63l0.14,1.34l-0.84,-0.2l-0.84,0.46l-1.58,-0.07l-2.08,-1.44l-2.09,0.33l-1.91,-0.62l-3.73,0.84l-2.39,2.07l-2.54,1.22l-1.45,1.41l-0.61,1.38l0.34,3.71l-0.29,0.02l-3.5,-1.33l-1.25,-3.11l-1.44,-1.5l-2.24,-3.56l-1.76,-1.09l-2.27,-0.01l-1.71,2.07l-1.76,-0.69l-1.16,-0.74l-1.52,-2.98l-3.93,-3.16l-4.34,-0.0l-0.4,0.4l-0.0,0.74l-6.5,0.02l-9.02,-3.14l-0.34,-0.71l-5.7,0.49l-0.43,-1.29l-1.62,-1.61l-1.14,-0.38l-0.55,-0.88l-1.28,-0.13l-1.01,-0.77l-2.22,-0.27l-0.43,-0.3l-0.36,-1.58l-2.4,-2.83l-2.01,-3.85l-0.06,-0.9l-2.92,-3.26l-0.33,-2.29l-1.3,-1.66l0.52,-2.37l-0.09,-2.57l-0.78,-2.3l0.95,-2.82l0.61,-5.68l-0.47,-4.27l-1.46,-4.08l3.19,0.79l1.26,2.83l0.69,0.08l0.69,-1.14l-1.1,-4.79l68.76,-0.0l0.4,-0.4l0.14,-0.86ZM32.44,67.52l1.73,1.97l0.55,0.05l0.99,-0.79l3.65,0.24l-0.09,0.62l0.32,0.45l3.83,0.77l2.61,-0.43l5.19,1.4l4.84,0.43l1.89,0.57l3.42,-0.7l6.14,1.87l-0.03,38.06l0.38,0.4l2.39,0.11l2.31,0.98l3.9,3.99l0.55,0.04l2.4,-2.03l2.16,-1.04l1.2,1.71l3.95,3.14l4.09,6.63l4.2,2.29l0.06,1.83l-1.02,1.23l-1.16,-1.08l-2.04,-1.03l-0.67,-2.89l-3.28,-3.03l-1.65,-3.57l-6.35,-0.32l-2.82,-1.01l-5.26,-3.85l-6.77,-2.04l-3.53,0.3l-4.81,-1.69l-3.25,-1.63l-2.78,0.8l-0.28,0.46l0.44,2.21l-3.91,0.96l-2.26,1.27l-2.3,0.65l-0.27,-1.65l1.05,-3.42l2.49,-1.09l0.16,-0.6l-0.69,-0.96l-0.55,-0.1l-3.19,2.12l-1.78,2.56l-3.55,2.61l-0.04,0.61l1.56,1.52l-2.07,2.29l-5.11,2.57l-0.77,1.66l-3.76,1.77l-0.92,1.73l-2.69,1.38l-1.81,-0.22l-6.95,3.32l-3.97,0.91l4.85,-2.5l2.59,-1.86l3.26,-0.52l1.19,-1.4l3.42,-2.1l2.59,-2.27l0.42,-2.68l1.23,-2.1l-0.04,-0.46l-0.45,-0.11l-2.68,1.03l-0.63,-0.49l-0.53,0.03l-1.05,1.04l-1.36,-1.54l-0.66,0.08l-0.32,0.62l-0.58,-1.14l-0.56,-0.16l-2.41,1.42l-1.07,-0.0l-0.17,-1.75l0.3,-1.71l-1.61,-1.33l-3.41,0.59l-1.96,-1.63l-1.57,-0.84l-0.15,-2.21l-1.7,-1.43l0.82,-1.88l1.99,-2.12l0.88,-1.92l1.71,-0.24l2.04,0.51l1.87,-1.77l1.91,0.25l1.91,-1.23l0.17,-0.43l-0.47,-1.82l-1.07,-0.7l1.39,-1.17l0.12,-0.45l-0.39,-0.26l-1.65,0.07l-2.66,0.88l-0.75,0.78l-1.92,-0.8l-3.46,0.44l-3.44,-0.91l-1.06,-1.61l-2.65,-1.99l2.91,-1.43l5.5,-2.0l1.52,0.0l-0.26,1.62l0.41,0.46l5.29,-0.16l0.3,-0.65l-2.03,-2.59l-3.14,-1.68l-1.79,-2.12l-2.4,-1.83l-3.09,-1.24l1.04,-1.69l4.23,-0.14l3.36,-2.07l0.73,-2.27l2.39,-1.99l2.42,-0.52l4.65,-1.97l2.46,0.23l3.71,-2.35l3.5,0.89ZM37.6,123.41l-2.25,1.23l-0.95,-0.69l-0.29,-1.24l3.21,-1.63l1.42,0.21l0.67,0.7l-1.8,1.42ZM31.06,234.03l0.98,0.47l0.74,0.87l-1.77,1.07l-0.44,-1.53l0.49,-0.89ZM29.34,232.07l0.18,0.05l0.08,0.05l-0.16,0.03l-0.11,-0.14ZM25.16,230.17l0.05,-0.03l0.18,0.22l-0.13,-0.01l-0.1,-0.18ZM5.89,113.26l-1.08,0.41l-2.21,-1.12l1.53,-0.4l1.62,0.28l0.14,0.83Z",
+      "name": "United States"
+    },
+    "LV": {
+      "path": "M489.16,122.85l0.96,0.66l0.22,1.65l0.68,1.76l-3.65,1.7l-2.23,-1.58l-1.29,-0.26l-0.68,-0.77l-2.42,0.34l-4.16,-0.23l-2.47,0.9l0.06,-1.98l1.13,-2.06l1.95,-1.02l2.12,2.58l2.01,-0.07l0.38,-0.33l0.44,-2.52l1.76,-0.53l3.06,1.7l2.15,0.07Z",
+      "name": "Latvia"
+    },
+    "UY": {
+      "path": "M286.85,372.74l-0.92,1.5l-2.59,1.44l-1.69,-0.52l-1.42,0.26l-2.39,-1.19l-1.52,0.08l-1.27,-1.3l0.16,-1.5l0.56,-0.79l-0.02,-2.73l1.21,-4.74l1.19,-0.21l2.37,2.0l1.08,0.03l4.36,3.17l1.22,1.6l-0.96,1.5l0.61,1.4Z",
+      "name": "Uruguay"
+    },
+    "LB": {
+      "path": "M510.37,198.01l-0.88,0.51l1.82,-3.54l0.62,0.08l0.22,0.61l-1.13,0.88l-0.65,1.47Z",
+      "name": "Lebanon"
+    },
+    "LA": {
+      "path": "M689.54,248.53l-1.76,-0.74l-0.49,0.15l-0.94,1.46l-1.32,-0.64l0.62,-0.98l0.11,-2.17l-2.04,-2.42l-0.25,-2.65l-1.9,-2.1l-2.15,-0.31l-0.78,0.91l-1.12,0.06l-1.05,-0.4l-2.06,1.2l-0.04,-1.59l0.61,-2.68l-0.36,-0.49l-1.35,-0.1l-0.11,-1.23l-0.96,-0.88l1.96,-1.89l0.39,0.36l1.33,0.07l0.42,-0.45l-0.34,-2.66l0.7,-0.21l1.28,1.81l1.11,2.35l0.36,0.23l2.82,0.02l0.71,1.67l-1.39,0.65l-0.72,0.93l0.13,0.6l2.91,1.51l3.6,5.25l1.88,1.78l0.56,1.62l-0.35,1.96Z",
+      "name": "Lao PDR"
+    },
+    "TW": {
+      "path": "M724.01,226.68l-0.74,1.48l-0.9,-1.52l-0.25,-1.74l1.38,-2.44l1.73,-1.74l0.64,0.44l-1.85,5.52Z",
+      "name": "Taiwan"
+    },
+    "TT": {
+      "path": "M266.64,259.32l0.28,-1.16l1.13,-0.22l-0.06,1.2l-1.35,0.18Z",
+      "name": "Trinidad and Tobago"
+    },
+    "TR": {
+      "path": "M513.21,175.47l3.64,1.17l3.05,-0.44l2.1,0.26l3.11,-1.56l2.46,-0.13l2.19,1.33l0.33,0.82l-0.22,1.33l0.25,0.44l2.28,1.13l-1.17,0.57l-0.21,0.45l0.75,3.2l-0.41,1.16l1.13,1.92l-0.55,0.22l-0.9,-0.67l-2.91,-0.37l-1.24,0.46l-4.23,0.41l-2.81,1.05l-1.91,0.01l-1.52,-0.53l-2.58,0.75l-0.66,-0.45l-0.62,0.3l-0.12,1.45l-0.89,0.84l-0.47,-0.67l0.79,-1.3l-0.41,-0.2l-1.43,0.23l-2.0,-0.63l-2.02,1.65l-3.51,0.3l-2.13,-1.53l-2.7,-0.1l-0.86,1.24l-1.38,0.27l-2.29,-1.44l-2.71,-0.01l-1.37,-2.65l-1.68,-1.52l1.07,-1.99l-0.09,-0.49l-1.27,-1.12l2.37,-2.41l3.7,-0.11l1.28,-2.24l4.49,0.37l3.21,-1.97l2.81,-0.82l3.99,-0.06l4.29,2.07ZM488.79,176.72l-1.72,1.31l-0.5,-0.88l1.37,-2.57l-0.7,-0.85l1.7,-0.63l1.8,0.34l0.46,1.17l1.76,0.78l-2.87,0.32l-1.3,1.01Z",
+      "name": "Turkey"
+    },
+    "LK": {
+      "path": "M624.16,268.99l-1.82,0.48l-0.99,-1.67l-0.42,-3.46l0.95,-3.43l1.21,0.98l2.26,4.19l-0.34,2.33l-0.85,0.58Z",
+      "name": "Sri Lanka"
+    },
+    "TN": {
+      "path": "M448.1,188.24l-1.0,1.27l-0.02,1.32l0.84,0.88l-0.28,2.09l-1.53,1.32l-0.12,0.42l0.48,1.54l1.42,0.32l0.53,1.11l0.9,0.52l-0.11,1.67l-3.54,2.64l-0.1,2.38l-0.58,0.3l-0.96,-4.45l-1.54,-1.25l-0.16,-0.78l-1.92,-1.56l-0.18,-1.76l1.51,-1.62l0.59,-2.34l-0.38,-2.78l0.42,-1.21l2.45,-1.05l1.29,0.26l-0.06,1.11l0.58,0.38l1.47,-0.73Z",
+      "name": "Tunisia"
+    },
+    "TL": {
+      "path": "M734.55,307.93l-0.1,-0.97l4.5,-0.86l-2.82,1.28l-1.59,0.55Z",
+      "name": "Timor-Leste"
+    },
+    "TM": {
+      "path": "M553.03,173.76l-0.04,0.34l-0.09,-0.22l0.13,-0.12ZM555.87,172.66l0.45,-0.1l1.48,0.74l2.06,2.43l4.07,-0.18l0.38,-0.51l-0.32,-1.19l1.92,-0.94l1.91,-1.59l2.94,1.39l0.43,2.47l1.19,0.67l2.58,-0.13l0.62,0.4l1.32,3.12l4.54,3.44l2.67,1.45l3.06,1.14l-0.04,1.05l-1.33,-0.75l-0.59,0.19l-0.32,0.84l-2.2,0.81l-0.46,2.13l-1.21,0.74l-1.91,0.42l-0.73,1.33l-1.56,0.31l-2.22,-0.94l-0.2,-2.17l-0.38,-0.36l-1.73,-0.09l-2.76,-2.46l-2.14,-0.4l-2.84,-1.48l-1.78,-0.27l-1.24,0.53l-1.57,-0.08l-2.0,1.69l-1.7,0.43l-0.36,-1.58l0.36,-2.98l-0.22,-0.4l-1.65,-0.84l0.54,-1.69l-0.34,-0.52l-1.22,-0.13l0.36,-1.64l2.22,0.59l2.2,-0.95l0.12,-0.65l-1.77,-1.74l-0.66,-1.57Z",
+      "name": "Turkmenistan"
+    },
+    "TJ": {
+      "path": "M597.75,178.82l-2.54,-0.44l-0.47,0.34l-0.24,1.7l0.43,0.45l2.64,-0.22l3.18,0.95l4.39,-0.41l0.56,2.37l0.52,0.29l0.67,-0.24l1.11,0.49l0.21,2.13l-3.76,-0.21l-1.8,1.32l-1.76,0.74l-0.61,-0.58l0.21,-2.23l-0.64,-0.49l-0.07,-0.93l-1.36,-0.66l-0.45,0.07l-1.08,1.01l-0.55,1.48l-1.31,-0.05l-0.95,1.16l-0.9,-0.35l-1.86,0.74l1.26,-2.83l-0.54,-2.17l-1.67,-0.82l0.33,-0.66l2.18,-0.04l1.19,-1.63l0.76,-1.79l2.43,-0.5l-0.26,1.0l0.73,1.05Z",
+      "name": "Tajikistan"
+    },
+    "LS": {
+      "path": "M491.06,363.48l-0.49,0.15l-1.49,-1.67l1.1,-1.43l2.19,-1.44l1.51,1.27l-0.98,1.82l-1.23,0.38l-0.62,0.93Z",
+      "name": "Lesotho"
+    },
+    "TH": {
+      "path": "M670.27,255.86l-1.41,3.87l0.15,2.0l0.38,0.36l1.38,0.07l0.9,2.04l0.55,2.34l1.4,1.44l1.61,0.38l0.96,0.97l-0.5,0.64l-1.1,0.2l-0.34,-1.18l-2.04,-1.1l-0.63,0.23l-0.63,-0.62l-0.48,-1.3l-2.56,-2.63l-0.73,0.41l0.95,-3.89l2.16,-4.22ZM670.67,254.77l-0.92,-2.18l-0.26,-2.61l-2.14,-3.06l0.71,-0.49l0.89,-2.59l-3.61,-5.45l0.87,-0.51l1.05,-2.58l1.74,-0.18l2.6,-1.59l0.76,0.56l0.13,1.39l0.37,0.36l1.23,0.09l-0.51,2.28l0.05,2.42l0.6,0.34l2.43,-1.42l0.77,0.39l1.47,-0.07l0.71,-0.88l1.48,0.14l1.71,1.88l0.25,2.65l1.92,2.11l-0.1,1.89l-0.61,0.86l-2.22,-0.33l-3.5,0.64l-1.6,2.12l0.36,2.58l-1.51,-0.79l-1.84,-0.01l0.28,-1.52l-0.4,-0.47l-2.21,0.01l-0.4,0.37l-0.19,2.74l-0.34,0.93Z",
+      "name": "Thailand"
+    },
+    "TF": {
+      "path": "M596.68,420.38l-3.2,0.18l-0.05,-1.26l0.39,-1.41l1.3,0.78l2.08,0.35l-0.52,1.36Z",
+      "name": "Fr. S. Antarctic Lands"
+    },
+    "TG": {
+      "path": "M422.7,257.63l-0.09,1.23l1.53,1.52l0.08,1.09l0.5,0.65l-0.11,5.62l0.49,1.47l-1.31,0.35l-1.02,-2.13l-0.18,-1.12l0.53,-2.19l-0.63,-1.16l-0.22,-3.68l-1.01,-1.4l0.07,-0.28l1.37,0.03Z",
+      "name": "Togo"
+    },
+    "TD": {
+      "path": "M480.25,235.49l0.12,9.57l-2.1,0.05l-1.14,1.89l-0.69,1.63l0.34,0.73l-0.66,0.91l0.24,0.89l-0.86,1.95l0.45,0.5l0.6,-0.1l0.34,0.64l0.03,1.38l0.9,1.04l-1.45,0.43l-1.27,1.03l-1.83,2.76l-2.16,1.07l-2.31,-0.15l-0.86,0.25l-0.26,0.49l0.17,0.61l-2.11,1.68l-2.85,0.87l-1.09,-0.57l-0.73,0.66l-1.12,0.1l-1.1,-3.12l-1.25,-0.64l-1.22,-1.22l0.29,-0.64l3.01,0.04l0.35,-0.6l-1.3,-2.2l-0.08,-3.31l-0.97,-1.66l0.22,-1.04l-0.38,-0.48l-1.22,-0.04l0.0,-1.25l-0.98,-1.07l0.96,-3.01l3.25,-2.65l0.13,-3.33l0.95,-5.18l0.52,-1.07l-0.1,-0.48l-0.91,-0.78l-0.2,-0.96l-0.8,-0.58l-0.55,-3.65l2.1,-1.2l19.57,9.83Z",
+      "name": "Chad"
+    },
+    "LY": {
+      "path": "M483.48,203.15l-0.75,1.1l0.29,1.39l-0.6,1.83l0.73,2.14l0.0,24.12l-2.48,0.01l-0.41,0.85l-19.41,-9.76l-4.41,2.28l-1.37,-1.33l-3.82,-1.1l-1.14,-1.65l-1.98,-1.23l-1.22,0.32l-0.66,-1.11l-0.17,-1.26l-1.28,-1.69l0.87,-1.19l-0.07,-4.34l0.43,-2.27l-0.86,-3.45l1.13,-0.76l0.22,-1.16l-0.2,-1.03l3.48,-2.61l0.29,-1.94l2.45,0.8l1.18,-0.21l1.98,0.44l3.15,1.18l1.37,2.54l5.72,1.67l2.64,1.35l1.61,-0.72l1.29,-1.34l-0.44,-2.34l0.66,-1.13l1.67,-1.21l1.57,-0.35l3.14,0.53l1.08,1.28l3.99,0.78l0.36,0.54Z",
+      "name": "Libya"
+    },
+    "AE": {
+      "path": "M550.76,223.97l1.88,-0.4l3.84,0.02l4.78,-4.75l0.19,0.36l0.26,1.58l-0.81,0.01l-0.39,0.35l-0.08,2.04l-0.81,0.63l-0.01,0.96l-0.66,0.99l-0.39,1.41l-7.08,-1.25l-0.7,-1.96Z",
+      "name": "United Arab Emirates"
+    },
+    "VE": {
+      "path": "M240.68,256.69l0.53,0.75l-0.02,1.06l-1.07,1.78l0.95,2.0l0.42,0.22l1.4,-0.44l0.56,-1.83l-0.77,-1.17l-0.1,-1.47l2.82,-0.93l0.26,-0.49l-0.28,-0.96l0.3,-0.28l0.66,1.31l1.96,0.26l1.4,1.22l0.08,0.68l0.39,0.35l4.81,-0.22l1.49,1.11l1.92,0.31l1.67,-0.84l0.22,-0.6l3.44,-0.14l-0.17,0.55l0.86,1.19l2.19,0.35l1.67,1.1l0.37,1.86l0.41,0.32l1.55,0.17l-1.66,1.35l-0.22,0.92l0.65,0.97l-1.67,0.54l-0.3,0.4l0.04,0.99l-0.56,0.57l-0.01,0.55l1.85,2.27l-0.66,0.69l-4.47,1.29l-0.72,0.54l-3.69,-0.9l-0.71,0.27l-0.02,0.7l0.91,0.53l-0.08,1.54l0.35,1.58l0.35,0.31l1.66,0.17l-1.3,0.52l-0.48,1.13l-2.68,0.91l-0.6,0.77l-1.57,0.13l-1.17,-1.13l-0.8,-2.52l-1.25,-1.26l1.02,-1.23l-1.29,-2.95l0.18,-1.62l1.0,-2.21l-0.2,-0.49l-1.14,-0.46l-4.02,0.36l-1.82,-2.1l-1.57,-0.33l-2.99,0.22l-1.06,-0.97l0.25,-1.23l-0.2,-1.01l-0.59,-0.69l-0.29,-1.06l-1.08,-0.39l0.78,-2.79l1.9,-2.11Z",
+      "name": "Venezuela"
+    },
+    "AF": {
+      "path": "M600.7,188.88l-1.57,1.3l-0.1,0.48l0.8,2.31l-1.09,1.04l-0.03,1.27l-0.48,0.71l-2.16,-0.08l-0.37,0.59l0.78,1.48l-1.38,0.69l-1.06,1.69l0.06,1.7l-0.65,0.52l-0.91,-0.21l-1.91,0.36l-0.48,0.77l-1.88,0.13l-1.4,1.56l-0.18,2.32l-2.91,1.02l-1.65,-0.23l-0.71,0.55l-1.41,-0.3l-2.41,0.39l-3.52,-1.17l1.96,-2.35l-0.21,-1.78l-0.3,-0.34l-1.63,-0.4l-0.19,-1.58l-0.75,-2.03l0.95,-1.36l-0.19,-0.6l-0.73,-0.28l1.47,-4.8l2.14,0.9l2.12,-0.36l0.74,-1.34l1.77,-0.39l1.54,-0.92l0.63,-2.31l1.87,-0.5l0.49,-0.81l0.94,0.56l2.13,0.11l2.55,0.92l1.95,-0.83l0.65,0.43l0.56,-0.13l0.69,-1.12l1.57,-0.08l0.72,-1.66l0.79,-0.74l0.8,0.39l-0.17,0.56l0.71,0.58l-0.08,2.39l1.11,0.95ZM601.37,188.71l1.73,-0.71l1.43,-1.18l4.03,0.35l-2.23,0.74l-4.95,0.8Z",
+      "name": "Afghanistan"
+    },
+    "IQ": {
+      "path": "M530.82,187.47l0.79,0.66l1.26,-0.28l1.46,3.08l1.63,0.94l0.14,1.23l-1.22,1.05l-0.53,2.52l1.73,2.67l3.12,1.62l1.15,1.88l-0.38,1.85l0.39,0.48l0.41,-0.0l0.02,1.07l0.76,0.94l-2.47,-0.1l-1.71,2.44l-4.31,-0.2l-7.02,-5.48l-3.73,-1.94l-2.88,-0.73l-0.85,-2.87l5.45,-3.02l0.95,-3.43l-0.19,-1.96l1.27,-0.7l1.22,-1.7l0.87,-0.36l2.69,0.34Z",
+      "name": "Iraq"
+    },
+    "IS": {
+      "path": "M384.14,88.06l-0.37,2.61l2.54,2.51l-2.9,2.75l-9.19,3.4l-9.25,-1.66l1.7,-1.22l-0.1,-0.7l-4.05,-1.47l2.96,-0.53l0.33,-0.43l-0.11,-1.2l-0.33,-0.36l-4.67,-0.85l1.28,-2.04l3.45,-0.56l3.77,2.72l0.44,0.02l3.64,-2.16l3.3,1.08l3.98,-2.16l3.58,0.26Z",
+      "name": "Iceland"
+    },
+    "IR": {
+      "path": "M533.43,187.16l-1.27,-2.15l0.42,-0.98l-0.71,-3.04l1.03,-0.5l0.33,0.83l1.26,1.35l2.05,0.51l1.11,-0.16l2.89,-2.11l0.62,-0.14l0.39,0.46l-0.72,1.2l0.06,0.49l1.56,1.53l0.65,0.04l0.67,1.81l2.56,0.83l1.87,1.48l3.69,0.49l3.91,-0.76l0.47,-0.73l2.17,-0.6l1.66,-1.54l1.51,0.08l1.18,-0.53l1.59,0.24l2.83,1.48l1.88,0.3l2.77,2.47l1.77,0.18l0.18,1.99l-1.68,5.49l0.24,0.5l0.61,0.23l-0.82,1.48l0.8,2.18l0.19,1.71l0.3,0.34l1.63,0.4l0.15,1.32l-2.15,2.35l-0.01,0.53l2.21,3.03l2.34,1.24l0.06,2.14l1.24,0.72l0.11,0.69l-3.31,1.27l-1.08,3.03l-9.68,-1.68l-0.99,-3.05l-1.43,-0.73l-2.17,0.46l-2.47,1.26l-2.83,-0.82l-2.46,-2.02l-2.41,-0.8l-3.42,-6.06l-0.48,-0.2l-1.18,0.39l-1.44,-0.82l-0.5,0.08l-0.65,0.74l-0.97,-1.01l-0.02,-1.31l-0.71,-0.39l0.26,-1.81l-1.29,-2.11l-3.13,-1.63l-1.58,-2.43l0.5,-1.9l1.31,-1.26l-0.19,-1.66l-1.74,-1.1l-1.57,-3.3Z",
+      "name": "Iran"
+    },
+    "AM": {
+      "path": "M536.99,182.33l-0.28,0.03l-1.23,-2.13l-0.93,0.01l-0.62,-0.66l-0.69,-0.07l-0.96,-0.81l-1.56,-0.62l0.19,-1.12l-0.26,-0.79l2.72,-0.36l1.09,1.01l-0.17,0.92l1.02,0.78l-0.47,0.62l0.08,0.56l2.04,1.23l0.04,1.4Z",
+      "name": "Armenia"
+    },
+    "IT": {
+      "path": "M451.59,158.63l3.48,0.94l-0.21,1.17l0.3,0.83l-1.49,-0.24l-2.04,1.1l-0.21,0.39l0.13,1.45l-0.25,1.12l0.82,1.57l2.39,1.63l1.31,2.54l2.79,2.43l2.05,0.08l0.21,0.23l-0.39,0.33l0.09,0.67l4.05,1.97l2.17,1.76l-0.16,0.36l-1.17,-1.08l-2.18,-0.49l-0.44,0.2l-1.05,1.91l0.14,0.54l1.57,0.95l-0.19,0.98l-1.06,0.33l-1.25,2.34l-0.37,0.08l0.0,-0.33l1.0,-2.45l-1.73,-3.17l-1.12,-0.51l-0.88,-1.33l-1.51,-0.51l-1.27,-1.25l-1.75,-0.18l-4.12,-3.21l-1.62,-1.65l-1.03,-3.19l-3.53,-1.36l-1.3,0.51l-1.69,1.41l0.16,-0.72l-0.28,-0.47l-1.14,-0.33l-0.53,-1.96l0.72,-0.78l0.04,-0.48l-0.65,-1.17l0.8,0.39l1.4,-0.23l1.11,-0.84l0.52,0.35l1.19,-0.1l0.75,-1.2l1.53,0.33l1.36,-0.56l0.35,-1.14l1.08,0.32l0.68,-0.64l1.98,-0.44l0.42,0.82ZM459.19,184.75l-0.65,1.65l0.32,1.05l-0.31,0.89l-1.5,-0.85l-4.5,-1.67l0.19,-0.82l2.67,0.23l3.78,-0.48ZM443.93,176.05l1.18,1.66l-0.3,3.32l-1.06,-0.01l-0.77,0.73l-0.53,-0.44l-0.1,-3.37l-0.39,-1.22l1.04,0.01l0.92,-0.68Z",
+      "name": "Italy"
+    },
+    "VN": {
+      "path": "M690.56,230.25l-2.7,1.82l-2.09,2.46l-0.63,1.95l4.31,6.45l2.32,1.65l1.43,1.94l1.11,4.59l-0.32,4.24l-1.93,1.54l-2.84,1.61l-2.11,2.15l-2.73,2.06l-0.59,-1.05l0.63,-1.53l-0.13,-0.47l-1.34,-1.04l1.51,-0.71l2.55,-0.18l0.3,-0.63l-0.82,-1.14l4.0,-2.07l0.31,-3.05l-0.57,-1.77l0.42,-2.66l-0.73,-1.97l-1.86,-1.76l-3.63,-5.29l-2.72,-1.46l0.36,-0.47l1.5,-0.64l0.21,-0.52l-0.97,-2.27l-0.37,-0.24l-2.83,-0.02l-2.24,-3.9l0.83,-0.4l4.39,-0.29l2.06,-1.31l1.15,0.89l1.88,0.4l-0.17,1.51l1.35,1.16l1.67,0.45Z",
+      "name": "Vietnam"
+    },
+    "AR": {
+      "path": "M249.29,428.93l-2.33,-0.52l-5.83,-0.43l-0.89,-1.66l0.05,-2.37l-0.45,-0.4l-1.43,0.18l-0.67,-0.91l-0.2,-3.13l1.88,-1.47l0.79,-2.04l-0.25,-1.7l1.3,-2.68l0.91,-4.15l-0.22,-1.69l0.85,-0.45l0.2,-0.44l-0.27,-1.16l-0.98,-0.68l0.59,-0.92l-0.05,-0.5l-1.04,-1.07l-0.52,-3.1l0.97,-0.86l-0.42,-3.58l1.2,-5.43l1.38,-0.98l0.16,-0.43l-0.75,-2.79l-0.01,-2.43l1.78,-1.75l0.06,-2.57l1.43,-2.85l0.01,-2.58l-0.69,-0.74l-1.09,-4.52l1.47,-2.7l-0.18,-2.79l0.85,-2.35l1.59,-2.46l1.73,-1.64l0.05,-0.52l-0.6,-0.84l0.44,-0.85l-0.07,-4.19l2.7,-1.44l0.86,-2.75l-0.21,-0.71l1.76,-2.01l2.9,0.57l1.38,1.78l0.68,-0.08l0.87,-1.87l2.39,0.09l4.95,4.77l2.17,0.49l3.0,1.92l2.47,1.0l0.25,0.82l-2.37,3.93l0.23,0.59l5.39,1.16l2.12,-0.44l2.45,-2.16l0.5,-2.38l0.76,-0.31l0.98,1.2l-0.04,1.8l-3.67,2.51l-2.85,2.66l-3.43,3.88l-1.3,5.07l0.01,2.72l-0.54,0.73l-0.36,3.28l3.14,2.64l-0.16,2.11l1.4,1.11l-0.1,1.09l-2.29,3.52l-3.55,1.49l-4.92,0.6l-2.71,-0.29l-0.43,0.51l0.5,1.65l-0.49,2.1l0.38,1.42l-1.19,0.83l-2.36,0.38l-2.3,-1.04l-1.38,0.83l0.41,3.64l1.69,0.91l1.4,-0.71l0.36,0.76l-2.04,0.86l-2.01,1.89l-0.97,4.63l-2.34,0.1l-2.09,1.78l-0.61,2.75l2.46,2.31l2.17,0.63l-0.7,2.32l-2.83,1.73l-1.73,3.86l-2.17,1.22l-1.16,1.67l0.75,3.76l1.04,1.28ZM256.71,438.88l-2.0,0.15l-1.4,-1.22l-3.82,-0.1l-0.0,-5.83l1.6,3.05l3.26,2.07l3.08,0.78l-0.71,1.1Z",
+      "name": "Argentina"
+    },
+    "AU": {
+      "path": "M705.8,353.26l0.26,0.04l0.17,-0.47l-0.48,-1.42l0.92,1.11l0.45,0.15l0.27,-0.39l-0.1,-1.56l-1.98,-3.63l1.09,-3.31l-0.24,-1.57l0.34,-0.62l0.38,1.06l0.43,-0.19l0.99,-1.7l1.91,-0.83l1.29,-1.15l1.81,-0.91l0.96,-0.17l0.92,0.26l1.92,-0.95l1.47,-0.28l1.03,-0.8l1.43,0.04l2.78,-0.84l1.36,-1.15l0.71,-1.45l1.41,-1.26l0.3,-2.58l1.27,-1.59l0.78,1.65l0.54,0.19l1.07,-0.51l0.15,-0.6l-0.73,-1.0l0.45,-0.71l0.78,0.39l0.58,-0.3l0.28,-1.82l1.87,-2.14l1.12,-0.39l0.28,-0.58l0.62,0.17l0.53,-0.73l1.87,-0.57l1.65,1.05l1.35,1.48l3.39,0.38l0.43,-0.54l-0.46,-1.23l1.05,-1.79l1.04,-0.61l0.14,-0.55l-0.25,-0.41l0.88,-1.17l1.31,-0.77l1.3,0.27l2.1,-0.48l0.31,-0.4l-0.05,-1.3l-0.92,-0.77l1.48,0.56l1.41,1.07l2.11,0.65l0.81,-0.2l1.4,0.7l1.69,-0.66l0.8,0.19l0.64,-0.33l0.71,0.77l-1.33,1.94l-0.71,0.07l-0.35,0.51l0.24,0.86l-1.52,2.35l0.12,1.05l2.15,1.65l1.97,0.85l3.04,2.36l1.97,0.65l0.55,0.88l2.72,0.85l1.84,-1.1l2.07,-5.97l-0.42,-3.59l0.3,-1.73l0.47,-0.87l-0.31,-0.68l1.09,-3.28l0.46,-0.47l0.4,0.71l0.16,1.51l0.65,0.52l0.16,1.04l0.85,1.21l0.12,2.38l0.9,2.0l0.57,0.18l1.3,-0.78l1.69,1.7l-0.2,1.08l0.53,2.2l0.39,1.3l0.68,0.48l0.6,1.95l-0.19,1.48l0.81,1.76l6.01,3.69l-0.11,0.76l1.38,1.58l0.95,2.77l0.58,0.22l0.72,-0.41l0.8,0.9l0.61,0.01l0.46,2.41l4.81,4.71l0.66,2.02l-0.07,3.31l1.14,2.2l-0.13,2.24l-1.1,3.68l0.03,1.64l-0.47,1.89l-1.05,2.4l-1.9,1.47l-1.72,3.51l-2.38,6.09l-0.24,2.82l-1.14,0.8l-2.85,0.15l-2.31,1.19l-2.51,2.25l-3.09,-1.57l0.3,-1.15l-0.54,-0.47l-1.5,0.63l-2.01,1.94l-7.12,-2.18l-1.48,-1.63l-1.14,-3.74l-1.45,-1.26l-1.81,-0.26l0.56,-1.18l-0.61,-2.1l-0.72,-0.1l-1.14,1.82l-0.9,0.21l0.63,-0.82l0.36,-1.55l0.92,-1.31l-0.13,-2.34l-0.7,-0.22l-2.0,2.34l-1.51,0.93l-0.94,2.01l-1.35,-0.81l-0.02,-1.52l-1.57,-2.04l-1.09,-0.88l0.24,-0.33l-0.14,-0.59l-3.21,-1.69l-1.83,-0.12l-2.54,-1.35l-4.58,0.28l-6.02,1.9l-2.53,-0.13l-2.62,1.41l-2.13,0.63l-1.49,2.6l-3.49,0.31l-2.29,-0.5l-3.48,0.43l-1.6,1.47l-0.81,-0.04l-2.37,1.63l-3.26,-0.1l-3.72,-2.21l0.04,-1.05l1.19,-0.46l0.49,-0.89l0.21,-2.97l-0.28,-1.64l-1.34,-2.86l-0.38,-1.47l0.05,-1.72l-0.95,-1.7l-0.18,-0.97l-1.01,-0.99l-0.29,-1.98l-1.13,-1.75ZM784.92,393.44l2.65,1.02l3.23,-0.96l1.09,0.14l0.15,3.06l-0.85,1.13l-0.17,1.63l-0.87,-0.24l-1.57,1.91l-1.68,-0.18l-1.4,-2.36l-0.37,-2.04l-1.39,-2.51l0.04,-0.8l1.15,0.18Z",
+      "name": "Australia"
+    },
+    "IL": {
+      "path": "M507.76,203.05l0.4,-0.78l0.18,0.4l-0.33,1.03l0.52,0.44l0.68,-0.22l-0.86,3.6l-1.16,-3.32l0.59,-0.74l-0.03,-0.41ZM508.73,200.34l0.37,-1.02l0.64,0.0l0.52,-0.51l-0.49,1.53l-0.56,-0.24l-0.48,0.23Z",
+      "name": "Israel"
+    },
+    "IN": {
+      "path": "M623.34,207.03l-1.24,1.04l-0.97,2.55l0.22,0.51l8.04,3.87l3.42,0.37l1.57,1.38l4.92,0.88l2.18,-0.04l0.38,-0.3l0.29,-1.24l-0.32,-1.64l0.14,-0.87l0.82,-0.31l0.45,2.48l2.28,1.02l1.77,-0.38l4.14,0.1l0.38,-0.36l0.18,-1.66l-0.5,-0.65l1.37,-0.29l2.25,-1.99l2.7,-1.62l1.93,0.62l1.8,-0.98l0.79,1.14l-0.68,0.91l0.26,0.63l2.42,0.36l0.09,0.47l-0.83,0.75l0.13,1.07l-1.52,-0.29l-3.24,1.86l-0.13,1.78l-1.32,2.14l-0.18,1.39l-0.93,1.82l-1.64,-0.5l-0.52,0.37l-0.09,2.63l-0.56,1.11l0.19,0.81l-0.53,0.27l-1.18,-3.73l-1.08,-0.27l-0.38,0.31l-0.24,1.0l-0.66,-0.66l0.54,-1.06l1.22,-0.34l1.15,-2.25l-0.24,-0.56l-1.57,-0.47l-4.34,-0.28l-0.18,-1.56l-0.35,-0.35l-1.11,-0.12l-1.91,-1.12l-0.56,0.17l-0.88,1.82l0.11,0.49l1.36,1.07l-1.09,0.69l-0.69,1.11l0.18,0.56l1.24,0.57l-0.32,1.54l0.85,1.94l0.36,2.01l-0.22,0.59l-4.58,0.52l-0.33,0.42l0.13,1.8l-1.17,1.36l-3.65,1.81l-2.79,3.03l-4.32,3.28l-0.18,1.27l-4.65,1.79l-0.77,2.16l0.64,5.3l-1.06,2.49l-0.01,3.94l-1.24,0.28l-1.14,1.93l0.39,0.84l-1.68,0.53l-1.04,1.83l-0.65,0.47l-2.06,-2.05l-2.1,-6.02l-2.2,-3.64l-1.05,-4.75l-2.29,-3.57l-1.76,-8.2l0.01,-3.11l-0.49,-2.53l-0.55,-0.29l-3.53,1.52l-1.53,-0.27l-2.86,-2.77l0.85,-0.67l0.08,-0.55l-0.74,-1.03l-2.67,-2.06l1.24,-1.32l5.34,0.01l0.39,-0.49l-0.5,-2.29l-1.42,-1.46l-0.27,-1.93l-1.43,-1.2l2.31,-2.37l3.05,0.06l2.62,-2.85l1.6,-2.81l2.4,-2.73l0.07,-2.04l1.97,-1.48l-0.02,-0.65l-1.93,-1.31l-0.82,-1.78l-0.8,-2.21l0.9,-0.89l3.59,0.65l2.92,-0.42l2.33,-2.19l2.31,2.85l-0.24,2.13l0.99,1.59l-0.05,0.82l-1.34,-0.28l-0.47,0.48l0.7,3.06l2.62,1.99l2.99,1.65Z",
+      "name": "India"
+    },
+    "TZ": {
+      "path": "M495.56,296.42l2.8,-3.12l-0.02,-0.81l-0.64,-1.3l0.68,-0.52l0.14,-1.47l-0.76,-1.25l0.31,-0.11l2.26,0.03l-0.51,2.76l0.76,1.3l0.5,0.12l1.05,-0.53l1.19,-0.12l0.61,0.24l1.43,-0.62l0.1,-0.67l-0.71,-0.62l1.57,-1.7l8.65,4.86l0.32,1.53l3.34,2.33l-1.05,2.8l0.13,1.61l1.63,1.12l-0.6,1.76l-0.01,2.33l1.89,4.03l0.57,0.43l-1.46,1.08l-2.61,0.94l-1.43,-0.04l-1.06,0.77l-2.29,0.36l-2.87,-0.68l-0.83,0.07l-0.63,-0.75l-0.31,-2.78l-1.32,-1.35l-3.25,-0.77l-3.96,-1.58l-1.18,-2.41l-0.32,-1.75l-1.76,-1.49l0.42,-1.05l-0.44,-0.89l0.08,-0.96l-0.46,-0.58l0.06,-0.56Z",
+      "name": "Tanzania"
+    },
+    "AZ": {
+      "path": "M539.29,175.73l1.33,0.32l1.94,-1.8l2.3,3.34l1.43,0.43l-1.26,0.15l-0.35,0.32l-0.8,3.14l-0.99,0.96l0.05,1.11l-1.26,-1.13l0.7,-1.18l-0.04,-0.47l-0.74,-0.86l-1.48,0.15l-2.34,1.71l-0.03,-1.27l-2.03,-1.35l0.47,-0.62l-0.08,-0.56l-1.03,-0.79l0.29,-0.43l-0.14,-0.58l-1.13,-0.86l1.89,0.68l1.69,0.06l0.37,-0.87l-0.81,-1.37l0.42,0.06l1.63,1.72ZM533.78,180.57l0.61,0.46l0.69,-0.0l0.59,1.15l-0.68,-0.15l-1.21,-1.45Z",
+      "name": "Azerbaijan"
+    },
+    "IE": {
+      "path": "M405.08,135.42l0.35,2.06l-1.75,2.78l-4.22,1.88l-2.84,-0.4l1.73,-3.0l-1.18,-3.53l4.6,-3.74l0.32,1.15l-0.49,1.74l0.4,0.51l1.47,-0.04l1.6,0.6Z",
+      "name": "Ireland"
+    },
+    "ID": {
+      "path": "M756.47,287.89l0.69,4.01l2.79,1.78l0.51,-0.1l2.04,-2.59l2.71,-1.43l2.05,-0.0l3.9,1.73l2.46,0.45l0.08,15.12l-1.75,-1.54l-2.54,-0.51l-0.88,0.71l-2.32,0.06l0.69,-1.33l1.45,-0.64l0.23,-0.46l-0.65,-2.74l-1.24,-2.21l-5.04,-2.29l-2.09,-0.23l-3.68,-2.27l-0.55,0.13l-0.65,1.07l-0.52,0.12l-0.55,-1.89l-1.21,-0.78l1.84,-0.62l1.72,0.05l0.39,-0.52l-0.21,-0.66l-0.38,-0.28l-3.45,-0.0l-1.13,-1.48l-2.1,-0.43l-0.52,-0.6l2.69,-0.48l1.28,-0.78l3.66,0.94l0.3,0.71ZM757.91,300.34l-0.62,0.82l-0.1,-0.8l0.59,-1.12l0.13,1.1ZM747.38,292.98l0.34,0.72l-1.22,-0.57l-4.68,-0.1l0.27,-0.62l2.78,-0.09l2.52,0.67ZM741.05,285.25l-0.67,-2.88l0.64,-2.01l0.41,0.86l1.21,0.18l0.16,0.7l-0.1,1.68l-0.84,-0.16l-0.46,0.3l-0.34,1.34ZM739.05,293.5l-0.5,0.44l-1.34,-0.36l-0.17,-0.37l1.73,-0.08l0.27,0.36ZM721.45,284.51l-0.19,1.97l2.24,2.23l0.54,0.02l1.27,-1.07l2.75,-0.5l-0.9,1.21l-2.11,0.93l-0.16,0.6l2.22,3.01l-0.3,1.07l1.36,1.74l-2.26,0.85l-0.28,-0.31l0.12,-1.19l-1.64,-1.34l0.17,-2.23l-0.56,-0.39l-1.67,0.76l-0.23,0.39l0.3,6.17l-1.1,0.25l-0.69,-0.47l0.64,-2.21l-0.39,-2.42l-0.39,-0.34l-0.8,-0.01l-0.58,-1.29l0.98,-1.6l0.35,-1.96l1.32,-3.87ZM728.59,296.27l0.38,0.49l-0.02,1.28l-0.88,0.49l-0.53,-0.47l1.04,-1.79ZM729.04,286.98l0.27,-0.05l-0.02,0.13l-0.24,-0.08ZM721.68,284.05l0.16,-0.32l1.89,-1.65l1.83,0.68l3.16,0.35l2.94,-0.1l2.39,-1.66l-1.73,2.13l-1.66,0.43l-2.41,-0.48l-4.17,0.13l-2.39,0.51ZM730.55,310.47l1.11,-1.93l2.03,-0.82l0.08,0.62l-1.45,1.67l-1.77,0.46ZM728.12,305.88l-0.1,0.38l-3.46,0.66l-2.91,-0.27l-0.0,-0.25l1.54,-0.41l1.66,0.73l1.67,-0.19l1.61,-0.65ZM722.9,310.24l-0.64,0.03l-2.26,-1.2l1.11,-0.24l1.78,1.41ZM716.26,305.77l0.88,0.51l1.28,-0.17l0.2,0.35l-4.65,0.73l0.39,-0.67l1.15,-0.02l0.75,-0.73ZM711.66,293.84l-0.38,-0.16l-2.54,1.01l-1.12,-1.44l-1.69,-0.13l-1.16,-0.75l-3.04,0.77l-1.1,-1.15l-3.31,-0.11l-0.35,-3.05l-1.35,-0.95l-1.11,-1.98l-0.33,-2.06l0.27,-2.14l0.9,-1.01l0.37,1.15l2.09,1.49l1.53,-0.48l1.82,0.08l1.38,-1.19l1.0,-0.18l2.28,0.67l2.26,-0.53l1.52,-3.64l1.01,-0.99l0.78,-2.57l4.1,0.3l-1.11,1.77l0.02,0.46l1.7,2.2l-0.23,1.39l2.07,1.71l-2.33,0.42l-0.88,1.9l0.1,2.05l-2.4,1.9l-0.06,2.45l-0.7,2.79ZM692.58,302.03l0.35,0.26l4.8,0.25l0.78,-0.97l4.17,1.09l1.13,1.68l3.69,0.45l2.13,1.04l-1.8,0.6l-2.77,-0.99l-4.8,-0.12l-5.24,-1.41l-1.84,-0.25l-1.11,0.3l-4.26,-0.97l-0.7,-1.14l-1.59,-0.13l1.18,-1.65l2.74,0.13l2.87,1.13l0.26,0.68ZM685.53,299.17l-2.22,0.04l-2.06,-2.03l-3.15,-2.01l-2.93,-3.51l-3.11,-5.33l-2.2,-2.12l-1.64,-4.06l-2.32,-1.69l-1.27,-2.07l-1.96,-1.5l-2.51,-2.65l-0.11,-0.66l4.81,0.53l2.15,2.38l3.31,2.74l2.35,2.66l2.7,0.17l1.95,1.59l1.54,2.17l1.59,0.95l-0.84,1.71l0.15,0.52l1.44,0.87l0.79,0.1l0.4,1.58l0.87,1.4l1.96,0.39l1.0,1.31l-0.6,3.01l-0.09,3.5Z",
+      "name": "Indonesia"
+    },
+    "UA": {
+      "path": "M492.5,162.44l1.28,-2.49l1.82,0.19l0.66,-0.23l0.09,-0.71l-0.25,-0.75l-0.79,-0.72l-0.33,-1.21l-0.86,-0.62l-0.02,-1.19l-1.13,-0.86l-1.15,-0.19l-2.04,-1.0l-1.66,0.32l-0.66,0.47l-0.92,-0.0l-0.84,0.78l-2.48,0.7l-1.18,-0.71l-3.07,-0.36l-0.89,0.43l-0.24,-0.55l-1.11,-0.7l0.35,-0.93l1.26,-1.02l-0.54,-1.23l2.04,-2.43l1.4,-0.62l0.25,-1.19l-1.04,-2.39l0.83,-0.13l1.28,-0.84l1.8,-0.07l2.47,0.26l2.86,0.81l1.88,0.06l0.86,0.44l1.04,-0.41l0.77,0.66l2.18,-0.15l0.92,0.3l0.52,-0.34l0.15,-1.53l0.56,-0.54l2.85,-0.05l0.84,-0.72l3.04,-0.18l1.23,1.46l-0.48,0.77l0.21,1.03l0.36,0.32l1.8,0.14l0.93,2.08l3.18,1.15l1.94,-0.45l1.67,1.49l1.4,-0.03l3.35,0.96l0.02,0.54l-0.96,1.59l0.47,1.97l-0.26,0.7l-2.36,0.28l-1.29,0.89l-0.23,1.38l-1.83,0.27l-1.58,0.97l-2.41,0.21l-2.16,1.17l-0.21,0.38l0.34,2.26l1.23,0.75l2.13,-0.08l-0.14,0.31l-2.65,0.53l-3.23,1.69l-0.87,-0.39l0.42,-1.1l-0.25,-0.52l-2.21,-0.73l2.35,-1.06l0.12,-0.65l-0.93,-0.82l-3.62,-0.74l-0.13,-0.89l-0.46,-0.34l-2.61,0.59l-0.91,1.69l-1.71,2.04l-0.86,-0.4l-1.62,0.27Z",
+      "name": "Ukraine"
+    },
+    "QA": {
+      "path": "M549.33,221.64l-0.76,-0.23l-0.14,-1.64l0.84,-1.29l0.47,0.52l0.04,1.34l-0.45,1.3Z",
+      "name": "Qatar"
+    },
+    "MZ": {
+      "path": "M508.58,318.75l-0.34,-2.57l0.51,-2.05l3.55,0.63l2.5,-0.38l1.02,-0.76l1.49,0.01l2.74,-0.98l1.66,-1.2l0.5,9.24l0.41,1.23l-0.68,1.67l-0.93,1.71l-1.5,1.5l-5.16,2.28l-2.78,2.73l-1.02,0.53l-1.71,1.8l-0.98,0.57l-0.35,2.41l1.16,1.94l0.49,2.17l0.43,0.31l-0.06,2.06l-0.39,1.17l0.5,0.72l-0.25,0.73l-0.92,0.83l-5.12,2.39l-1.22,1.36l0.21,1.13l0.58,0.39l-0.11,0.72l-1.22,-0.01l-0.73,-2.97l0.42,-3.09l-1.78,-5.37l2.49,-2.81l0.69,-1.89l0.44,-0.43l0.28,-1.53l-0.39,-0.93l0.59,-3.65l-0.01,-3.26l-1.49,-1.16l-1.2,-0.22l-1.74,-1.17l-1.92,0.01l-0.29,-2.08l7.06,-1.96l1.28,1.09l0.89,-0.1l0.67,0.44l0.1,0.73l-0.51,1.29l0.19,1.81l1.75,1.83l0.65,-0.13l0.71,-1.65l1.17,-0.86l-0.26,-3.47l-1.05,-1.85l-1.04,-0.94Z",
+      "name": "Mozambique"
+    }
+  },
+  "height": 440.70631074413296,
+  "projection": {
+    "type": "mill",
+    "centralMeridian": 11.5
+  },
+  "width": 900.0
+});
+
+/***/ }),
+
+/***/ "./resources/js/admin/Corona/jquery-jvectormap.min.js":
+/*!************************************************************!*\
+  !*** ./resources/js/admin/Corona/jquery-jvectormap.min.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+!function ($) {
+  var apiParams = {
+    set: {
+      colors: 1,
+      values: 1,
+      backgroundColor: 1,
+      scaleColors: 1,
+      normalizeFunction: 1,
+      focus: 1
+    },
+    get: {
+      selectedRegions: 1,
+      selectedMarkers: 1,
+      mapObject: 1,
+      regionName: 1
+    }
+  };
+
+  $.fn.vectorMap = function (options) {
+    var map,
+        methodName,
+        map = this.children(".jvectormap-container").data("mapObject");
+    if ("addMap" === options) jvm.Map.maps[arguments[1]] = arguments[2];else {
+      if (("set" === options || "get" === options) && apiParams[options][arguments[1]]) return methodName = arguments[1].charAt(0).toUpperCase() + arguments[1].substr(1), map[options + methodName].apply(map, Array.prototype.slice.call(arguments, 2));
+      options = options || {}, options.container = this, map = new jvm.Map(options);
+    }
+    return this;
+  };
+}(jQuery), function (factory) {
+   true ? !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)) : undefined;
+}(function ($) {
+  function handler(event) {
+    var orgEvent = event || window.event,
+        args = slice.call(arguments, 1),
+        delta = 0,
+        deltaX = 0,
+        deltaY = 0,
+        absDelta = 0;
+
+    if (event = $.event.fix(orgEvent), event.type = "mousewheel", "detail" in orgEvent && (deltaY = -1 * orgEvent.detail), "wheelDelta" in orgEvent && (deltaY = orgEvent.wheelDelta), "wheelDeltaY" in orgEvent && (deltaY = orgEvent.wheelDeltaY), "wheelDeltaX" in orgEvent && (deltaX = -1 * orgEvent.wheelDeltaX), "axis" in orgEvent && orgEvent.axis === orgEvent.HORIZONTAL_AXIS && (deltaX = -1 * deltaY, deltaY = 0), delta = 0 === deltaY ? deltaX : deltaY, "deltaY" in orgEvent && (deltaY = -1 * orgEvent.deltaY, delta = deltaY), "deltaX" in orgEvent && (deltaX = orgEvent.deltaX, 0 === deltaY && (delta = -1 * deltaX)), 0 !== deltaY || 0 !== deltaX) {
+      if (1 === orgEvent.deltaMode) {
+        var lineHeight = $.data(this, "mousewheel-line-height");
+        delta *= lineHeight, deltaY *= lineHeight, deltaX *= lineHeight;
+      } else if (2 === orgEvent.deltaMode) {
+        var pageHeight = $.data(this, "mousewheel-page-height");
+        delta *= pageHeight, deltaY *= pageHeight, deltaX *= pageHeight;
+      }
+
+      return absDelta = Math.max(Math.abs(deltaY), Math.abs(deltaX)), (!lowestDelta || lowestDelta > absDelta) && (lowestDelta = absDelta, shouldAdjustOldDeltas(orgEvent, absDelta) && (lowestDelta /= 40)), shouldAdjustOldDeltas(orgEvent, absDelta) && (delta /= 40, deltaX /= 40, deltaY /= 40), delta = Math[delta >= 1 ? "floor" : "ceil"](delta / lowestDelta), deltaX = Math[deltaX >= 1 ? "floor" : "ceil"](deltaX / lowestDelta), deltaY = Math[deltaY >= 1 ? "floor" : "ceil"](deltaY / lowestDelta), event.deltaX = deltaX, event.deltaY = deltaY, event.deltaFactor = lowestDelta, event.deltaMode = 0, args.unshift(event, delta, deltaX, deltaY), nullLowestDeltaTimeout && clearTimeout(nullLowestDeltaTimeout), nullLowestDeltaTimeout = setTimeout(nullLowestDelta, 200), ($.event.dispatch || $.event.handle).apply(this, args);
+    }
+  }
+
+  function nullLowestDelta() {
+    lowestDelta = null;
+  }
+
+  function shouldAdjustOldDeltas(orgEvent, absDelta) {
+    return special.settings.adjustOldDeltas && "mousewheel" === orgEvent.type && absDelta % 120 === 0;
+  }
+
+  var nullLowestDeltaTimeout,
+      lowestDelta,
+      toFix = ["wheel", "mousewheel", "DOMMouseScroll", "MozMousePixelScroll"],
+      toBind = "onwheel" in document || document.documentMode >= 9 ? ["wheel"] : ["mousewheel", "DomMouseScroll", "MozMousePixelScroll"],
+      slice = Array.prototype.slice;
+  if ($.event.fixHooks) for (var i = toFix.length; i;) {
+    $.event.fixHooks[toFix[--i]] = $.event.mouseHooks;
+  }
+  var special = $.event.special.mousewheel = {
+    version: "3.1.9",
+    setup: function setup() {
+      if (this.addEventListener) for (var i = toBind.length; i;) {
+        this.addEventListener(toBind[--i], handler, !1);
+      } else this.onmousewheel = handler;
+      $.data(this, "mousewheel-line-height", special.getLineHeight(this)), $.data(this, "mousewheel-page-height", special.getPageHeight(this));
+    },
+    teardown: function teardown() {
+      if (this.removeEventListener) for (var i = toBind.length; i;) {
+        this.removeEventListener(toBind[--i], handler, !1);
+      } else this.onmousewheel = null;
+    },
+    getLineHeight: function getLineHeight(elem) {
+      return parseInt($(elem)["offsetParent" in $.fn ? "offsetParent" : "parent"]().css("fontSize"), 10);
+    },
+    getPageHeight: function getPageHeight(elem) {
+      return $(elem).height();
+    },
+    settings: {
+      adjustOldDeltas: !0
+    }
+  };
+  $.fn.extend({
+    mousewheel: function mousewheel(fn) {
+      return fn ? this.bind("mousewheel", fn) : this.trigger("mousewheel");
+    },
+    unmousewheel: function unmousewheel(fn) {
+      return this.unbind("mousewheel", fn);
+    }
+  });
+});
+var jvm = {
+  inherits: function inherits(child, parent) {
+    function temp() {}
+
+    temp.prototype = parent.prototype, child.prototype = new temp(), child.prototype.constructor = child, child.parentClass = parent;
+  },
+  mixin: function mixin(target, source) {
+    var prop;
+
+    for (prop in source.prototype) {
+      source.prototype.hasOwnProperty(prop) && (target.prototype[prop] = source.prototype[prop]);
+    }
+  },
+  min: function min(values) {
+    var i,
+        min = Number.MAX_VALUE;
+    if (values instanceof Array) for (i = 0; i < values.length; i++) {
+      values[i] < min && (min = values[i]);
+    } else for (i in values) {
+      values[i] < min && (min = values[i]);
+    }
+    return min;
+  },
+  max: function max(values) {
+    var i,
+        max = Number.MIN_VALUE;
+    if (values instanceof Array) for (i = 0; i < values.length; i++) {
+      values[i] > max && (max = values[i]);
+    } else for (i in values) {
+      values[i] > max && (max = values[i]);
+    }
+    return max;
+  },
+  keys: function keys(object) {
+    var key,
+        keys = [];
+
+    for (key in object) {
+      keys.push(key);
+    }
+
+    return keys;
+  },
+  values: function values(object) {
+    var key,
+        i,
+        values = [];
+
+    for (i = 0; i < arguments.length; i++) {
+      object = arguments[i];
+
+      for (key in object) {
+        values.push(object[key]);
+      }
+    }
+
+    return values;
+  },
+  whenImageLoaded: function whenImageLoaded(url) {
+    var deferred = new jvm.$.Deferred(),
+        img = jvm.$("<img/>");
+    return img.error(function () {
+      deferred.reject();
+    }).load(function () {
+      deferred.resolve(img);
+    }), img.attr("src", url), deferred;
+  },
+  isImageUrl: function isImageUrl(s) {
+    return /\.\w{3,4}$/.test(s);
+  }
+};
+jvm.$ = jQuery, Array.prototype.indexOf || (Array.prototype.indexOf = function (searchElement, fromIndex) {
+  var k;
+  if (null == this) throw new TypeError('"this" is null or not defined');
+  var O = Object(this),
+      len = O.length >>> 0;
+  if (0 === len) return -1;
+  var n = +fromIndex || 0;
+  if (Math.abs(n) === 1 / 0 && (n = 0), n >= len) return -1;
+
+  for (k = Math.max(n >= 0 ? n : len - Math.abs(n), 0); len > k;) {
+    if (k in O && O[k] === searchElement) return k;
+    k++;
+  }
+
+  return -1;
+}), jvm.AbstractElement = function (name, config) {
+  this.node = this.createElement(name), this.name = name, this.properties = {}, config && this.set(config);
+}, jvm.AbstractElement.prototype.set = function (property, value) {
+  var key;
+  if ("object" == _typeof(property)) for (key in property) {
+    this.properties[key] = property[key], this.applyAttr(key, property[key]);
+  } else this.properties[property] = value, this.applyAttr(property, value);
+}, jvm.AbstractElement.prototype.get = function (property) {
+  return this.properties[property];
+}, jvm.AbstractElement.prototype.applyAttr = function (property, value) {
+  this.node.setAttribute(property, value);
+}, jvm.AbstractElement.prototype.remove = function () {
+  jvm.$(this.node).remove();
+}, jvm.AbstractCanvasElement = function (container, width, height) {
+  this.container = container, this.setSize(width, height), this.rootElement = new jvm[this.classPrefix + "GroupElement"](), this.node.appendChild(this.rootElement.node), this.container.appendChild(this.node);
+}, jvm.AbstractCanvasElement.prototype.add = function (element, group) {
+  group = group || this.rootElement, group.add(element), element.canvas = this;
+}, jvm.AbstractCanvasElement.prototype.addPath = function (config, style, group) {
+  var el = new jvm[this.classPrefix + "PathElement"](config, style);
+  return this.add(el, group), el;
+}, jvm.AbstractCanvasElement.prototype.addCircle = function (config, style, group) {
+  var el = new jvm[this.classPrefix + "CircleElement"](config, style);
+  return this.add(el, group), el;
+}, jvm.AbstractCanvasElement.prototype.addImage = function (config, style, group) {
+  var el = new jvm[this.classPrefix + "ImageElement"](config, style);
+  return this.add(el, group), el;
+}, jvm.AbstractCanvasElement.prototype.addText = function (config, style, group) {
+  var el = new jvm[this.classPrefix + "TextElement"](config, style);
+  return this.add(el, group), el;
+}, jvm.AbstractCanvasElement.prototype.addGroup = function (parentGroup) {
+  var el = new jvm[this.classPrefix + "GroupElement"]();
+  return parentGroup ? parentGroup.node.appendChild(el.node) : this.node.appendChild(el.node), el.canvas = this, el;
+}, jvm.AbstractShapeElement = function (name, config, style) {
+  this.style = style || {}, this.style.current = this.style.current || {}, this.isHovered = !1, this.isSelected = !1, this.updateStyle();
+}, jvm.AbstractShapeElement.prototype.setStyle = function (property, value) {
+  var styles = {};
+  "object" == _typeof(property) ? styles = property : styles[property] = value, jvm.$.extend(this.style.current, styles), this.updateStyle();
+}, jvm.AbstractShapeElement.prototype.updateStyle = function () {
+  var attrs = {};
+  jvm.AbstractShapeElement.mergeStyles(attrs, this.style.initial), jvm.AbstractShapeElement.mergeStyles(attrs, this.style.current), this.isHovered && jvm.AbstractShapeElement.mergeStyles(attrs, this.style.hover), this.isSelected && (jvm.AbstractShapeElement.mergeStyles(attrs, this.style.selected), this.isHovered && jvm.AbstractShapeElement.mergeStyles(attrs, this.style.selectedHover)), this.set(attrs);
+}, jvm.AbstractShapeElement.mergeStyles = function (styles, newStyles) {
+  var key;
+  newStyles = newStyles || {};
+
+  for (key in newStyles) {
+    null === newStyles[key] ? delete styles[key] : styles[key] = newStyles[key];
+  }
+}, jvm.SVGElement = function () {
+  jvm.SVGElement.parentClass.apply(this, arguments);
+}, jvm.inherits(jvm.SVGElement, jvm.AbstractElement), jvm.SVGElement.svgns = "http://www.w3.org/2000/svg", jvm.SVGElement.prototype.createElement = function (tagName) {
+  return document.createElementNS(jvm.SVGElement.svgns, tagName);
+}, jvm.SVGElement.prototype.addClass = function (className) {
+  this.node.setAttribute("class", className);
+}, jvm.SVGElement.prototype.getElementCtr = function (ctr) {
+  return jvm["SVG" + ctr];
+}, jvm.SVGElement.prototype.getBBox = function () {
+  return this.node.getBBox();
+}, jvm.SVGGroupElement = function () {
+  jvm.SVGGroupElement.parentClass.call(this, "g");
+}, jvm.inherits(jvm.SVGGroupElement, jvm.SVGElement), jvm.SVGGroupElement.prototype.add = function (element) {
+  this.node.appendChild(element.node);
+}, jvm.SVGCanvasElement = function () {
+  this.classPrefix = "SVG", jvm.SVGCanvasElement.parentClass.call(this, "svg"), this.defsElement = new jvm.SVGElement("defs"), this.node.appendChild(this.defsElement.node), jvm.AbstractCanvasElement.apply(this, arguments);
+}, jvm.inherits(jvm.SVGCanvasElement, jvm.SVGElement), jvm.mixin(jvm.SVGCanvasElement, jvm.AbstractCanvasElement), jvm.SVGCanvasElement.prototype.setSize = function (width, height) {
+  this.width = width, this.height = height, this.node.setAttribute("width", width), this.node.setAttribute("height", height);
+}, jvm.SVGCanvasElement.prototype.applyTransformParams = function (scale, transX, transY) {
+  this.scale = scale, this.transX = transX, this.transY = transY, this.rootElement.node.setAttribute("transform", "scale(" + scale + ") translate(" + transX + ", " + transY + ")");
+}, jvm.SVGShapeElement = function (name, config) {
+  jvm.SVGShapeElement.parentClass.call(this, name, config), jvm.AbstractShapeElement.apply(this, arguments);
+}, jvm.inherits(jvm.SVGShapeElement, jvm.SVGElement), jvm.mixin(jvm.SVGShapeElement, jvm.AbstractShapeElement), jvm.SVGShapeElement.prototype.applyAttr = function (attr, value) {
+  var patternEl,
+      imageEl,
+      that = this;
+  "fill" === attr && jvm.isImageUrl(value) ? jvm.SVGShapeElement.images[value] ? this.applyAttr("fill", "url(#image" + jvm.SVGShapeElement.images[value] + ")") : jvm.whenImageLoaded(value).then(function (img) {
+    imageEl = new jvm.SVGElement("image"), imageEl.node.setAttributeNS("http://www.w3.org/1999/xlink", "href", value), imageEl.applyAttr("x", "0"), imageEl.applyAttr("y", "0"), imageEl.applyAttr("width", img[0].width), imageEl.applyAttr("height", img[0].height), patternEl = new jvm.SVGElement("pattern"), patternEl.applyAttr("id", "image" + jvm.SVGShapeElement.imageCounter), patternEl.applyAttr("x", 0), patternEl.applyAttr("y", 0), patternEl.applyAttr("width", img[0].width / 2), patternEl.applyAttr("height", img[0].height / 2), patternEl.applyAttr("viewBox", "0 0 " + img[0].width + " " + img[0].height), patternEl.applyAttr("patternUnits", "userSpaceOnUse"), patternEl.node.appendChild(imageEl.node), that.canvas.defsElement.node.appendChild(patternEl.node), jvm.SVGShapeElement.images[value] = jvm.SVGShapeElement.imageCounter++, that.applyAttr("fill", "url(#image" + jvm.SVGShapeElement.images[value] + ")");
+  }) : jvm.SVGShapeElement.parentClass.prototype.applyAttr.apply(this, arguments);
+}, jvm.SVGShapeElement.imageCounter = 1, jvm.SVGShapeElement.images = {}, jvm.SVGPathElement = function (config, style) {
+  jvm.SVGPathElement.parentClass.call(this, "path", config, style), this.node.setAttribute("fill-rule", "evenodd");
+}, jvm.inherits(jvm.SVGPathElement, jvm.SVGShapeElement), jvm.SVGCircleElement = function (config, style) {
+  jvm.SVGCircleElement.parentClass.call(this, "circle", config, style);
+}, jvm.inherits(jvm.SVGCircleElement, jvm.SVGShapeElement), jvm.SVGImageElement = function (config, style) {
+  jvm.SVGImageElement.parentClass.call(this, "image", config, style);
+}, jvm.inherits(jvm.SVGImageElement, jvm.SVGShapeElement), jvm.SVGImageElement.prototype.applyAttr = function (attr, value) {
+  var that = this;
+  "image" == attr ? jvm.whenImageLoaded(value).then(function (img) {
+    that.node.setAttributeNS("http://www.w3.org/1999/xlink", "href", value), that.width = img[0].width, that.height = img[0].height, that.applyAttr("width", that.width), that.applyAttr("height", that.height), that.applyAttr("x", that.cx - that.width / 2), that.applyAttr("y", that.cy - that.height / 2), jvm.$(that.node).trigger("imageloaded", [img]);
+  }) : "cx" == attr ? (this.cx = value, this.width && this.applyAttr("x", value - this.width / 2)) : "cy" == attr ? (this.cy = value, this.height && this.applyAttr("y", value - this.height / 2)) : jvm.SVGImageElement.parentClass.prototype.applyAttr.apply(this, arguments);
+}, jvm.SVGTextElement = function (config, style) {
+  jvm.SVGTextElement.parentClass.call(this, "text", config, style);
+}, jvm.inherits(jvm.SVGTextElement, jvm.SVGShapeElement), jvm.SVGTextElement.prototype.applyAttr = function (attr, value) {
+  "text" === attr ? this.node.textContent = value : jvm.SVGTextElement.parentClass.prototype.applyAttr.apply(this, arguments);
+}, jvm.VMLElement = function () {
+  jvm.VMLElement.VMLInitialized || jvm.VMLElement.initializeVML(), jvm.VMLElement.parentClass.apply(this, arguments);
+}, jvm.inherits(jvm.VMLElement, jvm.AbstractElement), jvm.VMLElement.VMLInitialized = !1, jvm.VMLElement.initializeVML = function () {
+  try {
+    document.namespaces.rvml || document.namespaces.add("rvml", "urn:schemas-microsoft-com:vml"), jvm.VMLElement.prototype.createElement = function (tagName) {
+      return document.createElement("<rvml:" + tagName + ' class="rvml">');
+    };
+  } catch (e) {
+    jvm.VMLElement.prototype.createElement = function (tagName) {
+      return document.createElement("<" + tagName + ' xmlns="urn:schemas-microsoft.com:vml" class="rvml">');
+    };
+  }
+
+  document.createStyleSheet().addRule(".rvml", "behavior:url(#default#VML)"), jvm.VMLElement.VMLInitialized = !0;
+}, jvm.VMLElement.prototype.getElementCtr = function (ctr) {
+  return jvm["VML" + ctr];
+}, jvm.VMLElement.prototype.addClass = function (className) {
+  jvm.$(this.node).addClass(className);
+}, jvm.VMLElement.prototype.applyAttr = function (attr, value) {
+  this.node[attr] = value;
+}, jvm.VMLElement.prototype.getBBox = function () {
+  var node = jvm.$(this.node);
+  return {
+    x: node.position().left / this.canvas.scale,
+    y: node.position().top / this.canvas.scale,
+    width: node.width() / this.canvas.scale,
+    height: node.height() / this.canvas.scale
+  };
+}, jvm.VMLGroupElement = function () {
+  jvm.VMLGroupElement.parentClass.call(this, "group"), this.node.style.left = "0px", this.node.style.top = "0px", this.node.coordorigin = "0 0";
+}, jvm.inherits(jvm.VMLGroupElement, jvm.VMLElement), jvm.VMLGroupElement.prototype.add = function (element) {
+  this.node.appendChild(element.node);
+}, jvm.VMLCanvasElement = function () {
+  this.classPrefix = "VML", jvm.VMLCanvasElement.parentClass.call(this, "group"), jvm.AbstractCanvasElement.apply(this, arguments), this.node.style.position = "absolute";
+}, jvm.inherits(jvm.VMLCanvasElement, jvm.VMLElement), jvm.mixin(jvm.VMLCanvasElement, jvm.AbstractCanvasElement), jvm.VMLCanvasElement.prototype.setSize = function (width, height) {
+  var paths, groups, i, l;
+
+  if (this.width = width, this.height = height, this.node.style.width = width + "px", this.node.style.height = height + "px", this.node.coordsize = width + " " + height, this.node.coordorigin = "0 0", this.rootElement) {
+    for (paths = this.rootElement.node.getElementsByTagName("shape"), i = 0, l = paths.length; l > i; i++) {
+      paths[i].coordsize = width + " " + height, paths[i].style.width = width + "px", paths[i].style.height = height + "px";
+    }
+
+    for (groups = this.node.getElementsByTagName("group"), i = 0, l = groups.length; l > i; i++) {
+      groups[i].coordsize = width + " " + height, groups[i].style.width = width + "px", groups[i].style.height = height + "px";
+    }
+  }
+}, jvm.VMLCanvasElement.prototype.applyTransformParams = function (scale, transX, transY) {
+  this.scale = scale, this.transX = transX, this.transY = transY, this.rootElement.node.coordorigin = this.width - transX - this.width / 100 + "," + (this.height - transY - this.height / 100), this.rootElement.node.coordsize = this.width / scale + "," + this.height / scale;
+}, jvm.VMLShapeElement = function (name, config) {
+  jvm.VMLShapeElement.parentClass.call(this, name, config), this.fillElement = new jvm.VMLElement("fill"), this.strokeElement = new jvm.VMLElement("stroke"), this.node.appendChild(this.fillElement.node), this.node.appendChild(this.strokeElement.node), this.node.stroked = !1, jvm.AbstractShapeElement.apply(this, arguments);
+}, jvm.inherits(jvm.VMLShapeElement, jvm.VMLElement), jvm.mixin(jvm.VMLShapeElement, jvm.AbstractShapeElement), jvm.VMLShapeElement.prototype.applyAttr = function (attr, value) {
+  switch (attr) {
+    case "fill":
+      this.node.fillcolor = value;
+      break;
+
+    case "fill-opacity":
+      this.fillElement.node.opacity = Math.round(100 * value) + "%";
+      break;
+
+    case "stroke":
+      this.node.stroked = "none" === value ? !1 : !0, this.node.strokecolor = value;
+      break;
+
+    case "stroke-opacity":
+      this.strokeElement.node.opacity = Math.round(100 * value) + "%";
+      break;
+
+    case "stroke-width":
+      this.node.stroked = 0 === parseInt(value, 10) ? !1 : !0, this.node.strokeweight = value;
+      break;
+
+    case "d":
+      this.node.path = jvm.VMLPathElement.pathSvgToVml(value);
+      break;
+
+    default:
+      jvm.VMLShapeElement.parentClass.prototype.applyAttr.apply(this, arguments);
+  }
+}, jvm.VMLPathElement = function (config, style) {
+  var scale = new jvm.VMLElement("skew");
+  jvm.VMLPathElement.parentClass.call(this, "shape", config, style), this.node.coordorigin = "0 0", scale.node.on = !0, scale.node.matrix = "0.01,0,0,0.01,0,0", scale.node.offset = "0,0", this.node.appendChild(scale.node);
+}, jvm.inherits(jvm.VMLPathElement, jvm.VMLShapeElement), jvm.VMLPathElement.prototype.applyAttr = function (attr, value) {
+  "d" === attr ? this.node.path = jvm.VMLPathElement.pathSvgToVml(value) : jvm.VMLShapeElement.prototype.applyAttr.call(this, attr, value);
+}, jvm.VMLPathElement.pathSvgToVml = function (path) {
+  var ctrlx,
+      ctrly,
+      cx = 0,
+      cy = 0;
+  return path = path.replace(/(-?\d+)e(-?\d+)/g, "0"), path.replace(/([MmLlHhVvCcSs])\s*((?:-?\d*(?:\.\d+)?\s*,?\s*)+)/g, function (segment, letter, coords) {
+    coords = coords.replace(/(\d)-/g, "$1,-").replace(/^\s+/g, "").replace(/\s+$/g, "").replace(/\s+/g, ",").split(","), coords[0] || coords.shift();
+
+    for (var i = 0, l = coords.length; l > i; i++) {
+      coords[i] = Math.round(100 * coords[i]);
+    }
+
+    switch (letter) {
+      case "m":
+        return cx += coords[0], cy += coords[1], "t" + coords.join(",");
+
+      case "M":
+        return cx = coords[0], cy = coords[1], "m" + coords.join(",");
+
+      case "l":
+        return cx += coords[0], cy += coords[1], "r" + coords.join(",");
+
+      case "L":
+        return cx = coords[0], cy = coords[1], "l" + coords.join(",");
+
+      case "h":
+        return cx += coords[0], "r" + coords[0] + ",0";
+
+      case "H":
+        return cx = coords[0], "l" + cx + "," + cy;
+
+      case "v":
+        return cy += coords[0], "r0," + coords[0];
+
+      case "V":
+        return cy = coords[0], "l" + cx + "," + cy;
+
+      case "c":
+        return ctrlx = cx + coords[coords.length - 4], ctrly = cy + coords[coords.length - 3], cx += coords[coords.length - 2], cy += coords[coords.length - 1], "v" + coords.join(",");
+
+      case "C":
+        return ctrlx = coords[coords.length - 4], ctrly = coords[coords.length - 3], cx = coords[coords.length - 2], cy = coords[coords.length - 1], "c" + coords.join(",");
+
+      case "s":
+        return coords.unshift(cy - ctrly), coords.unshift(cx - ctrlx), ctrlx = cx + coords[coords.length - 4], ctrly = cy + coords[coords.length - 3], cx += coords[coords.length - 2], cy += coords[coords.length - 1], "v" + coords.join(",");
+
+      case "S":
+        return coords.unshift(cy + cy - ctrly), coords.unshift(cx + cx - ctrlx), ctrlx = coords[coords.length - 4], ctrly = coords[coords.length - 3], cx = coords[coords.length - 2], cy = coords[coords.length - 1], "c" + coords.join(",");
+    }
+
+    return "";
+  }).replace(/z/g, "e");
+}, jvm.VMLCircleElement = function (config, style) {
+  jvm.VMLCircleElement.parentClass.call(this, "oval", config, style);
+}, jvm.inherits(jvm.VMLCircleElement, jvm.VMLShapeElement), jvm.VMLCircleElement.prototype.applyAttr = function (attr, value) {
+  switch (attr) {
+    case "r":
+      this.node.style.width = 2 * value + "px", this.node.style.height = 2 * value + "px", this.applyAttr("cx", this.get("cx") || 0), this.applyAttr("cy", this.get("cy") || 0);
+      break;
+
+    case "cx":
+      if (!value) return;
+      this.node.style.left = value - (this.get("r") || 0) + "px";
+      break;
+
+    case "cy":
+      if (!value) return;
+      this.node.style.top = value - (this.get("r") || 0) + "px";
+      break;
+
+    default:
+      jvm.VMLCircleElement.parentClass.prototype.applyAttr.call(this, attr, value);
+  }
+}, jvm.VectorCanvas = function (container, width, height) {
+  return this.mode = window.SVGAngle ? "svg" : "vml", this.impl = "svg" == this.mode ? new jvm.SVGCanvasElement(container, width, height) : new jvm.VMLCanvasElement(container, width, height), this.impl.mode = this.mode, this.impl;
+}, jvm.SimpleScale = function (scale) {
+  this.scale = scale;
+}, jvm.SimpleScale.prototype.getValue = function (value) {
+  return value;
+}, jvm.OrdinalScale = function (scale) {
+  this.scale = scale;
+}, jvm.OrdinalScale.prototype.getValue = function (value) {
+  return this.scale[value];
+}, jvm.OrdinalScale.prototype.getTicks = function () {
+  var key,
+      ticks = [];
+
+  for (key in this.scale) {
+    ticks.push({
+      label: key,
+      value: this.scale[key]
+    });
+  }
+
+  return ticks;
+}, jvm.NumericScale = function (scale, normalizeFunction, minValue, maxValue) {
+  this.scale = [], normalizeFunction = normalizeFunction || "linear", scale && this.setScale(scale), normalizeFunction && this.setNormalizeFunction(normalizeFunction), "undefined" != typeof minValue && this.setMin(minValue), "undefined" != typeof maxValue && this.setMax(maxValue);
+}, jvm.NumericScale.prototype = {
+  setMin: function setMin(min) {
+    this.clearMinValue = min, this.minValue = "function" == typeof this.normalize ? this.normalize(min) : min;
+  },
+  setMax: function setMax(max) {
+    this.clearMaxValue = max, this.maxValue = "function" == typeof this.normalize ? this.normalize(max) : max;
+  },
+  setScale: function setScale(scale) {
+    var i;
+
+    for (this.scale = [], i = 0; i < scale.length; i++) {
+      this.scale[i] = [scale[i]];
+    }
+  },
+  setNormalizeFunction: function setNormalizeFunction(f) {
+    "polynomial" === f ? this.normalize = function (value) {
+      return Math.pow(value, .2);
+    } : "linear" === f ? delete this.normalize : this.normalize = f, this.setMin(this.clearMinValue), this.setMax(this.clearMaxValue);
+  },
+  getValue: function getValue(value) {
+    var l,
+        c,
+        lengthes = [],
+        fullLength = 0,
+        i = 0;
+
+    for ("function" == typeof this.normalize && (value = this.normalize(value)), i = 0; i < this.scale.length - 1; i++) {
+      l = this.vectorLength(this.vectorSubtract(this.scale[i + 1], this.scale[i])), lengthes.push(l), fullLength += l;
+    }
+
+    for (c = (this.maxValue - this.minValue) / fullLength, i = 0; i < lengthes.length; i++) {
+      lengthes[i] *= c;
+    }
+
+    for (i = 0, value -= this.minValue; value - lengthes[i] >= 0;) {
+      value -= lengthes[i], i++;
+    }
+
+    return value = this.vectorToNum(i == this.scale.length - 1 ? this.scale[i] : this.vectorAdd(this.scale[i], this.vectorMult(this.vectorSubtract(this.scale[i + 1], this.scale[i]), value / lengthes[i])));
+  },
+  vectorToNum: function vectorToNum(vector) {
+    var i,
+        num = 0;
+
+    for (i = 0; i < vector.length; i++) {
+      num += Math.round(vector[i]) * Math.pow(256, vector.length - i - 1);
+    }
+
+    return num;
+  },
+  vectorSubtract: function vectorSubtract(vector1, vector2) {
+    var i,
+        vector = [];
+
+    for (i = 0; i < vector1.length; i++) {
+      vector[i] = vector1[i] - vector2[i];
+    }
+
+    return vector;
+  },
+  vectorAdd: function vectorAdd(vector1, vector2) {
+    var i,
+        vector = [];
+
+    for (i = 0; i < vector1.length; i++) {
+      vector[i] = vector1[i] + vector2[i];
+    }
+
+    return vector;
+  },
+  vectorMult: function vectorMult(vector, num) {
+    var i,
+        result = [];
+
+    for (i = 0; i < vector.length; i++) {
+      result[i] = vector[i] * num;
+    }
+
+    return result;
+  },
+  vectorLength: function vectorLength(vector) {
+    var i,
+        result = 0;
+
+    for (i = 0; i < vector.length; i++) {
+      result += vector[i] * vector[i];
+    }
+
+    return Math.sqrt(result);
+  },
+  getTicks: function getTicks() {
+    var tick,
+        v,
+        m = 5,
+        extent = [this.clearMinValue, this.clearMaxValue],
+        span = extent[1] - extent[0],
+        step = Math.pow(10, Math.floor(Math.log(span / m) / Math.LN10)),
+        err = m / span * step,
+        ticks = [];
+
+    for (.15 >= err ? step *= 10 : .35 >= err ? step *= 5 : .75 >= err && (step *= 2), extent[0] = Math.floor(extent[0] / step) * step, extent[1] = Math.ceil(extent[1] / step) * step, tick = extent[0]; tick <= extent[1];) {
+      v = tick == extent[0] ? this.clearMinValue : tick == extent[1] ? this.clearMaxValue : tick, ticks.push({
+        label: tick,
+        value: this.getValue(v)
+      }), tick += step;
+    }
+
+    return ticks;
+  }
+}, jvm.ColorScale = function () {
+  jvm.ColorScale.parentClass.apply(this, arguments);
+}, jvm.inherits(jvm.ColorScale, jvm.NumericScale), jvm.ColorScale.prototype.setScale = function (scale) {
+  var i;
+
+  for (i = 0; i < scale.length; i++) {
+    this.scale[i] = jvm.ColorScale.rgbToArray(scale[i]);
+  }
+}, jvm.ColorScale.prototype.getValue = function (value) {
+  return jvm.ColorScale.numToRgb(jvm.ColorScale.parentClass.prototype.getValue.call(this, value));
+}, jvm.ColorScale.arrayToRgb = function (ar) {
+  var d,
+      i,
+      rgb = "#";
+
+  for (i = 0; i < ar.length; i++) {
+    d = ar[i].toString(16), rgb += 1 == d.length ? "0" + d : d;
+  }
+
+  return rgb;
+}, jvm.ColorScale.numToRgb = function (num) {
+  for (num = num.toString(16); num.length < 6;) {
+    num = "0" + num;
+  }
+
+  return "#" + num;
+}, jvm.ColorScale.rgbToArray = function (rgb) {
+  return rgb = rgb.substr(1), [parseInt(rgb.substr(0, 2), 16), parseInt(rgb.substr(2, 2), 16), parseInt(rgb.substr(4, 2), 16)];
+}, jvm.Legend = function (params) {
+  this.params = params || {}, this.map = this.params.map, this.series = this.params.series, this.body = jvm.$("<div/>"), this.body.addClass("jvectormap-legend"), this.params.cssClass && this.body.addClass(this.params.cssClass), params.vertical ? this.map.legendCntVertical.append(this.body) : this.map.legendCntHorizontal.append(this.body), this.render();
+}, jvm.Legend.prototype.render = function () {
+  var i,
+      tick,
+      sample,
+      label,
+      ticks = this.series.scale.getTicks(),
+      inner = jvm.$("<div/>").addClass("jvectormap-legend-inner");
+
+  for (this.body.html(""), this.params.title && this.body.append(jvm.$("<div/>").addClass("jvectormap-legend-title").html(this.params.title)), this.body.append(inner), i = 0; i < ticks.length; i++) {
+    switch (tick = jvm.$("<div/>").addClass("jvectormap-legend-tick"), sample = jvm.$("<div/>").addClass("jvectormap-legend-tick-sample"), this.series.params.attribute) {
+      case "fill":
+        jvm.isImageUrl(ticks[i].value) ? sample.css("background", "url(" + ticks[i].value + ")") : sample.css("background", ticks[i].value);
+        break;
+
+      case "stroke":
+        sample.css("background", ticks[i].value);
+        break;
+
+      case "image":
+        sample.css("background", "url(" + ticks[i].value + ") no-repeat center center");
+        break;
+
+      case "r":
+        jvm.$("<div/>").css({
+          "border-radius": ticks[i].value,
+          border: this.map.params.markerStyle.initial["stroke-width"] + "px " + this.map.params.markerStyle.initial.stroke + " solid",
+          width: 2 * ticks[i].value + "px",
+          height: 2 * ticks[i].value + "px",
+          background: this.map.params.markerStyle.initial.fill
+        }).appendTo(sample);
+    }
+
+    tick.append(sample), label = ticks[i].label, this.params.labelRender && (label = this.params.labelRender(label)), tick.append(jvm.$("<div>" + label + " </div>").addClass("jvectormap-legend-tick-text")), inner.append(tick);
+  }
+
+  inner.append(jvm.$("<div/>").css("clear", "both"));
+}, jvm.DataSeries = function (params, elements, map) {
+  var scaleConstructor;
+  params = params || {}, params.attribute = params.attribute || "fill", this.elements = elements, this.params = params, this.map = map, params.attributes && this.setAttributes(params.attributes), jvm.$.isArray(params.scale) ? (scaleConstructor = "fill" === params.attribute || "stroke" === params.attribute ? jvm.ColorScale : jvm.NumericScale, this.scale = new scaleConstructor(params.scale, params.normalizeFunction, params.min, params.max)) : this.scale = params.scale ? new jvm.OrdinalScale(params.scale) : new jvm.SimpleScale(params.scale), this.values = params.values || {}, this.setValues(this.values), this.params.legend && (this.legend = new jvm.Legend($.extend({
+    map: this.map,
+    series: this
+  }, this.params.legend)));
+}, jvm.DataSeries.prototype = {
+  setAttributes: function setAttributes(key, attr) {
+    var code,
+        attrs = key;
+    if ("string" == typeof key) this.elements[key] && this.elements[key].setStyle(this.params.attribute, attr);else for (code in attrs) {
+      this.elements[code] && this.elements[code].element.setStyle(this.params.attribute, attrs[code]);
+    }
+  },
+  setValues: function setValues(values) {
+    var val,
+        cc,
+        max = -Number.MAX_VALUE,
+        min = Number.MAX_VALUE,
+        attrs = {};
+    if (this.scale instanceof jvm.OrdinalScale || this.scale instanceof jvm.SimpleScale) for (cc in values) {
+      attrs[cc] = values[cc] ? this.scale.getValue(values[cc]) : this.elements[cc].element.style.initial[this.params.attribute];
+    } else {
+      if ("undefined" == typeof this.params.min || "undefined" == typeof this.params.max) for (cc in values) {
+        val = parseFloat(values[cc]), val > max && (max = val), min > val && (min = val);
+      }
+      "undefined" == typeof this.params.min ? (this.scale.setMin(min), this.params.min = min) : this.scale.setMin(this.params.min), "undefined" == typeof this.params.max ? (this.scale.setMax(max), this.params.max = max) : this.scale.setMax(this.params.max);
+
+      for (cc in values) {
+        "indexOf" != cc && (val = parseFloat(values[cc]), attrs[cc] = isNaN(val) ? this.elements[cc].element.style.initial[this.params.attribute] : this.scale.getValue(val));
+      }
+    }
+    this.setAttributes(attrs), jvm.$.extend(this.values, values);
+  },
+  clear: function clear() {
+    var key,
+        attrs = {};
+
+    for (key in this.values) {
+      this.elements[key] && (attrs[key] = this.elements[key].element.shape.style.initial[this.params.attribute]);
+    }
+
+    this.setAttributes(attrs), this.values = {};
+  },
+  setScale: function setScale(scale) {
+    this.scale.setScale(scale), this.values && this.setValues(this.values);
+  },
+  setNormalizeFunction: function setNormalizeFunction(f) {
+    this.scale.setNormalizeFunction(f), this.values && this.setValues(this.values);
+  }
+}, jvm.Proj = {
+  degRad: 180 / Math.PI,
+  radDeg: Math.PI / 180,
+  radius: 6381372,
+  sgn: function sgn(n) {
+    return n > 0 ? 1 : 0 > n ? -1 : n;
+  },
+  mill: function mill(lat, lng, c) {
+    return {
+      x: this.radius * (lng - c) * this.radDeg,
+      y: -this.radius * Math.log(Math.tan((45 + .4 * lat) * this.radDeg)) / .8
+    };
+  },
+  mill_inv: function mill_inv(x, y, c) {
+    return {
+      lat: (2.5 * Math.atan(Math.exp(.8 * y / this.radius)) - 5 * Math.PI / 8) * this.degRad,
+      lng: (c * this.radDeg + x / this.radius) * this.degRad
+    };
+  },
+  merc: function merc(lat, lng, c) {
+    return {
+      x: this.radius * (lng - c) * this.radDeg,
+      y: -this.radius * Math.log(Math.tan(Math.PI / 4 + lat * Math.PI / 360))
+    };
+  },
+  merc_inv: function merc_inv(x, y, c) {
+    return {
+      lat: (2 * Math.atan(Math.exp(y / this.radius)) - Math.PI / 2) * this.degRad,
+      lng: (c * this.radDeg + x / this.radius) * this.degRad
+    };
+  },
+  aea: function aea(lat, lng, c) {
+    var fi0 = 0,
+        lambda0 = c * this.radDeg,
+        fi1 = 29.5 * this.radDeg,
+        fi2 = 45.5 * this.radDeg,
+        fi = lat * this.radDeg,
+        lambda = lng * this.radDeg,
+        n = (Math.sin(fi1) + Math.sin(fi2)) / 2,
+        C = Math.cos(fi1) * Math.cos(fi1) + 2 * n * Math.sin(fi1),
+        theta = n * (lambda - lambda0),
+        ro = Math.sqrt(C - 2 * n * Math.sin(fi)) / n,
+        ro0 = Math.sqrt(C - 2 * n * Math.sin(fi0)) / n;
+    return {
+      x: ro * Math.sin(theta) * this.radius,
+      y: -(ro0 - ro * Math.cos(theta)) * this.radius
+    };
+  },
+  aea_inv: function aea_inv(xCoord, yCoord, c) {
+    var x = xCoord / this.radius,
+        y = yCoord / this.radius,
+        fi0 = 0,
+        lambda0 = c * this.radDeg,
+        fi1 = 29.5 * this.radDeg,
+        fi2 = 45.5 * this.radDeg,
+        n = (Math.sin(fi1) + Math.sin(fi2)) / 2,
+        C = Math.cos(fi1) * Math.cos(fi1) + 2 * n * Math.sin(fi1),
+        ro0 = Math.sqrt(C - 2 * n * Math.sin(fi0)) / n,
+        ro = Math.sqrt(x * x + (ro0 - y) * (ro0 - y)),
+        theta = Math.atan(x / (ro0 - y));
+    return {
+      lat: Math.asin((C - ro * ro * n * n) / (2 * n)) * this.degRad,
+      lng: (lambda0 + theta / n) * this.degRad
+    };
+  },
+  lcc: function lcc(lat, lng, c) {
+    var fi0 = 0,
+        lambda0 = c * this.radDeg,
+        lambda = lng * this.radDeg,
+        fi1 = 33 * this.radDeg,
+        fi2 = 45 * this.radDeg,
+        fi = lat * this.radDeg,
+        n = Math.log(Math.cos(fi1) * (1 / Math.cos(fi2))) / Math.log(Math.tan(Math.PI / 4 + fi2 / 2) * (1 / Math.tan(Math.PI / 4 + fi1 / 2))),
+        F = Math.cos(fi1) * Math.pow(Math.tan(Math.PI / 4 + fi1 / 2), n) / n,
+        ro = F * Math.pow(1 / Math.tan(Math.PI / 4 + fi / 2), n),
+        ro0 = F * Math.pow(1 / Math.tan(Math.PI / 4 + fi0 / 2), n);
+    return {
+      x: ro * Math.sin(n * (lambda - lambda0)) * this.radius,
+      y: -(ro0 - ro * Math.cos(n * (lambda - lambda0))) * this.radius
+    };
+  },
+  lcc_inv: function lcc_inv(xCoord, yCoord, c) {
+    var x = xCoord / this.radius,
+        y = yCoord / this.radius,
+        fi0 = 0,
+        lambda0 = c * this.radDeg,
+        fi1 = 33 * this.radDeg,
+        fi2 = 45 * this.radDeg,
+        n = Math.log(Math.cos(fi1) * (1 / Math.cos(fi2))) / Math.log(Math.tan(Math.PI / 4 + fi2 / 2) * (1 / Math.tan(Math.PI / 4 + fi1 / 2))),
+        F = Math.cos(fi1) * Math.pow(Math.tan(Math.PI / 4 + fi1 / 2), n) / n,
+        ro0 = F * Math.pow(1 / Math.tan(Math.PI / 4 + fi0 / 2), n),
+        ro = this.sgn(n) * Math.sqrt(x * x + (ro0 - y) * (ro0 - y)),
+        theta = Math.atan(x / (ro0 - y));
+    return {
+      lat: (2 * Math.atan(Math.pow(F / ro, 1 / n)) - Math.PI / 2) * this.degRad,
+      lng: (lambda0 + theta / n) * this.degRad
+    };
+  }
+}, jvm.MapObject = function () {}, jvm.MapObject.prototype.getLabelText = function (key) {
+  var text;
+  return text = this.config.label ? "function" == typeof this.config.label.render ? this.config.label.render(key) : key : null;
+}, jvm.MapObject.prototype.getLabelOffsets = function (key) {
+  var offsets;
+  return this.config.label && ("function" == typeof this.config.label.offsets ? offsets = this.config.label.offsets(key) : "object" == _typeof(this.config.label.offsets) && (offsets = this.config.label.offsets[key])), offsets || [0, 0];
+}, jvm.MapObject.prototype.setHovered = function (isHovered) {
+  this.isHovered !== isHovered && (this.isHovered = isHovered, this.shape.isHovered = isHovered, this.shape.updateStyle(), this.label && (this.label.isHovered = isHovered, this.label.updateStyle()));
+}, jvm.MapObject.prototype.setSelected = function (isSelected) {
+  this.isSelected !== isSelected && (this.isSelected = isSelected, this.shape.isSelected = isSelected, this.shape.updateStyle(), this.label && (this.label.isSelected = isSelected, this.label.updateStyle()), jvm.$(this.shape).trigger("selected", [isSelected]));
+}, jvm.MapObject.prototype.setStyle = function () {
+  this.shape.setStyle.apply(this.shape, arguments);
+}, jvm.MapObject.prototype.remove = function () {
+  this.shape.remove(), this.label && this.label.remove();
+}, jvm.Region = function (config) {
+  var bbox, text, offsets;
+  this.config = config, this.map = this.config.map, this.shape = config.canvas.addPath({
+    d: config.path,
+    "data-code": config.code
+  }, config.style, config.canvas.rootElement), this.shape.addClass("jvectormap-region jvectormap-element"), bbox = this.shape.getBBox(), text = this.getLabelText(config.code), this.config.label && text && (offsets = this.getLabelOffsets(config.code), this.labelX = bbox.x + bbox.width / 2 + offsets[0], this.labelY = bbox.y + bbox.height / 2 + offsets[1], this.label = config.canvas.addText({
+    text: text,
+    "text-anchor": "middle",
+    "alignment-baseline": "central",
+    x: this.labelX,
+    y: this.labelY,
+    "data-code": config.code
+  }, config.labelStyle, config.labelsGroup), this.label.addClass("jvectormap-region jvectormap-element"));
+}, jvm.inherits(jvm.Region, jvm.MapObject), jvm.Region.prototype.updateLabelPosition = function () {
+  this.label && this.label.set({
+    x: this.labelX * this.map.scale + this.map.transX * this.map.scale,
+    y: this.labelY * this.map.scale + this.map.transY * this.map.scale
+  });
+}, jvm.Marker = function (config) {
+  var text;
+  this.config = config, this.map = this.config.map, this.isImage = !!this.config.style.initial.image, this.createShape(), text = this.getLabelText(config.index), this.config.label && text && (this.offsets = this.getLabelOffsets(config.index), this.labelX = config.cx / this.map.scale - this.map.transX, this.labelY = config.cy / this.map.scale - this.map.transY, this.label = config.canvas.addText({
+    text: text,
+    "data-index": config.index,
+    dy: "0.6ex",
+    x: this.labelX,
+    y: this.labelY
+  }, config.labelStyle, config.labelsGroup), this.label.addClass("jvectormap-marker jvectormap-element"));
+}, jvm.inherits(jvm.Marker, jvm.MapObject), jvm.Marker.prototype.createShape = function () {
+  var that = this;
+  this.shape && this.shape.remove(), this.shape = this.config.canvas[this.isImage ? "addImage" : "addCircle"]({
+    "data-index": this.config.index,
+    cx: this.config.cx,
+    cy: this.config.cy
+  }, this.config.style, this.config.group), this.shape.addClass("jvectormap-marker jvectormap-element"), this.isImage && jvm.$(this.shape.node).on("imageloaded", function () {
+    that.updateLabelPosition();
+  });
+}, jvm.Marker.prototype.updateLabelPosition = function () {
+  this.label && this.label.set({
+    x: this.labelX * this.map.scale + this.offsets[0] + this.map.transX * this.map.scale + 5 + (this.isImage ? (this.shape.width || 0) / 2 : this.shape.properties.r),
+    y: this.labelY * this.map.scale + this.map.transY * this.map.scale + this.offsets[1]
+  });
+}, jvm.Marker.prototype.setStyle = function (property) {
+  var isImage;
+  jvm.Marker.parentClass.prototype.setStyle.apply(this, arguments), "r" === property && this.updateLabelPosition(), isImage = !!this.shape.get("image"), isImage != this.isImage && (this.isImage = isImage, this.config.style = jvm.$.extend(!0, {}, this.shape.style), this.createShape());
+}, jvm.Map = function (params) {
+  var e,
+      map = this;
+  if (this.params = jvm.$.extend(!0, {}, jvm.Map.defaultParams, params), !jvm.Map.maps[this.params.map]) throw new Error("Attempt to use map which was not loaded: " + this.params.map);
+  this.mapData = jvm.Map.maps[this.params.map], this.markers = {}, this.regions = {}, this.regionsColors = {}, this.regionsData = {}, this.container = jvm.$("<div>").addClass("jvectormap-container"), this.params.container && this.params.container.append(this.container), this.container.data("mapObject", this), this.defaultWidth = this.mapData.width, this.defaultHeight = this.mapData.height, this.setBackgroundColor(this.params.backgroundColor), this.onResize = function () {
+    map.updateSize();
+  }, jvm.$(window).resize(this.onResize);
+
+  for (e in jvm.Map.apiEvents) {
+    this.params[e] && this.container.bind(jvm.Map.apiEvents[e] + ".jvectormap", this.params[e]);
+  }
+
+  this.canvas = new jvm.VectorCanvas(this.container[0], this.width, this.height), this.params.bindTouchEvents && ("ontouchstart" in window || window.DocumentTouch && document instanceof DocumentTouch ? this.bindContainerTouchEvents() : window.MSGesture && this.bindContainerPointerEvents()), this.bindContainerEvents(), this.bindElementEvents(), this.createTip(), this.params.zoomButtons && this.bindZoomButtons(), this.createRegions(), this.createMarkers(this.params.markers || {}), this.updateSize(), this.params.focusOn && ("string" == typeof this.params.focusOn ? this.params.focusOn = {
+    region: this.params.focusOn
+  } : jvm.$.isArray(this.params.focusOn) && (this.params.focusOn = {
+    regions: this.params.focusOn
+  }), this.setFocus(this.params.focusOn)), this.params.selectedRegions && this.setSelectedRegions(this.params.selectedRegions), this.params.selectedMarkers && this.setSelectedMarkers(this.params.selectedMarkers), this.legendCntHorizontal = jvm.$("<div/>").addClass("jvectormap-legend-cnt jvectormap-legend-cnt-h"), this.legendCntVertical = jvm.$("<div/>").addClass("jvectormap-legend-cnt jvectormap-legend-cnt-v"), this.container.append(this.legendCntHorizontal), this.container.append(this.legendCntVertical), this.params.series && this.createSeries();
+}, jvm.Map.prototype = {
+  transX: 0,
+  transY: 0,
+  scale: 1,
+  baseTransX: 0,
+  baseTransY: 0,
+  baseScale: 1,
+  width: 0,
+  height: 0,
+  setBackgroundColor: function setBackgroundColor(backgroundColor) {
+    this.container.css("background-color", backgroundColor);
+  },
+  resize: function resize() {
+    var curBaseScale = this.baseScale;
+    this.width / this.height > this.defaultWidth / this.defaultHeight ? (this.baseScale = this.height / this.defaultHeight, this.baseTransX = Math.abs(this.width - this.defaultWidth * this.baseScale) / (2 * this.baseScale)) : (this.baseScale = this.width / this.defaultWidth, this.baseTransY = Math.abs(this.height - this.defaultHeight * this.baseScale) / (2 * this.baseScale)), this.scale *= this.baseScale / curBaseScale, this.transX *= this.baseScale / curBaseScale, this.transY *= this.baseScale / curBaseScale;
+  },
+  updateSize: function updateSize() {
+    this.width = this.container.width(), this.height = this.container.height(), this.resize(), this.canvas.setSize(this.width, this.height), this.applyTransform();
+  },
+  reset: function reset() {
+    var key, i;
+
+    for (key in this.series) {
+      for (i = 0; i < this.series[key].length; i++) {
+        this.series[key][i].clear();
+      }
+    }
+
+    this.scale = this.baseScale, this.transX = this.baseTransX, this.transY = this.baseTransY, this.applyTransform();
+  },
+  applyTransform: function applyTransform() {
+    var maxTransX, maxTransY, minTransX, minTransY;
+    this.defaultWidth * this.scale <= this.width ? (maxTransX = (this.width - this.defaultWidth * this.scale) / (2 * this.scale), minTransX = (this.width - this.defaultWidth * this.scale) / (2 * this.scale)) : (maxTransX = 0, minTransX = (this.width - this.defaultWidth * this.scale) / this.scale), this.defaultHeight * this.scale <= this.height ? (maxTransY = (this.height - this.defaultHeight * this.scale) / (2 * this.scale), minTransY = (this.height - this.defaultHeight * this.scale) / (2 * this.scale)) : (maxTransY = 0, minTransY = (this.height - this.defaultHeight * this.scale) / this.scale), this.transY > maxTransY ? this.transY = maxTransY : this.transY < minTransY && (this.transY = minTransY), this.transX > maxTransX ? this.transX = maxTransX : this.transX < minTransX && (this.transX = minTransX), this.canvas.applyTransformParams(this.scale, this.transX, this.transY), this.markers && this.repositionMarkers(), this.repositionLabels(), this.container.trigger("viewportChange", [this.scale / this.baseScale, this.transX, this.transY]);
+  },
+  bindContainerEvents: function bindContainerEvents() {
+    var oldPageX,
+        oldPageY,
+        mouseDown = !1,
+        map = this;
+    this.params.panOnDrag && (this.container.mousemove(function (e) {
+      return mouseDown && (map.transX -= (oldPageX - e.pageX) / map.scale, map.transY -= (oldPageY - e.pageY) / map.scale, map.applyTransform(), oldPageX = e.pageX, oldPageY = e.pageY), !1;
+    }).mousedown(function (e) {
+      return mouseDown = !0, oldPageX = e.pageX, oldPageY = e.pageY, !1;
+    }), this.onContainerMouseUp = function () {
+      mouseDown = !1;
+    }, jvm.$("body").mouseup(this.onContainerMouseUp)), this.params.zoomOnScroll && this.container.mousewheel(function (event) {
+      var offset = jvm.$(map.container).offset(),
+          centerX = event.pageX - offset.left,
+          centerY = event.pageY - offset.top,
+          zoomStep = Math.pow(1 + map.params.zoomOnScrollSpeed / 1e3, event.deltaFactor * event.deltaY);
+      map.tip.hide(), map.setScale(map.scale * zoomStep, centerX, centerY), event.preventDefault();
+    });
+  },
+  bindContainerTouchEvents: function bindContainerTouchEvents() {
+    var touchStartScale,
+        touchStartDistance,
+        touchX,
+        touchY,
+        centerTouchX,
+        centerTouchY,
+        lastTouchesLength,
+        map = this,
+        handleTouchEvent = function handleTouchEvent(e) {
+      var offset,
+          scale,
+          transXOld,
+          transYOld,
+          touches = e.originalEvent.touches;
+      "touchstart" == e.type && (lastTouchesLength = 0), 1 == touches.length ? (1 == lastTouchesLength && (transXOld = map.transX, transYOld = map.transY, map.transX -= (touchX - touches[0].pageX) / map.scale, map.transY -= (touchY - touches[0].pageY) / map.scale, map.applyTransform(), map.tip.hide(), (transXOld != map.transX || transYOld != map.transY) && e.preventDefault()), touchX = touches[0].pageX, touchY = touches[0].pageY) : 2 == touches.length && (2 == lastTouchesLength ? (scale = Math.sqrt(Math.pow(touches[0].pageX - touches[1].pageX, 2) + Math.pow(touches[0].pageY - touches[1].pageY, 2)) / touchStartDistance, map.setScale(touchStartScale * scale, centerTouchX, centerTouchY), map.tip.hide(), e.preventDefault()) : (offset = jvm.$(map.container).offset(), centerTouchX = touches[0].pageX > touches[1].pageX ? touches[1].pageX + (touches[0].pageX - touches[1].pageX) / 2 : touches[0].pageX + (touches[1].pageX - touches[0].pageX) / 2, centerTouchY = touches[0].pageY > touches[1].pageY ? touches[1].pageY + (touches[0].pageY - touches[1].pageY) / 2 : touches[0].pageY + (touches[1].pageY - touches[0].pageY) / 2, centerTouchX -= offset.left, centerTouchY -= offset.top, touchStartScale = map.scale, touchStartDistance = Math.sqrt(Math.pow(touches[0].pageX - touches[1].pageX, 2) + Math.pow(touches[0].pageY - touches[1].pageY, 2)))), lastTouchesLength = touches.length;
+    };
+
+    jvm.$(this.container).bind("touchstart", handleTouchEvent), jvm.$(this.container).bind("touchmove", handleTouchEvent);
+  },
+  bindContainerPointerEvents: function bindContainerPointerEvents() {
+    var map = this,
+        gesture = new MSGesture(),
+        element = this.container[0],
+        handlePointerDownEvent = function handlePointerDownEvent(e) {
+      gesture.addPointer(e.pointerId);
+    },
+        handleGestureEvent = function handleGestureEvent(e) {
+      var transXOld, transYOld;
+      (0 != e.translationX || 0 != e.translationY) && (transXOld = map.transX, transYOld = map.transY, map.transX += e.translationX / map.scale, map.transY += e.translationY / map.scale, map.applyTransform(), map.tip.hide(), (transXOld != map.transX || transYOld != map.transY) && e.preventDefault()), 1 != e.scale && (map.setScale(map.scale * e.scale, e.offsetX, e.offsetY), map.tip.hide(), e.preventDefault());
+    };
+
+    gesture.target = element, element.addEventListener("MSGestureChange", handleGestureEvent, !1), element.addEventListener("pointerdown", handlePointerDownEvent, !1);
+  },
+  bindElementEvents: function bindElementEvents() {
+    var pageX,
+        pageY,
+        mouseMoved,
+        map = this;
+    this.container.mousemove(function (e) {
+      Math.abs(pageX - e.pageX) + Math.abs(pageY - e.pageY) > 2 && (mouseMoved = !0);
+    }), this.container.delegate("[class~='jvectormap-element']", "mouseover mouseout", function (e) {
+      var baseVal = jvm.$(this).attr("class").baseVal || jvm.$(this).attr("class"),
+          type = -1 === baseVal.indexOf("jvectormap-region") ? "marker" : "region",
+          code = jvm.$(this).attr("region" == type ? "data-code" : "data-index"),
+          element = "region" == type ? map.regions[code].element : map.markers[code].element,
+          tipText = "region" == type ? map.mapData.paths[code].name : map.markers[code].config.name || "",
+          tipShowEvent = jvm.$.Event(type + "TipShow.jvectormap"),
+          overEvent = jvm.$.Event(type + "Over.jvectormap");
+      "mouseover" == e.type ? (map.container.trigger(overEvent, [code]), overEvent.isDefaultPrevented() || element.setHovered(!0), map.tip.text(tipText), map.container.trigger(tipShowEvent, [map.tip, code]), tipShowEvent.isDefaultPrevented() || (map.tip.show(), map.tipWidth = map.tip.width(), map.tipHeight = map.tip.height())) : (element.setHovered(!1), map.tip.hide(), map.container.trigger(type + "Out.jvectormap", [code]));
+    }), this.container.delegate("[class~='jvectormap-element']", "mousedown", function (e) {
+      pageX = e.pageX, pageY = e.pageY, mouseMoved = !1;
+    }), this.container.delegate("[class~='jvectormap-element']", "mouseup", function () {
+      var baseVal = jvm.$(this).attr("class").baseVal ? jvm.$(this).attr("class").baseVal : jvm.$(this).attr("class"),
+          type = -1 === baseVal.indexOf("jvectormap-region") ? "marker" : "region",
+          code = jvm.$(this).attr("region" == type ? "data-code" : "data-index"),
+          clickEvent = jvm.$.Event(type + "Click.jvectormap"),
+          element = "region" == type ? map.regions[code].element : map.markers[code].element;
+      mouseMoved || (map.container.trigger(clickEvent, [code]), ("region" === type && map.params.regionsSelectable || "marker" === type && map.params.markersSelectable) && (clickEvent.isDefaultPrevented() || (map.params[type + "sSelectableOne"] && map.clearSelected(type + "s"), element.setSelected(!element.isSelected))));
+    });
+  },
+  bindZoomButtons: function bindZoomButtons() {
+    var map = this;
+    jvm.$("<div/>").addClass("jvectormap-zoomin").text("+").appendTo(this.container), jvm.$("<div/>").addClass("jvectormap-zoomout").html("&#x2212;").appendTo(this.container), this.container.find(".jvectormap-zoomin").click(function () {
+      map.setScale(map.scale * map.params.zoomStep, map.width / 2, map.height / 2, !1, map.params.zoomAnimate);
+    }), this.container.find(".jvectormap-zoomout").click(function () {
+      map.setScale(map.scale / map.params.zoomStep, map.width / 2, map.height / 2, !1, map.params.zoomAnimate);
+    });
+  },
+  createTip: function createTip() {
+    var map = this;
+    this.tip = jvm.$("<div/>").addClass("jvectormap-tip").appendTo(jvm.$("body")), this.container.mousemove(function (e) {
+      var left = e.pageX - 15 - map.tipWidth,
+          top = e.pageY - 15 - map.tipHeight;
+      5 > left && (left = e.pageX + 15), 5 > top && (top = e.pageY + 15), map.tip.css({
+        left: left,
+        top: top
+      });
+    });
+  },
+  setScale: function setScale(scale, anchorX, anchorY, isCentered, animate) {
+    var interval,
+        scaleStart,
+        scaleDiff,
+        transXStart,
+        transXDiff,
+        transYStart,
+        transYDiff,
+        transX,
+        transY,
+        viewportChangeEvent = jvm.$.Event("zoom.jvectormap"),
+        that = this,
+        i = 0,
+        count = Math.abs(Math.round(60 * (scale - this.scale) / Math.max(scale, this.scale))),
+        deferred = new jvm.$.Deferred();
+    return scale > this.params.zoomMax * this.baseScale ? scale = this.params.zoomMax * this.baseScale : scale < this.params.zoomMin * this.baseScale && (scale = this.params.zoomMin * this.baseScale), "undefined" != typeof anchorX && "undefined" != typeof anchorY && (zoomStep = scale / this.scale, isCentered ? (transX = anchorX + this.defaultWidth * (this.width / (this.defaultWidth * scale)) / 2, transY = anchorY + this.defaultHeight * (this.height / (this.defaultHeight * scale)) / 2) : (transX = this.transX - (zoomStep - 1) / scale * anchorX, transY = this.transY - (zoomStep - 1) / scale * anchorY)), animate && count > 0 ? (scaleStart = this.scale, scaleDiff = (scale - scaleStart) / count, transXStart = this.transX * this.scale, transYStart = this.transY * this.scale, transXDiff = (transX * scale - transXStart) / count, transYDiff = (transY * scale - transYStart) / count, interval = setInterval(function () {
+      i += 1, that.scale = scaleStart + scaleDiff * i, that.transX = (transXStart + transXDiff * i) / that.scale, that.transY = (transYStart + transYDiff * i) / that.scale, that.applyTransform(), i == count && (clearInterval(interval), that.container.trigger(viewportChangeEvent, [scale / that.baseScale]), deferred.resolve());
+    }, 10)) : (this.transX = transX, this.transY = transY, this.scale = scale, this.applyTransform(), this.container.trigger(viewportChangeEvent, [scale / this.baseScale]), deferred.resolve()), deferred;
+  },
+  setFocus: function setFocus(config) {
+    var bbox, itemBbox, newBbox, codes, i, point;
+
+    if (config = config || {}, config.region ? codes = [config.region] : config.regions && (codes = config.regions), codes) {
+      for (i = 0; i < codes.length; i++) {
+        this.regions[codes[i]] && (itemBbox = this.regions[codes[i]].element.shape.getBBox(), itemBbox && ("undefined" == typeof bbox ? bbox = itemBbox : (newBbox = {
+          x: Math.min(bbox.x, itemBbox.x),
+          y: Math.min(bbox.y, itemBbox.y),
+          width: Math.max(bbox.x + bbox.width, itemBbox.x + itemBbox.width) - Math.min(bbox.x, itemBbox.x),
+          height: Math.max(bbox.y + bbox.height, itemBbox.y + itemBbox.height) - Math.min(bbox.y, itemBbox.y)
+        }, bbox = newBbox)));
+      }
+
+      return this.setScale(Math.min(this.width / bbox.width, this.height / bbox.height), -(bbox.x + bbox.width / 2), -(bbox.y + bbox.height / 2), !0, config.animate);
+    }
+
+    return config.lat && config.lng ? (point = this.latLngToPoint(config.lat, config.lng), config.x = this.transX - point.x / this.scale, config.y = this.transY - point.y / this.scale) : config.x && config.y && (config.x *= -this.defaultWidth, config.y *= -this.defaultHeight), this.setScale(config.scale * this.baseScale, config.x, config.y, !0, config.animate);
+  },
+  getSelected: function getSelected(type) {
+    var key,
+        selected = [];
+
+    for (key in this[type]) {
+      this[type][key].element.isSelected && selected.push(key);
+    }
+
+    return selected;
+  },
+  getSelectedRegions: function getSelectedRegions() {
+    return this.getSelected("regions");
+  },
+  getSelectedMarkers: function getSelectedMarkers() {
+    return this.getSelected("markers");
+  },
+  setSelected: function setSelected(type, keys) {
+    var i;
+    if ("object" != _typeof(keys) && (keys = [keys]), jvm.$.isArray(keys)) for (i = 0; i < keys.length; i++) {
+      this[type][keys[i]].element.setSelected(!0);
+    } else for (i in keys) {
+      this[type][i].element.setSelected(!!keys[i]);
+    }
+  },
+  setSelectedRegions: function setSelectedRegions(keys) {
+    this.setSelected("regions", keys);
+  },
+  setSelectedMarkers: function setSelectedMarkers(keys) {
+    this.setSelected("markers", keys);
+  },
+  clearSelected: function clearSelected(type) {
+    var i,
+        select = {},
+        selected = this.getSelected(type);
+
+    for (i = 0; i < selected.length; i++) {
+      select[selected[i]] = !1;
+    }
+
+    this.setSelected(type, select);
+  },
+  clearSelectedRegions: function clearSelectedRegions() {
+    this.clearSelected("regions");
+  },
+  clearSelectedMarkers: function clearSelectedMarkers() {
+    this.clearSelected("markers");
+  },
+  getMapObject: function getMapObject() {
+    return this;
+  },
+  getRegionName: function getRegionName(code) {
+    return this.mapData.paths[code].name;
+  },
+  createRegions: function createRegions() {
+    var key,
+        region,
+        map = this;
+    this.regionLabelsGroup = this.regionLabelsGroup || this.canvas.addGroup();
+
+    for (key in this.mapData.paths) {
+      region = new jvm.Region({
+        map: this,
+        path: this.mapData.paths[key].path,
+        code: key,
+        style: jvm.$.extend(!0, {}, this.params.regionStyle),
+        labelStyle: jvm.$.extend(!0, {}, this.params.regionLabelStyle),
+        canvas: this.canvas,
+        labelsGroup: this.regionLabelsGroup,
+        label: "vml" != this.canvas.mode ? this.params.labels && this.params.labels.regions : null
+      }), jvm.$(region.shape).bind("selected", function (e, isSelected) {
+        map.container.trigger("regionSelected.jvectormap", [jvm.$(this.node).attr("data-code"), isSelected, map.getSelectedRegions()]);
+      }), this.regions[key] = {
+        element: region,
+        config: this.mapData.paths[key]
+      };
+    }
+  },
+  createMarkers: function createMarkers(markers) {
+    var i,
+        marker,
+        point,
+        markerConfig,
+        markersArray,
+        map = this;
+    if (this.markersGroup = this.markersGroup || this.canvas.addGroup(), this.markerLabelsGroup = this.markerLabelsGroup || this.canvas.addGroup(), jvm.$.isArray(markers)) for (markersArray = markers.slice(), markers = {}, i = 0; i < markersArray.length; i++) {
+      markers[i] = markersArray[i];
+    }
+
+    for (i in markers) {
+      markerConfig = markers[i] instanceof Array ? {
+        latLng: markers[i]
+      } : markers[i], point = this.getMarkerPosition(markerConfig), point !== !1 && (marker = new jvm.Marker({
+        map: this,
+        style: jvm.$.extend(!0, {}, this.params.markerStyle, {
+          initial: markerConfig.style || {}
+        }),
+        labelStyle: jvm.$.extend(!0, {}, this.params.markerLabelStyle),
+        index: i,
+        cx: point.x,
+        cy: point.y,
+        group: this.markersGroup,
+        canvas: this.canvas,
+        labelsGroup: this.markerLabelsGroup,
+        label: "vml" != this.canvas.mode ? this.params.labels && this.params.labels.markers : null
+      }), jvm.$(marker.shape).bind("selected", function (e, isSelected) {
+        map.container.trigger("markerSelected.jvectormap", [jvm.$(this.node).attr("data-index"), isSelected, map.getSelectedMarkers()]);
+      }), this.markers[i] && this.removeMarkers([i]), this.markers[i] = {
+        element: marker,
+        config: markerConfig
+      });
+    }
+  },
+  repositionMarkers: function repositionMarkers() {
+    var i, point;
+
+    for (i in this.markers) {
+      point = this.getMarkerPosition(this.markers[i].config), point !== !1 && this.markers[i].element.setStyle({
+        cx: point.x,
+        cy: point.y
+      });
+    }
+  },
+  repositionLabels: function repositionLabels() {
+    var key;
+
+    for (key in this.regions) {
+      this.regions[key].element.updateLabelPosition();
+    }
+
+    for (key in this.markers) {
+      this.markers[key].element.updateLabelPosition();
+    }
+  },
+  getMarkerPosition: function getMarkerPosition(markerConfig) {
+    return jvm.Map.maps[this.params.map].projection ? this.latLngToPoint.apply(this, markerConfig.latLng || [0, 0]) : {
+      x: markerConfig.coords[0] * this.scale + this.transX * this.scale,
+      y: markerConfig.coords[1] * this.scale + this.transY * this.scale
+    };
+  },
+  addMarker: function addMarker(key, marker, seriesData) {
+    var values,
+        i,
+        markers = {},
+        data = [],
+        seriesData = seriesData || [];
+
+    for (markers[key] = marker, i = 0; i < seriesData.length; i++) {
+      values = {}, "undefined" != typeof seriesData[i] && (values[key] = seriesData[i]), data.push(values);
+    }
+
+    this.addMarkers(markers, data);
+  },
+  addMarkers: function addMarkers(markers, seriesData) {
+    var i;
+
+    for (seriesData = seriesData || [], this.createMarkers(markers), i = 0; i < seriesData.length; i++) {
+      this.series.markers[i].setValues(seriesData[i] || {});
+    }
+  },
+  removeMarkers: function removeMarkers(markers) {
+    var i;
+
+    for (i = 0; i < markers.length; i++) {
+      this.markers[markers[i]].element.remove(), delete this.markers[markers[i]];
+    }
+  },
+  removeAllMarkers: function removeAllMarkers() {
+    var i,
+        markers = [];
+
+    for (i in this.markers) {
+      markers.push(i);
+    }
+
+    this.removeMarkers(markers);
+  },
+  latLngToPoint: function latLngToPoint(lat, lng) {
+    var point,
+        inset,
+        bbox,
+        proj = jvm.Map.maps[this.params.map].projection,
+        centralMeridian = proj.centralMeridian;
+    return -180 + centralMeridian > lng && (lng += 360), point = jvm.Proj[proj.type](lat, lng, centralMeridian), inset = this.getInsetForPoint(point.x, point.y), inset ? (bbox = inset.bbox, point.x = (point.x - bbox[0].x) / (bbox[1].x - bbox[0].x) * inset.width * this.scale, point.y = (point.y - bbox[0].y) / (bbox[1].y - bbox[0].y) * inset.height * this.scale, {
+      x: point.x + this.transX * this.scale + inset.left * this.scale,
+      y: point.y + this.transY * this.scale + inset.top * this.scale
+    }) : !1;
+  },
+  pointToLatLng: function pointToLatLng(x, y) {
+    var i,
+        inset,
+        bbox,
+        nx,
+        ny,
+        proj = jvm.Map.maps[this.params.map].projection,
+        centralMeridian = proj.centralMeridian,
+        insets = jvm.Map.maps[this.params.map].insets;
+
+    for (i = 0; i < insets.length; i++) {
+      if (inset = insets[i], bbox = inset.bbox, nx = x - (this.transX * this.scale + inset.left * this.scale), ny = y - (this.transY * this.scale + inset.top * this.scale), nx = nx / (inset.width * this.scale) * (bbox[1].x - bbox[0].x) + bbox[0].x, ny = ny / (inset.height * this.scale) * (bbox[1].y - bbox[0].y) + bbox[0].y, nx > bbox[0].x && nx < bbox[1].x && ny > bbox[0].y && ny < bbox[1].y) return jvm.Proj[proj.type + "_inv"](nx, -ny, centralMeridian);
+    }
+
+    return !1;
+  },
+  getInsetForPoint: function getInsetForPoint(x, y) {
+    var i,
+        bbox,
+        insets = jvm.Map.maps[this.params.map].insets;
+
+    for (i = 0; i < insets.length; i++) {
+      if (bbox = insets[i].bbox, x > bbox[0].x && x < bbox[1].x && y > bbox[0].y && y < bbox[1].y) return insets[i];
+    }
+  },
+  createSeries: function createSeries() {
+    var i, key;
+    this.series = {
+      markers: [],
+      regions: []
+    };
+
+    for (key in this.params.series) {
+      for (i = 0; i < this.params.series[key].length; i++) {
+        this.series[key][i] = new jvm.DataSeries(this.params.series[key][i], this[key], this);
+      }
+    }
+  },
+  remove: function remove() {
+    this.tip.remove(), this.container.remove(), jvm.$(window).unbind("resize", this.onResize), jvm.$("body").unbind("mouseup", this.onContainerMouseUp);
+  }
+}, jvm.Map.maps = {}, jvm.Map.defaultParams = {
+  map: "world_mill_en",
+  backgroundColor: "#505050",
+  zoomButtons: !0,
+  zoomOnScroll: !0,
+  zoomOnScrollSpeed: 3,
+  panOnDrag: !0,
+  zoomMax: 8,
+  zoomMin: 1,
+  zoomStep: 1.6,
+  zoomAnimate: !0,
+  regionsSelectable: !1,
+  markersSelectable: !1,
+  bindTouchEvents: !0,
+  regionStyle: {
+    initial: {
+      fill: "white",
+      "fill-opacity": 1,
+      stroke: "none",
+      "stroke-width": 0,
+      "stroke-opacity": 1
+    },
+    hover: {
+      "fill-opacity": .8,
+      cursor: "pointer"
+    },
+    selected: {
+      fill: "yellow"
+    },
+    selectedHover: {}
+  },
+  regionLabelStyle: {
+    initial: {
+      "font-family": "Verdana",
+      "font-size": "12",
+      "font-weight": "bold",
+      cursor: "default",
+      fill: "black"
+    },
+    hover: {
+      cursor: "pointer"
+    }
+  },
+  markerStyle: {
+    initial: {
+      fill: "grey",
+      stroke: "#505050",
+      "fill-opacity": 1,
+      "stroke-width": 1,
+      "stroke-opacity": 1,
+      r: 5
+    },
+    hover: {
+      stroke: "black",
+      "stroke-width": 2,
+      cursor: "pointer"
+    },
+    selected: {
+      fill: "blue"
+    },
+    selectedHover: {}
+  },
+  markerLabelStyle: {
+    initial: {
+      "font-family": "Verdana",
+      "font-size": "12",
+      "font-weight": "bold",
+      cursor: "default",
+      fill: "black"
+    },
+    hover: {
+      cursor: "pointer"
+    }
+  }
+}, jvm.Map.apiEvents = {
+  onRegionTipShow: "regionTipShow",
+  onRegionOver: "regionOver",
+  onRegionOut: "regionOut",
+  onRegionClick: "regionClick",
+  onRegionSelected: "regionSelected",
+  onMarkerTipShow: "markerTipShow",
+  onMarkerOver: "markerOver",
+  onMarkerOut: "markerOut",
+  onMarkerClick: "markerClick",
+  onMarkerSelected: "markerSelected",
+  onViewportChange: "viewportChange"
+}, jvm.MultiMap = function (params) {
+  var that = this;
+  this.maps = {}, this.params = jvm.$.extend(!0, {}, jvm.MultiMap.defaultParams, params), this.params.maxLevel = this.params.maxLevel || Number.MAX_VALUE, this.params.main = this.params.main || {}, this.params.main.multiMapLevel = 0, this.history = [this.addMap(this.params.main.map, this.params.main)], this.defaultProjection = this.history[0].mapData.projection.type, this.mapsLoaded = {}, this.params.container.css({
+    position: "relative"
+  }), this.backButton = jvm.$("<div/>").addClass("jvectormap-goback").text("Back").appendTo(this.params.container), this.backButton.hide(), this.backButton.click(function () {
+    that.goBack();
+  }), this.spinner = jvm.$("<div/>").addClass("jvectormap-spinner").appendTo(this.params.container), this.spinner.hide();
+}, jvm.MultiMap.prototype = {
+  addMap: function addMap(name, config) {
+    var cnt = jvm.$("<div/>").css({
+      width: "100%",
+      height: "100%"
+    });
+    return this.params.container.append(cnt), this.maps[name] = new jvm.Map(jvm.$.extend(config, {
+      container: cnt
+    })), this.params.maxLevel > config.multiMapLevel && this.maps[name].container.on("regionClick.jvectormap", {
+      scope: this
+    }, function (e, code) {
+      var multimap = e.data.scope,
+          mapName = multimap.params.mapNameByCode(code, multimap);
+      multimap.drillDownPromise && "pending" === multimap.drillDownPromise.state() || multimap.drillDown(mapName, code);
+    }), this.maps[name];
+  },
+  downloadMap: function downloadMap(code) {
+    var that = this,
+        deferred = jvm.$.Deferred();
+    return this.mapsLoaded[code] ? deferred.resolve() : jvm.$.get(this.params.mapUrlByCode(code, this)).then(function () {
+      that.mapsLoaded[code] = !0, deferred.resolve();
+    }, function () {
+      deferred.reject();
+    }), deferred;
+  },
+  drillDown: function drillDown(name, code) {
+    var currentMap = this.history[this.history.length - 1],
+        that = this,
+        focusPromise = currentMap.setFocus({
+      region: code,
+      animate: !0
+    }),
+        downloadPromise = this.downloadMap(code);
+    focusPromise.then(function () {
+      "pending" === downloadPromise.state() && that.spinner.show();
+    }), downloadPromise.always(function () {
+      that.spinner.hide();
+    }), this.drillDownPromise = jvm.$.when(downloadPromise, focusPromise), this.drillDownPromise.then(function () {
+      currentMap.params.container.hide(), that.maps[name] ? that.maps[name].params.container.show() : that.addMap(name, {
+        map: name,
+        multiMapLevel: currentMap.params.multiMapLevel + 1
+      }), that.history.push(that.maps[name]), that.backButton.show();
+    });
+  },
+  goBack: function goBack() {
+    var currentMap = this.history.pop(),
+        prevMap = this.history[this.history.length - 1],
+        that = this;
+    currentMap.setFocus({
+      scale: 1,
+      x: .5,
+      y: .5,
+      animate: !0
+    }).then(function () {
+      currentMap.params.container.hide(), prevMap.params.container.show(), prevMap.updateSize(), 1 === that.history.length && that.backButton.hide(), prevMap.setFocus({
+        scale: 1,
+        x: .5,
+        y: .5,
+        animate: !0
+      });
+    });
+  }
+}, jvm.MultiMap.defaultParams = {
+  mapNameByCode: function mapNameByCode(code, multiMap) {
+    return code.toLowerCase() + "_" + multiMap.defaultProjection + "_en";
+  },
+  mapUrlByCode: function mapUrlByCode(code, multiMap) {
+    return "jquery-jvectormap-data-" + code.toLowerCase() + "-" + multiMap.defaultProjection + "-en.js";
+  }
+};
+
+/***/ }),
+
+/***/ "./resources/js/admin/Corona/misc.js":
+/*!*******************************************!*\
+  !*** ./resources/js/admin/Corona/misc.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function ($) {
+  'use strict';
+
+  $(function () {
+    var body = $('body');
+    var contentWrapper = $('.content-wrapper');
+    var scroller = $('.container-scroller');
+    var footer = $('.footer');
+    var sidebar = $('.sidebar'); //Add active class to nav-link based on url dynamically
+    //Active class can be hard coded directly in html file also as required
+
+    function addActiveClass(element) {
+      if (current === "") {
+        //for root url
+        if (element.attr('href').indexOf("index.html") !== -1) {
+          element.parents('.nav-item').last().addClass('active');
+
+          if (element.parents('.sub-menu').length) {
+            element.closest('.collapse').addClass('show');
+            element.addClass('active');
+          }
+        }
+      } else {
+        //for other url
+        if (element.attr('href').indexOf(current) !== -1) {
+          element.parents('.nav-item').last().addClass('active');
+
+          if (element.parents('.sub-menu').length) {
+            element.closest('.collapse').addClass('show');
+            element.addClass('active');
+          }
+
+          if (element.parents('.submenu-item').length) {
+            element.addClass('active');
+          }
+        }
+      }
+    }
+
+    var current = location.pathname.split("/").slice(-1)[0].replace(/^\/|\/$/g, '');
+    $('.nav li a', sidebar).each(function () {
+      var $this = $(this);
+      addActiveClass($this);
+    });
+    $('.horizontal-menu .nav li a').each(function () {
+      var $this = $(this);
+      addActiveClass($this);
+    }); //Close other submenu in sidebar on opening any
+
+    sidebar.on('show.bs.collapse', '.collapse', function () {
+      sidebar.find('.collapse.show').collapse('hide');
+    }); //Change sidebar and content-wrapper height
+
+    applyStyles();
+
+    function applyStyles() {
+      //Applying perfect scrollbar
+      if (!body.hasClass("rtl")) {
+        if ($('.settings-panel .tab-content .tab-pane.scroll-wrapper').length) {
+          var settingsPanelScroll = new PerfectScrollbar('.settings-panel .tab-content .tab-pane.scroll-wrapper');
+        }
+
+        if ($('.chats').length) {
+          var chatsScroll = new PerfectScrollbar('.chats');
+        }
+
+        if (body.hasClass("sidebar-fixed")) {
+          var fixedSidebarScroll = new PerfectScrollbar('#sidebar .nav');
+        }
+      }
+    }
+
+    $('[data-toggle="minimize"]').on("click", function () {
+      if (body.hasClass('sidebar-toggle-display') || body.hasClass('sidebar-absolute')) {
+        body.toggleClass('sidebar-hidden');
+      } else {
+        body.toggleClass('sidebar-icon-only');
+      }
+    }); //checkbox and radios
+
+    $(".form-check label,.form-radio label").append('<i class="input-helper"></i>'); //fullscreen
+
+    $("#fullscreen-button").on("click", function toggleFullScreen() {
+      if (document.fullScreenElement !== undefined && document.fullScreenElement === null || document.msFullscreenElement !== undefined && document.msFullscreenElement === null || document.mozFullScreen !== undefined && !document.mozFullScreen || document.webkitIsFullScreen !== undefined && !document.webkitIsFullScreen) {
+        if (document.documentElement.requestFullScreen) {
+          document.documentElement.requestFullScreen();
+        } else if (document.documentElement.mozRequestFullScreen) {
+          document.documentElement.mozRequestFullScreen();
+        } else if (document.documentElement.webkitRequestFullScreen) {
+          document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+        } else if (document.documentElement.msRequestFullscreen) {
+          document.documentElement.msRequestFullscreen();
+        }
+      } else {
+        if (document.cancelFullScreen) {
+          document.cancelFullScreen();
+        } else if (document.mozCancelFullScreen) {
+          document.mozCancelFullScreen();
+        } else if (document.webkitCancelFullScreen) {
+          document.webkitCancelFullScreen();
+        } else if (document.msExitFullscreen) {
+          document.msExitFullscreen();
+        }
+      }
+    });
+  });
+})(jQuery);
+
+/***/ }),
+
+/***/ "./resources/js/admin/Corona/off-canvas.js":
+/*!*************************************************!*\
+  !*** ./resources/js/admin/Corona/off-canvas.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function ($) {
+  'use strict';
+
+  $(function () {
+    $('[data-toggle="offcanvas"]').on("click", function () {
+      $('.sidebar-offcanvas').toggleClass('active');
+    });
+  });
+})(jQuery);
+
+/***/ }),
+
+/***/ "./resources/js/admin/Corona/owl.carousel.min.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/admin/Corona/owl.carousel.min.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+/**
+ * Owl Carousel v2.3.4
+ * Copyright 2013-2018 David Deutsch
+ * Licensed under: SEE LICENSE IN https://github.com/OwlCarousel2/OwlCarousel2/blob/master/LICENSE
+ */
+!function (a, b, c, d) {
+  function e(b, c) {
+    this.settings = null, this.options = a.extend({}, e.Defaults, c), this.$element = a(b), this._handlers = {}, this._plugins = {}, this._supress = {}, this._current = null, this._speed = null, this._coordinates = [], this._breakpoint = null, this._width = null, this._items = [], this._clones = [], this._mergers = [], this._widths = [], this._invalidated = {}, this._pipe = [], this._drag = {
+      time: null,
+      target: null,
+      pointer: null,
+      stage: {
+        start: null,
+        current: null
+      },
+      direction: null
+    }, this._states = {
+      current: {},
+      tags: {
+        initializing: ["busy"],
+        animating: ["busy"],
+        dragging: ["interacting"]
+      }
+    }, a.each(["onResize", "onThrottledResize"], a.proxy(function (b, c) {
+      this._handlers[c] = a.proxy(this[c], this);
+    }, this)), a.each(e.Plugins, a.proxy(function (a, b) {
+      this._plugins[a.charAt(0).toLowerCase() + a.slice(1)] = new b(this);
+    }, this)), a.each(e.Workers, a.proxy(function (b, c) {
+      this._pipe.push({
+        filter: c.filter,
+        run: a.proxy(c.run, this)
+      });
+    }, this)), this.setup(), this.initialize();
+  }
+
+  e.Defaults = {
+    items: 3,
+    loop: !1,
+    center: !1,
+    rewind: !1,
+    checkVisibility: !0,
+    mouseDrag: !0,
+    touchDrag: !0,
+    pullDrag: !0,
+    freeDrag: !1,
+    margin: 0,
+    stagePadding: 0,
+    merge: !1,
+    mergeFit: !0,
+    autoWidth: !1,
+    startPosition: 0,
+    rtl: !1,
+    smartSpeed: 250,
+    fluidSpeed: !1,
+    dragEndSpeed: !1,
+    responsive: {},
+    responsiveRefreshRate: 200,
+    responsiveBaseElement: b,
+    fallbackEasing: "swing",
+    slideTransition: "",
+    info: !1,
+    nestedItemSelector: !1,
+    itemElement: "div",
+    stageElement: "div",
+    refreshClass: "owl-refresh",
+    loadedClass: "owl-loaded",
+    loadingClass: "owl-loading",
+    rtlClass: "owl-rtl",
+    responsiveClass: "owl-responsive",
+    dragClass: "owl-drag",
+    itemClass: "owl-item",
+    stageClass: "owl-stage",
+    stageOuterClass: "owl-stage-outer",
+    grabClass: "owl-grab"
+  }, e.Width = {
+    Default: "default",
+    Inner: "inner",
+    Outer: "outer"
+  }, e.Type = {
+    Event: "event",
+    State: "state"
+  }, e.Plugins = {}, e.Workers = [{
+    filter: ["width", "settings"],
+    run: function run() {
+      this._width = this.$element.width();
+    }
+  }, {
+    filter: ["width", "items", "settings"],
+    run: function run(a) {
+      a.current = this._items && this._items[this.relative(this._current)];
+    }
+  }, {
+    filter: ["items", "settings"],
+    run: function run() {
+      this.$stage.children(".cloned").remove();
+    }
+  }, {
+    filter: ["width", "items", "settings"],
+    run: function run(a) {
+      var b = this.settings.margin || "",
+          c = !this.settings.autoWidth,
+          d = this.settings.rtl,
+          e = {
+        width: "auto",
+        "margin-left": d ? b : "",
+        "margin-right": d ? "" : b
+      };
+      !c && this.$stage.children().css(e), a.css = e;
+    }
+  }, {
+    filter: ["width", "items", "settings"],
+    run: function run(a) {
+      var b = (this.width() / this.settings.items).toFixed(3) - this.settings.margin,
+          c = null,
+          d = this._items.length,
+          e = !this.settings.autoWidth,
+          f = [];
+
+      for (a.items = {
+        merge: !1,
+        width: b
+      }; d--;) {
+        c = this._mergers[d], c = this.settings.mergeFit && Math.min(c, this.settings.items) || c, a.items.merge = c > 1 || a.items.merge, f[d] = e ? b * c : this._items[d].width();
+      }
+
+      this._widths = f;
+    }
+  }, {
+    filter: ["items", "settings"],
+    run: function run() {
+      var b = [],
+          c = this._items,
+          d = this.settings,
+          e = Math.max(2 * d.items, 4),
+          f = 2 * Math.ceil(c.length / 2),
+          g = d.loop && c.length ? d.rewind ? e : Math.max(e, f) : 0,
+          h = "",
+          i = "";
+
+      for (g /= 2; g > 0;) {
+        b.push(this.normalize(b.length / 2, !0)), h += c[b[b.length - 1]][0].outerHTML, b.push(this.normalize(c.length - 1 - (b.length - 1) / 2, !0)), i = c[b[b.length - 1]][0].outerHTML + i, g -= 1;
+      }
+
+      this._clones = b, a(h).addClass("cloned").appendTo(this.$stage), a(i).addClass("cloned").prependTo(this.$stage);
+    }
+  }, {
+    filter: ["width", "items", "settings"],
+    run: function run() {
+      for (var a = this.settings.rtl ? 1 : -1, b = this._clones.length + this._items.length, c = -1, d = 0, e = 0, f = []; ++c < b;) {
+        d = f[c - 1] || 0, e = this._widths[this.relative(c)] + this.settings.margin, f.push(d + e * a);
+      }
+
+      this._coordinates = f;
+    }
+  }, {
+    filter: ["width", "items", "settings"],
+    run: function run() {
+      var a = this.settings.stagePadding,
+          b = this._coordinates,
+          c = {
+        width: Math.ceil(Math.abs(b[b.length - 1])) + 2 * a,
+        "padding-left": a || "",
+        "padding-right": a || ""
+      };
+      this.$stage.css(c);
+    }
+  }, {
+    filter: ["width", "items", "settings"],
+    run: function run(a) {
+      var b = this._coordinates.length,
+          c = !this.settings.autoWidth,
+          d = this.$stage.children();
+      if (c && a.items.merge) for (; b--;) {
+        a.css.width = this._widths[this.relative(b)], d.eq(b).css(a.css);
+      } else c && (a.css.width = a.items.width, d.css(a.css));
+    }
+  }, {
+    filter: ["items"],
+    run: function run() {
+      this._coordinates.length < 1 && this.$stage.removeAttr("style");
+    }
+  }, {
+    filter: ["width", "items", "settings"],
+    run: function run(a) {
+      a.current = a.current ? this.$stage.children().index(a.current) : 0, a.current = Math.max(this.minimum(), Math.min(this.maximum(), a.current)), this.reset(a.current);
+    }
+  }, {
+    filter: ["position"],
+    run: function run() {
+      this.animate(this.coordinates(this._current));
+    }
+  }, {
+    filter: ["width", "position", "items", "settings"],
+    run: function run() {
+      var a,
+          b,
+          c,
+          d,
+          e = this.settings.rtl ? 1 : -1,
+          f = 2 * this.settings.stagePadding,
+          g = this.coordinates(this.current()) + f,
+          h = g + this.width() * e,
+          i = [];
+
+      for (c = 0, d = this._coordinates.length; c < d; c++) {
+        a = this._coordinates[c - 1] || 0, b = Math.abs(this._coordinates[c]) + f * e, (this.op(a, "<=", g) && this.op(a, ">", h) || this.op(b, "<", g) && this.op(b, ">", h)) && i.push(c);
+      }
+
+      this.$stage.children(".active").removeClass("active"), this.$stage.children(":eq(" + i.join("), :eq(") + ")").addClass("active"), this.$stage.children(".center").removeClass("center"), this.settings.center && this.$stage.children().eq(this.current()).addClass("center");
+    }
+  }], e.prototype.initializeStage = function () {
+    this.$stage = this.$element.find("." + this.settings.stageClass), this.$stage.length || (this.$element.addClass(this.options.loadingClass), this.$stage = a("<" + this.settings.stageElement + ">", {
+      "class": this.settings.stageClass
+    }).wrap(a("<div/>", {
+      "class": this.settings.stageOuterClass
+    })), this.$element.append(this.$stage.parent()));
+  }, e.prototype.initializeItems = function () {
+    var b = this.$element.find(".owl-item");
+    if (b.length) return this._items = b.get().map(function (b) {
+      return a(b);
+    }), this._mergers = this._items.map(function () {
+      return 1;
+    }), void this.refresh();
+    this.replace(this.$element.children().not(this.$stage.parent())), this.isVisible() ? this.refresh() : this.invalidate("width"), this.$element.removeClass(this.options.loadingClass).addClass(this.options.loadedClass);
+  }, e.prototype.initialize = function () {
+    if (this.enter("initializing"), this.trigger("initialize"), this.$element.toggleClass(this.settings.rtlClass, this.settings.rtl), this.settings.autoWidth && !this.is("pre-loading")) {
+      var a, b, c;
+      a = this.$element.find("img"), b = this.settings.nestedItemSelector ? "." + this.settings.nestedItemSelector : d, c = this.$element.children(b).width(), a.length && c <= 0 && this.preloadAutoWidthImages(a);
+    }
+
+    this.initializeStage(), this.initializeItems(), this.registerEventHandlers(), this.leave("initializing"), this.trigger("initialized");
+  }, e.prototype.isVisible = function () {
+    return !this.settings.checkVisibility || this.$element.is(":visible");
+  }, e.prototype.setup = function () {
+    var b = this.viewport(),
+        c = this.options.responsive,
+        d = -1,
+        e = null;
+    c ? (a.each(c, function (a) {
+      a <= b && a > d && (d = Number(a));
+    }), e = a.extend({}, this.options, c[d]), "function" == typeof e.stagePadding && (e.stagePadding = e.stagePadding()), delete e.responsive, e.responsiveClass && this.$element.attr("class", this.$element.attr("class").replace(new RegExp("(" + this.options.responsiveClass + "-)\\S+\\s", "g"), "$1" + d))) : e = a.extend({}, this.options), this.trigger("change", {
+      property: {
+        name: "settings",
+        value: e
+      }
+    }), this._breakpoint = d, this.settings = e, this.invalidate("settings"), this.trigger("changed", {
+      property: {
+        name: "settings",
+        value: this.settings
+      }
+    });
+  }, e.prototype.optionsLogic = function () {
+    this.settings.autoWidth && (this.settings.stagePadding = !1, this.settings.merge = !1);
+  }, e.prototype.prepare = function (b) {
+    var c = this.trigger("prepare", {
+      content: b
+    });
+    return c.data || (c.data = a("<" + this.settings.itemElement + "/>").addClass(this.options.itemClass).append(b)), this.trigger("prepared", {
+      content: c.data
+    }), c.data;
+  }, e.prototype.update = function () {
+    for (var b = 0, c = this._pipe.length, d = a.proxy(function (a) {
+      return this[a];
+    }, this._invalidated), e = {}; b < c;) {
+      (this._invalidated.all || a.grep(this._pipe[b].filter, d).length > 0) && this._pipe[b].run(e), b++;
+    }
+
+    this._invalidated = {}, !this.is("valid") && this.enter("valid");
+  }, e.prototype.width = function (a) {
+    switch (a = a || e.Width.Default) {
+      case e.Width.Inner:
+      case e.Width.Outer:
+        return this._width;
+
+      default:
+        return this._width - 2 * this.settings.stagePadding + this.settings.margin;
+    }
+  }, e.prototype.refresh = function () {
+    this.enter("refreshing"), this.trigger("refresh"), this.setup(), this.optionsLogic(), this.$element.addClass(this.options.refreshClass), this.update(), this.$element.removeClass(this.options.refreshClass), this.leave("refreshing"), this.trigger("refreshed");
+  }, e.prototype.onThrottledResize = function () {
+    b.clearTimeout(this.resizeTimer), this.resizeTimer = b.setTimeout(this._handlers.onResize, this.settings.responsiveRefreshRate);
+  }, e.prototype.onResize = function () {
+    return !!this._items.length && this._width !== this.$element.width() && !!this.isVisible() && (this.enter("resizing"), this.trigger("resize").isDefaultPrevented() ? (this.leave("resizing"), !1) : (this.invalidate("width"), this.refresh(), this.leave("resizing"), void this.trigger("resized")));
+  }, e.prototype.registerEventHandlers = function () {
+    a.support.transition && this.$stage.on(a.support.transition.end + ".owl.core", a.proxy(this.onTransitionEnd, this)), !1 !== this.settings.responsive && this.on(b, "resize", this._handlers.onThrottledResize), this.settings.mouseDrag && (this.$element.addClass(this.options.dragClass), this.$stage.on("mousedown.owl.core", a.proxy(this.onDragStart, this)), this.$stage.on("dragstart.owl.core selectstart.owl.core", function () {
+      return !1;
+    })), this.settings.touchDrag && (this.$stage.on("touchstart.owl.core", a.proxy(this.onDragStart, this)), this.$stage.on("touchcancel.owl.core", a.proxy(this.onDragEnd, this)));
+  }, e.prototype.onDragStart = function (b) {
+    var d = null;
+    3 !== b.which && (a.support.transform ? (d = this.$stage.css("transform").replace(/.*\(|\)| /g, "").split(","), d = {
+      x: d[16 === d.length ? 12 : 4],
+      y: d[16 === d.length ? 13 : 5]
+    }) : (d = this.$stage.position(), d = {
+      x: this.settings.rtl ? d.left + this.$stage.width() - this.width() + this.settings.margin : d.left,
+      y: d.top
+    }), this.is("animating") && (a.support.transform ? this.animate(d.x) : this.$stage.stop(), this.invalidate("position")), this.$element.toggleClass(this.options.grabClass, "mousedown" === b.type), this.speed(0), this._drag.time = new Date().getTime(), this._drag.target = a(b.target), this._drag.stage.start = d, this._drag.stage.current = d, this._drag.pointer = this.pointer(b), a(c).on("mouseup.owl.core touchend.owl.core", a.proxy(this.onDragEnd, this)), a(c).one("mousemove.owl.core touchmove.owl.core", a.proxy(function (b) {
+      var d = this.difference(this._drag.pointer, this.pointer(b));
+      a(c).on("mousemove.owl.core touchmove.owl.core", a.proxy(this.onDragMove, this)), Math.abs(d.x) < Math.abs(d.y) && this.is("valid") || (b.preventDefault(), this.enter("dragging"), this.trigger("drag"));
+    }, this)));
+  }, e.prototype.onDragMove = function (a) {
+    var b = null,
+        c = null,
+        d = null,
+        e = this.difference(this._drag.pointer, this.pointer(a)),
+        f = this.difference(this._drag.stage.start, e);
+    this.is("dragging") && (a.preventDefault(), this.settings.loop ? (b = this.coordinates(this.minimum()), c = this.coordinates(this.maximum() + 1) - b, f.x = ((f.x - b) % c + c) % c + b) : (b = this.settings.rtl ? this.coordinates(this.maximum()) : this.coordinates(this.minimum()), c = this.settings.rtl ? this.coordinates(this.minimum()) : this.coordinates(this.maximum()), d = this.settings.pullDrag ? -1 * e.x / 5 : 0, f.x = Math.max(Math.min(f.x, b + d), c + d)), this._drag.stage.current = f, this.animate(f.x));
+  }, e.prototype.onDragEnd = function (b) {
+    var d = this.difference(this._drag.pointer, this.pointer(b)),
+        e = this._drag.stage.current,
+        f = d.x > 0 ^ this.settings.rtl ? "left" : "right";
+    a(c).off(".owl.core"), this.$element.removeClass(this.options.grabClass), (0 !== d.x && this.is("dragging") || !this.is("valid")) && (this.speed(this.settings.dragEndSpeed || this.settings.smartSpeed), this.current(this.closest(e.x, 0 !== d.x ? f : this._drag.direction)), this.invalidate("position"), this.update(), this._drag.direction = f, (Math.abs(d.x) > 3 || new Date().getTime() - this._drag.time > 300) && this._drag.target.one("click.owl.core", function () {
+      return !1;
+    })), this.is("dragging") && (this.leave("dragging"), this.trigger("dragged"));
+  }, e.prototype.closest = function (b, c) {
+    var e = -1,
+        f = 30,
+        g = this.width(),
+        h = this.coordinates();
+    return this.settings.freeDrag || a.each(h, a.proxy(function (a, i) {
+      return "left" === c && b > i - f && b < i + f ? e = a : "right" === c && b > i - g - f && b < i - g + f ? e = a + 1 : this.op(b, "<", i) && this.op(b, ">", h[a + 1] !== d ? h[a + 1] : i - g) && (e = "left" === c ? a + 1 : a), -1 === e;
+    }, this)), this.settings.loop || (this.op(b, ">", h[this.minimum()]) ? e = b = this.minimum() : this.op(b, "<", h[this.maximum()]) && (e = b = this.maximum())), e;
+  }, e.prototype.animate = function (b) {
+    var c = this.speed() > 0;
+    this.is("animating") && this.onTransitionEnd(), c && (this.enter("animating"), this.trigger("translate")), a.support.transform3d && a.support.transition ? this.$stage.css({
+      transform: "translate3d(" + b + "px,0px,0px)",
+      transition: this.speed() / 1e3 + "s" + (this.settings.slideTransition ? " " + this.settings.slideTransition : "")
+    }) : c ? this.$stage.animate({
+      left: b + "px"
+    }, this.speed(), this.settings.fallbackEasing, a.proxy(this.onTransitionEnd, this)) : this.$stage.css({
+      left: b + "px"
+    });
+  }, e.prototype.is = function (a) {
+    return this._states.current[a] && this._states.current[a] > 0;
+  }, e.prototype.current = function (a) {
+    if (a === d) return this._current;
+    if (0 === this._items.length) return d;
+
+    if (a = this.normalize(a), this._current !== a) {
+      var b = this.trigger("change", {
+        property: {
+          name: "position",
+          value: a
+        }
+      });
+      b.data !== d && (a = this.normalize(b.data)), this._current = a, this.invalidate("position"), this.trigger("changed", {
+        property: {
+          name: "position",
+          value: this._current
+        }
+      });
+    }
+
+    return this._current;
+  }, e.prototype.invalidate = function (b) {
+    return "string" === a.type(b) && (this._invalidated[b] = !0, this.is("valid") && this.leave("valid")), a.map(this._invalidated, function (a, b) {
+      return b;
+    });
+  }, e.prototype.reset = function (a) {
+    (a = this.normalize(a)) !== d && (this._speed = 0, this._current = a, this.suppress(["translate", "translated"]), this.animate(this.coordinates(a)), this.release(["translate", "translated"]));
+  }, e.prototype.normalize = function (a, b) {
+    var c = this._items.length,
+        e = b ? 0 : this._clones.length;
+    return !this.isNumeric(a) || c < 1 ? a = d : (a < 0 || a >= c + e) && (a = ((a - e / 2) % c + c) % c + e / 2), a;
+  }, e.prototype.relative = function (a) {
+    return a -= this._clones.length / 2, this.normalize(a, !0);
+  }, e.prototype.maximum = function (a) {
+    var b,
+        c,
+        d,
+        e = this.settings,
+        f = this._coordinates.length;
+    if (e.loop) f = this._clones.length / 2 + this._items.length - 1;else if (e.autoWidth || e.merge) {
+      if (b = this._items.length) for (c = this._items[--b].width(), d = this.$element.width(); b-- && !((c += this._items[b].width() + this.settings.margin) > d);) {
+        ;
+      }
+      f = b + 1;
+    } else f = e.center ? this._items.length - 1 : this._items.length - e.items;
+    return a && (f -= this._clones.length / 2), Math.max(f, 0);
+  }, e.prototype.minimum = function (a) {
+    return a ? 0 : this._clones.length / 2;
+  }, e.prototype.items = function (a) {
+    return a === d ? this._items.slice() : (a = this.normalize(a, !0), this._items[a]);
+  }, e.prototype.mergers = function (a) {
+    return a === d ? this._mergers.slice() : (a = this.normalize(a, !0), this._mergers[a]);
+  }, e.prototype.clones = function (b) {
+    var c = this._clones.length / 2,
+        e = c + this._items.length,
+        f = function f(a) {
+      return a % 2 == 0 ? e + a / 2 : c - (a + 1) / 2;
+    };
+
+    return b === d ? a.map(this._clones, function (a, b) {
+      return f(b);
+    }) : a.map(this._clones, function (a, c) {
+      return a === b ? f(c) : null;
+    });
+  }, e.prototype.speed = function (a) {
+    return a !== d && (this._speed = a), this._speed;
+  }, e.prototype.coordinates = function (b) {
+    var c,
+        e = 1,
+        f = b - 1;
+    return b === d ? a.map(this._coordinates, a.proxy(function (a, b) {
+      return this.coordinates(b);
+    }, this)) : (this.settings.center ? (this.settings.rtl && (e = -1, f = b + 1), c = this._coordinates[b], c += (this.width() - c + (this._coordinates[f] || 0)) / 2 * e) : c = this._coordinates[f] || 0, c = Math.ceil(c));
+  }, e.prototype.duration = function (a, b, c) {
+    return 0 === c ? 0 : Math.min(Math.max(Math.abs(b - a), 1), 6) * Math.abs(c || this.settings.smartSpeed);
+  }, e.prototype.to = function (a, b) {
+    var c = this.current(),
+        d = null,
+        e = a - this.relative(c),
+        f = (e > 0) - (e < 0),
+        g = this._items.length,
+        h = this.minimum(),
+        i = this.maximum();
+    this.settings.loop ? (!this.settings.rewind && Math.abs(e) > g / 2 && (e += -1 * f * g), a = c + e, (d = ((a - h) % g + g) % g + h) !== a && d - e <= i && d - e > 0 && (c = d - e, a = d, this.reset(c))) : this.settings.rewind ? (i += 1, a = (a % i + i) % i) : a = Math.max(h, Math.min(i, a)), this.speed(this.duration(c, a, b)), this.current(a), this.isVisible() && this.update();
+  }, e.prototype.next = function (a) {
+    a = a || !1, this.to(this.relative(this.current()) + 1, a);
+  }, e.prototype.prev = function (a) {
+    a = a || !1, this.to(this.relative(this.current()) - 1, a);
+  }, e.prototype.onTransitionEnd = function (a) {
+    if (a !== d && (a.stopPropagation(), (a.target || a.srcElement || a.originalTarget) !== this.$stage.get(0))) return !1;
+    this.leave("animating"), this.trigger("translated");
+  }, e.prototype.viewport = function () {
+    var d;
+    return this.options.responsiveBaseElement !== b ? d = a(this.options.responsiveBaseElement).width() : b.innerWidth ? d = b.innerWidth : c.documentElement && c.documentElement.clientWidth ? d = c.documentElement.clientWidth : console.warn("Can not detect viewport width."), d;
+  }, e.prototype.replace = function (b) {
+    this.$stage.empty(), this._items = [], b && (b = b instanceof jQuery ? b : a(b)), this.settings.nestedItemSelector && (b = b.find("." + this.settings.nestedItemSelector)), b.filter(function () {
+      return 1 === this.nodeType;
+    }).each(a.proxy(function (a, b) {
+      b = this.prepare(b), this.$stage.append(b), this._items.push(b), this._mergers.push(1 * b.find("[data-merge]").addBack("[data-merge]").attr("data-merge") || 1);
+    }, this)), this.reset(this.isNumeric(this.settings.startPosition) ? this.settings.startPosition : 0), this.invalidate("items");
+  }, e.prototype.add = function (b, c) {
+    var e = this.relative(this._current);
+    c = c === d ? this._items.length : this.normalize(c, !0), b = b instanceof jQuery ? b : a(b), this.trigger("add", {
+      content: b,
+      position: c
+    }), b = this.prepare(b), 0 === this._items.length || c === this._items.length ? (0 === this._items.length && this.$stage.append(b), 0 !== this._items.length && this._items[c - 1].after(b), this._items.push(b), this._mergers.push(1 * b.find("[data-merge]").addBack("[data-merge]").attr("data-merge") || 1)) : (this._items[c].before(b), this._items.splice(c, 0, b), this._mergers.splice(c, 0, 1 * b.find("[data-merge]").addBack("[data-merge]").attr("data-merge") || 1)), this._items[e] && this.reset(this._items[e].index()), this.invalidate("items"), this.trigger("added", {
+      content: b,
+      position: c
+    });
+  }, e.prototype.remove = function (a) {
+    (a = this.normalize(a, !0)) !== d && (this.trigger("remove", {
+      content: this._items[a],
+      position: a
+    }), this._items[a].remove(), this._items.splice(a, 1), this._mergers.splice(a, 1), this.invalidate("items"), this.trigger("removed", {
+      content: null,
+      position: a
+    }));
+  }, e.prototype.preloadAutoWidthImages = function (b) {
+    b.each(a.proxy(function (b, c) {
+      this.enter("pre-loading"), c = a(c), a(new Image()).one("load", a.proxy(function (a) {
+        c.attr("src", a.target.src), c.css("opacity", 1), this.leave("pre-loading"), !this.is("pre-loading") && !this.is("initializing") && this.refresh();
+      }, this)).attr("src", c.attr("src") || c.attr("data-src") || c.attr("data-src-retina"));
+    }, this));
+  }, e.prototype.destroy = function () {
+    this.$element.off(".owl.core"), this.$stage.off(".owl.core"), a(c).off(".owl.core"), !1 !== this.settings.responsive && (b.clearTimeout(this.resizeTimer), this.off(b, "resize", this._handlers.onThrottledResize));
+
+    for (var d in this._plugins) {
+      this._plugins[d].destroy();
+    }
+
+    this.$stage.children(".cloned").remove(), this.$stage.unwrap(), this.$stage.children().contents().unwrap(), this.$stage.children().unwrap(), this.$stage.remove(), this.$element.removeClass(this.options.refreshClass).removeClass(this.options.loadingClass).removeClass(this.options.loadedClass).removeClass(this.options.rtlClass).removeClass(this.options.dragClass).removeClass(this.options.grabClass).attr("class", this.$element.attr("class").replace(new RegExp(this.options.responsiveClass + "-\\S+\\s", "g"), "")).removeData("owl.carousel");
+  }, e.prototype.op = function (a, b, c) {
+    var d = this.settings.rtl;
+
+    switch (b) {
+      case "<":
+        return d ? a > c : a < c;
+
+      case ">":
+        return d ? a < c : a > c;
+
+      case ">=":
+        return d ? a <= c : a >= c;
+
+      case "<=":
+        return d ? a >= c : a <= c;
+    }
+  }, e.prototype.on = function (a, b, c, d) {
+    a.addEventListener ? a.addEventListener(b, c, d) : a.attachEvent && a.attachEvent("on" + b, c);
+  }, e.prototype.off = function (a, b, c, d) {
+    a.removeEventListener ? a.removeEventListener(b, c, d) : a.detachEvent && a.detachEvent("on" + b, c);
+  }, e.prototype.trigger = function (b, c, d, f, g) {
+    var h = {
+      item: {
+        count: this._items.length,
+        index: this.current()
+      }
+    },
+        i = a.camelCase(a.grep(["on", b, d], function (a) {
+      return a;
+    }).join("-").toLowerCase()),
+        j = a.Event([b, "owl", d || "carousel"].join(".").toLowerCase(), a.extend({
+      relatedTarget: this
+    }, h, c));
+    return this._supress[b] || (a.each(this._plugins, function (a, b) {
+      b.onTrigger && b.onTrigger(j);
+    }), this.register({
+      type: e.Type.Event,
+      name: b
+    }), this.$element.trigger(j), this.settings && "function" == typeof this.settings[i] && this.settings[i].call(this, j)), j;
+  }, e.prototype.enter = function (b) {
+    a.each([b].concat(this._states.tags[b] || []), a.proxy(function (a, b) {
+      this._states.current[b] === d && (this._states.current[b] = 0), this._states.current[b]++;
+    }, this));
+  }, e.prototype.leave = function (b) {
+    a.each([b].concat(this._states.tags[b] || []), a.proxy(function (a, b) {
+      this._states.current[b]--;
+    }, this));
+  }, e.prototype.register = function (b) {
+    if (b.type === e.Type.Event) {
+      if (a.event.special[b.name] || (a.event.special[b.name] = {}), !a.event.special[b.name].owl) {
+        var c = a.event.special[b.name]._default;
+        a.event.special[b.name]._default = function (a) {
+          return !c || !c.apply || a.namespace && -1 !== a.namespace.indexOf("owl") ? a.namespace && a.namespace.indexOf("owl") > -1 : c.apply(this, arguments);
+        }, a.event.special[b.name].owl = !0;
+      }
+    } else b.type === e.Type.State && (this._states.tags[b.name] ? this._states.tags[b.name] = this._states.tags[b.name].concat(b.tags) : this._states.tags[b.name] = b.tags, this._states.tags[b.name] = a.grep(this._states.tags[b.name], a.proxy(function (c, d) {
+      return a.inArray(c, this._states.tags[b.name]) === d;
+    }, this)));
+  }, e.prototype.suppress = function (b) {
+    a.each(b, a.proxy(function (a, b) {
+      this._supress[b] = !0;
+    }, this));
+  }, e.prototype.release = function (b) {
+    a.each(b, a.proxy(function (a, b) {
+      delete this._supress[b];
+    }, this));
+  }, e.prototype.pointer = function (a) {
+    var c = {
+      x: null,
+      y: null
+    };
+    return a = a.originalEvent || a || b.event, a = a.touches && a.touches.length ? a.touches[0] : a.changedTouches && a.changedTouches.length ? a.changedTouches[0] : a, a.pageX ? (c.x = a.pageX, c.y = a.pageY) : (c.x = a.clientX, c.y = a.clientY), c;
+  }, e.prototype.isNumeric = function (a) {
+    return !isNaN(parseFloat(a));
+  }, e.prototype.difference = function (a, b) {
+    return {
+      x: a.x - b.x,
+      y: a.y - b.y
+    };
+  }, a.fn.owlCarousel = function (b) {
+    var c = Array.prototype.slice.call(arguments, 1);
+    return this.each(function () {
+      var d = a(this),
+          f = d.data("owl.carousel");
+      f || (f = new e(this, "object" == _typeof(b) && b), d.data("owl.carousel", f), a.each(["next", "prev", "to", "destroy", "refresh", "replace", "add", "remove"], function (b, c) {
+        f.register({
+          type: e.Type.Event,
+          name: c
+        }), f.$element.on(c + ".owl.carousel.core", a.proxy(function (a) {
+          a.namespace && a.relatedTarget !== this && (this.suppress([c]), f[c].apply(this, [].slice.call(arguments, 1)), this.release([c]));
+        }, f));
+      })), "string" == typeof b && "_" !== b.charAt(0) && f[b].apply(f, c);
+    });
+  }, a.fn.owlCarousel.Constructor = e;
+}(window.Zepto || window.jQuery, window, document), function (a, b, c, d) {
+  var e = function e(b) {
+    this._core = b, this._interval = null, this._visible = null, this._handlers = {
+      "initialized.owl.carousel": a.proxy(function (a) {
+        a.namespace && this._core.settings.autoRefresh && this.watch();
+      }, this)
+    }, this._core.options = a.extend({}, e.Defaults, this._core.options), this._core.$element.on(this._handlers);
+  };
+
+  e.Defaults = {
+    autoRefresh: !0,
+    autoRefreshInterval: 500
+  }, e.prototype.watch = function () {
+    this._interval || (this._visible = this._core.isVisible(), this._interval = b.setInterval(a.proxy(this.refresh, this), this._core.settings.autoRefreshInterval));
+  }, e.prototype.refresh = function () {
+    this._core.isVisible() !== this._visible && (this._visible = !this._visible, this._core.$element.toggleClass("owl-hidden", !this._visible), this._visible && this._core.invalidate("width") && this._core.refresh());
+  }, e.prototype.destroy = function () {
+    var a, c;
+    b.clearInterval(this._interval);
+
+    for (a in this._handlers) {
+      this._core.$element.off(a, this._handlers[a]);
+    }
+
+    for (c in Object.getOwnPropertyNames(this)) {
+      "function" != typeof this[c] && (this[c] = null);
+    }
+  }, a.fn.owlCarousel.Constructor.Plugins.AutoRefresh = e;
+}(window.Zepto || window.jQuery, window, document), function (a, b, c, d) {
+  var e = function e(b) {
+    this._core = b, this._loaded = [], this._handlers = {
+      "initialized.owl.carousel change.owl.carousel resized.owl.carousel": a.proxy(function (b) {
+        if (b.namespace && this._core.settings && this._core.settings.lazyLoad && (b.property && "position" == b.property.name || "initialized" == b.type)) {
+          var c = this._core.settings,
+              e = c.center && Math.ceil(c.items / 2) || c.items,
+              f = c.center && -1 * e || 0,
+              g = (b.property && b.property.value !== d ? b.property.value : this._core.current()) + f,
+              h = this._core.clones().length,
+              i = a.proxy(function (a, b) {
+            this.load(b);
+          }, this);
+
+          for (c.lazyLoadEager > 0 && (e += c.lazyLoadEager, c.loop && (g -= c.lazyLoadEager, e++)); f++ < e;) {
+            this.load(h / 2 + this._core.relative(g)), h && a.each(this._core.clones(this._core.relative(g)), i), g++;
+          }
+        }
+      }, this)
+    }, this._core.options = a.extend({}, e.Defaults, this._core.options), this._core.$element.on(this._handlers);
+  };
+
+  e.Defaults = {
+    lazyLoad: !1,
+    lazyLoadEager: 0
+  }, e.prototype.load = function (c) {
+    var d = this._core.$stage.children().eq(c),
+        e = d && d.find(".owl-lazy");
+
+    !e || a.inArray(d.get(0), this._loaded) > -1 || (e.each(a.proxy(function (c, d) {
+      var e,
+          f = a(d),
+          g = b.devicePixelRatio > 1 && f.attr("data-src-retina") || f.attr("data-src") || f.attr("data-srcset");
+      this._core.trigger("load", {
+        element: f,
+        url: g
+      }, "lazy"), f.is("img") ? f.one("load.owl.lazy", a.proxy(function () {
+        f.css("opacity", 1), this._core.trigger("loaded", {
+          element: f,
+          url: g
+        }, "lazy");
+      }, this)).attr("src", g) : f.is("source") ? f.one("load.owl.lazy", a.proxy(function () {
+        this._core.trigger("loaded", {
+          element: f,
+          url: g
+        }, "lazy");
+      }, this)).attr("srcset", g) : (e = new Image(), e.onload = a.proxy(function () {
+        f.css({
+          "background-image": 'url("' + g + '")',
+          opacity: "1"
+        }), this._core.trigger("loaded", {
+          element: f,
+          url: g
+        }, "lazy");
+      }, this), e.src = g);
+    }, this)), this._loaded.push(d.get(0)));
+  }, e.prototype.destroy = function () {
+    var a, b;
+
+    for (a in this.handlers) {
+      this._core.$element.off(a, this.handlers[a]);
+    }
+
+    for (b in Object.getOwnPropertyNames(this)) {
+      "function" != typeof this[b] && (this[b] = null);
+    }
+  }, a.fn.owlCarousel.Constructor.Plugins.Lazy = e;
+}(window.Zepto || window.jQuery, window, document), function (a, b, c, d) {
+  var e = function e(c) {
+    this._core = c, this._previousHeight = null, this._handlers = {
+      "initialized.owl.carousel refreshed.owl.carousel": a.proxy(function (a) {
+        a.namespace && this._core.settings.autoHeight && this.update();
+      }, this),
+      "changed.owl.carousel": a.proxy(function (a) {
+        a.namespace && this._core.settings.autoHeight && "position" === a.property.name && this.update();
+      }, this),
+      "loaded.owl.lazy": a.proxy(function (a) {
+        a.namespace && this._core.settings.autoHeight && a.element.closest("." + this._core.settings.itemClass).index() === this._core.current() && this.update();
+      }, this)
+    }, this._core.options = a.extend({}, e.Defaults, this._core.options), this._core.$element.on(this._handlers), this._intervalId = null;
+    var d = this;
+    a(b).on("load", function () {
+      d._core.settings.autoHeight && d.update();
+    }), a(b).resize(function () {
+      d._core.settings.autoHeight && (null != d._intervalId && clearTimeout(d._intervalId), d._intervalId = setTimeout(function () {
+        d.update();
+      }, 250));
+    });
+  };
+
+  e.Defaults = {
+    autoHeight: !1,
+    autoHeightClass: "owl-height"
+  }, e.prototype.update = function () {
+    var b = this._core._current,
+        c = b + this._core.settings.items,
+        d = this._core.settings.lazyLoad,
+        e = this._core.$stage.children().toArray().slice(b, c),
+        f = [],
+        g = 0;
+
+    a.each(e, function (b, c) {
+      f.push(a(c).height());
+    }), g = Math.max.apply(null, f), g <= 1 && d && this._previousHeight && (g = this._previousHeight), this._previousHeight = g, this._core.$stage.parent().height(g).addClass(this._core.settings.autoHeightClass);
+  }, e.prototype.destroy = function () {
+    var a, b;
+
+    for (a in this._handlers) {
+      this._core.$element.off(a, this._handlers[a]);
+    }
+
+    for (b in Object.getOwnPropertyNames(this)) {
+      "function" != typeof this[b] && (this[b] = null);
+    }
+  }, a.fn.owlCarousel.Constructor.Plugins.AutoHeight = e;
+}(window.Zepto || window.jQuery, window, document), function (a, b, c, d) {
+  var e = function e(b) {
+    this._core = b, this._videos = {}, this._playing = null, this._handlers = {
+      "initialized.owl.carousel": a.proxy(function (a) {
+        a.namespace && this._core.register({
+          type: "state",
+          name: "playing",
+          tags: ["interacting"]
+        });
+      }, this),
+      "resize.owl.carousel": a.proxy(function (a) {
+        a.namespace && this._core.settings.video && this.isInFullScreen() && a.preventDefault();
+      }, this),
+      "refreshed.owl.carousel": a.proxy(function (a) {
+        a.namespace && this._core.is("resizing") && this._core.$stage.find(".cloned .owl-video-frame").remove();
+      }, this),
+      "changed.owl.carousel": a.proxy(function (a) {
+        a.namespace && "position" === a.property.name && this._playing && this.stop();
+      }, this),
+      "prepared.owl.carousel": a.proxy(function (b) {
+        if (b.namespace) {
+          var c = a(b.content).find(".owl-video");
+          c.length && (c.css("display", "none"), this.fetch(c, a(b.content)));
+        }
+      }, this)
+    }, this._core.options = a.extend({}, e.Defaults, this._core.options), this._core.$element.on(this._handlers), this._core.$element.on("click.owl.video", ".owl-video-play-icon", a.proxy(function (a) {
+      this.play(a);
+    }, this));
+  };
+
+  e.Defaults = {
+    video: !1,
+    videoHeight: !1,
+    videoWidth: !1
+  }, e.prototype.fetch = function (a, b) {
+    var c = function () {
+      return a.attr("data-vimeo-id") ? "vimeo" : a.attr("data-vzaar-id") ? "vzaar" : "youtube";
+    }(),
+        d = a.attr("data-vimeo-id") || a.attr("data-youtube-id") || a.attr("data-vzaar-id"),
+        e = a.attr("data-width") || this._core.settings.videoWidth,
+        f = a.attr("data-height") || this._core.settings.videoHeight,
+        g = a.attr("href");
+
+    if (!g) throw new Error("Missing video URL.");
+    if (d = g.match(/(http:|https:|)\/\/(player.|www.|app.)?(vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com|be\-nocookie\.com)|vzaar\.com)\/(video\/|videos\/|embed\/|channels\/.+\/|groups\/.+\/|watch\?v=|v\/)?([A-Za-z0-9._%-]*)(\&\S+)?/), d[3].indexOf("youtu") > -1) c = "youtube";else if (d[3].indexOf("vimeo") > -1) c = "vimeo";else {
+      if (!(d[3].indexOf("vzaar") > -1)) throw new Error("Video URL not supported.");
+      c = "vzaar";
+    }
+    d = d[6], this._videos[g] = {
+      type: c,
+      id: d,
+      width: e,
+      height: f
+    }, b.attr("data-video", g), this.thumbnail(a, this._videos[g]);
+  }, e.prototype.thumbnail = function (b, c) {
+    var d,
+        e,
+        f,
+        g = c.width && c.height ? "width:" + c.width + "px;height:" + c.height + "px;" : "",
+        h = b.find("img"),
+        i = "src",
+        j = "",
+        k = this._core.settings,
+        l = function l(c) {
+      e = '<div class="owl-video-play-icon"></div>', d = k.lazyLoad ? a("<div/>", {
+        "class": "owl-video-tn " + j,
+        srcType: c
+      }) : a("<div/>", {
+        "class": "owl-video-tn",
+        style: "opacity:1;background-image:url(" + c + ")"
+      }), b.after(d), b.after(e);
+    };
+
+    if (b.wrap(a("<div/>", {
+      "class": "owl-video-wrapper",
+      style: g
+    })), this._core.settings.lazyLoad && (i = "data-src", j = "owl-lazy"), h.length) return l(h.attr(i)), h.remove(), !1;
+    "youtube" === c.type ? (f = "//img.youtube.com/vi/" + c.id + "/hqdefault.jpg", l(f)) : "vimeo" === c.type ? a.ajax({
+      type: "GET",
+      url: "//vimeo.com/api/v2/video/" + c.id + ".json",
+      jsonp: "callback",
+      dataType: "jsonp",
+      success: function success(a) {
+        f = a[0].thumbnail_large, l(f);
+      }
+    }) : "vzaar" === c.type && a.ajax({
+      type: "GET",
+      url: "//vzaar.com/api/videos/" + c.id + ".json",
+      jsonp: "callback",
+      dataType: "jsonp",
+      success: function success(a) {
+        f = a.framegrab_url, l(f);
+      }
+    });
+  }, e.prototype.stop = function () {
+    this._core.trigger("stop", null, "video"), this._playing.find(".owl-video-frame").remove(), this._playing.removeClass("owl-video-playing"), this._playing = null, this._core.leave("playing"), this._core.trigger("stopped", null, "video");
+  }, e.prototype.play = function (b) {
+    var c,
+        d = a(b.target),
+        e = d.closest("." + this._core.settings.itemClass),
+        f = this._videos[e.attr("data-video")],
+        g = f.width || "100%",
+        h = f.height || this._core.$stage.height();
+
+    this._playing || (this._core.enter("playing"), this._core.trigger("play", null, "video"), e = this._core.items(this._core.relative(e.index())), this._core.reset(e.index()), c = a('<iframe frameborder="0" allowfullscreen mozallowfullscreen webkitAllowFullScreen ></iframe>'), c.attr("height", h), c.attr("width", g), "youtube" === f.type ? c.attr("src", "//www.youtube.com/embed/" + f.id + "?autoplay=1&rel=0&v=" + f.id) : "vimeo" === f.type ? c.attr("src", "//player.vimeo.com/video/" + f.id + "?autoplay=1") : "vzaar" === f.type && c.attr("src", "//view.vzaar.com/" + f.id + "/player?autoplay=true"), a(c).wrap('<div class="owl-video-frame" />').insertAfter(e.find(".owl-video")), this._playing = e.addClass("owl-video-playing"));
+  }, e.prototype.isInFullScreen = function () {
+    var b = c.fullscreenElement || c.mozFullScreenElement || c.webkitFullscreenElement;
+    return b && a(b).parent().hasClass("owl-video-frame");
+  }, e.prototype.destroy = function () {
+    var a, b;
+
+    this._core.$element.off("click.owl.video");
+
+    for (a in this._handlers) {
+      this._core.$element.off(a, this._handlers[a]);
+    }
+
+    for (b in Object.getOwnPropertyNames(this)) {
+      "function" != typeof this[b] && (this[b] = null);
+    }
+  }, a.fn.owlCarousel.Constructor.Plugins.Video = e;
+}(window.Zepto || window.jQuery, window, document), function (a, b, c, d) {
+  var e = function e(b) {
+    this.core = b, this.core.options = a.extend({}, e.Defaults, this.core.options), this.swapping = !0, this.previous = d, this.next = d, this.handlers = {
+      "change.owl.carousel": a.proxy(function (a) {
+        a.namespace && "position" == a.property.name && (this.previous = this.core.current(), this.next = a.property.value);
+      }, this),
+      "drag.owl.carousel dragged.owl.carousel translated.owl.carousel": a.proxy(function (a) {
+        a.namespace && (this.swapping = "translated" == a.type);
+      }, this),
+      "translate.owl.carousel": a.proxy(function (a) {
+        a.namespace && this.swapping && (this.core.options.animateOut || this.core.options.animateIn) && this.swap();
+      }, this)
+    }, this.core.$element.on(this.handlers);
+  };
+
+  e.Defaults = {
+    animateOut: !1,
+    animateIn: !1
+  }, e.prototype.swap = function () {
+    if (1 === this.core.settings.items && a.support.animation && a.support.transition) {
+      this.core.speed(0);
+      var b,
+          c = a.proxy(this.clear, this),
+          d = this.core.$stage.children().eq(this.previous),
+          e = this.core.$stage.children().eq(this.next),
+          f = this.core.settings.animateIn,
+          g = this.core.settings.animateOut;
+      this.core.current() !== this.previous && (g && (b = this.core.coordinates(this.previous) - this.core.coordinates(this.next), d.one(a.support.animation.end, c).css({
+        left: b + "px"
+      }).addClass("animated owl-animated-out").addClass(g)), f && e.one(a.support.animation.end, c).addClass("animated owl-animated-in").addClass(f));
+    }
+  }, e.prototype.clear = function (b) {
+    a(b.target).css({
+      left: ""
+    }).removeClass("animated owl-animated-out owl-animated-in").removeClass(this.core.settings.animateIn).removeClass(this.core.settings.animateOut), this.core.onTransitionEnd();
+  }, e.prototype.destroy = function () {
+    var a, b;
+
+    for (a in this.handlers) {
+      this.core.$element.off(a, this.handlers[a]);
+    }
+
+    for (b in Object.getOwnPropertyNames(this)) {
+      "function" != typeof this[b] && (this[b] = null);
+    }
+  }, a.fn.owlCarousel.Constructor.Plugins.Animate = e;
+}(window.Zepto || window.jQuery, window, document), function (a, b, c, d) {
+  var e = function e(b) {
+    this._core = b, this._call = null, this._time = 0, this._timeout = 0, this._paused = !0, this._handlers = {
+      "changed.owl.carousel": a.proxy(function (a) {
+        a.namespace && "settings" === a.property.name ? this._core.settings.autoplay ? this.play() : this.stop() : a.namespace && "position" === a.property.name && this._paused && (this._time = 0);
+      }, this),
+      "initialized.owl.carousel": a.proxy(function (a) {
+        a.namespace && this._core.settings.autoplay && this.play();
+      }, this),
+      "play.owl.autoplay": a.proxy(function (a, b, c) {
+        a.namespace && this.play(b, c);
+      }, this),
+      "stop.owl.autoplay": a.proxy(function (a) {
+        a.namespace && this.stop();
+      }, this),
+      "mouseover.owl.autoplay": a.proxy(function () {
+        this._core.settings.autoplayHoverPause && this._core.is("rotating") && this.pause();
+      }, this),
+      "mouseleave.owl.autoplay": a.proxy(function () {
+        this._core.settings.autoplayHoverPause && this._core.is("rotating") && this.play();
+      }, this),
+      "touchstart.owl.core": a.proxy(function () {
+        this._core.settings.autoplayHoverPause && this._core.is("rotating") && this.pause();
+      }, this),
+      "touchend.owl.core": a.proxy(function () {
+        this._core.settings.autoplayHoverPause && this.play();
+      }, this)
+    }, this._core.$element.on(this._handlers), this._core.options = a.extend({}, e.Defaults, this._core.options);
+  };
+
+  e.Defaults = {
+    autoplay: !1,
+    autoplayTimeout: 5e3,
+    autoplayHoverPause: !1,
+    autoplaySpeed: !1
+  }, e.prototype._next = function (d) {
+    this._call = b.setTimeout(a.proxy(this._next, this, d), this._timeout * (Math.round(this.read() / this._timeout) + 1) - this.read()), this._core.is("interacting") || c.hidden || this._core.next(d || this._core.settings.autoplaySpeed);
+  }, e.prototype.read = function () {
+    return new Date().getTime() - this._time;
+  }, e.prototype.play = function (c, d) {
+    var e;
+    this._core.is("rotating") || this._core.enter("rotating"), c = c || this._core.settings.autoplayTimeout, e = Math.min(this._time % (this._timeout || c), c), this._paused ? (this._time = this.read(), this._paused = !1) : b.clearTimeout(this._call), this._time += this.read() % c - e, this._timeout = c, this._call = b.setTimeout(a.proxy(this._next, this, d), c - e);
+  }, e.prototype.stop = function () {
+    this._core.is("rotating") && (this._time = 0, this._paused = !0, b.clearTimeout(this._call), this._core.leave("rotating"));
+  }, e.prototype.pause = function () {
+    this._core.is("rotating") && !this._paused && (this._time = this.read(), this._paused = !0, b.clearTimeout(this._call));
+  }, e.prototype.destroy = function () {
+    var a, b;
+    this.stop();
+
+    for (a in this._handlers) {
+      this._core.$element.off(a, this._handlers[a]);
+    }
+
+    for (b in Object.getOwnPropertyNames(this)) {
+      "function" != typeof this[b] && (this[b] = null);
+    }
+  }, a.fn.owlCarousel.Constructor.Plugins.autoplay = e;
+}(window.Zepto || window.jQuery, window, document), function (a, b, c, d) {
+  "use strict";
+
+  var e = function e(b) {
+    this._core = b, this._initialized = !1, this._pages = [], this._controls = {}, this._templates = [], this.$element = this._core.$element, this._overrides = {
+      next: this._core.next,
+      prev: this._core.prev,
+      to: this._core.to
+    }, this._handlers = {
+      "prepared.owl.carousel": a.proxy(function (b) {
+        b.namespace && this._core.settings.dotsData && this._templates.push('<div class="' + this._core.settings.dotClass + '">' + a(b.content).find("[data-dot]").addBack("[data-dot]").attr("data-dot") + "</div>");
+      }, this),
+      "added.owl.carousel": a.proxy(function (a) {
+        a.namespace && this._core.settings.dotsData && this._templates.splice(a.position, 0, this._templates.pop());
+      }, this),
+      "remove.owl.carousel": a.proxy(function (a) {
+        a.namespace && this._core.settings.dotsData && this._templates.splice(a.position, 1);
+      }, this),
+      "changed.owl.carousel": a.proxy(function (a) {
+        a.namespace && "position" == a.property.name && this.draw();
+      }, this),
+      "initialized.owl.carousel": a.proxy(function (a) {
+        a.namespace && !this._initialized && (this._core.trigger("initialize", null, "navigation"), this.initialize(), this.update(), this.draw(), this._initialized = !0, this._core.trigger("initialized", null, "navigation"));
+      }, this),
+      "refreshed.owl.carousel": a.proxy(function (a) {
+        a.namespace && this._initialized && (this._core.trigger("refresh", null, "navigation"), this.update(), this.draw(), this._core.trigger("refreshed", null, "navigation"));
+      }, this)
+    }, this._core.options = a.extend({}, e.Defaults, this._core.options), this.$element.on(this._handlers);
+  };
+
+  e.Defaults = {
+    nav: !1,
+    navText: ['<span aria-label="Previous">&#x2039;</span>', '<span aria-label="Next">&#x203a;</span>'],
+    navSpeed: !1,
+    navElement: 'button type="button" role="presentation"',
+    navContainer: !1,
+    navContainerClass: "owl-nav",
+    navClass: ["owl-prev", "owl-next"],
+    slideBy: 1,
+    dotClass: "owl-dot",
+    dotsClass: "owl-dots",
+    dots: !0,
+    dotsEach: !1,
+    dotsData: !1,
+    dotsSpeed: !1,
+    dotsContainer: !1
+  }, e.prototype.initialize = function () {
+    var b,
+        c = this._core.settings;
+    this._controls.$relative = (c.navContainer ? a(c.navContainer) : a("<div>").addClass(c.navContainerClass).appendTo(this.$element)).addClass("disabled"), this._controls.$previous = a("<" + c.navElement + ">").addClass(c.navClass[0]).html(c.navText[0]).prependTo(this._controls.$relative).on("click", a.proxy(function (a) {
+      this.prev(c.navSpeed);
+    }, this)), this._controls.$next = a("<" + c.navElement + ">").addClass(c.navClass[1]).html(c.navText[1]).appendTo(this._controls.$relative).on("click", a.proxy(function (a) {
+      this.next(c.navSpeed);
+    }, this)), c.dotsData || (this._templates = [a('<button role="button">').addClass(c.dotClass).append(a("<span>")).prop("outerHTML")]), this._controls.$absolute = (c.dotsContainer ? a(c.dotsContainer) : a("<div>").addClass(c.dotsClass).appendTo(this.$element)).addClass("disabled"), this._controls.$absolute.on("click", "button", a.proxy(function (b) {
+      var d = a(b.target).parent().is(this._controls.$absolute) ? a(b.target).index() : a(b.target).parent().index();
+      b.preventDefault(), this.to(d, c.dotsSpeed);
+    }, this));
+
+    for (b in this._overrides) {
+      this._core[b] = a.proxy(this[b], this);
+    }
+  }, e.prototype.destroy = function () {
+    var a, b, c, d, e;
+    e = this._core.settings;
+
+    for (a in this._handlers) {
+      this.$element.off(a, this._handlers[a]);
+    }
+
+    for (b in this._controls) {
+      "$relative" === b && e.navContainer ? this._controls[b].html("") : this._controls[b].remove();
+    }
+
+    for (d in this.overides) {
+      this._core[d] = this._overrides[d];
+    }
+
+    for (c in Object.getOwnPropertyNames(this)) {
+      "function" != typeof this[c] && (this[c] = null);
+    }
+  }, e.prototype.update = function () {
+    var a,
+        b,
+        c,
+        d = this._core.clones().length / 2,
+        e = d + this._core.items().length,
+        f = this._core.maximum(!0),
+        g = this._core.settings,
+        h = g.center || g.autoWidth || g.dotsData ? 1 : g.dotsEach || g.items;
+
+    if ("page" !== g.slideBy && (g.slideBy = Math.min(g.slideBy, g.items)), g.dots || "page" == g.slideBy) for (this._pages = [], a = d, b = 0, c = 0; a < e; a++) {
+      if (b >= h || 0 === b) {
+        if (this._pages.push({
+          start: Math.min(f, a - d),
+          end: a - d + h - 1
+        }), Math.min(f, a - d) === f) break;
+        b = 0, ++c;
+      }
+
+      b += this._core.mergers(this._core.relative(a));
+    }
+  }, e.prototype.draw = function () {
+    var b,
+        c = this._core.settings,
+        d = this._core.items().length <= c.items,
+        e = this._core.relative(this._core.current()),
+        f = c.loop || c.rewind;
+
+    this._controls.$relative.toggleClass("disabled", !c.nav || d), c.nav && (this._controls.$previous.toggleClass("disabled", !f && e <= this._core.minimum(!0)), this._controls.$next.toggleClass("disabled", !f && e >= this._core.maximum(!0))), this._controls.$absolute.toggleClass("disabled", !c.dots || d), c.dots && (b = this._pages.length - this._controls.$absolute.children().length, c.dotsData && 0 !== b ? this._controls.$absolute.html(this._templates.join("")) : b > 0 ? this._controls.$absolute.append(new Array(b + 1).join(this._templates[0])) : b < 0 && this._controls.$absolute.children().slice(b).remove(), this._controls.$absolute.find(".active").removeClass("active"), this._controls.$absolute.children().eq(a.inArray(this.current(), this._pages)).addClass("active"));
+  }, e.prototype.onTrigger = function (b) {
+    var c = this._core.settings;
+    b.page = {
+      index: a.inArray(this.current(), this._pages),
+      count: this._pages.length,
+      size: c && (c.center || c.autoWidth || c.dotsData ? 1 : c.dotsEach || c.items)
+    };
+  }, e.prototype.current = function () {
+    var b = this._core.relative(this._core.current());
+
+    return a.grep(this._pages, a.proxy(function (a, c) {
+      return a.start <= b && a.end >= b;
+    }, this)).pop();
+  }, e.prototype.getPosition = function (b) {
+    var c,
+        d,
+        e = this._core.settings;
+    return "page" == e.slideBy ? (c = a.inArray(this.current(), this._pages), d = this._pages.length, b ? ++c : --c, c = this._pages[(c % d + d) % d].start) : (c = this._core.relative(this._core.current()), d = this._core.items().length, b ? c += e.slideBy : c -= e.slideBy), c;
+  }, e.prototype.next = function (b) {
+    a.proxy(this._overrides.to, this._core)(this.getPosition(!0), b);
+  }, e.prototype.prev = function (b) {
+    a.proxy(this._overrides.to, this._core)(this.getPosition(!1), b);
+  }, e.prototype.to = function (b, c, d) {
+    var e;
+    !d && this._pages.length ? (e = this._pages.length, a.proxy(this._overrides.to, this._core)(this._pages[(b % e + e) % e].start, c)) : a.proxy(this._overrides.to, this._core)(b, c);
+  }, a.fn.owlCarousel.Constructor.Plugins.Navigation = e;
+}(window.Zepto || window.jQuery, window, document), function (a, b, c, d) {
+  "use strict";
+
+  var e = function e(c) {
+    this._core = c, this._hashes = {}, this.$element = this._core.$element, this._handlers = {
+      "initialized.owl.carousel": a.proxy(function (c) {
+        c.namespace && "URLHash" === this._core.settings.startPosition && a(b).trigger("hashchange.owl.navigation");
+      }, this),
+      "prepared.owl.carousel": a.proxy(function (b) {
+        if (b.namespace) {
+          var c = a(b.content).find("[data-hash]").addBack("[data-hash]").attr("data-hash");
+          if (!c) return;
+          this._hashes[c] = b.content;
+        }
+      }, this),
+      "changed.owl.carousel": a.proxy(function (c) {
+        if (c.namespace && "position" === c.property.name) {
+          var d = this._core.items(this._core.relative(this._core.current())),
+              e = a.map(this._hashes, function (a, b) {
+            return a === d ? b : null;
+          }).join();
+
+          if (!e || b.location.hash.slice(1) === e) return;
+          b.location.hash = e;
+        }
+      }, this)
+    }, this._core.options = a.extend({}, e.Defaults, this._core.options), this.$element.on(this._handlers), a(b).on("hashchange.owl.navigation", a.proxy(function (a) {
+      var c = b.location.hash.substring(1),
+          e = this._core.$stage.children(),
+          f = this._hashes[c] && e.index(this._hashes[c]);
+
+      f !== d && f !== this._core.current() && this._core.to(this._core.relative(f), !1, !0);
+    }, this));
+  };
+
+  e.Defaults = {
+    URLhashListener: !1
+  }, e.prototype.destroy = function () {
+    var c, d;
+    a(b).off("hashchange.owl.navigation");
+
+    for (c in this._handlers) {
+      this._core.$element.off(c, this._handlers[c]);
+    }
+
+    for (d in Object.getOwnPropertyNames(this)) {
+      "function" != typeof this[d] && (this[d] = null);
+    }
+  }, a.fn.owlCarousel.Constructor.Plugins.Hash = e;
+}(window.Zepto || window.jQuery, window, document), function (a, b, c, d) {
+  function e(b, c) {
+    var e = !1,
+        f = b.charAt(0).toUpperCase() + b.slice(1);
+    return a.each((b + " " + h.join(f + " ") + f).split(" "), function (a, b) {
+      if (g[b] !== d) return e = !c || b, !1;
+    }), e;
+  }
+
+  function f(a) {
+    return e(a, !0);
+  }
+
+  var g = a("<support>").get(0).style,
+      h = "Webkit Moz O ms".split(" "),
+      i = {
+    transition: {
+      end: {
+        WebkitTransition: "webkitTransitionEnd",
+        MozTransition: "transitionend",
+        OTransition: "oTransitionEnd",
+        transition: "transitionend"
+      }
+    },
+    animation: {
+      end: {
+        WebkitAnimation: "webkitAnimationEnd",
+        MozAnimation: "animationend",
+        OAnimation: "oAnimationEnd",
+        animation: "animationend"
+      }
+    }
+  },
+      j = {
+    csstransforms: function csstransforms() {
+      return !!e("transform");
+    },
+    csstransforms3d: function csstransforms3d() {
+      return !!e("perspective");
+    },
+    csstransitions: function csstransitions() {
+      return !!e("transition");
+    },
+    cssanimations: function cssanimations() {
+      return !!e("animation");
+    }
+  };
+  j.csstransitions() && (a.support.transition = new String(f("transition")), a.support.transition.end = i.transition.end[a.support.transition]), j.cssanimations() && (a.support.animation = new String(f("animation")), a.support.animation.end = i.animation.end[a.support.animation]), j.csstransforms() && (a.support.transform = new String(f("transform")), a.support.transform3d = j.csstransforms3d());
+}(window.Zepto || window.jQuery, window, document);
+
+/***/ }),
+
+/***/ "./resources/js/admin/Corona/settings.js":
+/*!***********************************************!*\
+  !*** ./resources/js/admin/Corona/settings.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function ($) {
+  'use strict';
+
+  $(function () {
+    $(".nav-settings").click(function () {
+      $("#right-sidebar").toggleClass("open");
+    });
+    $(".settings-close").click(function () {
+      $("#right-sidebar,#theme-settings").removeClass("open");
+    });
+    $("#settings-trigger").on("click", function () {
+      $("#theme-settings").toggleClass("open");
+    }); //background constants
+
+    var navbar_classes = "navbar-danger navbar-success navbar-warning navbar-dark navbar-light navbar-primary navbar-info navbar-pink";
+    var sidebar_classes = "sidebar-light sidebar-dark";
+    var $body = $("body"); //sidebar backgrounds
+
+    $("#sidebar-default-theme").on("click", function () {
+      $body.removeClass(sidebar_classes);
+      $(".sidebar-bg-options").removeClass("selected");
+      $(this).addClass("selected");
+    });
+    $("#sidebar-dark-theme").on("click", function () {
+      $body.removeClass(sidebar_classes);
+      $body.addClass("sidebar-dark");
+      $(".sidebar-bg-options").removeClass("selected");
+      $(this).addClass("selected");
+    }); //Navbar Backgrounds
+
+    $(".tiles.primary").on("click", function () {
+      $(".navbar").removeClass(navbar_classes);
+      $(".navbar").addClass("navbar-primary");
+      $(".tiles").removeClass("selected");
+      $(this).addClass("selected");
+    });
+    $(".tiles.success").on("click", function () {
+      $(".navbar").removeClass(navbar_classes);
+      $(".navbar").addClass("navbar-success");
+      $(".tiles").removeClass("selected");
+      $(this).addClass("selected");
+    });
+    $(".tiles.warning").on("click", function () {
+      $(".navbar").removeClass(navbar_classes);
+      $(".navbar").addClass("navbar-warning");
+      $(".tiles").removeClass("selected");
+      $(this).addClass("selected");
+    });
+    $(".tiles.danger").on("click", function () {
+      $(".navbar").removeClass(navbar_classes);
+      $(".navbar").addClass("navbar-danger");
+      $(".tiles").removeClass("selected");
+      $(this).addClass("selected");
+    });
+    $(".tiles.info").on("click", function () {
+      $(".navbar").removeClass(navbar_classes);
+      $(".navbar").addClass("navbar-info");
+      $(".tiles").removeClass("selected");
+      $(this).addClass("selected");
+    });
+    $(".tiles.dark").on("click", function () {
+      $(".navbar").removeClass(navbar_classes);
+      $(".navbar").addClass("navbar-dark");
+      $(".tiles").removeClass("selected");
+      $(this).addClass("selected");
+    });
+    $(".tiles.default").on("click", function () {
+      $(".navbar").removeClass(navbar_classes);
+      $(".tiles").removeClass("selected");
+      $(this).addClass("selected");
+    }); //Horizontal menu in mobile
+
+    $('[data-toggle="horizontal-menu-toggle"]').on("click", function () {
+      $(".horizontal-menu .bottom-navbar").toggleClass("header-toggled");
+    }); // Horizontal menu navigation in mobile menu on click
+
+    var navItemClicked = $('.horizontal-menu .page-navigation >.nav-item');
+    navItemClicked.on("click", function (event) {
+      if (window.matchMedia('(max-width: 991px)').matches) {
+        if (!$(this).hasClass('show-submenu')) {
+          navItemClicked.removeClass('show-submenu');
+        }
+
+        $(this).toggleClass('show-submenu');
+      }
+    });
+    $(window).scroll(function () {
+      if (window.matchMedia('(min-width: 992px)').matches) {
+        var header = $('.horizontal-menu');
+
+        if ($(window).scrollTop() >= 71) {
+          $(header).addClass('fixed-on-scroll');
+        } else {
+          $(header).removeClass('fixed-on-scroll');
+        }
+      }
+    });
+  });
+})(jQuery);
+
+/***/ }),
+
+/***/ "./resources/js/admin/Corona/todolist.js":
+/*!***********************************************!*\
+  !*** ./resources/js/admin/Corona/todolist.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function ($) {
+  'use strict';
+
+  $(function () {
+    var todoListItem = $('.todo-list');
+    var todoListInput = $('.todo-list-input');
+    $('.todo-list-add-btn').on("click", function (event) {
+      event.preventDefault();
+      var item = $(this).prevAll('.todo-list-input').val();
+
+      if (item) {
+        todoListItem.append("<li><div class='form-check'><label class='form-check-label'><input class='checkbox' type='checkbox'/>" + item + "<i class='input-helper'></i></label></div><i class='remove mdi mdi-close-circle-outline'></i></li>");
+        todoListInput.val("");
+      }
+    });
+    todoListItem.on('change', '.checkbox', function () {
+      if ($(this).attr('checked')) {
+        $(this).removeAttr('checked');
+      } else {
+        $(this).attr('checked', 'checked');
+      }
+
+      $(this).closest("li").toggleClass('completed');
+    });
+    todoListItem.on('click', '.remove', function () {
+      $(this).parent().remove();
+    });
+  });
+})(jQuery);
+
+/***/ }),
+
+/***/ "./resources/js/admin/Corona/vendor.bundle.base.js":
+/*!*********************************************************!*\
+  !*** ./resources/js/admin/Corona/vendor.bundle.base.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(module, global) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_LOCAL_MODULE_0__;var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+/*! jQuery v3.4.1 | (c) JS Foundation and other contributors | jquery.org/license */
+!function (e, t) {
+  "use strict";
+
+  "object" == ( false ? undefined : _typeof(module)) && "object" == _typeof(module.exports) ? module.exports = e.document ? t(e, !0) : function (e) {
+    if (!e.document) throw new Error("jQuery requires a window with a document");
+    return t(e);
+  } : t(e);
+}("undefined" != typeof window ? window : this, function (C, e) {
+  "use strict";
+
+  var t = [],
+      E = C.document,
+      r = Object.getPrototypeOf,
+      s = t.slice,
+      g = t.concat,
+      u = t.push,
+      i = t.indexOf,
+      n = {},
+      o = n.toString,
+      v = n.hasOwnProperty,
+      a = v.toString,
+      l = a.call(Object),
+      y = {},
+      m = function m(e) {
+    return "function" == typeof e && "number" != typeof e.nodeType;
+  },
+      x = function x(e) {
+    return null != e && e === e.window;
+  },
+      c = {
+    type: !0,
+    src: !0,
+    nonce: !0,
+    noModule: !0
+  };
+
+  function b(e, t, n) {
+    var r,
+        i,
+        o = (n = n || E).createElement("script");
+    if (o.text = e, t) for (r in c) {
+      (i = t[r] || t.getAttribute && t.getAttribute(r)) && o.setAttribute(r, i);
+    }
+    n.head.appendChild(o).parentNode.removeChild(o);
+  }
+
+  function w(e) {
+    return null == e ? e + "" : "object" == _typeof(e) || "function" == typeof e ? n[o.call(e)] || "object" : _typeof(e);
+  }
+
+  var f = "3.4.1",
+      k = function k(e, t) {
+    return new k.fn.init(e, t);
+  },
+      p = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+
+  function d(e) {
+    var t = !!e && "length" in e && e.length,
+        n = w(e);
+    return !m(e) && !x(e) && ("array" === n || 0 === t || "number" == typeof t && 0 < t && t - 1 in e);
+  }
+
+  k.fn = k.prototype = {
+    jquery: f,
+    constructor: k,
+    length: 0,
+    toArray: function toArray() {
+      return s.call(this);
+    },
+    get: function get(e) {
+      return null == e ? s.call(this) : e < 0 ? this[e + this.length] : this[e];
+    },
+    pushStack: function pushStack(e) {
+      var t = k.merge(this.constructor(), e);
+      return t.prevObject = this, t;
+    },
+    each: function each(e) {
+      return k.each(this, e);
+    },
+    map: function map(n) {
+      return this.pushStack(k.map(this, function (e, t) {
+        return n.call(e, t, e);
+      }));
+    },
+    slice: function slice() {
+      return this.pushStack(s.apply(this, arguments));
+    },
+    first: function first() {
+      return this.eq(0);
+    },
+    last: function last() {
+      return this.eq(-1);
+    },
+    eq: function eq(e) {
+      var t = this.length,
+          n = +e + (e < 0 ? t : 0);
+      return this.pushStack(0 <= n && n < t ? [this[n]] : []);
+    },
+    end: function end() {
+      return this.prevObject || this.constructor();
+    },
+    push: u,
+    sort: t.sort,
+    splice: t.splice
+  }, k.extend = k.fn.extend = function () {
+    var e,
+        t,
+        n,
+        r,
+        i,
+        o,
+        a = arguments[0] || {},
+        s = 1,
+        u = arguments.length,
+        l = !1;
+
+    for ("boolean" == typeof a && (l = a, a = arguments[s] || {}, s++), "object" == _typeof(a) || m(a) || (a = {}), s === u && (a = this, s--); s < u; s++) {
+      if (null != (e = arguments[s])) for (t in e) {
+        r = e[t], "__proto__" !== t && a !== r && (l && r && (k.isPlainObject(r) || (i = Array.isArray(r))) ? (n = a[t], o = i && !Array.isArray(n) ? [] : i || k.isPlainObject(n) ? n : {}, i = !1, a[t] = k.extend(l, o, r)) : void 0 !== r && (a[t] = r));
+      }
+    }
+
+    return a;
+  }, k.extend({
+    expando: "jQuery" + (f + Math.random()).replace(/\D/g, ""),
+    isReady: !0,
+    error: function error(e) {
+      throw new Error(e);
+    },
+    noop: function noop() {},
+    isPlainObject: function isPlainObject(e) {
+      var t, n;
+      return !(!e || "[object Object]" !== o.call(e)) && (!(t = r(e)) || "function" == typeof (n = v.call(t, "constructor") && t.constructor) && a.call(n) === l);
+    },
+    isEmptyObject: function isEmptyObject(e) {
+      var t;
+
+      for (t in e) {
+        return !1;
+      }
+
+      return !0;
+    },
+    globalEval: function globalEval(e, t) {
+      b(e, {
+        nonce: t && t.nonce
+      });
+    },
+    each: function each(e, t) {
+      var n,
+          r = 0;
+
+      if (d(e)) {
+        for (n = e.length; r < n; r++) {
+          if (!1 === t.call(e[r], r, e[r])) break;
+        }
+      } else for (r in e) {
+        if (!1 === t.call(e[r], r, e[r])) break;
+      }
+
+      return e;
+    },
+    trim: function trim(e) {
+      return null == e ? "" : (e + "").replace(p, "");
+    },
+    makeArray: function makeArray(e, t) {
+      var n = t || [];
+      return null != e && (d(Object(e)) ? k.merge(n, "string" == typeof e ? [e] : e) : u.call(n, e)), n;
+    },
+    inArray: function inArray(e, t, n) {
+      return null == t ? -1 : i.call(t, e, n);
+    },
+    merge: function merge(e, t) {
+      for (var n = +t.length, r = 0, i = e.length; r < n; r++) {
+        e[i++] = t[r];
+      }
+
+      return e.length = i, e;
+    },
+    grep: function grep(e, t, n) {
+      for (var r = [], i = 0, o = e.length, a = !n; i < o; i++) {
+        !t(e[i], i) !== a && r.push(e[i]);
+      }
+
+      return r;
+    },
+    map: function map(e, t, n) {
+      var r,
+          i,
+          o = 0,
+          a = [];
+      if (d(e)) for (r = e.length; o < r; o++) {
+        null != (i = t(e[o], o, n)) && a.push(i);
+      } else for (o in e) {
+        null != (i = t(e[o], o, n)) && a.push(i);
+      }
+      return g.apply([], a);
+    },
+    guid: 1,
+    support: y
+  }), "function" == typeof Symbol && (k.fn[Symbol.iterator] = t[Symbol.iterator]), k.each("Boolean Number String Function Array Date RegExp Object Error Symbol".split(" "), function (e, t) {
+    n["[object " + t + "]"] = t.toLowerCase();
+  });
+
+  var h = function (n) {
+    var e,
+        d,
+        b,
+        o,
+        i,
+        h,
+        f,
+        g,
+        w,
+        u,
+        l,
+        T,
+        C,
+        a,
+        E,
+        v,
+        s,
+        c,
+        y,
+        k = "sizzle" + 1 * new Date(),
+        m = n.document,
+        S = 0,
+        r = 0,
+        p = ue(),
+        x = ue(),
+        N = ue(),
+        A = ue(),
+        D = function D(e, t) {
+      return e === t && (l = !0), 0;
+    },
+        j = {}.hasOwnProperty,
+        t = [],
+        q = t.pop,
+        L = t.push,
+        H = t.push,
+        O = t.slice,
+        P = function P(e, t) {
+      for (var n = 0, r = e.length; n < r; n++) {
+        if (e[n] === t) return n;
+      }
+
+      return -1;
+    },
+        R = "checked|selected|async|autofocus|autoplay|controls|defer|disabled|hidden|ismap|loop|multiple|open|readonly|required|scoped",
+        M = "[\\x20\\t\\r\\n\\f]",
+        I = "(?:\\\\.|[\\w-]|[^\0-\\xa0])+",
+        W = "\\[" + M + "*(" + I + ")(?:" + M + "*([*^$|!~]?=)" + M + "*(?:'((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\"|(" + I + "))|)" + M + "*\\]",
+        $ = ":(" + I + ")(?:\\((('((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\")|((?:\\\\.|[^\\\\()[\\]]|" + W + ")*)|.*)\\)|)",
+        F = new RegExp(M + "+", "g"),
+        B = new RegExp("^" + M + "+|((?:^|[^\\\\])(?:\\\\.)*)" + M + "+$", "g"),
+        _ = new RegExp("^" + M + "*," + M + "*"),
+        z = new RegExp("^" + M + "*([>+~]|" + M + ")" + M + "*"),
+        U = new RegExp(M + "|>"),
+        X = new RegExp($),
+        V = new RegExp("^" + I + "$"),
+        G = {
+      ID: new RegExp("^#(" + I + ")"),
+      CLASS: new RegExp("^\\.(" + I + ")"),
+      TAG: new RegExp("^(" + I + "|[*])"),
+      ATTR: new RegExp("^" + W),
+      PSEUDO: new RegExp("^" + $),
+      CHILD: new RegExp("^:(only|first|last|nth|nth-last)-(child|of-type)(?:\\(" + M + "*(even|odd|(([+-]|)(\\d*)n|)" + M + "*(?:([+-]|)" + M + "*(\\d+)|))" + M + "*\\)|)", "i"),
+      bool: new RegExp("^(?:" + R + ")$", "i"),
+      needsContext: new RegExp("^" + M + "*[>+~]|:(even|odd|eq|gt|lt|nth|first|last)(?:\\(" + M + "*((?:-\\d)?\\d*)" + M + "*\\)|)(?=[^-]|$)", "i")
+    },
+        Y = /HTML$/i,
+        Q = /^(?:input|select|textarea|button)$/i,
+        J = /^h\d$/i,
+        K = /^[^{]+\{\s*\[native \w/,
+        Z = /^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/,
+        ee = /[+~]/,
+        te = new RegExp("\\\\([\\da-f]{1,6}" + M + "?|(" + M + ")|.)", "ig"),
+        ne = function ne(e, t, n) {
+      var r = "0x" + t - 65536;
+      return r != r || n ? t : r < 0 ? String.fromCharCode(r + 65536) : String.fromCharCode(r >> 10 | 55296, 1023 & r | 56320);
+    },
+        re = /([\0-\x1f\x7f]|^-?\d)|^-$|[^\0-\x1f\x7f-\uFFFF\w-]/g,
+        ie = function ie(e, t) {
+      return t ? "\0" === e ? "\uFFFD" : e.slice(0, -1) + "\\" + e.charCodeAt(e.length - 1).toString(16) + " " : "\\" + e;
+    },
+        oe = function oe() {
+      T();
+    },
+        ae = be(function (e) {
+      return !0 === e.disabled && "fieldset" === e.nodeName.toLowerCase();
+    }, {
+      dir: "parentNode",
+      next: "legend"
+    });
+
+    try {
+      H.apply(t = O.call(m.childNodes), m.childNodes), t[m.childNodes.length].nodeType;
+    } catch (e) {
+      H = {
+        apply: t.length ? function (e, t) {
+          L.apply(e, O.call(t));
+        } : function (e, t) {
+          var n = e.length,
+              r = 0;
+
+          while (e[n++] = t[r++]) {
+            ;
+          }
+
+          e.length = n - 1;
+        }
+      };
+    }
+
+    function se(t, e, n, r) {
+      var i,
+          o,
+          a,
+          s,
+          u,
+          l,
+          c,
+          f = e && e.ownerDocument,
+          p = e ? e.nodeType : 9;
+      if (n = n || [], "string" != typeof t || !t || 1 !== p && 9 !== p && 11 !== p) return n;
+
+      if (!r && ((e ? e.ownerDocument || e : m) !== C && T(e), e = e || C, E)) {
+        if (11 !== p && (u = Z.exec(t))) if (i = u[1]) {
+          if (9 === p) {
+            if (!(a = e.getElementById(i))) return n;
+            if (a.id === i) return n.push(a), n;
+          } else if (f && (a = f.getElementById(i)) && y(e, a) && a.id === i) return n.push(a), n;
+        } else {
+          if (u[2]) return H.apply(n, e.getElementsByTagName(t)), n;
+          if ((i = u[3]) && d.getElementsByClassName && e.getElementsByClassName) return H.apply(n, e.getElementsByClassName(i)), n;
+        }
+
+        if (d.qsa && !A[t + " "] && (!v || !v.test(t)) && (1 !== p || "object" !== e.nodeName.toLowerCase())) {
+          if (c = t, f = e, 1 === p && U.test(t)) {
+            (s = e.getAttribute("id")) ? s = s.replace(re, ie) : e.setAttribute("id", s = k), o = (l = h(t)).length;
+
+            while (o--) {
+              l[o] = "#" + s + " " + xe(l[o]);
+            }
+
+            c = l.join(","), f = ee.test(t) && ye(e.parentNode) || e;
+          }
+
+          try {
+            return H.apply(n, f.querySelectorAll(c)), n;
+          } catch (e) {
+            A(t, !0);
+          } finally {
+            s === k && e.removeAttribute("id");
+          }
+        }
+      }
+
+      return g(t.replace(B, "$1"), e, n, r);
+    }
+
+    function ue() {
+      var r = [];
+      return function e(t, n) {
+        return r.push(t + " ") > b.cacheLength && delete e[r.shift()], e[t + " "] = n;
+      };
+    }
+
+    function le(e) {
+      return e[k] = !0, e;
+    }
+
+    function ce(e) {
+      var t = C.createElement("fieldset");
+
+      try {
+        return !!e(t);
+      } catch (e) {
+        return !1;
+      } finally {
+        t.parentNode && t.parentNode.removeChild(t), t = null;
+      }
+    }
+
+    function fe(e, t) {
+      var n = e.split("|"),
+          r = n.length;
+
+      while (r--) {
+        b.attrHandle[n[r]] = t;
+      }
+    }
+
+    function pe(e, t) {
+      var n = t && e,
+          r = n && 1 === e.nodeType && 1 === t.nodeType && e.sourceIndex - t.sourceIndex;
+      if (r) return r;
+      if (n) while (n = n.nextSibling) {
+        if (n === t) return -1;
+      }
+      return e ? 1 : -1;
+    }
+
+    function de(t) {
+      return function (e) {
+        return "input" === e.nodeName.toLowerCase() && e.type === t;
+      };
+    }
+
+    function he(n) {
+      return function (e) {
+        var t = e.nodeName.toLowerCase();
+        return ("input" === t || "button" === t) && e.type === n;
+      };
+    }
+
+    function ge(t) {
+      return function (e) {
+        return "form" in e ? e.parentNode && !1 === e.disabled ? "label" in e ? "label" in e.parentNode ? e.parentNode.disabled === t : e.disabled === t : e.isDisabled === t || e.isDisabled !== !t && ae(e) === t : e.disabled === t : "label" in e && e.disabled === t;
+      };
+    }
+
+    function ve(a) {
+      return le(function (o) {
+        return o = +o, le(function (e, t) {
+          var n,
+              r = a([], e.length, o),
+              i = r.length;
+
+          while (i--) {
+            e[n = r[i]] && (e[n] = !(t[n] = e[n]));
+          }
+        });
+      });
+    }
+
+    function ye(e) {
+      return e && "undefined" != typeof e.getElementsByTagName && e;
+    }
+
+    for (e in d = se.support = {}, i = se.isXML = function (e) {
+      var t = e.namespaceURI,
+          n = (e.ownerDocument || e).documentElement;
+      return !Y.test(t || n && n.nodeName || "HTML");
+    }, T = se.setDocument = function (e) {
+      var t,
+          n,
+          r = e ? e.ownerDocument || e : m;
+      return r !== C && 9 === r.nodeType && r.documentElement && (a = (C = r).documentElement, E = !i(C), m !== C && (n = C.defaultView) && n.top !== n && (n.addEventListener ? n.addEventListener("unload", oe, !1) : n.attachEvent && n.attachEvent("onunload", oe)), d.attributes = ce(function (e) {
+        return e.className = "i", !e.getAttribute("className");
+      }), d.getElementsByTagName = ce(function (e) {
+        return e.appendChild(C.createComment("")), !e.getElementsByTagName("*").length;
+      }), d.getElementsByClassName = K.test(C.getElementsByClassName), d.getById = ce(function (e) {
+        return a.appendChild(e).id = k, !C.getElementsByName || !C.getElementsByName(k).length;
+      }), d.getById ? (b.filter.ID = function (e) {
+        var t = e.replace(te, ne);
+        return function (e) {
+          return e.getAttribute("id") === t;
+        };
+      }, b.find.ID = function (e, t) {
+        if ("undefined" != typeof t.getElementById && E) {
+          var n = t.getElementById(e);
+          return n ? [n] : [];
+        }
+      }) : (b.filter.ID = function (e) {
+        var n = e.replace(te, ne);
+        return function (e) {
+          var t = "undefined" != typeof e.getAttributeNode && e.getAttributeNode("id");
+          return t && t.value === n;
+        };
+      }, b.find.ID = function (e, t) {
+        if ("undefined" != typeof t.getElementById && E) {
+          var n,
+              r,
+              i,
+              o = t.getElementById(e);
+
+          if (o) {
+            if ((n = o.getAttributeNode("id")) && n.value === e) return [o];
+            i = t.getElementsByName(e), r = 0;
+
+            while (o = i[r++]) {
+              if ((n = o.getAttributeNode("id")) && n.value === e) return [o];
+            }
+          }
+
+          return [];
+        }
+      }), b.find.TAG = d.getElementsByTagName ? function (e, t) {
+        return "undefined" != typeof t.getElementsByTagName ? t.getElementsByTagName(e) : d.qsa ? t.querySelectorAll(e) : void 0;
+      } : function (e, t) {
+        var n,
+            r = [],
+            i = 0,
+            o = t.getElementsByTagName(e);
+
+        if ("*" === e) {
+          while (n = o[i++]) {
+            1 === n.nodeType && r.push(n);
+          }
+
+          return r;
+        }
+
+        return o;
+      }, b.find.CLASS = d.getElementsByClassName && function (e, t) {
+        if ("undefined" != typeof t.getElementsByClassName && E) return t.getElementsByClassName(e);
+      }, s = [], v = [], (d.qsa = K.test(C.querySelectorAll)) && (ce(function (e) {
+        a.appendChild(e).innerHTML = "<a id='" + k + "'></a><select id='" + k + "-\r\\' msallowcapture=''><option selected=''></option></select>", e.querySelectorAll("[msallowcapture^='']").length && v.push("[*^$]=" + M + "*(?:''|\"\")"), e.querySelectorAll("[selected]").length || v.push("\\[" + M + "*(?:value|" + R + ")"), e.querySelectorAll("[id~=" + k + "-]").length || v.push("~="), e.querySelectorAll(":checked").length || v.push(":checked"), e.querySelectorAll("a#" + k + "+*").length || v.push(".#.+[+~]");
+      }), ce(function (e) {
+        e.innerHTML = "<a href='' disabled='disabled'></a><select disabled='disabled'><option/></select>";
+        var t = C.createElement("input");
+        t.setAttribute("type", "hidden"), e.appendChild(t).setAttribute("name", "D"), e.querySelectorAll("[name=d]").length && v.push("name" + M + "*[*^$|!~]?="), 2 !== e.querySelectorAll(":enabled").length && v.push(":enabled", ":disabled"), a.appendChild(e).disabled = !0, 2 !== e.querySelectorAll(":disabled").length && v.push(":enabled", ":disabled"), e.querySelectorAll("*,:x"), v.push(",.*:");
+      })), (d.matchesSelector = K.test(c = a.matches || a.webkitMatchesSelector || a.mozMatchesSelector || a.oMatchesSelector || a.msMatchesSelector)) && ce(function (e) {
+        d.disconnectedMatch = c.call(e, "*"), c.call(e, "[s!='']:x"), s.push("!=", $);
+      }), v = v.length && new RegExp(v.join("|")), s = s.length && new RegExp(s.join("|")), t = K.test(a.compareDocumentPosition), y = t || K.test(a.contains) ? function (e, t) {
+        var n = 9 === e.nodeType ? e.documentElement : e,
+            r = t && t.parentNode;
+        return e === r || !(!r || 1 !== r.nodeType || !(n.contains ? n.contains(r) : e.compareDocumentPosition && 16 & e.compareDocumentPosition(r)));
+      } : function (e, t) {
+        if (t) while (t = t.parentNode) {
+          if (t === e) return !0;
+        }
+        return !1;
+      }, D = t ? function (e, t) {
+        if (e === t) return l = !0, 0;
+        var n = !e.compareDocumentPosition - !t.compareDocumentPosition;
+        return n || (1 & (n = (e.ownerDocument || e) === (t.ownerDocument || t) ? e.compareDocumentPosition(t) : 1) || !d.sortDetached && t.compareDocumentPosition(e) === n ? e === C || e.ownerDocument === m && y(m, e) ? -1 : t === C || t.ownerDocument === m && y(m, t) ? 1 : u ? P(u, e) - P(u, t) : 0 : 4 & n ? -1 : 1);
+      } : function (e, t) {
+        if (e === t) return l = !0, 0;
+        var n,
+            r = 0,
+            i = e.parentNode,
+            o = t.parentNode,
+            a = [e],
+            s = [t];
+        if (!i || !o) return e === C ? -1 : t === C ? 1 : i ? -1 : o ? 1 : u ? P(u, e) - P(u, t) : 0;
+        if (i === o) return pe(e, t);
+        n = e;
+
+        while (n = n.parentNode) {
+          a.unshift(n);
+        }
+
+        n = t;
+
+        while (n = n.parentNode) {
+          s.unshift(n);
+        }
+
+        while (a[r] === s[r]) {
+          r++;
+        }
+
+        return r ? pe(a[r], s[r]) : a[r] === m ? -1 : s[r] === m ? 1 : 0;
+      }), C;
+    }, se.matches = function (e, t) {
+      return se(e, null, null, t);
+    }, se.matchesSelector = function (e, t) {
+      if ((e.ownerDocument || e) !== C && T(e), d.matchesSelector && E && !A[t + " "] && (!s || !s.test(t)) && (!v || !v.test(t))) try {
+        var n = c.call(e, t);
+        if (n || d.disconnectedMatch || e.document && 11 !== e.document.nodeType) return n;
+      } catch (e) {
+        A(t, !0);
+      }
+      return 0 < se(t, C, null, [e]).length;
+    }, se.contains = function (e, t) {
+      return (e.ownerDocument || e) !== C && T(e), y(e, t);
+    }, se.attr = function (e, t) {
+      (e.ownerDocument || e) !== C && T(e);
+      var n = b.attrHandle[t.toLowerCase()],
+          r = n && j.call(b.attrHandle, t.toLowerCase()) ? n(e, t, !E) : void 0;
+      return void 0 !== r ? r : d.attributes || !E ? e.getAttribute(t) : (r = e.getAttributeNode(t)) && r.specified ? r.value : null;
+    }, se.escape = function (e) {
+      return (e + "").replace(re, ie);
+    }, se.error = function (e) {
+      throw new Error("Syntax error, unrecognized expression: " + e);
+    }, se.uniqueSort = function (e) {
+      var t,
+          n = [],
+          r = 0,
+          i = 0;
+
+      if (l = !d.detectDuplicates, u = !d.sortStable && e.slice(0), e.sort(D), l) {
+        while (t = e[i++]) {
+          t === e[i] && (r = n.push(i));
+        }
+
+        while (r--) {
+          e.splice(n[r], 1);
+        }
+      }
+
+      return u = null, e;
+    }, o = se.getText = function (e) {
+      var t,
+          n = "",
+          r = 0,
+          i = e.nodeType;
+
+      if (i) {
+        if (1 === i || 9 === i || 11 === i) {
+          if ("string" == typeof e.textContent) return e.textContent;
+
+          for (e = e.firstChild; e; e = e.nextSibling) {
+            n += o(e);
+          }
+        } else if (3 === i || 4 === i) return e.nodeValue;
+      } else while (t = e[r++]) {
+        n += o(t);
+      }
+
+      return n;
+    }, (b = se.selectors = {
+      cacheLength: 50,
+      createPseudo: le,
+      match: G,
+      attrHandle: {},
+      find: {},
+      relative: {
+        ">": {
+          dir: "parentNode",
+          first: !0
+        },
+        " ": {
+          dir: "parentNode"
+        },
+        "+": {
+          dir: "previousSibling",
+          first: !0
+        },
+        "~": {
+          dir: "previousSibling"
+        }
+      },
+      preFilter: {
+        ATTR: function ATTR(e) {
+          return e[1] = e[1].replace(te, ne), e[3] = (e[3] || e[4] || e[5] || "").replace(te, ne), "~=" === e[2] && (e[3] = " " + e[3] + " "), e.slice(0, 4);
+        },
+        CHILD: function CHILD(e) {
+          return e[1] = e[1].toLowerCase(), "nth" === e[1].slice(0, 3) ? (e[3] || se.error(e[0]), e[4] = +(e[4] ? e[5] + (e[6] || 1) : 2 * ("even" === e[3] || "odd" === e[3])), e[5] = +(e[7] + e[8] || "odd" === e[3])) : e[3] && se.error(e[0]), e;
+        },
+        PSEUDO: function PSEUDO(e) {
+          var t,
+              n = !e[6] && e[2];
+          return G.CHILD.test(e[0]) ? null : (e[3] ? e[2] = e[4] || e[5] || "" : n && X.test(n) && (t = h(n, !0)) && (t = n.indexOf(")", n.length - t) - n.length) && (e[0] = e[0].slice(0, t), e[2] = n.slice(0, t)), e.slice(0, 3));
+        }
+      },
+      filter: {
+        TAG: function TAG(e) {
+          var t = e.replace(te, ne).toLowerCase();
+          return "*" === e ? function () {
+            return !0;
+          } : function (e) {
+            return e.nodeName && e.nodeName.toLowerCase() === t;
+          };
+        },
+        CLASS: function CLASS(e) {
+          var t = p[e + " "];
+          return t || (t = new RegExp("(^|" + M + ")" + e + "(" + M + "|$)")) && p(e, function (e) {
+            return t.test("string" == typeof e.className && e.className || "undefined" != typeof e.getAttribute && e.getAttribute("class") || "");
+          });
+        },
+        ATTR: function ATTR(n, r, i) {
+          return function (e) {
+            var t = se.attr(e, n);
+            return null == t ? "!=" === r : !r || (t += "", "=" === r ? t === i : "!=" === r ? t !== i : "^=" === r ? i && 0 === t.indexOf(i) : "*=" === r ? i && -1 < t.indexOf(i) : "$=" === r ? i && t.slice(-i.length) === i : "~=" === r ? -1 < (" " + t.replace(F, " ") + " ").indexOf(i) : "|=" === r && (t === i || t.slice(0, i.length + 1) === i + "-"));
+          };
+        },
+        CHILD: function CHILD(h, e, t, g, v) {
+          var y = "nth" !== h.slice(0, 3),
+              m = "last" !== h.slice(-4),
+              x = "of-type" === e;
+          return 1 === g && 0 === v ? function (e) {
+            return !!e.parentNode;
+          } : function (e, t, n) {
+            var r,
+                i,
+                o,
+                a,
+                s,
+                u,
+                l = y !== m ? "nextSibling" : "previousSibling",
+                c = e.parentNode,
+                f = x && e.nodeName.toLowerCase(),
+                p = !n && !x,
+                d = !1;
+
+            if (c) {
+              if (y) {
+                while (l) {
+                  a = e;
+
+                  while (a = a[l]) {
+                    if (x ? a.nodeName.toLowerCase() === f : 1 === a.nodeType) return !1;
+                  }
+
+                  u = l = "only" === h && !u && "nextSibling";
+                }
+
+                return !0;
+              }
+
+              if (u = [m ? c.firstChild : c.lastChild], m && p) {
+                d = (s = (r = (i = (o = (a = c)[k] || (a[k] = {}))[a.uniqueID] || (o[a.uniqueID] = {}))[h] || [])[0] === S && r[1]) && r[2], a = s && c.childNodes[s];
+
+                while (a = ++s && a && a[l] || (d = s = 0) || u.pop()) {
+                  if (1 === a.nodeType && ++d && a === e) {
+                    i[h] = [S, s, d];
+                    break;
+                  }
+                }
+              } else if (p && (d = s = (r = (i = (o = (a = e)[k] || (a[k] = {}))[a.uniqueID] || (o[a.uniqueID] = {}))[h] || [])[0] === S && r[1]), !1 === d) while (a = ++s && a && a[l] || (d = s = 0) || u.pop()) {
+                if ((x ? a.nodeName.toLowerCase() === f : 1 === a.nodeType) && ++d && (p && ((i = (o = a[k] || (a[k] = {}))[a.uniqueID] || (o[a.uniqueID] = {}))[h] = [S, d]), a === e)) break;
+              }
+
+              return (d -= v) === g || d % g == 0 && 0 <= d / g;
+            }
+          };
+        },
+        PSEUDO: function PSEUDO(e, o) {
+          var t,
+              a = b.pseudos[e] || b.setFilters[e.toLowerCase()] || se.error("unsupported pseudo: " + e);
+          return a[k] ? a(o) : 1 < a.length ? (t = [e, e, "", o], b.setFilters.hasOwnProperty(e.toLowerCase()) ? le(function (e, t) {
+            var n,
+                r = a(e, o),
+                i = r.length;
+
+            while (i--) {
+              e[n = P(e, r[i])] = !(t[n] = r[i]);
+            }
+          }) : function (e) {
+            return a(e, 0, t);
+          }) : a;
+        }
+      },
+      pseudos: {
+        not: le(function (e) {
+          var r = [],
+              i = [],
+              s = f(e.replace(B, "$1"));
+          return s[k] ? le(function (e, t, n, r) {
+            var i,
+                o = s(e, null, r, []),
+                a = e.length;
+
+            while (a--) {
+              (i = o[a]) && (e[a] = !(t[a] = i));
+            }
+          }) : function (e, t, n) {
+            return r[0] = e, s(r, null, n, i), r[0] = null, !i.pop();
+          };
+        }),
+        has: le(function (t) {
+          return function (e) {
+            return 0 < se(t, e).length;
+          };
+        }),
+        contains: le(function (t) {
+          return t = t.replace(te, ne), function (e) {
+            return -1 < (e.textContent || o(e)).indexOf(t);
+          };
+        }),
+        lang: le(function (n) {
+          return V.test(n || "") || se.error("unsupported lang: " + n), n = n.replace(te, ne).toLowerCase(), function (e) {
+            var t;
+
+            do {
+              if (t = E ? e.lang : e.getAttribute("xml:lang") || e.getAttribute("lang")) return (t = t.toLowerCase()) === n || 0 === t.indexOf(n + "-");
+            } while ((e = e.parentNode) && 1 === e.nodeType);
+
+            return !1;
+          };
+        }),
+        target: function target(e) {
+          var t = n.location && n.location.hash;
+          return t && t.slice(1) === e.id;
+        },
+        root: function root(e) {
+          return e === a;
+        },
+        focus: function focus(e) {
+          return e === C.activeElement && (!C.hasFocus || C.hasFocus()) && !!(e.type || e.href || ~e.tabIndex);
+        },
+        enabled: ge(!1),
+        disabled: ge(!0),
+        checked: function checked(e) {
+          var t = e.nodeName.toLowerCase();
+          return "input" === t && !!e.checked || "option" === t && !!e.selected;
+        },
+        selected: function selected(e) {
+          return e.parentNode && e.parentNode.selectedIndex, !0 === e.selected;
+        },
+        empty: function empty(e) {
+          for (e = e.firstChild; e; e = e.nextSibling) {
+            if (e.nodeType < 6) return !1;
+          }
+
+          return !0;
+        },
+        parent: function parent(e) {
+          return !b.pseudos.empty(e);
+        },
+        header: function header(e) {
+          return J.test(e.nodeName);
+        },
+        input: function input(e) {
+          return Q.test(e.nodeName);
+        },
+        button: function button(e) {
+          var t = e.nodeName.toLowerCase();
+          return "input" === t && "button" === e.type || "button" === t;
+        },
+        text: function text(e) {
+          var t;
+          return "input" === e.nodeName.toLowerCase() && "text" === e.type && (null == (t = e.getAttribute("type")) || "text" === t.toLowerCase());
+        },
+        first: ve(function () {
+          return [0];
+        }),
+        last: ve(function (e, t) {
+          return [t - 1];
+        }),
+        eq: ve(function (e, t, n) {
+          return [n < 0 ? n + t : n];
+        }),
+        even: ve(function (e, t) {
+          for (var n = 0; n < t; n += 2) {
+            e.push(n);
+          }
+
+          return e;
+        }),
+        odd: ve(function (e, t) {
+          for (var n = 1; n < t; n += 2) {
+            e.push(n);
+          }
+
+          return e;
+        }),
+        lt: ve(function (e, t, n) {
+          for (var r = n < 0 ? n + t : t < n ? t : n; 0 <= --r;) {
+            e.push(r);
+          }
+
+          return e;
+        }),
+        gt: ve(function (e, t, n) {
+          for (var r = n < 0 ? n + t : n; ++r < t;) {
+            e.push(r);
+          }
+
+          return e;
+        })
+      }
+    }).pseudos.nth = b.pseudos.eq, {
+      radio: !0,
+      checkbox: !0,
+      file: !0,
+      password: !0,
+      image: !0
+    }) {
+      b.pseudos[e] = de(e);
+    }
+
+    for (e in {
+      submit: !0,
+      reset: !0
+    }) {
+      b.pseudos[e] = he(e);
+    }
+
+    function me() {}
+
+    function xe(e) {
+      for (var t = 0, n = e.length, r = ""; t < n; t++) {
+        r += e[t].value;
+      }
+
+      return r;
+    }
+
+    function be(s, e, t) {
+      var u = e.dir,
+          l = e.next,
+          c = l || u,
+          f = t && "parentNode" === c,
+          p = r++;
+      return e.first ? function (e, t, n) {
+        while (e = e[u]) {
+          if (1 === e.nodeType || f) return s(e, t, n);
+        }
+
+        return !1;
+      } : function (e, t, n) {
+        var r,
+            i,
+            o,
+            a = [S, p];
+
+        if (n) {
+          while (e = e[u]) {
+            if ((1 === e.nodeType || f) && s(e, t, n)) return !0;
+          }
+        } else while (e = e[u]) {
+          if (1 === e.nodeType || f) if (i = (o = e[k] || (e[k] = {}))[e.uniqueID] || (o[e.uniqueID] = {}), l && l === e.nodeName.toLowerCase()) e = e[u] || e;else {
+            if ((r = i[c]) && r[0] === S && r[1] === p) return a[2] = r[2];
+            if ((i[c] = a)[2] = s(e, t, n)) return !0;
+          }
+        }
+
+        return !1;
+      };
+    }
+
+    function we(i) {
+      return 1 < i.length ? function (e, t, n) {
+        var r = i.length;
+
+        while (r--) {
+          if (!i[r](e, t, n)) return !1;
+        }
+
+        return !0;
+      } : i[0];
+    }
+
+    function Te(e, t, n, r, i) {
+      for (var o, a = [], s = 0, u = e.length, l = null != t; s < u; s++) {
+        (o = e[s]) && (n && !n(o, r, i) || (a.push(o), l && t.push(s)));
+      }
+
+      return a;
+    }
+
+    function Ce(d, h, g, v, y, e) {
+      return v && !v[k] && (v = Ce(v)), y && !y[k] && (y = Ce(y, e)), le(function (e, t, n, r) {
+        var i,
+            o,
+            a,
+            s = [],
+            u = [],
+            l = t.length,
+            c = e || function (e, t, n) {
+          for (var r = 0, i = t.length; r < i; r++) {
+            se(e, t[r], n);
+          }
+
+          return n;
+        }(h || "*", n.nodeType ? [n] : n, []),
+            f = !d || !e && h ? c : Te(c, s, d, n, r),
+            p = g ? y || (e ? d : l || v) ? [] : t : f;
+
+        if (g && g(f, p, n, r), v) {
+          i = Te(p, u), v(i, [], n, r), o = i.length;
+
+          while (o--) {
+            (a = i[o]) && (p[u[o]] = !(f[u[o]] = a));
+          }
+        }
+
+        if (e) {
+          if (y || d) {
+            if (y) {
+              i = [], o = p.length;
+
+              while (o--) {
+                (a = p[o]) && i.push(f[o] = a);
+              }
+
+              y(null, p = [], i, r);
+            }
+
+            o = p.length;
+
+            while (o--) {
+              (a = p[o]) && -1 < (i = y ? P(e, a) : s[o]) && (e[i] = !(t[i] = a));
+            }
+          }
+        } else p = Te(p === t ? p.splice(l, p.length) : p), y ? y(null, t, p, r) : H.apply(t, p);
+      });
+    }
+
+    function Ee(e) {
+      for (var i, t, n, r = e.length, o = b.relative[e[0].type], a = o || b.relative[" "], s = o ? 1 : 0, u = be(function (e) {
+        return e === i;
+      }, a, !0), l = be(function (e) {
+        return -1 < P(i, e);
+      }, a, !0), c = [function (e, t, n) {
+        var r = !o && (n || t !== w) || ((i = t).nodeType ? u(e, t, n) : l(e, t, n));
+        return i = null, r;
+      }]; s < r; s++) {
+        if (t = b.relative[e[s].type]) c = [be(we(c), t)];else {
+          if ((t = b.filter[e[s].type].apply(null, e[s].matches))[k]) {
+            for (n = ++s; n < r; n++) {
+              if (b.relative[e[n].type]) break;
+            }
+
+            return Ce(1 < s && we(c), 1 < s && xe(e.slice(0, s - 1).concat({
+              value: " " === e[s - 2].type ? "*" : ""
+            })).replace(B, "$1"), t, s < n && Ee(e.slice(s, n)), n < r && Ee(e = e.slice(n)), n < r && xe(e));
+          }
+
+          c.push(t);
+        }
+      }
+
+      return we(c);
+    }
+
+    return me.prototype = b.filters = b.pseudos, b.setFilters = new me(), h = se.tokenize = function (e, t) {
+      var n,
+          r,
+          i,
+          o,
+          a,
+          s,
+          u,
+          l = x[e + " "];
+      if (l) return t ? 0 : l.slice(0);
+      a = e, s = [], u = b.preFilter;
+
+      while (a) {
+        for (o in n && !(r = _.exec(a)) || (r && (a = a.slice(r[0].length) || a), s.push(i = [])), n = !1, (r = z.exec(a)) && (n = r.shift(), i.push({
+          value: n,
+          type: r[0].replace(B, " ")
+        }), a = a.slice(n.length)), b.filter) {
+          !(r = G[o].exec(a)) || u[o] && !(r = u[o](r)) || (n = r.shift(), i.push({
+            value: n,
+            type: o,
+            matches: r
+          }), a = a.slice(n.length));
+        }
+
+        if (!n) break;
+      }
+
+      return t ? a.length : a ? se.error(e) : x(e, s).slice(0);
+    }, f = se.compile = function (e, t) {
+      var n,
+          v,
+          y,
+          m,
+          x,
+          r,
+          i = [],
+          o = [],
+          a = N[e + " "];
+
+      if (!a) {
+        t || (t = h(e)), n = t.length;
+
+        while (n--) {
+          (a = Ee(t[n]))[k] ? i.push(a) : o.push(a);
+        }
+
+        (a = N(e, (v = o, m = 0 < (y = i).length, x = 0 < v.length, r = function r(e, t, n, _r, i) {
+          var o,
+              a,
+              s,
+              u = 0,
+              l = "0",
+              c = e && [],
+              f = [],
+              p = w,
+              d = e || x && b.find.TAG("*", i),
+              h = S += null == p ? 1 : Math.random() || .1,
+              g = d.length;
+
+          for (i && (w = t === C || t || i); l !== g && null != (o = d[l]); l++) {
+            if (x && o) {
+              a = 0, t || o.ownerDocument === C || (T(o), n = !E);
+
+              while (s = v[a++]) {
+                if (s(o, t || C, n)) {
+                  _r.push(o);
+
+                  break;
+                }
+              }
+
+              i && (S = h);
+            }
+
+            m && ((o = !s && o) && u--, e && c.push(o));
+          }
+
+          if (u += l, m && l !== u) {
+            a = 0;
+
+            while (s = y[a++]) {
+              s(c, f, t, n);
+            }
+
+            if (e) {
+              if (0 < u) while (l--) {
+                c[l] || f[l] || (f[l] = q.call(_r));
+              }
+              f = Te(f);
+            }
+
+            H.apply(_r, f), i && !e && 0 < f.length && 1 < u + y.length && se.uniqueSort(_r);
+          }
+
+          return i && (S = h, w = p), c;
+        }, m ? le(r) : r))).selector = e;
+      }
+
+      return a;
+    }, g = se.select = function (e, t, n, r) {
+      var i,
+          o,
+          a,
+          s,
+          u,
+          l = "function" == typeof e && e,
+          c = !r && h(e = l.selector || e);
+
+      if (n = n || [], 1 === c.length) {
+        if (2 < (o = c[0] = c[0].slice(0)).length && "ID" === (a = o[0]).type && 9 === t.nodeType && E && b.relative[o[1].type]) {
+          if (!(t = (b.find.ID(a.matches[0].replace(te, ne), t) || [])[0])) return n;
+          l && (t = t.parentNode), e = e.slice(o.shift().value.length);
+        }
+
+        i = G.needsContext.test(e) ? 0 : o.length;
+
+        while (i--) {
+          if (a = o[i], b.relative[s = a.type]) break;
+
+          if ((u = b.find[s]) && (r = u(a.matches[0].replace(te, ne), ee.test(o[0].type) && ye(t.parentNode) || t))) {
+            if (o.splice(i, 1), !(e = r.length && xe(o))) return H.apply(n, r), n;
+            break;
+          }
+        }
+      }
+
+      return (l || f(e, c))(r, t, !E, n, !t || ee.test(e) && ye(t.parentNode) || t), n;
+    }, d.sortStable = k.split("").sort(D).join("") === k, d.detectDuplicates = !!l, T(), d.sortDetached = ce(function (e) {
+      return 1 & e.compareDocumentPosition(C.createElement("fieldset"));
+    }), ce(function (e) {
+      return e.innerHTML = "<a href='#'></a>", "#" === e.firstChild.getAttribute("href");
+    }) || fe("type|href|height|width", function (e, t, n) {
+      if (!n) return e.getAttribute(t, "type" === t.toLowerCase() ? 1 : 2);
+    }), d.attributes && ce(function (e) {
+      return e.innerHTML = "<input/>", e.firstChild.setAttribute("value", ""), "" === e.firstChild.getAttribute("value");
+    }) || fe("value", function (e, t, n) {
+      if (!n && "input" === e.nodeName.toLowerCase()) return e.defaultValue;
+    }), ce(function (e) {
+      return null == e.getAttribute("disabled");
+    }) || fe(R, function (e, t, n) {
+      var r;
+      if (!n) return !0 === e[t] ? t.toLowerCase() : (r = e.getAttributeNode(t)) && r.specified ? r.value : null;
+    }), se;
+  }(C);
+
+  k.find = h, k.expr = h.selectors, k.expr[":"] = k.expr.pseudos, k.uniqueSort = k.unique = h.uniqueSort, k.text = h.getText, k.isXMLDoc = h.isXML, k.contains = h.contains, k.escapeSelector = h.escape;
+
+  var T = function T(e, t, n) {
+    var r = [],
+        i = void 0 !== n;
+
+    while ((e = e[t]) && 9 !== e.nodeType) {
+      if (1 === e.nodeType) {
+        if (i && k(e).is(n)) break;
+        r.push(e);
+      }
+    }
+
+    return r;
+  },
+      S = function S(e, t) {
+    for (var n = []; e; e = e.nextSibling) {
+      1 === e.nodeType && e !== t && n.push(e);
+    }
+
+    return n;
+  },
+      N = k.expr.match.needsContext;
+
+  function A(e, t) {
+    return e.nodeName && e.nodeName.toLowerCase() === t.toLowerCase();
+  }
+
+  var D = /^<([a-z][^\/\0>:\x20\t\r\n\f]*)[\x20\t\r\n\f]*\/?>(?:<\/\1>|)$/i;
+
+  function j(e, n, r) {
+    return m(n) ? k.grep(e, function (e, t) {
+      return !!n.call(e, t, e) !== r;
+    }) : n.nodeType ? k.grep(e, function (e) {
+      return e === n !== r;
+    }) : "string" != typeof n ? k.grep(e, function (e) {
+      return -1 < i.call(n, e) !== r;
+    }) : k.filter(n, e, r);
+  }
+
+  k.filter = function (e, t, n) {
+    var r = t[0];
+    return n && (e = ":not(" + e + ")"), 1 === t.length && 1 === r.nodeType ? k.find.matchesSelector(r, e) ? [r] : [] : k.find.matches(e, k.grep(t, function (e) {
+      return 1 === e.nodeType;
+    }));
+  }, k.fn.extend({
+    find: function find(e) {
+      var t,
+          n,
+          r = this.length,
+          i = this;
+      if ("string" != typeof e) return this.pushStack(k(e).filter(function () {
+        for (t = 0; t < r; t++) {
+          if (k.contains(i[t], this)) return !0;
+        }
+      }));
+
+      for (n = this.pushStack([]), t = 0; t < r; t++) {
+        k.find(e, i[t], n);
+      }
+
+      return 1 < r ? k.uniqueSort(n) : n;
+    },
+    filter: function filter(e) {
+      return this.pushStack(j(this, e || [], !1));
+    },
+    not: function not(e) {
+      return this.pushStack(j(this, e || [], !0));
+    },
+    is: function is(e) {
+      return !!j(this, "string" == typeof e && N.test(e) ? k(e) : e || [], !1).length;
+    }
+  });
+  var q,
+      L = /^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]+))$/;
+  (k.fn.init = function (e, t, n) {
+    var r, i;
+    if (!e) return this;
+
+    if (n = n || q, "string" == typeof e) {
+      if (!(r = "<" === e[0] && ">" === e[e.length - 1] && 3 <= e.length ? [null, e, null] : L.exec(e)) || !r[1] && t) return !t || t.jquery ? (t || n).find(e) : this.constructor(t).find(e);
+
+      if (r[1]) {
+        if (t = t instanceof k ? t[0] : t, k.merge(this, k.parseHTML(r[1], t && t.nodeType ? t.ownerDocument || t : E, !0)), D.test(r[1]) && k.isPlainObject(t)) for (r in t) {
+          m(this[r]) ? this[r](t[r]) : this.attr(r, t[r]);
+        }
+        return this;
+      }
+
+      return (i = E.getElementById(r[2])) && (this[0] = i, this.length = 1), this;
+    }
+
+    return e.nodeType ? (this[0] = e, this.length = 1, this) : m(e) ? void 0 !== n.ready ? n.ready(e) : e(k) : k.makeArray(e, this);
+  }).prototype = k.fn, q = k(E);
+  var H = /^(?:parents|prev(?:Until|All))/,
+      O = {
+    children: !0,
+    contents: !0,
+    next: !0,
+    prev: !0
+  };
+
+  function P(e, t) {
+    while ((e = e[t]) && 1 !== e.nodeType) {
+      ;
+    }
+
+    return e;
+  }
+
+  k.fn.extend({
+    has: function has(e) {
+      var t = k(e, this),
+          n = t.length;
+      return this.filter(function () {
+        for (var e = 0; e < n; e++) {
+          if (k.contains(this, t[e])) return !0;
+        }
+      });
+    },
+    closest: function closest(e, t) {
+      var n,
+          r = 0,
+          i = this.length,
+          o = [],
+          a = "string" != typeof e && k(e);
+      if (!N.test(e)) for (; r < i; r++) {
+        for (n = this[r]; n && n !== t; n = n.parentNode) {
+          if (n.nodeType < 11 && (a ? -1 < a.index(n) : 1 === n.nodeType && k.find.matchesSelector(n, e))) {
+            o.push(n);
+            break;
+          }
+        }
+      }
+      return this.pushStack(1 < o.length ? k.uniqueSort(o) : o);
+    },
+    index: function index(e) {
+      return e ? "string" == typeof e ? i.call(k(e), this[0]) : i.call(this, e.jquery ? e[0] : e) : this[0] && this[0].parentNode ? this.first().prevAll().length : -1;
+    },
+    add: function add(e, t) {
+      return this.pushStack(k.uniqueSort(k.merge(this.get(), k(e, t))));
+    },
+    addBack: function addBack(e) {
+      return this.add(null == e ? this.prevObject : this.prevObject.filter(e));
+    }
+  }), k.each({
+    parent: function parent(e) {
+      var t = e.parentNode;
+      return t && 11 !== t.nodeType ? t : null;
+    },
+    parents: function parents(e) {
+      return T(e, "parentNode");
+    },
+    parentsUntil: function parentsUntil(e, t, n) {
+      return T(e, "parentNode", n);
+    },
+    next: function next(e) {
+      return P(e, "nextSibling");
+    },
+    prev: function prev(e) {
+      return P(e, "previousSibling");
+    },
+    nextAll: function nextAll(e) {
+      return T(e, "nextSibling");
+    },
+    prevAll: function prevAll(e) {
+      return T(e, "previousSibling");
+    },
+    nextUntil: function nextUntil(e, t, n) {
+      return T(e, "nextSibling", n);
+    },
+    prevUntil: function prevUntil(e, t, n) {
+      return T(e, "previousSibling", n);
+    },
+    siblings: function siblings(e) {
+      return S((e.parentNode || {}).firstChild, e);
+    },
+    children: function children(e) {
+      return S(e.firstChild);
+    },
+    contents: function contents(e) {
+      return "undefined" != typeof e.contentDocument ? e.contentDocument : (A(e, "template") && (e = e.content || e), k.merge([], e.childNodes));
+    }
+  }, function (r, i) {
+    k.fn[r] = function (e, t) {
+      var n = k.map(this, i, e);
+      return "Until" !== r.slice(-5) && (t = e), t && "string" == typeof t && (n = k.filter(t, n)), 1 < this.length && (O[r] || k.uniqueSort(n), H.test(r) && n.reverse()), this.pushStack(n);
+    };
+  });
+  var R = /[^\x20\t\r\n\f]+/g;
+
+  function M(e) {
+    return e;
+  }
+
+  function I(e) {
+    throw e;
+  }
+
+  function W(e, t, n, r) {
+    var i;
+
+    try {
+      e && m(i = e.promise) ? i.call(e).done(t).fail(n) : e && m(i = e.then) ? i.call(e, t, n) : t.apply(void 0, [e].slice(r));
+    } catch (e) {
+      n.apply(void 0, [e]);
+    }
+  }
+
+  k.Callbacks = function (r) {
+    var e, n;
+    r = "string" == typeof r ? (e = r, n = {}, k.each(e.match(R) || [], function (e, t) {
+      n[t] = !0;
+    }), n) : k.extend({}, r);
+
+    var i,
+        t,
+        o,
+        a,
+        s = [],
+        u = [],
+        l = -1,
+        c = function c() {
+      for (a = a || r.once, o = i = !0; u.length; l = -1) {
+        t = u.shift();
+
+        while (++l < s.length) {
+          !1 === s[l].apply(t[0], t[1]) && r.stopOnFalse && (l = s.length, t = !1);
+        }
+      }
+
+      r.memory || (t = !1), i = !1, a && (s = t ? [] : "");
+    },
+        f = {
+      add: function add() {
+        return s && (t && !i && (l = s.length - 1, u.push(t)), function n(e) {
+          k.each(e, function (e, t) {
+            m(t) ? r.unique && f.has(t) || s.push(t) : t && t.length && "string" !== w(t) && n(t);
+          });
+        }(arguments), t && !i && c()), this;
+      },
+      remove: function remove() {
+        return k.each(arguments, function (e, t) {
+          var n;
+
+          while (-1 < (n = k.inArray(t, s, n))) {
+            s.splice(n, 1), n <= l && l--;
+          }
+        }), this;
+      },
+      has: function has(e) {
+        return e ? -1 < k.inArray(e, s) : 0 < s.length;
+      },
+      empty: function empty() {
+        return s && (s = []), this;
+      },
+      disable: function disable() {
+        return a = u = [], s = t = "", this;
+      },
+      disabled: function disabled() {
+        return !s;
+      },
+      lock: function lock() {
+        return a = u = [], t || i || (s = t = ""), this;
+      },
+      locked: function locked() {
+        return !!a;
+      },
+      fireWith: function fireWith(e, t) {
+        return a || (t = [e, (t = t || []).slice ? t.slice() : t], u.push(t), i || c()), this;
+      },
+      fire: function fire() {
+        return f.fireWith(this, arguments), this;
+      },
+      fired: function fired() {
+        return !!o;
+      }
+    };
+
+    return f;
+  }, k.extend({
+    Deferred: function Deferred(e) {
+      var o = [["notify", "progress", k.Callbacks("memory"), k.Callbacks("memory"), 2], ["resolve", "done", k.Callbacks("once memory"), k.Callbacks("once memory"), 0, "resolved"], ["reject", "fail", k.Callbacks("once memory"), k.Callbacks("once memory"), 1, "rejected"]],
+          i = "pending",
+          a = {
+        state: function state() {
+          return i;
+        },
+        always: function always() {
+          return s.done(arguments).fail(arguments), this;
+        },
+        "catch": function _catch(e) {
+          return a.then(null, e);
+        },
+        pipe: function pipe() {
+          var i = arguments;
+          return k.Deferred(function (r) {
+            k.each(o, function (e, t) {
+              var n = m(i[t[4]]) && i[t[4]];
+              s[t[1]](function () {
+                var e = n && n.apply(this, arguments);
+                e && m(e.promise) ? e.promise().progress(r.notify).done(r.resolve).fail(r.reject) : r[t[0] + "With"](this, n ? [e] : arguments);
+              });
+            }), i = null;
+          }).promise();
+        },
+        then: function then(t, n, r) {
+          var u = 0;
+
+          function l(i, o, a, s) {
+            return function () {
+              var n = this,
+                  r = arguments,
+                  e = function e() {
+                var e, t;
+
+                if (!(i < u)) {
+                  if ((e = a.apply(n, r)) === o.promise()) throw new TypeError("Thenable self-resolution");
+                  t = e && ("object" == _typeof(e) || "function" == typeof e) && e.then, m(t) ? s ? t.call(e, l(u, o, M, s), l(u, o, I, s)) : (u++, t.call(e, l(u, o, M, s), l(u, o, I, s), l(u, o, M, o.notifyWith))) : (a !== M && (n = void 0, r = [e]), (s || o.resolveWith)(n, r));
+                }
+              },
+                  t = s ? e : function () {
+                try {
+                  e();
+                } catch (e) {
+                  k.Deferred.exceptionHook && k.Deferred.exceptionHook(e, t.stackTrace), u <= i + 1 && (a !== I && (n = void 0, r = [e]), o.rejectWith(n, r));
+                }
+              };
+
+              i ? t() : (k.Deferred.getStackHook && (t.stackTrace = k.Deferred.getStackHook()), C.setTimeout(t));
+            };
+          }
+
+          return k.Deferred(function (e) {
+            o[0][3].add(l(0, e, m(r) ? r : M, e.notifyWith)), o[1][3].add(l(0, e, m(t) ? t : M)), o[2][3].add(l(0, e, m(n) ? n : I));
+          }).promise();
+        },
+        promise: function promise(e) {
+          return null != e ? k.extend(e, a) : a;
+        }
+      },
+          s = {};
+      return k.each(o, function (e, t) {
+        var n = t[2],
+            r = t[5];
+        a[t[1]] = n.add, r && n.add(function () {
+          i = r;
+        }, o[3 - e][2].disable, o[3 - e][3].disable, o[0][2].lock, o[0][3].lock), n.add(t[3].fire), s[t[0]] = function () {
+          return s[t[0] + "With"](this === s ? void 0 : this, arguments), this;
+        }, s[t[0] + "With"] = n.fireWith;
+      }), a.promise(s), e && e.call(s, s), s;
+    },
+    when: function when(e) {
+      var n = arguments.length,
+          t = n,
+          r = Array(t),
+          i = s.call(arguments),
+          o = k.Deferred(),
+          a = function a(t) {
+        return function (e) {
+          r[t] = this, i[t] = 1 < arguments.length ? s.call(arguments) : e, --n || o.resolveWith(r, i);
+        };
+      };
+
+      if (n <= 1 && (W(e, o.done(a(t)).resolve, o.reject, !n), "pending" === o.state() || m(i[t] && i[t].then))) return o.then();
+
+      while (t--) {
+        W(i[t], a(t), o.reject);
+      }
+
+      return o.promise();
+    }
+  });
+  var $ = /^(Eval|Internal|Range|Reference|Syntax|Type|URI)Error$/;
+  k.Deferred.exceptionHook = function (e, t) {
+    C.console && C.console.warn && e && $.test(e.name) && C.console.warn("jQuery.Deferred exception: " + e.message, e.stack, t);
+  }, k.readyException = function (e) {
+    C.setTimeout(function () {
+      throw e;
+    });
+  };
+  var F = k.Deferred();
+
+  function B() {
+    E.removeEventListener("DOMContentLoaded", B), C.removeEventListener("load", B), k.ready();
+  }
+
+  k.fn.ready = function (e) {
+    return F.then(e)["catch"](function (e) {
+      k.readyException(e);
+    }), this;
+  }, k.extend({
+    isReady: !1,
+    readyWait: 1,
+    ready: function ready(e) {
+      (!0 === e ? --k.readyWait : k.isReady) || (k.isReady = !0) !== e && 0 < --k.readyWait || F.resolveWith(E, [k]);
+    }
+  }), k.ready.then = F.then, "complete" === E.readyState || "loading" !== E.readyState && !E.documentElement.doScroll ? C.setTimeout(k.ready) : (E.addEventListener("DOMContentLoaded", B), C.addEventListener("load", B));
+
+  var _ = function _(e, t, n, r, i, o, a) {
+    var s = 0,
+        u = e.length,
+        l = null == n;
+    if ("object" === w(n)) for (s in i = !0, n) {
+      _(e, t, s, n[s], !0, o, a);
+    } else if (void 0 !== r && (i = !0, m(r) || (a = !0), l && (a ? (t.call(e, r), t = null) : (l = t, t = function t(e, _t2, n) {
+      return l.call(k(e), n);
+    })), t)) for (; s < u; s++) {
+      t(e[s], n, a ? r : r.call(e[s], s, t(e[s], n)));
+    }
+    return i ? e : l ? t.call(e) : u ? t(e[0], n) : o;
+  },
+      z = /^-ms-/,
+      U = /-([a-z])/g;
+
+  function X(e, t) {
+    return t.toUpperCase();
+  }
+
+  function V(e) {
+    return e.replace(z, "ms-").replace(U, X);
+  }
+
+  var G = function G(e) {
+    return 1 === e.nodeType || 9 === e.nodeType || !+e.nodeType;
+  };
+
+  function Y() {
+    this.expando = k.expando + Y.uid++;
+  }
+
+  Y.uid = 1, Y.prototype = {
+    cache: function cache(e) {
+      var t = e[this.expando];
+      return t || (t = {}, G(e) && (e.nodeType ? e[this.expando] = t : Object.defineProperty(e, this.expando, {
+        value: t,
+        configurable: !0
+      }))), t;
+    },
+    set: function set(e, t, n) {
+      var r,
+          i = this.cache(e);
+      if ("string" == typeof t) i[V(t)] = n;else for (r in t) {
+        i[V(r)] = t[r];
+      }
+      return i;
+    },
+    get: function get(e, t) {
+      return void 0 === t ? this.cache(e) : e[this.expando] && e[this.expando][V(t)];
+    },
+    access: function access(e, t, n) {
+      return void 0 === t || t && "string" == typeof t && void 0 === n ? this.get(e, t) : (this.set(e, t, n), void 0 !== n ? n : t);
+    },
+    remove: function remove(e, t) {
+      var n,
+          r = e[this.expando];
+
+      if (void 0 !== r) {
+        if (void 0 !== t) {
+          n = (t = Array.isArray(t) ? t.map(V) : (t = V(t)) in r ? [t] : t.match(R) || []).length;
+
+          while (n--) {
+            delete r[t[n]];
+          }
+        }
+
+        (void 0 === t || k.isEmptyObject(r)) && (e.nodeType ? e[this.expando] = void 0 : delete e[this.expando]);
+      }
+    },
+    hasData: function hasData(e) {
+      var t = e[this.expando];
+      return void 0 !== t && !k.isEmptyObject(t);
+    }
+  };
+  var Q = new Y(),
+      J = new Y(),
+      K = /^(?:\{[\w\W]*\}|\[[\w\W]*\])$/,
+      Z = /[A-Z]/g;
+
+  function ee(e, t, n) {
+    var r, i;
+    if (void 0 === n && 1 === e.nodeType) if (r = "data-" + t.replace(Z, "-$&").toLowerCase(), "string" == typeof (n = e.getAttribute(r))) {
+      try {
+        n = "true" === (i = n) || "false" !== i && ("null" === i ? null : i === +i + "" ? +i : K.test(i) ? JSON.parse(i) : i);
+      } catch (e) {}
+
+      J.set(e, t, n);
+    } else n = void 0;
+    return n;
+  }
+
+  k.extend({
+    hasData: function hasData(e) {
+      return J.hasData(e) || Q.hasData(e);
+    },
+    data: function data(e, t, n) {
+      return J.access(e, t, n);
+    },
+    removeData: function removeData(e, t) {
+      J.remove(e, t);
+    },
+    _data: function _data(e, t, n) {
+      return Q.access(e, t, n);
+    },
+    _removeData: function _removeData(e, t) {
+      Q.remove(e, t);
+    }
+  }), k.fn.extend({
+    data: function data(n, e) {
+      var t,
+          r,
+          i,
+          o = this[0],
+          a = o && o.attributes;
+
+      if (void 0 === n) {
+        if (this.length && (i = J.get(o), 1 === o.nodeType && !Q.get(o, "hasDataAttrs"))) {
+          t = a.length;
+
+          while (t--) {
+            a[t] && 0 === (r = a[t].name).indexOf("data-") && (r = V(r.slice(5)), ee(o, r, i[r]));
+          }
+
+          Q.set(o, "hasDataAttrs", !0);
+        }
+
+        return i;
+      }
+
+      return "object" == _typeof(n) ? this.each(function () {
+        J.set(this, n);
+      }) : _(this, function (e) {
+        var t;
+        if (o && void 0 === e) return void 0 !== (t = J.get(o, n)) ? t : void 0 !== (t = ee(o, n)) ? t : void 0;
+        this.each(function () {
+          J.set(this, n, e);
+        });
+      }, null, e, 1 < arguments.length, null, !0);
+    },
+    removeData: function removeData(e) {
+      return this.each(function () {
+        J.remove(this, e);
+      });
+    }
+  }), k.extend({
+    queue: function queue(e, t, n) {
+      var r;
+      if (e) return t = (t || "fx") + "queue", r = Q.get(e, t), n && (!r || Array.isArray(n) ? r = Q.access(e, t, k.makeArray(n)) : r.push(n)), r || [];
+    },
+    dequeue: function dequeue(e, t) {
+      t = t || "fx";
+
+      var n = k.queue(e, t),
+          r = n.length,
+          i = n.shift(),
+          o = k._queueHooks(e, t);
+
+      "inprogress" === i && (i = n.shift(), r--), i && ("fx" === t && n.unshift("inprogress"), delete o.stop, i.call(e, function () {
+        k.dequeue(e, t);
+      }, o)), !r && o && o.empty.fire();
+    },
+    _queueHooks: function _queueHooks(e, t) {
+      var n = t + "queueHooks";
+      return Q.get(e, n) || Q.access(e, n, {
+        empty: k.Callbacks("once memory").add(function () {
+          Q.remove(e, [t + "queue", n]);
+        })
+      });
+    }
+  }), k.fn.extend({
+    queue: function queue(t, n) {
+      var e = 2;
+      return "string" != typeof t && (n = t, t = "fx", e--), arguments.length < e ? k.queue(this[0], t) : void 0 === n ? this : this.each(function () {
+        var e = k.queue(this, t, n);
+        k._queueHooks(this, t), "fx" === t && "inprogress" !== e[0] && k.dequeue(this, t);
+      });
+    },
+    dequeue: function dequeue(e) {
+      return this.each(function () {
+        k.dequeue(this, e);
+      });
+    },
+    clearQueue: function clearQueue(e) {
+      return this.queue(e || "fx", []);
+    },
+    promise: function promise(e, t) {
+      var n,
+          r = 1,
+          i = k.Deferred(),
+          o = this,
+          a = this.length,
+          s = function s() {
+        --r || i.resolveWith(o, [o]);
+      };
+
+      "string" != typeof e && (t = e, e = void 0), e = e || "fx";
+
+      while (a--) {
+        (n = Q.get(o[a], e + "queueHooks")) && n.empty && (r++, n.empty.add(s));
+      }
+
+      return s(), i.promise(t);
+    }
+  });
+
+  var te = /[+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|)/.source,
+      ne = new RegExp("^(?:([+-])=|)(" + te + ")([a-z%]*)$", "i"),
+      re = ["Top", "Right", "Bottom", "Left"],
+      ie = E.documentElement,
+      oe = function oe(e) {
+    return k.contains(e.ownerDocument, e);
+  },
+      ae = {
+    composed: !0
+  };
+
+  ie.getRootNode && (oe = function oe(e) {
+    return k.contains(e.ownerDocument, e) || e.getRootNode(ae) === e.ownerDocument;
+  });
+
+  var se = function se(e, t) {
+    return "none" === (e = t || e).style.display || "" === e.style.display && oe(e) && "none" === k.css(e, "display");
+  },
+      ue = function ue(e, t, n, r) {
+    var i,
+        o,
+        a = {};
+
+    for (o in t) {
+      a[o] = e.style[o], e.style[o] = t[o];
+    }
+
+    for (o in i = n.apply(e, r || []), t) {
+      e.style[o] = a[o];
+    }
+
+    return i;
+  };
+
+  function le(e, t, n, r) {
+    var i,
+        o,
+        a = 20,
+        s = r ? function () {
+      return r.cur();
+    } : function () {
+      return k.css(e, t, "");
+    },
+        u = s(),
+        l = n && n[3] || (k.cssNumber[t] ? "" : "px"),
+        c = e.nodeType && (k.cssNumber[t] || "px" !== l && +u) && ne.exec(k.css(e, t));
+
+    if (c && c[3] !== l) {
+      u /= 2, l = l || c[3], c = +u || 1;
+
+      while (a--) {
+        k.style(e, t, c + l), (1 - o) * (1 - (o = s() / u || .5)) <= 0 && (a = 0), c /= o;
+      }
+
+      c *= 2, k.style(e, t, c + l), n = n || [];
+    }
+
+    return n && (c = +c || +u || 0, i = n[1] ? c + (n[1] + 1) * n[2] : +n[2], r && (r.unit = l, r.start = c, r.end = i)), i;
+  }
+
+  var ce = {};
+
+  function fe(e, t) {
+    for (var n, r, i, o, a, s, u, l = [], c = 0, f = e.length; c < f; c++) {
+      (r = e[c]).style && (n = r.style.display, t ? ("none" === n && (l[c] = Q.get(r, "display") || null, l[c] || (r.style.display = "")), "" === r.style.display && se(r) && (l[c] = (u = a = o = void 0, a = (i = r).ownerDocument, s = i.nodeName, (u = ce[s]) || (o = a.body.appendChild(a.createElement(s)), u = k.css(o, "display"), o.parentNode.removeChild(o), "none" === u && (u = "block"), ce[s] = u)))) : "none" !== n && (l[c] = "none", Q.set(r, "display", n)));
+    }
+
+    for (c = 0; c < f; c++) {
+      null != l[c] && (e[c].style.display = l[c]);
+    }
+
+    return e;
+  }
+
+  k.fn.extend({
+    show: function show() {
+      return fe(this, !0);
+    },
+    hide: function hide() {
+      return fe(this);
+    },
+    toggle: function toggle(e) {
+      return "boolean" == typeof e ? e ? this.show() : this.hide() : this.each(function () {
+        se(this) ? k(this).show() : k(this).hide();
+      });
+    }
+  });
+  var pe = /^(?:checkbox|radio)$/i,
+      de = /<([a-z][^\/\0>\x20\t\r\n\f]*)/i,
+      he = /^$|^module$|\/(?:java|ecma)script/i,
+      ge = {
+    option: [1, "<select multiple='multiple'>", "</select>"],
+    thead: [1, "<table>", "</table>"],
+    col: [2, "<table><colgroup>", "</colgroup></table>"],
+    tr: [2, "<table><tbody>", "</tbody></table>"],
+    td: [3, "<table><tbody><tr>", "</tr></tbody></table>"],
+    _default: [0, "", ""]
+  };
+
+  function ve(e, t) {
+    var n;
+    return n = "undefined" != typeof e.getElementsByTagName ? e.getElementsByTagName(t || "*") : "undefined" != typeof e.querySelectorAll ? e.querySelectorAll(t || "*") : [], void 0 === t || t && A(e, t) ? k.merge([e], n) : n;
+  }
+
+  function ye(e, t) {
+    for (var n = 0, r = e.length; n < r; n++) {
+      Q.set(e[n], "globalEval", !t || Q.get(t[n], "globalEval"));
+    }
+  }
+
+  ge.optgroup = ge.option, ge.tbody = ge.tfoot = ge.colgroup = ge.caption = ge.thead, ge.th = ge.td;
+  var me,
+      xe,
+      be = /<|&#?\w+;/;
+
+  function we(e, t, n, r, i) {
+    for (var o, a, s, u, l, c, f = t.createDocumentFragment(), p = [], d = 0, h = e.length; d < h; d++) {
+      if ((o = e[d]) || 0 === o) if ("object" === w(o)) k.merge(p, o.nodeType ? [o] : o);else if (be.test(o)) {
+        a = a || f.appendChild(t.createElement("div")), s = (de.exec(o) || ["", ""])[1].toLowerCase(), u = ge[s] || ge._default, a.innerHTML = u[1] + k.htmlPrefilter(o) + u[2], c = u[0];
+
+        while (c--) {
+          a = a.lastChild;
+        }
+
+        k.merge(p, a.childNodes), (a = f.firstChild).textContent = "";
+      } else p.push(t.createTextNode(o));
+    }
+
+    f.textContent = "", d = 0;
+
+    while (o = p[d++]) {
+      if (r && -1 < k.inArray(o, r)) i && i.push(o);else if (l = oe(o), a = ve(f.appendChild(o), "script"), l && ye(a), n) {
+        c = 0;
+
+        while (o = a[c++]) {
+          he.test(o.type || "") && n.push(o);
+        }
+      }
+    }
+
+    return f;
+  }
+
+  me = E.createDocumentFragment().appendChild(E.createElement("div")), (xe = E.createElement("input")).setAttribute("type", "radio"), xe.setAttribute("checked", "checked"), xe.setAttribute("name", "t"), me.appendChild(xe), y.checkClone = me.cloneNode(!0).cloneNode(!0).lastChild.checked, me.innerHTML = "<textarea>x</textarea>", y.noCloneChecked = !!me.cloneNode(!0).lastChild.defaultValue;
+  var Te = /^key/,
+      Ce = /^(?:mouse|pointer|contextmenu|drag|drop)|click/,
+      Ee = /^([^.]*)(?:\.(.+)|)/;
+
+  function ke() {
+    return !0;
+  }
+
+  function Se() {
+    return !1;
+  }
+
+  function Ne(e, t) {
+    return e === function () {
+      try {
+        return E.activeElement;
+      } catch (e) {}
+    }() == ("focus" === t);
+  }
+
+  function Ae(e, t, n, r, i, o) {
+    var a, s;
+
+    if ("object" == _typeof(t)) {
+      for (s in "string" != typeof n && (r = r || n, n = void 0), t) {
+        Ae(e, s, n, r, t[s], o);
+      }
+
+      return e;
+    }
+
+    if (null == r && null == i ? (i = n, r = n = void 0) : null == i && ("string" == typeof n ? (i = r, r = void 0) : (i = r, r = n, n = void 0)), !1 === i) i = Se;else if (!i) return e;
+    return 1 === o && (a = i, (i = function i(e) {
+      return k().off(e), a.apply(this, arguments);
+    }).guid = a.guid || (a.guid = k.guid++)), e.each(function () {
+      k.event.add(this, t, i, r, n);
+    });
+  }
+
+  function De(e, i, o) {
+    o ? (Q.set(e, i, !1), k.event.add(e, i, {
+      namespace: !1,
+      handler: function handler(e) {
+        var t,
+            n,
+            r = Q.get(this, i);
+
+        if (1 & e.isTrigger && this[i]) {
+          if (r.length) (k.event.special[i] || {}).delegateType && e.stopPropagation();else if (r = s.call(arguments), Q.set(this, i, r), t = o(this, i), this[i](), r !== (n = Q.get(this, i)) || t ? Q.set(this, i, !1) : n = {}, r !== n) return e.stopImmediatePropagation(), e.preventDefault(), n.value;
+        } else r.length && (Q.set(this, i, {
+          value: k.event.trigger(k.extend(r[0], k.Event.prototype), r.slice(1), this)
+        }), e.stopImmediatePropagation());
+      }
+    })) : void 0 === Q.get(e, i) && k.event.add(e, i, ke);
+  }
+
+  k.event = {
+    global: {},
+    add: function add(t, e, n, r, i) {
+      var o,
+          a,
+          s,
+          u,
+          l,
+          c,
+          f,
+          p,
+          d,
+          h,
+          g,
+          v = Q.get(t);
+
+      if (v) {
+        n.handler && (n = (o = n).handler, i = o.selector), i && k.find.matchesSelector(ie, i), n.guid || (n.guid = k.guid++), (u = v.events) || (u = v.events = {}), (a = v.handle) || (a = v.handle = function (e) {
+          return "undefined" != typeof k && k.event.triggered !== e.type ? k.event.dispatch.apply(t, arguments) : void 0;
+        }), l = (e = (e || "").match(R) || [""]).length;
+
+        while (l--) {
+          d = g = (s = Ee.exec(e[l]) || [])[1], h = (s[2] || "").split(".").sort(), d && (f = k.event.special[d] || {}, d = (i ? f.delegateType : f.bindType) || d, f = k.event.special[d] || {}, c = k.extend({
+            type: d,
+            origType: g,
+            data: r,
+            handler: n,
+            guid: n.guid,
+            selector: i,
+            needsContext: i && k.expr.match.needsContext.test(i),
+            namespace: h.join(".")
+          }, o), (p = u[d]) || ((p = u[d] = []).delegateCount = 0, f.setup && !1 !== f.setup.call(t, r, h, a) || t.addEventListener && t.addEventListener(d, a)), f.add && (f.add.call(t, c), c.handler.guid || (c.handler.guid = n.guid)), i ? p.splice(p.delegateCount++, 0, c) : p.push(c), k.event.global[d] = !0);
+        }
+      }
+    },
+    remove: function remove(e, t, n, r, i) {
+      var o,
+          a,
+          s,
+          u,
+          l,
+          c,
+          f,
+          p,
+          d,
+          h,
+          g,
+          v = Q.hasData(e) && Q.get(e);
+
+      if (v && (u = v.events)) {
+        l = (t = (t || "").match(R) || [""]).length;
+
+        while (l--) {
+          if (d = g = (s = Ee.exec(t[l]) || [])[1], h = (s[2] || "").split(".").sort(), d) {
+            f = k.event.special[d] || {}, p = u[d = (r ? f.delegateType : f.bindType) || d] || [], s = s[2] && new RegExp("(^|\\.)" + h.join("\\.(?:.*\\.|)") + "(\\.|$)"), a = o = p.length;
+
+            while (o--) {
+              c = p[o], !i && g !== c.origType || n && n.guid !== c.guid || s && !s.test(c.namespace) || r && r !== c.selector && ("**" !== r || !c.selector) || (p.splice(o, 1), c.selector && p.delegateCount--, f.remove && f.remove.call(e, c));
+            }
+
+            a && !p.length && (f.teardown && !1 !== f.teardown.call(e, h, v.handle) || k.removeEvent(e, d, v.handle), delete u[d]);
+          } else for (d in u) {
+            k.event.remove(e, d + t[l], n, r, !0);
+          }
+        }
+
+        k.isEmptyObject(u) && Q.remove(e, "handle events");
+      }
+    },
+    dispatch: function dispatch(e) {
+      var t,
+          n,
+          r,
+          i,
+          o,
+          a,
+          s = k.event.fix(e),
+          u = new Array(arguments.length),
+          l = (Q.get(this, "events") || {})[s.type] || [],
+          c = k.event.special[s.type] || {};
+
+      for (u[0] = s, t = 1; t < arguments.length; t++) {
+        u[t] = arguments[t];
+      }
+
+      if (s.delegateTarget = this, !c.preDispatch || !1 !== c.preDispatch.call(this, s)) {
+        a = k.event.handlers.call(this, s, l), t = 0;
+
+        while ((i = a[t++]) && !s.isPropagationStopped()) {
+          s.currentTarget = i.elem, n = 0;
+
+          while ((o = i.handlers[n++]) && !s.isImmediatePropagationStopped()) {
+            s.rnamespace && !1 !== o.namespace && !s.rnamespace.test(o.namespace) || (s.handleObj = o, s.data = o.data, void 0 !== (r = ((k.event.special[o.origType] || {}).handle || o.handler).apply(i.elem, u)) && !1 === (s.result = r) && (s.preventDefault(), s.stopPropagation()));
+          }
+        }
+
+        return c.postDispatch && c.postDispatch.call(this, s), s.result;
+      }
+    },
+    handlers: function handlers(e, t) {
+      var n,
+          r,
+          i,
+          o,
+          a,
+          s = [],
+          u = t.delegateCount,
+          l = e.target;
+      if (u && l.nodeType && !("click" === e.type && 1 <= e.button)) for (; l !== this; l = l.parentNode || this) {
+        if (1 === l.nodeType && ("click" !== e.type || !0 !== l.disabled)) {
+          for (o = [], a = {}, n = 0; n < u; n++) {
+            void 0 === a[i = (r = t[n]).selector + " "] && (a[i] = r.needsContext ? -1 < k(i, this).index(l) : k.find(i, this, null, [l]).length), a[i] && o.push(r);
+          }
+
+          o.length && s.push({
+            elem: l,
+            handlers: o
+          });
+        }
+      }
+      return l = this, u < t.length && s.push({
+        elem: l,
+        handlers: t.slice(u)
+      }), s;
+    },
+    addProp: function addProp(t, e) {
+      Object.defineProperty(k.Event.prototype, t, {
+        enumerable: !0,
+        configurable: !0,
+        get: m(e) ? function () {
+          if (this.originalEvent) return e(this.originalEvent);
+        } : function () {
+          if (this.originalEvent) return this.originalEvent[t];
+        },
+        set: function set(e) {
+          Object.defineProperty(this, t, {
+            enumerable: !0,
+            configurable: !0,
+            writable: !0,
+            value: e
+          });
+        }
+      });
+    },
+    fix: function fix(e) {
+      return e[k.expando] ? e : new k.Event(e);
+    },
+    special: {
+      load: {
+        noBubble: !0
+      },
+      click: {
+        setup: function setup(e) {
+          var t = this || e;
+          return pe.test(t.type) && t.click && A(t, "input") && De(t, "click", ke), !1;
+        },
+        trigger: function trigger(e) {
+          var t = this || e;
+          return pe.test(t.type) && t.click && A(t, "input") && De(t, "click"), !0;
+        },
+        _default: function _default(e) {
+          var t = e.target;
+          return pe.test(t.type) && t.click && A(t, "input") && Q.get(t, "click") || A(t, "a");
+        }
+      },
+      beforeunload: {
+        postDispatch: function postDispatch(e) {
+          void 0 !== e.result && e.originalEvent && (e.originalEvent.returnValue = e.result);
+        }
+      }
+    }
+  }, k.removeEvent = function (e, t, n) {
+    e.removeEventListener && e.removeEventListener(t, n);
+  }, k.Event = function (e, t) {
+    if (!(this instanceof k.Event)) return new k.Event(e, t);
+    e && e.type ? (this.originalEvent = e, this.type = e.type, this.isDefaultPrevented = e.defaultPrevented || void 0 === e.defaultPrevented && !1 === e.returnValue ? ke : Se, this.target = e.target && 3 === e.target.nodeType ? e.target.parentNode : e.target, this.currentTarget = e.currentTarget, this.relatedTarget = e.relatedTarget) : this.type = e, t && k.extend(this, t), this.timeStamp = e && e.timeStamp || Date.now(), this[k.expando] = !0;
+  }, k.Event.prototype = {
+    constructor: k.Event,
+    isDefaultPrevented: Se,
+    isPropagationStopped: Se,
+    isImmediatePropagationStopped: Se,
+    isSimulated: !1,
+    preventDefault: function preventDefault() {
+      var e = this.originalEvent;
+      this.isDefaultPrevented = ke, e && !this.isSimulated && e.preventDefault();
+    },
+    stopPropagation: function stopPropagation() {
+      var e = this.originalEvent;
+      this.isPropagationStopped = ke, e && !this.isSimulated && e.stopPropagation();
+    },
+    stopImmediatePropagation: function stopImmediatePropagation() {
+      var e = this.originalEvent;
+      this.isImmediatePropagationStopped = ke, e && !this.isSimulated && e.stopImmediatePropagation(), this.stopPropagation();
+    }
+  }, k.each({
+    altKey: !0,
+    bubbles: !0,
+    cancelable: !0,
+    changedTouches: !0,
+    ctrlKey: !0,
+    detail: !0,
+    eventPhase: !0,
+    metaKey: !0,
+    pageX: !0,
+    pageY: !0,
+    shiftKey: !0,
+    view: !0,
+    "char": !0,
+    code: !0,
+    charCode: !0,
+    key: !0,
+    keyCode: !0,
+    button: !0,
+    buttons: !0,
+    clientX: !0,
+    clientY: !0,
+    offsetX: !0,
+    offsetY: !0,
+    pointerId: !0,
+    pointerType: !0,
+    screenX: !0,
+    screenY: !0,
+    targetTouches: !0,
+    toElement: !0,
+    touches: !0,
+    which: function which(e) {
+      var t = e.button;
+      return null == e.which && Te.test(e.type) ? null != e.charCode ? e.charCode : e.keyCode : !e.which && void 0 !== t && Ce.test(e.type) ? 1 & t ? 1 : 2 & t ? 3 : 4 & t ? 2 : 0 : e.which;
+    }
+  }, k.event.addProp), k.each({
+    focus: "focusin",
+    blur: "focusout"
+  }, function (e, t) {
+    k.event.special[e] = {
+      setup: function setup() {
+        return De(this, e, Ne), !1;
+      },
+      trigger: function trigger() {
+        return De(this, e), !0;
+      },
+      delegateType: t
+    };
+  }), k.each({
+    mouseenter: "mouseover",
+    mouseleave: "mouseout",
+    pointerenter: "pointerover",
+    pointerleave: "pointerout"
+  }, function (e, i) {
+    k.event.special[e] = {
+      delegateType: i,
+      bindType: i,
+      handle: function handle(e) {
+        var t,
+            n = e.relatedTarget,
+            r = e.handleObj;
+        return n && (n === this || k.contains(this, n)) || (e.type = r.origType, t = r.handler.apply(this, arguments), e.type = i), t;
+      }
+    };
+  }), k.fn.extend({
+    on: function on(e, t, n, r) {
+      return Ae(this, e, t, n, r);
+    },
+    one: function one(e, t, n, r) {
+      return Ae(this, e, t, n, r, 1);
+    },
+    off: function off(e, t, n) {
+      var r, i;
+      if (e && e.preventDefault && e.handleObj) return r = e.handleObj, k(e.delegateTarget).off(r.namespace ? r.origType + "." + r.namespace : r.origType, r.selector, r.handler), this;
+
+      if ("object" == _typeof(e)) {
+        for (i in e) {
+          this.off(i, t, e[i]);
+        }
+
+        return this;
+      }
+
+      return !1 !== t && "function" != typeof t || (n = t, t = void 0), !1 === n && (n = Se), this.each(function () {
+        k.event.remove(this, e, n, t);
+      });
+    }
+  });
+  var je = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([a-z][^\/\0>\x20\t\r\n\f]*)[^>]*)\/>/gi,
+      qe = /<script|<style|<link/i,
+      Le = /checked\s*(?:[^=]|=\s*.checked.)/i,
+      He = /^\s*<!(?:\[CDATA\[|--)|(?:\]\]|--)>\s*$/g;
+
+  function Oe(e, t) {
+    return A(e, "table") && A(11 !== t.nodeType ? t : t.firstChild, "tr") && k(e).children("tbody")[0] || e;
+  }
+
+  function Pe(e) {
+    return e.type = (null !== e.getAttribute("type")) + "/" + e.type, e;
+  }
+
+  function Re(e) {
+    return "true/" === (e.type || "").slice(0, 5) ? e.type = e.type.slice(5) : e.removeAttribute("type"), e;
+  }
+
+  function Me(e, t) {
+    var n, r, i, o, a, s, u, l;
+
+    if (1 === t.nodeType) {
+      if (Q.hasData(e) && (o = Q.access(e), a = Q.set(t, o), l = o.events)) for (i in delete a.handle, a.events = {}, l) {
+        for (n = 0, r = l[i].length; n < r; n++) {
+          k.event.add(t, i, l[i][n]);
+        }
+      }
+      J.hasData(e) && (s = J.access(e), u = k.extend({}, s), J.set(t, u));
+    }
+  }
+
+  function Ie(n, r, i, o) {
+    r = g.apply([], r);
+    var e,
+        t,
+        a,
+        s,
+        u,
+        l,
+        c = 0,
+        f = n.length,
+        p = f - 1,
+        d = r[0],
+        h = m(d);
+    if (h || 1 < f && "string" == typeof d && !y.checkClone && Le.test(d)) return n.each(function (e) {
+      var t = n.eq(e);
+      h && (r[0] = d.call(this, e, t.html())), Ie(t, r, i, o);
+    });
+
+    if (f && (t = (e = we(r, n[0].ownerDocument, !1, n, o)).firstChild, 1 === e.childNodes.length && (e = t), t || o)) {
+      for (s = (a = k.map(ve(e, "script"), Pe)).length; c < f; c++) {
+        u = e, c !== p && (u = k.clone(u, !0, !0), s && k.merge(a, ve(u, "script"))), i.call(n[c], u, c);
+      }
+
+      if (s) for (l = a[a.length - 1].ownerDocument, k.map(a, Re), c = 0; c < s; c++) {
+        u = a[c], he.test(u.type || "") && !Q.access(u, "globalEval") && k.contains(l, u) && (u.src && "module" !== (u.type || "").toLowerCase() ? k._evalUrl && !u.noModule && k._evalUrl(u.src, {
+          nonce: u.nonce || u.getAttribute("nonce")
+        }) : b(u.textContent.replace(He, ""), u, l));
+      }
+    }
+
+    return n;
+  }
+
+  function We(e, t, n) {
+    for (var r, i = t ? k.filter(t, e) : e, o = 0; null != (r = i[o]); o++) {
+      n || 1 !== r.nodeType || k.cleanData(ve(r)), r.parentNode && (n && oe(r) && ye(ve(r, "script")), r.parentNode.removeChild(r));
+    }
+
+    return e;
+  }
+
+  k.extend({
+    htmlPrefilter: function htmlPrefilter(e) {
+      return e.replace(je, "<$1></$2>");
+    },
+    clone: function clone(e, t, n) {
+      var r,
+          i,
+          o,
+          a,
+          s,
+          u,
+          l,
+          c = e.cloneNode(!0),
+          f = oe(e);
+      if (!(y.noCloneChecked || 1 !== e.nodeType && 11 !== e.nodeType || k.isXMLDoc(e))) for (a = ve(c), r = 0, i = (o = ve(e)).length; r < i; r++) {
+        s = o[r], u = a[r], void 0, "input" === (l = u.nodeName.toLowerCase()) && pe.test(s.type) ? u.checked = s.checked : "input" !== l && "textarea" !== l || (u.defaultValue = s.defaultValue);
+      }
+      if (t) if (n) for (o = o || ve(e), a = a || ve(c), r = 0, i = o.length; r < i; r++) {
+        Me(o[r], a[r]);
+      } else Me(e, c);
+      return 0 < (a = ve(c, "script")).length && ye(a, !f && ve(e, "script")), c;
+    },
+    cleanData: function cleanData(e) {
+      for (var t, n, r, i = k.event.special, o = 0; void 0 !== (n = e[o]); o++) {
+        if (G(n)) {
+          if (t = n[Q.expando]) {
+            if (t.events) for (r in t.events) {
+              i[r] ? k.event.remove(n, r) : k.removeEvent(n, r, t.handle);
+            }
+            n[Q.expando] = void 0;
+          }
+
+          n[J.expando] && (n[J.expando] = void 0);
+        }
+      }
+    }
+  }), k.fn.extend({
+    detach: function detach(e) {
+      return We(this, e, !0);
+    },
+    remove: function remove(e) {
+      return We(this, e);
+    },
+    text: function text(e) {
+      return _(this, function (e) {
+        return void 0 === e ? k.text(this) : this.empty().each(function () {
+          1 !== this.nodeType && 11 !== this.nodeType && 9 !== this.nodeType || (this.textContent = e);
+        });
+      }, null, e, arguments.length);
+    },
+    append: function append() {
+      return Ie(this, arguments, function (e) {
+        1 !== this.nodeType && 11 !== this.nodeType && 9 !== this.nodeType || Oe(this, e).appendChild(e);
+      });
+    },
+    prepend: function prepend() {
+      return Ie(this, arguments, function (e) {
+        if (1 === this.nodeType || 11 === this.nodeType || 9 === this.nodeType) {
+          var t = Oe(this, e);
+          t.insertBefore(e, t.firstChild);
+        }
+      });
+    },
+    before: function before() {
+      return Ie(this, arguments, function (e) {
+        this.parentNode && this.parentNode.insertBefore(e, this);
+      });
+    },
+    after: function after() {
+      return Ie(this, arguments, function (e) {
+        this.parentNode && this.parentNode.insertBefore(e, this.nextSibling);
+      });
+    },
+    empty: function empty() {
+      for (var e, t = 0; null != (e = this[t]); t++) {
+        1 === e.nodeType && (k.cleanData(ve(e, !1)), e.textContent = "");
+      }
+
+      return this;
+    },
+    clone: function clone(e, t) {
+      return e = null != e && e, t = null == t ? e : t, this.map(function () {
+        return k.clone(this, e, t);
+      });
+    },
+    html: function html(e) {
+      return _(this, function (e) {
+        var t = this[0] || {},
+            n = 0,
+            r = this.length;
+        if (void 0 === e && 1 === t.nodeType) return t.innerHTML;
+
+        if ("string" == typeof e && !qe.test(e) && !ge[(de.exec(e) || ["", ""])[1].toLowerCase()]) {
+          e = k.htmlPrefilter(e);
+
+          try {
+            for (; n < r; n++) {
+              1 === (t = this[n] || {}).nodeType && (k.cleanData(ve(t, !1)), t.innerHTML = e);
+            }
+
+            t = 0;
+          } catch (e) {}
+        }
+
+        t && this.empty().append(e);
+      }, null, e, arguments.length);
+    },
+    replaceWith: function replaceWith() {
+      var n = [];
+      return Ie(this, arguments, function (e) {
+        var t = this.parentNode;
+        k.inArray(this, n) < 0 && (k.cleanData(ve(this)), t && t.replaceChild(e, this));
+      }, n);
+    }
+  }), k.each({
+    appendTo: "append",
+    prependTo: "prepend",
+    insertBefore: "before",
+    insertAfter: "after",
+    replaceAll: "replaceWith"
+  }, function (e, a) {
+    k.fn[e] = function (e) {
+      for (var t, n = [], r = k(e), i = r.length - 1, o = 0; o <= i; o++) {
+        t = o === i ? this : this.clone(!0), k(r[o])[a](t), u.apply(n, t.get());
+      }
+
+      return this.pushStack(n);
+    };
+  });
+
+  var $e = new RegExp("^(" + te + ")(?!px)[a-z%]+$", "i"),
+      Fe = function Fe(e) {
+    var t = e.ownerDocument.defaultView;
+    return t && t.opener || (t = C), t.getComputedStyle(e);
+  },
+      Be = new RegExp(re.join("|"), "i");
+
+  function _e(e, t, n) {
+    var r,
+        i,
+        o,
+        a,
+        s = e.style;
+    return (n = n || Fe(e)) && ("" !== (a = n.getPropertyValue(t) || n[t]) || oe(e) || (a = k.style(e, t)), !y.pixelBoxStyles() && $e.test(a) && Be.test(t) && (r = s.width, i = s.minWidth, o = s.maxWidth, s.minWidth = s.maxWidth = s.width = a, a = n.width, s.width = r, s.minWidth = i, s.maxWidth = o)), void 0 !== a ? a + "" : a;
+  }
+
+  function ze(e, t) {
+    return {
+      get: function get() {
+        if (!e()) return (this.get = t).apply(this, arguments);
+        delete this.get;
+      }
+    };
+  }
+
+  !function () {
+    function e() {
+      if (u) {
+        s.style.cssText = "position:absolute;left:-11111px;width:60px;margin-top:1px;padding:0;border:0", u.style.cssText = "position:relative;display:block;box-sizing:border-box;overflow:scroll;margin:auto;border:1px;padding:1px;width:60%;top:1%", ie.appendChild(s).appendChild(u);
+        var e = C.getComputedStyle(u);
+        n = "1%" !== e.top, a = 12 === t(e.marginLeft), u.style.right = "60%", o = 36 === t(e.right), r = 36 === t(e.width), u.style.position = "absolute", i = 12 === t(u.offsetWidth / 3), ie.removeChild(s), u = null;
+      }
+    }
+
+    function t(e) {
+      return Math.round(parseFloat(e));
+    }
+
+    var n,
+        r,
+        i,
+        o,
+        a,
+        s = E.createElement("div"),
+        u = E.createElement("div");
+    u.style && (u.style.backgroundClip = "content-box", u.cloneNode(!0).style.backgroundClip = "", y.clearCloneStyle = "content-box" === u.style.backgroundClip, k.extend(y, {
+      boxSizingReliable: function boxSizingReliable() {
+        return e(), r;
+      },
+      pixelBoxStyles: function pixelBoxStyles() {
+        return e(), o;
+      },
+      pixelPosition: function pixelPosition() {
+        return e(), n;
+      },
+      reliableMarginLeft: function reliableMarginLeft() {
+        return e(), a;
+      },
+      scrollboxSize: function scrollboxSize() {
+        return e(), i;
+      }
+    }));
+  }();
+  var Ue = ["Webkit", "Moz", "ms"],
+      Xe = E.createElement("div").style,
+      Ve = {};
+
+  function Ge(e) {
+    var t = k.cssProps[e] || Ve[e];
+    return t || (e in Xe ? e : Ve[e] = function (e) {
+      var t = e[0].toUpperCase() + e.slice(1),
+          n = Ue.length;
+
+      while (n--) {
+        if ((e = Ue[n] + t) in Xe) return e;
+      }
+    }(e) || e);
+  }
+
+  var Ye = /^(none|table(?!-c[ea]).+)/,
+      Qe = /^--/,
+      Je = {
+    position: "absolute",
+    visibility: "hidden",
+    display: "block"
+  },
+      Ke = {
+    letterSpacing: "0",
+    fontWeight: "400"
+  };
+
+  function Ze(e, t, n) {
+    var r = ne.exec(t);
+    return r ? Math.max(0, r[2] - (n || 0)) + (r[3] || "px") : t;
+  }
+
+  function et(e, t, n, r, i, o) {
+    var a = "width" === t ? 1 : 0,
+        s = 0,
+        u = 0;
+    if (n === (r ? "border" : "content")) return 0;
+
+    for (; a < 4; a += 2) {
+      "margin" === n && (u += k.css(e, n + re[a], !0, i)), r ? ("content" === n && (u -= k.css(e, "padding" + re[a], !0, i)), "margin" !== n && (u -= k.css(e, "border" + re[a] + "Width", !0, i))) : (u += k.css(e, "padding" + re[a], !0, i), "padding" !== n ? u += k.css(e, "border" + re[a] + "Width", !0, i) : s += k.css(e, "border" + re[a] + "Width", !0, i));
+    }
+
+    return !r && 0 <= o && (u += Math.max(0, Math.ceil(e["offset" + t[0].toUpperCase() + t.slice(1)] - o - u - s - .5)) || 0), u;
+  }
+
+  function tt(e, t, n) {
+    var r = Fe(e),
+        i = (!y.boxSizingReliable() || n) && "border-box" === k.css(e, "boxSizing", !1, r),
+        o = i,
+        a = _e(e, t, r),
+        s = "offset" + t[0].toUpperCase() + t.slice(1);
+
+    if ($e.test(a)) {
+      if (!n) return a;
+      a = "auto";
+    }
+
+    return (!y.boxSizingReliable() && i || "auto" === a || !parseFloat(a) && "inline" === k.css(e, "display", !1, r)) && e.getClientRects().length && (i = "border-box" === k.css(e, "boxSizing", !1, r), (o = s in e) && (a = e[s])), (a = parseFloat(a) || 0) + et(e, t, n || (i ? "border" : "content"), o, r, a) + "px";
+  }
+
+  function nt(e, t, n, r, i) {
+    return new nt.prototype.init(e, t, n, r, i);
+  }
+
+  k.extend({
+    cssHooks: {
+      opacity: {
+        get: function get(e, t) {
+          if (t) {
+            var n = _e(e, "opacity");
+
+            return "" === n ? "1" : n;
+          }
+        }
+      }
+    },
+    cssNumber: {
+      animationIterationCount: !0,
+      columnCount: !0,
+      fillOpacity: !0,
+      flexGrow: !0,
+      flexShrink: !0,
+      fontWeight: !0,
+      gridArea: !0,
+      gridColumn: !0,
+      gridColumnEnd: !0,
+      gridColumnStart: !0,
+      gridRow: !0,
+      gridRowEnd: !0,
+      gridRowStart: !0,
+      lineHeight: !0,
+      opacity: !0,
+      order: !0,
+      orphans: !0,
+      widows: !0,
+      zIndex: !0,
+      zoom: !0
+    },
+    cssProps: {},
+    style: function style(e, t, n, r) {
+      if (e && 3 !== e.nodeType && 8 !== e.nodeType && e.style) {
+        var i,
+            o,
+            a,
+            s = V(t),
+            u = Qe.test(t),
+            l = e.style;
+        if (u || (t = Ge(s)), a = k.cssHooks[t] || k.cssHooks[s], void 0 === n) return a && "get" in a && void 0 !== (i = a.get(e, !1, r)) ? i : l[t];
+        "string" === (o = _typeof(n)) && (i = ne.exec(n)) && i[1] && (n = le(e, t, i), o = "number"), null != n && n == n && ("number" !== o || u || (n += i && i[3] || (k.cssNumber[s] ? "" : "px")), y.clearCloneStyle || "" !== n || 0 !== t.indexOf("background") || (l[t] = "inherit"), a && "set" in a && void 0 === (n = a.set(e, n, r)) || (u ? l.setProperty(t, n) : l[t] = n));
+      }
+    },
+    css: function css(e, t, n, r) {
+      var i,
+          o,
+          a,
+          s = V(t);
+      return Qe.test(t) || (t = Ge(s)), (a = k.cssHooks[t] || k.cssHooks[s]) && "get" in a && (i = a.get(e, !0, n)), void 0 === i && (i = _e(e, t, r)), "normal" === i && t in Ke && (i = Ke[t]), "" === n || n ? (o = parseFloat(i), !0 === n || isFinite(o) ? o || 0 : i) : i;
+    }
+  }), k.each(["height", "width"], function (e, u) {
+    k.cssHooks[u] = {
+      get: function get(e, t, n) {
+        if (t) return !Ye.test(k.css(e, "display")) || e.getClientRects().length && e.getBoundingClientRect().width ? tt(e, u, n) : ue(e, Je, function () {
+          return tt(e, u, n);
+        });
+      },
+      set: function set(e, t, n) {
+        var r,
+            i = Fe(e),
+            o = !y.scrollboxSize() && "absolute" === i.position,
+            a = (o || n) && "border-box" === k.css(e, "boxSizing", !1, i),
+            s = n ? et(e, u, n, a, i) : 0;
+        return a && o && (s -= Math.ceil(e["offset" + u[0].toUpperCase() + u.slice(1)] - parseFloat(i[u]) - et(e, u, "border", !1, i) - .5)), s && (r = ne.exec(t)) && "px" !== (r[3] || "px") && (e.style[u] = t, t = k.css(e, u)), Ze(0, t, s);
+      }
+    };
+  }), k.cssHooks.marginLeft = ze(y.reliableMarginLeft, function (e, t) {
+    if (t) return (parseFloat(_e(e, "marginLeft")) || e.getBoundingClientRect().left - ue(e, {
+      marginLeft: 0
+    }, function () {
+      return e.getBoundingClientRect().left;
+    })) + "px";
+  }), k.each({
+    margin: "",
+    padding: "",
+    border: "Width"
+  }, function (i, o) {
+    k.cssHooks[i + o] = {
+      expand: function expand(e) {
+        for (var t = 0, n = {}, r = "string" == typeof e ? e.split(" ") : [e]; t < 4; t++) {
+          n[i + re[t] + o] = r[t] || r[t - 2] || r[0];
+        }
+
+        return n;
+      }
+    }, "margin" !== i && (k.cssHooks[i + o].set = Ze);
+  }), k.fn.extend({
+    css: function css(e, t) {
+      return _(this, function (e, t, n) {
+        var r,
+            i,
+            o = {},
+            a = 0;
+
+        if (Array.isArray(t)) {
+          for (r = Fe(e), i = t.length; a < i; a++) {
+            o[t[a]] = k.css(e, t[a], !1, r);
+          }
+
+          return o;
+        }
+
+        return void 0 !== n ? k.style(e, t, n) : k.css(e, t);
+      }, e, t, 1 < arguments.length);
+    }
+  }), ((k.Tween = nt).prototype = {
+    constructor: nt,
+    init: function init(e, t, n, r, i, o) {
+      this.elem = e, this.prop = n, this.easing = i || k.easing._default, this.options = t, this.start = this.now = this.cur(), this.end = r, this.unit = o || (k.cssNumber[n] ? "" : "px");
+    },
+    cur: function cur() {
+      var e = nt.propHooks[this.prop];
+      return e && e.get ? e.get(this) : nt.propHooks._default.get(this);
+    },
+    run: function run(e) {
+      var t,
+          n = nt.propHooks[this.prop];
+      return this.options.duration ? this.pos = t = k.easing[this.easing](e, this.options.duration * e, 0, 1, this.options.duration) : this.pos = t = e, this.now = (this.end - this.start) * t + this.start, this.options.step && this.options.step.call(this.elem, this.now, this), n && n.set ? n.set(this) : nt.propHooks._default.set(this), this;
+    }
+  }).init.prototype = nt.prototype, (nt.propHooks = {
+    _default: {
+      get: function get(e) {
+        var t;
+        return 1 !== e.elem.nodeType || null != e.elem[e.prop] && null == e.elem.style[e.prop] ? e.elem[e.prop] : (t = k.css(e.elem, e.prop, "")) && "auto" !== t ? t : 0;
+      },
+      set: function set(e) {
+        k.fx.step[e.prop] ? k.fx.step[e.prop](e) : 1 !== e.elem.nodeType || !k.cssHooks[e.prop] && null == e.elem.style[Ge(e.prop)] ? e.elem[e.prop] = e.now : k.style(e.elem, e.prop, e.now + e.unit);
+      }
+    }
+  }).scrollTop = nt.propHooks.scrollLeft = {
+    set: function set(e) {
+      e.elem.nodeType && e.elem.parentNode && (e.elem[e.prop] = e.now);
+    }
+  }, k.easing = {
+    linear: function linear(e) {
+      return e;
+    },
+    swing: function swing(e) {
+      return .5 - Math.cos(e * Math.PI) / 2;
+    },
+    _default: "swing"
+  }, k.fx = nt.prototype.init, k.fx.step = {};
+  var rt,
+      it,
+      ot,
+      at,
+      st = /^(?:toggle|show|hide)$/,
+      ut = /queueHooks$/;
+
+  function lt() {
+    it && (!1 === E.hidden && C.requestAnimationFrame ? C.requestAnimationFrame(lt) : C.setTimeout(lt, k.fx.interval), k.fx.tick());
+  }
+
+  function ct() {
+    return C.setTimeout(function () {
+      rt = void 0;
+    }), rt = Date.now();
+  }
+
+  function ft(e, t) {
+    var n,
+        r = 0,
+        i = {
+      height: e
+    };
+
+    for (t = t ? 1 : 0; r < 4; r += 2 - t) {
+      i["margin" + (n = re[r])] = i["padding" + n] = e;
+    }
+
+    return t && (i.opacity = i.width = e), i;
+  }
+
+  function pt(e, t, n) {
+    for (var r, i = (dt.tweeners[t] || []).concat(dt.tweeners["*"]), o = 0, a = i.length; o < a; o++) {
+      if (r = i[o].call(n, t, e)) return r;
+    }
+  }
+
+  function dt(o, e, t) {
+    var n,
+        a,
+        r = 0,
+        i = dt.prefilters.length,
+        s = k.Deferred().always(function () {
+      delete u.elem;
+    }),
+        u = function u() {
+      if (a) return !1;
+
+      for (var e = rt || ct(), t = Math.max(0, l.startTime + l.duration - e), n = 1 - (t / l.duration || 0), r = 0, i = l.tweens.length; r < i; r++) {
+        l.tweens[r].run(n);
+      }
+
+      return s.notifyWith(o, [l, n, t]), n < 1 && i ? t : (i || s.notifyWith(o, [l, 1, 0]), s.resolveWith(o, [l]), !1);
+    },
+        l = s.promise({
+      elem: o,
+      props: k.extend({}, e),
+      opts: k.extend(!0, {
+        specialEasing: {},
+        easing: k.easing._default
+      }, t),
+      originalProperties: e,
+      originalOptions: t,
+      startTime: rt || ct(),
+      duration: t.duration,
+      tweens: [],
+      createTween: function createTween(e, t) {
+        var n = k.Tween(o, l.opts, e, t, l.opts.specialEasing[e] || l.opts.easing);
+        return l.tweens.push(n), n;
+      },
+      stop: function stop(e) {
+        var t = 0,
+            n = e ? l.tweens.length : 0;
+        if (a) return this;
+
+        for (a = !0; t < n; t++) {
+          l.tweens[t].run(1);
+        }
+
+        return e ? (s.notifyWith(o, [l, 1, 0]), s.resolveWith(o, [l, e])) : s.rejectWith(o, [l, e]), this;
+      }
+    }),
+        c = l.props;
+
+    for (!function (e, t) {
+      var n, r, i, o, a;
+
+      for (n in e) {
+        if (i = t[r = V(n)], o = e[n], Array.isArray(o) && (i = o[1], o = e[n] = o[0]), n !== r && (e[r] = o, delete e[n]), (a = k.cssHooks[r]) && ("expand" in a)) for (n in o = a.expand(o), delete e[r], o) {
+          (n in e) || (e[n] = o[n], t[n] = i);
+        } else t[r] = i;
+      }
+    }(c, l.opts.specialEasing); r < i; r++) {
+      if (n = dt.prefilters[r].call(l, o, c, l.opts)) return m(n.stop) && (k._queueHooks(l.elem, l.opts.queue).stop = n.stop.bind(n)), n;
+    }
+
+    return k.map(c, pt, l), m(l.opts.start) && l.opts.start.call(o, l), l.progress(l.opts.progress).done(l.opts.done, l.opts.complete).fail(l.opts.fail).always(l.opts.always), k.fx.timer(k.extend(u, {
+      elem: o,
+      anim: l,
+      queue: l.opts.queue
+    })), l;
+  }
+
+  k.Animation = k.extend(dt, {
+    tweeners: {
+      "*": [function (e, t) {
+        var n = this.createTween(e, t);
+        return le(n.elem, e, ne.exec(t), n), n;
+      }]
+    },
+    tweener: function tweener(e, t) {
+      m(e) ? (t = e, e = ["*"]) : e = e.match(R);
+
+      for (var n, r = 0, i = e.length; r < i; r++) {
+        n = e[r], dt.tweeners[n] = dt.tweeners[n] || [], dt.tweeners[n].unshift(t);
+      }
+    },
+    prefilters: [function (e, t, n) {
+      var r,
+          i,
+          o,
+          a,
+          s,
+          u,
+          l,
+          c,
+          f = "width" in t || "height" in t,
+          p = this,
+          d = {},
+          h = e.style,
+          g = e.nodeType && se(e),
+          v = Q.get(e, "fxshow");
+
+      for (r in n.queue || (null == (a = k._queueHooks(e, "fx")).unqueued && (a.unqueued = 0, s = a.empty.fire, a.empty.fire = function () {
+        a.unqueued || s();
+      }), a.unqueued++, p.always(function () {
+        p.always(function () {
+          a.unqueued--, k.queue(e, "fx").length || a.empty.fire();
+        });
+      })), t) {
+        if (i = t[r], st.test(i)) {
+          if (delete t[r], o = o || "toggle" === i, i === (g ? "hide" : "show")) {
+            if ("show" !== i || !v || void 0 === v[r]) continue;
+            g = !0;
+          }
+
+          d[r] = v && v[r] || k.style(e, r);
+        }
+      }
+
+      if ((u = !k.isEmptyObject(t)) || !k.isEmptyObject(d)) for (r in f && 1 === e.nodeType && (n.overflow = [h.overflow, h.overflowX, h.overflowY], null == (l = v && v.display) && (l = Q.get(e, "display")), "none" === (c = k.css(e, "display")) && (l ? c = l : (fe([e], !0), l = e.style.display || l, c = k.css(e, "display"), fe([e]))), ("inline" === c || "inline-block" === c && null != l) && "none" === k.css(e, "float") && (u || (p.done(function () {
+        h.display = l;
+      }), null == l && (c = h.display, l = "none" === c ? "" : c)), h.display = "inline-block")), n.overflow && (h.overflow = "hidden", p.always(function () {
+        h.overflow = n.overflow[0], h.overflowX = n.overflow[1], h.overflowY = n.overflow[2];
+      })), u = !1, d) {
+        u || (v ? "hidden" in v && (g = v.hidden) : v = Q.access(e, "fxshow", {
+          display: l
+        }), o && (v.hidden = !g), g && fe([e], !0), p.done(function () {
+          for (r in g || fe([e]), Q.remove(e, "fxshow"), d) {
+            k.style(e, r, d[r]);
+          }
+        })), u = pt(g ? v[r] : 0, r, p), r in v || (v[r] = u.start, g && (u.end = u.start, u.start = 0));
+      }
+    }],
+    prefilter: function prefilter(e, t) {
+      t ? dt.prefilters.unshift(e) : dt.prefilters.push(e);
+    }
+  }), k.speed = function (e, t, n) {
+    var r = e && "object" == _typeof(e) ? k.extend({}, e) : {
+      complete: n || !n && t || m(e) && e,
+      duration: e,
+      easing: n && t || t && !m(t) && t
+    };
+    return k.fx.off ? r.duration = 0 : "number" != typeof r.duration && (r.duration in k.fx.speeds ? r.duration = k.fx.speeds[r.duration] : r.duration = k.fx.speeds._default), null != r.queue && !0 !== r.queue || (r.queue = "fx"), r.old = r.complete, r.complete = function () {
+      m(r.old) && r.old.call(this), r.queue && k.dequeue(this, r.queue);
+    }, r;
+  }, k.fn.extend({
+    fadeTo: function fadeTo(e, t, n, r) {
+      return this.filter(se).css("opacity", 0).show().end().animate({
+        opacity: t
+      }, e, n, r);
+    },
+    animate: function animate(t, e, n, r) {
+      var i = k.isEmptyObject(t),
+          o = k.speed(e, n, r),
+          a = function a() {
+        var e = dt(this, k.extend({}, t), o);
+        (i || Q.get(this, "finish")) && e.stop(!0);
+      };
+
+      return a.finish = a, i || !1 === o.queue ? this.each(a) : this.queue(o.queue, a);
+    },
+    stop: function stop(i, e, o) {
+      var a = function a(e) {
+        var t = e.stop;
+        delete e.stop, t(o);
+      };
+
+      return "string" != typeof i && (o = e, e = i, i = void 0), e && !1 !== i && this.queue(i || "fx", []), this.each(function () {
+        var e = !0,
+            t = null != i && i + "queueHooks",
+            n = k.timers,
+            r = Q.get(this);
+        if (t) r[t] && r[t].stop && a(r[t]);else for (t in r) {
+          r[t] && r[t].stop && ut.test(t) && a(r[t]);
+        }
+
+        for (t = n.length; t--;) {
+          n[t].elem !== this || null != i && n[t].queue !== i || (n[t].anim.stop(o), e = !1, n.splice(t, 1));
+        }
+
+        !e && o || k.dequeue(this, i);
+      });
+    },
+    finish: function finish(a) {
+      return !1 !== a && (a = a || "fx"), this.each(function () {
+        var e,
+            t = Q.get(this),
+            n = t[a + "queue"],
+            r = t[a + "queueHooks"],
+            i = k.timers,
+            o = n ? n.length : 0;
+
+        for (t.finish = !0, k.queue(this, a, []), r && r.stop && r.stop.call(this, !0), e = i.length; e--;) {
+          i[e].elem === this && i[e].queue === a && (i[e].anim.stop(!0), i.splice(e, 1));
+        }
+
+        for (e = 0; e < o; e++) {
+          n[e] && n[e].finish && n[e].finish.call(this);
+        }
+
+        delete t.finish;
+      });
+    }
+  }), k.each(["toggle", "show", "hide"], function (e, r) {
+    var i = k.fn[r];
+
+    k.fn[r] = function (e, t, n) {
+      return null == e || "boolean" == typeof e ? i.apply(this, arguments) : this.animate(ft(r, !0), e, t, n);
+    };
+  }), k.each({
+    slideDown: ft("show"),
+    slideUp: ft("hide"),
+    slideToggle: ft("toggle"),
+    fadeIn: {
+      opacity: "show"
+    },
+    fadeOut: {
+      opacity: "hide"
+    },
+    fadeToggle: {
+      opacity: "toggle"
+    }
+  }, function (e, r) {
+    k.fn[e] = function (e, t, n) {
+      return this.animate(r, e, t, n);
+    };
+  }), k.timers = [], k.fx.tick = function () {
+    var e,
+        t = 0,
+        n = k.timers;
+
+    for (rt = Date.now(); t < n.length; t++) {
+      (e = n[t])() || n[t] !== e || n.splice(t--, 1);
+    }
+
+    n.length || k.fx.stop(), rt = void 0;
+  }, k.fx.timer = function (e) {
+    k.timers.push(e), k.fx.start();
+  }, k.fx.interval = 13, k.fx.start = function () {
+    it || (it = !0, lt());
+  }, k.fx.stop = function () {
+    it = null;
+  }, k.fx.speeds = {
+    slow: 600,
+    fast: 200,
+    _default: 400
+  }, k.fn.delay = function (r, e) {
+    return r = k.fx && k.fx.speeds[r] || r, e = e || "fx", this.queue(e, function (e, t) {
+      var n = C.setTimeout(e, r);
+
+      t.stop = function () {
+        C.clearTimeout(n);
+      };
+    });
+  }, ot = E.createElement("input"), at = E.createElement("select").appendChild(E.createElement("option")), ot.type = "checkbox", y.checkOn = "" !== ot.value, y.optSelected = at.selected, (ot = E.createElement("input")).value = "t", ot.type = "radio", y.radioValue = "t" === ot.value;
+  var ht,
+      gt = k.expr.attrHandle;
+  k.fn.extend({
+    attr: function attr(e, t) {
+      return _(this, k.attr, e, t, 1 < arguments.length);
+    },
+    removeAttr: function removeAttr(e) {
+      return this.each(function () {
+        k.removeAttr(this, e);
+      });
+    }
+  }), k.extend({
+    attr: function attr(e, t, n) {
+      var r,
+          i,
+          o = e.nodeType;
+      if (3 !== o && 8 !== o && 2 !== o) return "undefined" == typeof e.getAttribute ? k.prop(e, t, n) : (1 === o && k.isXMLDoc(e) || (i = k.attrHooks[t.toLowerCase()] || (k.expr.match.bool.test(t) ? ht : void 0)), void 0 !== n ? null === n ? void k.removeAttr(e, t) : i && "set" in i && void 0 !== (r = i.set(e, n, t)) ? r : (e.setAttribute(t, n + ""), n) : i && "get" in i && null !== (r = i.get(e, t)) ? r : null == (r = k.find.attr(e, t)) ? void 0 : r);
+    },
+    attrHooks: {
+      type: {
+        set: function set(e, t) {
+          if (!y.radioValue && "radio" === t && A(e, "input")) {
+            var n = e.value;
+            return e.setAttribute("type", t), n && (e.value = n), t;
+          }
+        }
+      }
+    },
+    removeAttr: function removeAttr(e, t) {
+      var n,
+          r = 0,
+          i = t && t.match(R);
+      if (i && 1 === e.nodeType) while (n = i[r++]) {
+        e.removeAttribute(n);
+      }
+    }
+  }), ht = {
+    set: function set(e, t, n) {
+      return !1 === t ? k.removeAttr(e, n) : e.setAttribute(n, n), n;
+    }
+  }, k.each(k.expr.match.bool.source.match(/\w+/g), function (e, t) {
+    var a = gt[t] || k.find.attr;
+
+    gt[t] = function (e, t, n) {
+      var r,
+          i,
+          o = t.toLowerCase();
+      return n || (i = gt[o], gt[o] = r, r = null != a(e, t, n) ? o : null, gt[o] = i), r;
+    };
+  });
+  var vt = /^(?:input|select|textarea|button)$/i,
+      yt = /^(?:a|area)$/i;
+
+  function mt(e) {
+    return (e.match(R) || []).join(" ");
+  }
+
+  function xt(e) {
+    return e.getAttribute && e.getAttribute("class") || "";
+  }
+
+  function bt(e) {
+    return Array.isArray(e) ? e : "string" == typeof e && e.match(R) || [];
+  }
+
+  k.fn.extend({
+    prop: function prop(e, t) {
+      return _(this, k.prop, e, t, 1 < arguments.length);
+    },
+    removeProp: function removeProp(e) {
+      return this.each(function () {
+        delete this[k.propFix[e] || e];
+      });
+    }
+  }), k.extend({
+    prop: function prop(e, t, n) {
+      var r,
+          i,
+          o = e.nodeType;
+      if (3 !== o && 8 !== o && 2 !== o) return 1 === o && k.isXMLDoc(e) || (t = k.propFix[t] || t, i = k.propHooks[t]), void 0 !== n ? i && "set" in i && void 0 !== (r = i.set(e, n, t)) ? r : e[t] = n : i && "get" in i && null !== (r = i.get(e, t)) ? r : e[t];
+    },
+    propHooks: {
+      tabIndex: {
+        get: function get(e) {
+          var t = k.find.attr(e, "tabindex");
+          return t ? parseInt(t, 10) : vt.test(e.nodeName) || yt.test(e.nodeName) && e.href ? 0 : -1;
+        }
+      }
+    },
+    propFix: {
+      "for": "htmlFor",
+      "class": "className"
+    }
+  }), y.optSelected || (k.propHooks.selected = {
+    get: function get(e) {
+      var t = e.parentNode;
+      return t && t.parentNode && t.parentNode.selectedIndex, null;
+    },
+    set: function set(e) {
+      var t = e.parentNode;
+      t && (t.selectedIndex, t.parentNode && t.parentNode.selectedIndex);
+    }
+  }), k.each(["tabIndex", "readOnly", "maxLength", "cellSpacing", "cellPadding", "rowSpan", "colSpan", "useMap", "frameBorder", "contentEditable"], function () {
+    k.propFix[this.toLowerCase()] = this;
+  }), k.fn.extend({
+    addClass: function addClass(t) {
+      var e,
+          n,
+          r,
+          i,
+          o,
+          a,
+          s,
+          u = 0;
+      if (m(t)) return this.each(function (e) {
+        k(this).addClass(t.call(this, e, xt(this)));
+      });
+      if ((e = bt(t)).length) while (n = this[u++]) {
+        if (i = xt(n), r = 1 === n.nodeType && " " + mt(i) + " ") {
+          a = 0;
+
+          while (o = e[a++]) {
+            r.indexOf(" " + o + " ") < 0 && (r += o + " ");
+          }
+
+          i !== (s = mt(r)) && n.setAttribute("class", s);
+        }
+      }
+      return this;
+    },
+    removeClass: function removeClass(t) {
+      var e,
+          n,
+          r,
+          i,
+          o,
+          a,
+          s,
+          u = 0;
+      if (m(t)) return this.each(function (e) {
+        k(this).removeClass(t.call(this, e, xt(this)));
+      });
+      if (!arguments.length) return this.attr("class", "");
+      if ((e = bt(t)).length) while (n = this[u++]) {
+        if (i = xt(n), r = 1 === n.nodeType && " " + mt(i) + " ") {
+          a = 0;
+
+          while (o = e[a++]) {
+            while (-1 < r.indexOf(" " + o + " ")) {
+              r = r.replace(" " + o + " ", " ");
+            }
+          }
+
+          i !== (s = mt(r)) && n.setAttribute("class", s);
+        }
+      }
+      return this;
+    },
+    toggleClass: function toggleClass(i, t) {
+      var o = _typeof(i),
+          a = "string" === o || Array.isArray(i);
+
+      return "boolean" == typeof t && a ? t ? this.addClass(i) : this.removeClass(i) : m(i) ? this.each(function (e) {
+        k(this).toggleClass(i.call(this, e, xt(this), t), t);
+      }) : this.each(function () {
+        var e, t, n, r;
+
+        if (a) {
+          t = 0, n = k(this), r = bt(i);
+
+          while (e = r[t++]) {
+            n.hasClass(e) ? n.removeClass(e) : n.addClass(e);
+          }
+        } else void 0 !== i && "boolean" !== o || ((e = xt(this)) && Q.set(this, "__className__", e), this.setAttribute && this.setAttribute("class", e || !1 === i ? "" : Q.get(this, "__className__") || ""));
+      });
+    },
+    hasClass: function hasClass(e) {
+      var t,
+          n,
+          r = 0;
+      t = " " + e + " ";
+
+      while (n = this[r++]) {
+        if (1 === n.nodeType && -1 < (" " + mt(xt(n)) + " ").indexOf(t)) return !0;
+      }
+
+      return !1;
+    }
+  });
+  var wt = /\r/g;
+  k.fn.extend({
+    val: function val(n) {
+      var r,
+          e,
+          i,
+          t = this[0];
+      return arguments.length ? (i = m(n), this.each(function (e) {
+        var t;
+        1 === this.nodeType && (null == (t = i ? n.call(this, e, k(this).val()) : n) ? t = "" : "number" == typeof t ? t += "" : Array.isArray(t) && (t = k.map(t, function (e) {
+          return null == e ? "" : e + "";
+        })), (r = k.valHooks[this.type] || k.valHooks[this.nodeName.toLowerCase()]) && "set" in r && void 0 !== r.set(this, t, "value") || (this.value = t));
+      })) : t ? (r = k.valHooks[t.type] || k.valHooks[t.nodeName.toLowerCase()]) && "get" in r && void 0 !== (e = r.get(t, "value")) ? e : "string" == typeof (e = t.value) ? e.replace(wt, "") : null == e ? "" : e : void 0;
+    }
+  }), k.extend({
+    valHooks: {
+      option: {
+        get: function get(e) {
+          var t = k.find.attr(e, "value");
+          return null != t ? t : mt(k.text(e));
+        }
+      },
+      select: {
+        get: function get(e) {
+          var t,
+              n,
+              r,
+              i = e.options,
+              o = e.selectedIndex,
+              a = "select-one" === e.type,
+              s = a ? null : [],
+              u = a ? o + 1 : i.length;
+
+          for (r = o < 0 ? u : a ? o : 0; r < u; r++) {
+            if (((n = i[r]).selected || r === o) && !n.disabled && (!n.parentNode.disabled || !A(n.parentNode, "optgroup"))) {
+              if (t = k(n).val(), a) return t;
+              s.push(t);
+            }
+          }
+
+          return s;
+        },
+        set: function set(e, t) {
+          var n,
+              r,
+              i = e.options,
+              o = k.makeArray(t),
+              a = i.length;
+
+          while (a--) {
+            ((r = i[a]).selected = -1 < k.inArray(k.valHooks.option.get(r), o)) && (n = !0);
+          }
+
+          return n || (e.selectedIndex = -1), o;
+        }
+      }
+    }
+  }), k.each(["radio", "checkbox"], function () {
+    k.valHooks[this] = {
+      set: function set(e, t) {
+        if (Array.isArray(t)) return e.checked = -1 < k.inArray(k(e).val(), t);
+      }
+    }, y.checkOn || (k.valHooks[this].get = function (e) {
+      return null === e.getAttribute("value") ? "on" : e.value;
+    });
+  }), y.focusin = "onfocusin" in C;
+
+  var Tt = /^(?:focusinfocus|focusoutblur)$/,
+      Ct = function Ct(e) {
+    e.stopPropagation();
+  };
+
+  k.extend(k.event, {
+    trigger: function trigger(e, t, n, r) {
+      var i,
+          o,
+          a,
+          s,
+          u,
+          l,
+          c,
+          f,
+          p = [n || E],
+          d = v.call(e, "type") ? e.type : e,
+          h = v.call(e, "namespace") ? e.namespace.split(".") : [];
+
+      if (o = f = a = n = n || E, 3 !== n.nodeType && 8 !== n.nodeType && !Tt.test(d + k.event.triggered) && (-1 < d.indexOf(".") && (d = (h = d.split(".")).shift(), h.sort()), u = d.indexOf(":") < 0 && "on" + d, (e = e[k.expando] ? e : new k.Event(d, "object" == _typeof(e) && e)).isTrigger = r ? 2 : 3, e.namespace = h.join("."), e.rnamespace = e.namespace ? new RegExp("(^|\\.)" + h.join("\\.(?:.*\\.|)") + "(\\.|$)") : null, e.result = void 0, e.target || (e.target = n), t = null == t ? [e] : k.makeArray(t, [e]), c = k.event.special[d] || {}, r || !c.trigger || !1 !== c.trigger.apply(n, t))) {
+        if (!r && !c.noBubble && !x(n)) {
+          for (s = c.delegateType || d, Tt.test(s + d) || (o = o.parentNode); o; o = o.parentNode) {
+            p.push(o), a = o;
+          }
+
+          a === (n.ownerDocument || E) && p.push(a.defaultView || a.parentWindow || C);
+        }
+
+        i = 0;
+
+        while ((o = p[i++]) && !e.isPropagationStopped()) {
+          f = o, e.type = 1 < i ? s : c.bindType || d, (l = (Q.get(o, "events") || {})[e.type] && Q.get(o, "handle")) && l.apply(o, t), (l = u && o[u]) && l.apply && G(o) && (e.result = l.apply(o, t), !1 === e.result && e.preventDefault());
+        }
+
+        return e.type = d, r || e.isDefaultPrevented() || c._default && !1 !== c._default.apply(p.pop(), t) || !G(n) || u && m(n[d]) && !x(n) && ((a = n[u]) && (n[u] = null), k.event.triggered = d, e.isPropagationStopped() && f.addEventListener(d, Ct), n[d](), e.isPropagationStopped() && f.removeEventListener(d, Ct), k.event.triggered = void 0, a && (n[u] = a)), e.result;
+      }
+    },
+    simulate: function simulate(e, t, n) {
+      var r = k.extend(new k.Event(), n, {
+        type: e,
+        isSimulated: !0
+      });
+      k.event.trigger(r, null, t);
+    }
+  }), k.fn.extend({
+    trigger: function trigger(e, t) {
+      return this.each(function () {
+        k.event.trigger(e, t, this);
+      });
+    },
+    triggerHandler: function triggerHandler(e, t) {
+      var n = this[0];
+      if (n) return k.event.trigger(e, t, n, !0);
+    }
+  }), y.focusin || k.each({
+    focus: "focusin",
+    blur: "focusout"
+  }, function (n, r) {
+    var i = function i(e) {
+      k.event.simulate(r, e.target, k.event.fix(e));
+    };
+
+    k.event.special[r] = {
+      setup: function setup() {
+        var e = this.ownerDocument || this,
+            t = Q.access(e, r);
+        t || e.addEventListener(n, i, !0), Q.access(e, r, (t || 0) + 1);
+      },
+      teardown: function teardown() {
+        var e = this.ownerDocument || this,
+            t = Q.access(e, r) - 1;
+        t ? Q.access(e, r, t) : (e.removeEventListener(n, i, !0), Q.remove(e, r));
+      }
+    };
+  });
+  var Et = C.location,
+      kt = Date.now(),
+      St = /\?/;
+
+  k.parseXML = function (e) {
+    var t;
+    if (!e || "string" != typeof e) return null;
+
+    try {
+      t = new C.DOMParser().parseFromString(e, "text/xml");
+    } catch (e) {
+      t = void 0;
+    }
+
+    return t && !t.getElementsByTagName("parsererror").length || k.error("Invalid XML: " + e), t;
+  };
+
+  var Nt = /\[\]$/,
+      At = /\r?\n/g,
+      Dt = /^(?:submit|button|image|reset|file)$/i,
+      jt = /^(?:input|select|textarea|keygen)/i;
+
+  function qt(n, e, r, i) {
+    var t;
+    if (Array.isArray(e)) k.each(e, function (e, t) {
+      r || Nt.test(n) ? i(n, t) : qt(n + "[" + ("object" == _typeof(t) && null != t ? e : "") + "]", t, r, i);
+    });else if (r || "object" !== w(e)) i(n, e);else for (t in e) {
+      qt(n + "[" + t + "]", e[t], r, i);
+    }
+  }
+
+  k.param = function (e, t) {
+    var n,
+        r = [],
+        i = function i(e, t) {
+      var n = m(t) ? t() : t;
+      r[r.length] = encodeURIComponent(e) + "=" + encodeURIComponent(null == n ? "" : n);
+    };
+
+    if (null == e) return "";
+    if (Array.isArray(e) || e.jquery && !k.isPlainObject(e)) k.each(e, function () {
+      i(this.name, this.value);
+    });else for (n in e) {
+      qt(n, e[n], t, i);
+    }
+    return r.join("&");
+  }, k.fn.extend({
+    serialize: function serialize() {
+      return k.param(this.serializeArray());
+    },
+    serializeArray: function serializeArray() {
+      return this.map(function () {
+        var e = k.prop(this, "elements");
+        return e ? k.makeArray(e) : this;
+      }).filter(function () {
+        var e = this.type;
+        return this.name && !k(this).is(":disabled") && jt.test(this.nodeName) && !Dt.test(e) && (this.checked || !pe.test(e));
+      }).map(function (e, t) {
+        var n = k(this).val();
+        return null == n ? null : Array.isArray(n) ? k.map(n, function (e) {
+          return {
+            name: t.name,
+            value: e.replace(At, "\r\n")
+          };
+        }) : {
+          name: t.name,
+          value: n.replace(At, "\r\n")
+        };
+      }).get();
+    }
+  });
+  var Lt = /%20/g,
+      Ht = /#.*$/,
+      Ot = /([?&])_=[^&]*/,
+      Pt = /^(.*?):[ \t]*([^\r\n]*)$/gm,
+      Rt = /^(?:GET|HEAD)$/,
+      Mt = /^\/\//,
+      It = {},
+      Wt = {},
+      $t = "*/".concat("*"),
+      Ft = E.createElement("a");
+
+  function Bt(o) {
+    return function (e, t) {
+      "string" != typeof e && (t = e, e = "*");
+      var n,
+          r = 0,
+          i = e.toLowerCase().match(R) || [];
+      if (m(t)) while (n = i[r++]) {
+        "+" === n[0] ? (n = n.slice(1) || "*", (o[n] = o[n] || []).unshift(t)) : (o[n] = o[n] || []).push(t);
+      }
+    };
+  }
+
+  function _t(t, i, o, a) {
+    var s = {},
+        u = t === Wt;
+
+    function l(e) {
+      var r;
+      return s[e] = !0, k.each(t[e] || [], function (e, t) {
+        var n = t(i, o, a);
+        return "string" != typeof n || u || s[n] ? u ? !(r = n) : void 0 : (i.dataTypes.unshift(n), l(n), !1);
+      }), r;
+    }
+
+    return l(i.dataTypes[0]) || !s["*"] && l("*");
+  }
+
+  function zt(e, t) {
+    var n,
+        r,
+        i = k.ajaxSettings.flatOptions || {};
+
+    for (n in t) {
+      void 0 !== t[n] && ((i[n] ? e : r || (r = {}))[n] = t[n]);
+    }
+
+    return r && k.extend(!0, e, r), e;
+  }
+
+  Ft.href = Et.href, k.extend({
+    active: 0,
+    lastModified: {},
+    etag: {},
+    ajaxSettings: {
+      url: Et.href,
+      type: "GET",
+      isLocal: /^(?:about|app|app-storage|.+-extension|file|res|widget):$/.test(Et.protocol),
+      global: !0,
+      processData: !0,
+      async: !0,
+      contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+      accepts: {
+        "*": $t,
+        text: "text/plain",
+        html: "text/html",
+        xml: "application/xml, text/xml",
+        json: "application/json, text/javascript"
+      },
+      contents: {
+        xml: /\bxml\b/,
+        html: /\bhtml/,
+        json: /\bjson\b/
+      },
+      responseFields: {
+        xml: "responseXML",
+        text: "responseText",
+        json: "responseJSON"
+      },
+      converters: {
+        "* text": String,
+        "text html": !0,
+        "text json": JSON.parse,
+        "text xml": k.parseXML
+      },
+      flatOptions: {
+        url: !0,
+        context: !0
+      }
+    },
+    ajaxSetup: function ajaxSetup(e, t) {
+      return t ? zt(zt(e, k.ajaxSettings), t) : zt(k.ajaxSettings, e);
+    },
+    ajaxPrefilter: Bt(It),
+    ajaxTransport: Bt(Wt),
+    ajax: function ajax(e, t) {
+      "object" == _typeof(e) && (t = e, e = void 0), t = t || {};
+      var c,
+          f,
+          p,
+          n,
+          d,
+          r,
+          h,
+          g,
+          i,
+          o,
+          v = k.ajaxSetup({}, t),
+          y = v.context || v,
+          m = v.context && (y.nodeType || y.jquery) ? k(y) : k.event,
+          x = k.Deferred(),
+          b = k.Callbacks("once memory"),
+          w = v.statusCode || {},
+          a = {},
+          s = {},
+          u = "canceled",
+          T = {
+        readyState: 0,
+        getResponseHeader: function getResponseHeader(e) {
+          var t;
+
+          if (h) {
+            if (!n) {
+              n = {};
+
+              while (t = Pt.exec(p)) {
+                n[t[1].toLowerCase() + " "] = (n[t[1].toLowerCase() + " "] || []).concat(t[2]);
+              }
+            }
+
+            t = n[e.toLowerCase() + " "];
+          }
+
+          return null == t ? null : t.join(", ");
+        },
+        getAllResponseHeaders: function getAllResponseHeaders() {
+          return h ? p : null;
+        },
+        setRequestHeader: function setRequestHeader(e, t) {
+          return null == h && (e = s[e.toLowerCase()] = s[e.toLowerCase()] || e, a[e] = t), this;
+        },
+        overrideMimeType: function overrideMimeType(e) {
+          return null == h && (v.mimeType = e), this;
+        },
+        statusCode: function statusCode(e) {
+          var t;
+          if (e) if (h) T.always(e[T.status]);else for (t in e) {
+            w[t] = [w[t], e[t]];
+          }
+          return this;
+        },
+        abort: function abort(e) {
+          var t = e || u;
+          return c && c.abort(t), l(0, t), this;
+        }
+      };
+
+      if (x.promise(T), v.url = ((e || v.url || Et.href) + "").replace(Mt, Et.protocol + "//"), v.type = t.method || t.type || v.method || v.type, v.dataTypes = (v.dataType || "*").toLowerCase().match(R) || [""], null == v.crossDomain) {
+        r = E.createElement("a");
+
+        try {
+          r.href = v.url, r.href = r.href, v.crossDomain = Ft.protocol + "//" + Ft.host != r.protocol + "//" + r.host;
+        } catch (e) {
+          v.crossDomain = !0;
+        }
+      }
+
+      if (v.data && v.processData && "string" != typeof v.data && (v.data = k.param(v.data, v.traditional)), _t(It, v, t, T), h) return T;
+
+      for (i in (g = k.event && v.global) && 0 == k.active++ && k.event.trigger("ajaxStart"), v.type = v.type.toUpperCase(), v.hasContent = !Rt.test(v.type), f = v.url.replace(Ht, ""), v.hasContent ? v.data && v.processData && 0 === (v.contentType || "").indexOf("application/x-www-form-urlencoded") && (v.data = v.data.replace(Lt, "+")) : (o = v.url.slice(f.length), v.data && (v.processData || "string" == typeof v.data) && (f += (St.test(f) ? "&" : "?") + v.data, delete v.data), !1 === v.cache && (f = f.replace(Ot, "$1"), o = (St.test(f) ? "&" : "?") + "_=" + kt++ + o), v.url = f + o), v.ifModified && (k.lastModified[f] && T.setRequestHeader("If-Modified-Since", k.lastModified[f]), k.etag[f] && T.setRequestHeader("If-None-Match", k.etag[f])), (v.data && v.hasContent && !1 !== v.contentType || t.contentType) && T.setRequestHeader("Content-Type", v.contentType), T.setRequestHeader("Accept", v.dataTypes[0] && v.accepts[v.dataTypes[0]] ? v.accepts[v.dataTypes[0]] + ("*" !== v.dataTypes[0] ? ", " + $t + "; q=0.01" : "") : v.accepts["*"]), v.headers) {
+        T.setRequestHeader(i, v.headers[i]);
+      }
+
+      if (v.beforeSend && (!1 === v.beforeSend.call(y, T, v) || h)) return T.abort();
+
+      if (u = "abort", b.add(v.complete), T.done(v.success), T.fail(v.error), c = _t(Wt, v, t, T)) {
+        if (T.readyState = 1, g && m.trigger("ajaxSend", [T, v]), h) return T;
+        v.async && 0 < v.timeout && (d = C.setTimeout(function () {
+          T.abort("timeout");
+        }, v.timeout));
+
+        try {
+          h = !1, c.send(a, l);
+        } catch (e) {
+          if (h) throw e;
+          l(-1, e);
+        }
+      } else l(-1, "No Transport");
+
+      function l(e, t, n, r) {
+        var i,
+            o,
+            a,
+            s,
+            u,
+            l = t;
+        h || (h = !0, d && C.clearTimeout(d), c = void 0, p = r || "", T.readyState = 0 < e ? 4 : 0, i = 200 <= e && e < 300 || 304 === e, n && (s = function (e, t, n) {
+          var r,
+              i,
+              o,
+              a,
+              s = e.contents,
+              u = e.dataTypes;
+
+          while ("*" === u[0]) {
+            u.shift(), void 0 === r && (r = e.mimeType || t.getResponseHeader("Content-Type"));
+          }
+
+          if (r) for (i in s) {
+            if (s[i] && s[i].test(r)) {
+              u.unshift(i);
+              break;
+            }
+          }
+          if (u[0] in n) o = u[0];else {
+            for (i in n) {
+              if (!u[0] || e.converters[i + " " + u[0]]) {
+                o = i;
+                break;
+              }
+
+              a || (a = i);
+            }
+
+            o = o || a;
+          }
+          if (o) return o !== u[0] && u.unshift(o), n[o];
+        }(v, T, n)), s = function (e, t, n, r) {
+          var i,
+              o,
+              a,
+              s,
+              u,
+              l = {},
+              c = e.dataTypes.slice();
+          if (c[1]) for (a in e.converters) {
+            l[a.toLowerCase()] = e.converters[a];
+          }
+          o = c.shift();
+
+          while (o) {
+            if (e.responseFields[o] && (n[e.responseFields[o]] = t), !u && r && e.dataFilter && (t = e.dataFilter(t, e.dataType)), u = o, o = c.shift()) if ("*" === o) o = u;else if ("*" !== u && u !== o) {
+              if (!(a = l[u + " " + o] || l["* " + o])) for (i in l) {
+                if ((s = i.split(" "))[1] === o && (a = l[u + " " + s[0]] || l["* " + s[0]])) {
+                  !0 === a ? a = l[i] : !0 !== l[i] && (o = s[0], c.unshift(s[1]));
+                  break;
+                }
+              }
+              if (!0 !== a) if (a && e["throws"]) t = a(t);else try {
+                t = a(t);
+              } catch (e) {
+                return {
+                  state: "parsererror",
+                  error: a ? e : "No conversion from " + u + " to " + o
+                };
+              }
+            }
+          }
+
+          return {
+            state: "success",
+            data: t
+          };
+        }(v, s, T, i), i ? (v.ifModified && ((u = T.getResponseHeader("Last-Modified")) && (k.lastModified[f] = u), (u = T.getResponseHeader("etag")) && (k.etag[f] = u)), 204 === e || "HEAD" === v.type ? l = "nocontent" : 304 === e ? l = "notmodified" : (l = s.state, o = s.data, i = !(a = s.error))) : (a = l, !e && l || (l = "error", e < 0 && (e = 0))), T.status = e, T.statusText = (t || l) + "", i ? x.resolveWith(y, [o, l, T]) : x.rejectWith(y, [T, l, a]), T.statusCode(w), w = void 0, g && m.trigger(i ? "ajaxSuccess" : "ajaxError", [T, v, i ? o : a]), b.fireWith(y, [T, l]), g && (m.trigger("ajaxComplete", [T, v]), --k.active || k.event.trigger("ajaxStop")));
+      }
+
+      return T;
+    },
+    getJSON: function getJSON(e, t, n) {
+      return k.get(e, t, n, "json");
+    },
+    getScript: function getScript(e, t) {
+      return k.get(e, void 0, t, "script");
+    }
+  }), k.each(["get", "post"], function (e, i) {
+    k[i] = function (e, t, n, r) {
+      return m(t) && (r = r || n, n = t, t = void 0), k.ajax(k.extend({
+        url: e,
+        type: i,
+        dataType: r,
+        data: t,
+        success: n
+      }, k.isPlainObject(e) && e));
+    };
+  }), k._evalUrl = function (e, t) {
+    return k.ajax({
+      url: e,
+      type: "GET",
+      dataType: "script",
+      cache: !0,
+      async: !1,
+      global: !1,
+      converters: {
+        "text script": function textScript() {}
+      },
+      dataFilter: function dataFilter(e) {
+        k.globalEval(e, t);
+      }
+    });
+  }, k.fn.extend({
+    wrapAll: function wrapAll(e) {
+      var t;
+      return this[0] && (m(e) && (e = e.call(this[0])), t = k(e, this[0].ownerDocument).eq(0).clone(!0), this[0].parentNode && t.insertBefore(this[0]), t.map(function () {
+        var e = this;
+
+        while (e.firstElementChild) {
+          e = e.firstElementChild;
+        }
+
+        return e;
+      }).append(this)), this;
+    },
+    wrapInner: function wrapInner(n) {
+      return m(n) ? this.each(function (e) {
+        k(this).wrapInner(n.call(this, e));
+      }) : this.each(function () {
+        var e = k(this),
+            t = e.contents();
+        t.length ? t.wrapAll(n) : e.append(n);
+      });
+    },
+    wrap: function wrap(t) {
+      var n = m(t);
+      return this.each(function (e) {
+        k(this).wrapAll(n ? t.call(this, e) : t);
+      });
+    },
+    unwrap: function unwrap(e) {
+      return this.parent(e).not("body").each(function () {
+        k(this).replaceWith(this.childNodes);
+      }), this;
+    }
+  }), k.expr.pseudos.hidden = function (e) {
+    return !k.expr.pseudos.visible(e);
+  }, k.expr.pseudos.visible = function (e) {
+    return !!(e.offsetWidth || e.offsetHeight || e.getClientRects().length);
+  }, k.ajaxSettings.xhr = function () {
+    try {
+      return new C.XMLHttpRequest();
+    } catch (e) {}
+  };
+  var Ut = {
+    0: 200,
+    1223: 204
+  },
+      Xt = k.ajaxSettings.xhr();
+  y.cors = !!Xt && "withCredentials" in Xt, y.ajax = Xt = !!Xt, k.ajaxTransport(function (i) {
+    var _o, a;
+
+    if (y.cors || Xt && !i.crossDomain) return {
+      send: function send(e, t) {
+        var n,
+            r = i.xhr();
+        if (r.open(i.type, i.url, i.async, i.username, i.password), i.xhrFields) for (n in i.xhrFields) {
+          r[n] = i.xhrFields[n];
+        }
+
+        for (n in i.mimeType && r.overrideMimeType && r.overrideMimeType(i.mimeType), i.crossDomain || e["X-Requested-With"] || (e["X-Requested-With"] = "XMLHttpRequest"), e) {
+          r.setRequestHeader(n, e[n]);
+        }
+
+        _o = function o(e) {
+          return function () {
+            _o && (_o = a = r.onload = r.onerror = r.onabort = r.ontimeout = r.onreadystatechange = null, "abort" === e ? r.abort() : "error" === e ? "number" != typeof r.status ? t(0, "error") : t(r.status, r.statusText) : t(Ut[r.status] || r.status, r.statusText, "text" !== (r.responseType || "text") || "string" != typeof r.responseText ? {
+              binary: r.response
+            } : {
+              text: r.responseText
+            }, r.getAllResponseHeaders()));
+          };
+        }, r.onload = _o(), a = r.onerror = r.ontimeout = _o("error"), void 0 !== r.onabort ? r.onabort = a : r.onreadystatechange = function () {
+          4 === r.readyState && C.setTimeout(function () {
+            _o && a();
+          });
+        }, _o = _o("abort");
+
+        try {
+          r.send(i.hasContent && i.data || null);
+        } catch (e) {
+          if (_o) throw e;
+        }
+      },
+      abort: function abort() {
+        _o && _o();
+      }
+    };
+  }), k.ajaxPrefilter(function (e) {
+    e.crossDomain && (e.contents.script = !1);
+  }), k.ajaxSetup({
+    accepts: {
+      script: "text/javascript, application/javascript, application/ecmascript, application/x-ecmascript"
+    },
+    contents: {
+      script: /\b(?:java|ecma)script\b/
+    },
+    converters: {
+      "text script": function textScript(e) {
+        return k.globalEval(e), e;
+      }
+    }
+  }), k.ajaxPrefilter("script", function (e) {
+    void 0 === e.cache && (e.cache = !1), e.crossDomain && (e.type = "GET");
+  }), k.ajaxTransport("script", function (n) {
+    var r, _i;
+
+    if (n.crossDomain || n.scriptAttrs) return {
+      send: function send(e, t) {
+        r = k("<script>").attr(n.scriptAttrs || {}).prop({
+          charset: n.scriptCharset,
+          src: n.url
+        }).on("load error", _i = function i(e) {
+          r.remove(), _i = null, e && t("error" === e.type ? 404 : 200, e.type);
+        }), E.head.appendChild(r[0]);
+      },
+      abort: function abort() {
+        _i && _i();
+      }
+    };
+  });
+  var Vt,
+      Gt = [],
+      Yt = /(=)\?(?=&|$)|\?\?/;
+  k.ajaxSetup({
+    jsonp: "callback",
+    jsonpCallback: function jsonpCallback() {
+      var e = Gt.pop() || k.expando + "_" + kt++;
+      return this[e] = !0, e;
+    }
+  }), k.ajaxPrefilter("json jsonp", function (e, t, n) {
+    var r,
+        i,
+        o,
+        a = !1 !== e.jsonp && (Yt.test(e.url) ? "url" : "string" == typeof e.data && 0 === (e.contentType || "").indexOf("application/x-www-form-urlencoded") && Yt.test(e.data) && "data");
+    if (a || "jsonp" === e.dataTypes[0]) return r = e.jsonpCallback = m(e.jsonpCallback) ? e.jsonpCallback() : e.jsonpCallback, a ? e[a] = e[a].replace(Yt, "$1" + r) : !1 !== e.jsonp && (e.url += (St.test(e.url) ? "&" : "?") + e.jsonp + "=" + r), e.converters["script json"] = function () {
+      return o || k.error(r + " was not called"), o[0];
+    }, e.dataTypes[0] = "json", i = C[r], C[r] = function () {
+      o = arguments;
+    }, n.always(function () {
+      void 0 === i ? k(C).removeProp(r) : C[r] = i, e[r] && (e.jsonpCallback = t.jsonpCallback, Gt.push(r)), o && m(i) && i(o[0]), o = i = void 0;
+    }), "script";
+  }), y.createHTMLDocument = ((Vt = E.implementation.createHTMLDocument("").body).innerHTML = "<form></form><form></form>", 2 === Vt.childNodes.length), k.parseHTML = function (e, t, n) {
+    return "string" != typeof e ? [] : ("boolean" == typeof t && (n = t, t = !1), t || (y.createHTMLDocument ? ((r = (t = E.implementation.createHTMLDocument("")).createElement("base")).href = E.location.href, t.head.appendChild(r)) : t = E), o = !n && [], (i = D.exec(e)) ? [t.createElement(i[1])] : (i = we([e], t, o), o && o.length && k(o).remove(), k.merge([], i.childNodes)));
+    var r, i, o;
+  }, k.fn.load = function (e, t, n) {
+    var r,
+        i,
+        o,
+        a = this,
+        s = e.indexOf(" ");
+    return -1 < s && (r = mt(e.slice(s)), e = e.slice(0, s)), m(t) ? (n = t, t = void 0) : t && "object" == _typeof(t) && (i = "POST"), 0 < a.length && k.ajax({
+      url: e,
+      type: i || "GET",
+      dataType: "html",
+      data: t
+    }).done(function (e) {
+      o = arguments, a.html(r ? k("<div>").append(k.parseHTML(e)).find(r) : e);
+    }).always(n && function (e, t) {
+      a.each(function () {
+        n.apply(this, o || [e.responseText, t, e]);
+      });
+    }), this;
+  }, k.each(["ajaxStart", "ajaxStop", "ajaxComplete", "ajaxError", "ajaxSuccess", "ajaxSend"], function (e, t) {
+    k.fn[t] = function (e) {
+      return this.on(t, e);
+    };
+  }), k.expr.pseudos.animated = function (t) {
+    return k.grep(k.timers, function (e) {
+      return t === e.elem;
+    }).length;
+  }, k.offset = {
+    setOffset: function setOffset(e, t, n) {
+      var r,
+          i,
+          o,
+          a,
+          s,
+          u,
+          l = k.css(e, "position"),
+          c = k(e),
+          f = {};
+      "static" === l && (e.style.position = "relative"), s = c.offset(), o = k.css(e, "top"), u = k.css(e, "left"), ("absolute" === l || "fixed" === l) && -1 < (o + u).indexOf("auto") ? (a = (r = c.position()).top, i = r.left) : (a = parseFloat(o) || 0, i = parseFloat(u) || 0), m(t) && (t = t.call(e, n, k.extend({}, s))), null != t.top && (f.top = t.top - s.top + a), null != t.left && (f.left = t.left - s.left + i), "using" in t ? t.using.call(e, f) : c.css(f);
+    }
+  }, k.fn.extend({
+    offset: function offset(t) {
+      if (arguments.length) return void 0 === t ? this : this.each(function (e) {
+        k.offset.setOffset(this, t, e);
+      });
+      var e,
+          n,
+          r = this[0];
+      return r ? r.getClientRects().length ? (e = r.getBoundingClientRect(), n = r.ownerDocument.defaultView, {
+        top: e.top + n.pageYOffset,
+        left: e.left + n.pageXOffset
+      }) : {
+        top: 0,
+        left: 0
+      } : void 0;
+    },
+    position: function position() {
+      if (this[0]) {
+        var e,
+            t,
+            n,
+            r = this[0],
+            i = {
+          top: 0,
+          left: 0
+        };
+        if ("fixed" === k.css(r, "position")) t = r.getBoundingClientRect();else {
+          t = this.offset(), n = r.ownerDocument, e = r.offsetParent || n.documentElement;
+
+          while (e && (e === n.body || e === n.documentElement) && "static" === k.css(e, "position")) {
+            e = e.parentNode;
+          }
+
+          e && e !== r && 1 === e.nodeType && ((i = k(e).offset()).top += k.css(e, "borderTopWidth", !0), i.left += k.css(e, "borderLeftWidth", !0));
+        }
+        return {
+          top: t.top - i.top - k.css(r, "marginTop", !0),
+          left: t.left - i.left - k.css(r, "marginLeft", !0)
+        };
+      }
+    },
+    offsetParent: function offsetParent() {
+      return this.map(function () {
+        var e = this.offsetParent;
+
+        while (e && "static" === k.css(e, "position")) {
+          e = e.offsetParent;
+        }
+
+        return e || ie;
+      });
+    }
+  }), k.each({
+    scrollLeft: "pageXOffset",
+    scrollTop: "pageYOffset"
+  }, function (t, i) {
+    var o = "pageYOffset" === i;
+
+    k.fn[t] = function (e) {
+      return _(this, function (e, t, n) {
+        var r;
+        if (x(e) ? r = e : 9 === e.nodeType && (r = e.defaultView), void 0 === n) return r ? r[i] : e[t];
+        r ? r.scrollTo(o ? r.pageXOffset : n, o ? n : r.pageYOffset) : e[t] = n;
+      }, t, e, arguments.length);
+    };
+  }), k.each(["top", "left"], function (e, n) {
+    k.cssHooks[n] = ze(y.pixelPosition, function (e, t) {
+      if (t) return t = _e(e, n), $e.test(t) ? k(e).position()[n] + "px" : t;
+    });
+  }), k.each({
+    Height: "height",
+    Width: "width"
+  }, function (a, s) {
+    k.each({
+      padding: "inner" + a,
+      content: s,
+      "": "outer" + a
+    }, function (r, o) {
+      k.fn[o] = function (e, t) {
+        var n = arguments.length && (r || "boolean" != typeof e),
+            i = r || (!0 === e || !0 === t ? "margin" : "border");
+        return _(this, function (e, t, n) {
+          var r;
+          return x(e) ? 0 === o.indexOf("outer") ? e["inner" + a] : e.document.documentElement["client" + a] : 9 === e.nodeType ? (r = e.documentElement, Math.max(e.body["scroll" + a], r["scroll" + a], e.body["offset" + a], r["offset" + a], r["client" + a])) : void 0 === n ? k.css(e, t, i) : k.style(e, t, n, i);
+        }, s, n ? e : void 0, n);
+      };
+    });
+  }), k.each("blur focus focusin focusout resize scroll click dblclick mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave change select submit keydown keypress keyup contextmenu".split(" "), function (e, n) {
+    k.fn[n] = function (e, t) {
+      return 0 < arguments.length ? this.on(n, null, e, t) : this.trigger(n);
+    };
+  }), k.fn.extend({
+    hover: function hover(e, t) {
+      return this.mouseenter(e).mouseleave(t || e);
+    }
+  }), k.fn.extend({
+    bind: function bind(e, t, n) {
+      return this.on(e, null, t, n);
+    },
+    unbind: function unbind(e, t) {
+      return this.off(e, null, t);
+    },
+    delegate: function delegate(e, t, n, r) {
+      return this.on(t, e, n, r);
+    },
+    undelegate: function undelegate(e, t, n) {
+      return 1 === arguments.length ? this.off(e, "**") : this.off(t, e || "**", n);
+    }
+  }), k.proxy = function (e, t) {
+    var n, r, i;
+    if ("string" == typeof t && (n = e[t], t = e, e = n), m(e)) return r = s.call(arguments, 2), (i = function i() {
+      return e.apply(t || this, r.concat(s.call(arguments)));
+    }).guid = e.guid = e.guid || k.guid++, i;
+  }, k.holdReady = function (e) {
+    e ? k.readyWait++ : k.ready(!0);
+  }, k.isArray = Array.isArray, k.parseJSON = JSON.parse, k.nodeName = A, k.isFunction = m, k.isWindow = x, k.camelCase = V, k.type = w, k.now = Date.now, k.isNumeric = function (e) {
+    var t = k.type(e);
+    return ("number" === t || "string" === t) && !isNaN(e - parseFloat(e));
+  },  true && !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_LOCAL_MODULE_0__ = ((function () {
+    return k;
+  }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)));
+  var Qt = C.jQuery,
+      Jt = C.$;
+  return k.noConflict = function (e) {
+    return C.$ === k && (C.$ = Jt), e && C.jQuery === k && (C.jQuery = Qt), k;
+  }, e || (C.jQuery = C.$ = k), k;
+});
+/*
+ Copyright (C) Federico Zivolo 2020
+ Distributed under the MIT License (license terms are at http://opensource.org/licenses/MIT).
+ */
+
+(function (e, t) {
+  'object' == ( false ? undefined : _typeof(exports)) && 'undefined' != typeof module ? module.exports = t() :  true ? !(__WEBPACK_AMD_DEFINE_FACTORY__ = (t),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) :
+				__WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)) : undefined;
+})(this, function () {
+  'use strict';
+
+  function e(e) {
+    return e && '[object Function]' === {}.toString.call(e);
+  }
+
+  function t(e, t) {
+    if (1 !== e.nodeType) return [];
+    var o = e.ownerDocument.defaultView,
+        n = o.getComputedStyle(e, null);
+    return t ? n[t] : n;
+  }
+
+  function o(e) {
+    return 'HTML' === e.nodeName ? e : e.parentNode || e.host;
+  }
+
+  function n(e) {
+    if (!e) return document.body;
+
+    switch (e.nodeName) {
+      case 'HTML':
+      case 'BODY':
+        return e.ownerDocument.body;
+
+      case '#document':
+        return e.body;
+    }
+
+    var i = t(e),
+        r = i.overflow,
+        p = i.overflowX,
+        s = i.overflowY;
+    return /(auto|scroll|overlay)/.test(r + s + p) ? e : n(o(e));
+  }
+
+  function i(e) {
+    return e && e.referenceNode ? e.referenceNode : e;
+  }
+
+  function r(e) {
+    return 11 === e ? re : 10 === e ? pe : re || pe;
+  }
+
+  function p(e) {
+    if (!e) return document.documentElement;
+
+    for (var o = r(10) ? document.body : null, n = e.offsetParent || null; n === o && e.nextElementSibling;) {
+      n = (e = e.nextElementSibling).offsetParent;
+    }
+
+    var i = n && n.nodeName;
+    return i && 'BODY' !== i && 'HTML' !== i ? -1 !== ['TH', 'TD', 'TABLE'].indexOf(n.nodeName) && 'static' === t(n, 'position') ? p(n) : n : e ? e.ownerDocument.documentElement : document.documentElement;
+  }
+
+  function s(e) {
+    var t = e.nodeName;
+    return 'BODY' !== t && ('HTML' === t || p(e.firstElementChild) === e);
+  }
+
+  function d(e) {
+    return null === e.parentNode ? e : d(e.parentNode);
+  }
+
+  function a(e, t) {
+    if (!e || !e.nodeType || !t || !t.nodeType) return document.documentElement;
+    var o = e.compareDocumentPosition(t) & Node.DOCUMENT_POSITION_FOLLOWING,
+        n = o ? e : t,
+        i = o ? t : e,
+        r = document.createRange();
+    r.setStart(n, 0), r.setEnd(i, 0);
+    var l = r.commonAncestorContainer;
+    if (e !== l && t !== l || n.contains(i)) return s(l) ? l : p(l);
+    var f = d(e);
+    return f.host ? a(f.host, t) : a(e, d(t).host);
+  }
+
+  function l(e) {
+    var t = 1 < arguments.length && void 0 !== arguments[1] ? arguments[1] : 'top',
+        o = 'top' === t ? 'scrollTop' : 'scrollLeft',
+        n = e.nodeName;
+
+    if ('BODY' === n || 'HTML' === n) {
+      var i = e.ownerDocument.documentElement,
+          r = e.ownerDocument.scrollingElement || i;
+      return r[o];
+    }
+
+    return e[o];
+  }
+
+  function f(e, t) {
+    var o = 2 < arguments.length && void 0 !== arguments[2] && arguments[2],
+        n = l(t, 'top'),
+        i = l(t, 'left'),
+        r = o ? -1 : 1;
+    return e.top += n * r, e.bottom += n * r, e.left += i * r, e.right += i * r, e;
+  }
+
+  function m(e, t) {
+    var o = 'x' === t ? 'Left' : 'Top',
+        n = 'Left' == o ? 'Right' : 'Bottom';
+    return parseFloat(e['border' + o + 'Width']) + parseFloat(e['border' + n + 'Width']);
+  }
+
+  function h(e, t, o, n) {
+    return ee(t['offset' + e], t['scroll' + e], o['client' + e], o['offset' + e], o['scroll' + e], r(10) ? parseInt(o['offset' + e]) + parseInt(n['margin' + ('Height' === e ? 'Top' : 'Left')]) + parseInt(n['margin' + ('Height' === e ? 'Bottom' : 'Right')]) : 0);
+  }
+
+  function c(e) {
+    var t = e.body,
+        o = e.documentElement,
+        n = r(10) && getComputedStyle(o);
+    return {
+      height: h('Height', t, o, n),
+      width: h('Width', t, o, n)
+    };
+  }
+
+  function g(e) {
+    return le({}, e, {
+      right: e.left + e.width,
+      bottom: e.top + e.height
+    });
+  }
+
+  function u(e) {
+    var o = {};
+
+    try {
+      if (r(10)) {
+        o = e.getBoundingClientRect();
+        var n = l(e, 'top'),
+            i = l(e, 'left');
+        o.top += n, o.left += i, o.bottom += n, o.right += i;
+      } else o = e.getBoundingClientRect();
+    } catch (t) {}
+
+    var p = {
+      left: o.left,
+      top: o.top,
+      width: o.right - o.left,
+      height: o.bottom - o.top
+    },
+        s = 'HTML' === e.nodeName ? c(e.ownerDocument) : {},
+        d = s.width || e.clientWidth || p.width,
+        a = s.height || e.clientHeight || p.height,
+        f = e.offsetWidth - d,
+        h = e.offsetHeight - a;
+
+    if (f || h) {
+      var u = t(e);
+      f -= m(u, 'x'), h -= m(u, 'y'), p.width -= f, p.height -= h;
+    }
+
+    return g(p);
+  }
+
+  function b(e, o) {
+    var i = 2 < arguments.length && void 0 !== arguments[2] && arguments[2],
+        p = r(10),
+        s = 'HTML' === o.nodeName,
+        d = u(e),
+        a = u(o),
+        l = n(e),
+        m = t(o),
+        h = parseFloat(m.borderTopWidth),
+        c = parseFloat(m.borderLeftWidth);
+    i && s && (a.top = ee(a.top, 0), a.left = ee(a.left, 0));
+    var b = g({
+      top: d.top - a.top - h,
+      left: d.left - a.left - c,
+      width: d.width,
+      height: d.height
+    });
+
+    if (b.marginTop = 0, b.marginLeft = 0, !p && s) {
+      var w = parseFloat(m.marginTop),
+          y = parseFloat(m.marginLeft);
+      b.top -= h - w, b.bottom -= h - w, b.left -= c - y, b.right -= c - y, b.marginTop = w, b.marginLeft = y;
+    }
+
+    return (p && !i ? o.contains(l) : o === l && 'BODY' !== l.nodeName) && (b = f(b, o)), b;
+  }
+
+  function w(e) {
+    var t = 1 < arguments.length && void 0 !== arguments[1] && arguments[1],
+        o = e.ownerDocument.documentElement,
+        n = b(e, o),
+        i = ee(o.clientWidth, window.innerWidth || 0),
+        r = ee(o.clientHeight, window.innerHeight || 0),
+        p = t ? 0 : l(o),
+        s = t ? 0 : l(o, 'left'),
+        d = {
+      top: p - n.top + n.marginTop,
+      left: s - n.left + n.marginLeft,
+      width: i,
+      height: r
+    };
+    return g(d);
+  }
+
+  function y(e) {
+    var n = e.nodeName;
+    if ('BODY' === n || 'HTML' === n) return !1;
+    if ('fixed' === t(e, 'position')) return !0;
+    var i = o(e);
+    return !!i && y(i);
+  }
+
+  function E(e) {
+    if (!e || !e.parentElement || r()) return document.documentElement;
+
+    for (var o = e.parentElement; o && 'none' === t(o, 'transform');) {
+      o = o.parentElement;
+    }
+
+    return o || document.documentElement;
+  }
+
+  function v(e, t, r, p) {
+    var s = 4 < arguments.length && void 0 !== arguments[4] && arguments[4],
+        d = {
+      top: 0,
+      left: 0
+    },
+        l = s ? E(e) : a(e, i(t));
+    if ('viewport' === p) d = w(l, s);else {
+      var f;
+      'scrollParent' === p ? (f = n(o(t)), 'BODY' === f.nodeName && (f = e.ownerDocument.documentElement)) : 'window' === p ? f = e.ownerDocument.documentElement : f = p;
+      var m = b(f, l, s);
+
+      if ('HTML' === f.nodeName && !y(l)) {
+        var h = c(e.ownerDocument),
+            g = h.height,
+            u = h.width;
+        d.top += m.top - m.marginTop, d.bottom = g + m.top, d.left += m.left - m.marginLeft, d.right = u + m.left;
+      } else d = m;
+    }
+    r = r || 0;
+    var v = 'number' == typeof r;
+    return d.left += v ? r : r.left || 0, d.top += v ? r : r.top || 0, d.right -= v ? r : r.right || 0, d.bottom -= v ? r : r.bottom || 0, d;
+  }
+
+  function x(e) {
+    var t = e.width,
+        o = e.height;
+    return t * o;
+  }
+
+  function O(e, t, o, n, i) {
+    var r = 5 < arguments.length && void 0 !== arguments[5] ? arguments[5] : 0;
+    if (-1 === e.indexOf('auto')) return e;
+    var p = v(o, n, r, i),
+        s = {
+      top: {
+        width: p.width,
+        height: t.top - p.top
+      },
+      right: {
+        width: p.right - t.right,
+        height: p.height
+      },
+      bottom: {
+        width: p.width,
+        height: p.bottom - t.bottom
+      },
+      left: {
+        width: t.left - p.left,
+        height: p.height
+      }
+    },
+        d = Object.keys(s).map(function (e) {
+      return le({
+        key: e
+      }, s[e], {
+        area: x(s[e])
+      });
+    }).sort(function (e, t) {
+      return t.area - e.area;
+    }),
+        a = d.filter(function (e) {
+      var t = e.width,
+          n = e.height;
+      return t >= o.clientWidth && n >= o.clientHeight;
+    }),
+        l = 0 < a.length ? a[0].key : d[0].key,
+        f = e.split('-')[1];
+    return l + (f ? '-' + f : '');
+  }
+
+  function L(e, t, o) {
+    var n = 3 < arguments.length && void 0 !== arguments[3] ? arguments[3] : null,
+        r = n ? E(t) : a(t, i(o));
+    return b(o, r, n);
+  }
+
+  function S(e) {
+    var t = e.ownerDocument.defaultView,
+        o = t.getComputedStyle(e),
+        n = parseFloat(o.marginTop || 0) + parseFloat(o.marginBottom || 0),
+        i = parseFloat(o.marginLeft || 0) + parseFloat(o.marginRight || 0),
+        r = {
+      width: e.offsetWidth + i,
+      height: e.offsetHeight + n
+    };
+    return r;
+  }
+
+  function T(e) {
+    var t = {
+      left: 'right',
+      right: 'left',
+      bottom: 'top',
+      top: 'bottom'
+    };
+    return e.replace(/left|right|bottom|top/g, function (e) {
+      return t[e];
+    });
+  }
+
+  function C(e, t, o) {
+    o = o.split('-')[0];
+    var n = S(e),
+        i = {
+      width: n.width,
+      height: n.height
+    },
+        r = -1 !== ['right', 'left'].indexOf(o),
+        p = r ? 'top' : 'left',
+        s = r ? 'left' : 'top',
+        d = r ? 'height' : 'width',
+        a = r ? 'width' : 'height';
+    return i[p] = t[p] + t[d] / 2 - n[d] / 2, i[s] = o === s ? t[s] - n[a] : t[T(s)], i;
+  }
+
+  function D(e, t) {
+    return Array.prototype.find ? e.find(t) : e.filter(t)[0];
+  }
+
+  function N(e, t, o) {
+    if (Array.prototype.findIndex) return e.findIndex(function (e) {
+      return e[t] === o;
+    });
+    var n = D(e, function (e) {
+      return e[t] === o;
+    });
+    return e.indexOf(n);
+  }
+
+  function P(t, o, n) {
+    var i = void 0 === n ? t : t.slice(0, N(t, 'name', n));
+    return i.forEach(function (t) {
+      t['function'] && console.warn('`modifier.function` is deprecated, use `modifier.fn`!');
+      var n = t['function'] || t.fn;
+      t.enabled && e(n) && (o.offsets.popper = g(o.offsets.popper), o.offsets.reference = g(o.offsets.reference), o = n(o, t));
+    }), o;
+  }
+
+  function k() {
+    if (!this.state.isDestroyed) {
+      var e = {
+        instance: this,
+        styles: {},
+        arrowStyles: {},
+        attributes: {},
+        flipped: !1,
+        offsets: {}
+      };
+      e.offsets.reference = L(this.state, this.popper, this.reference, this.options.positionFixed), e.placement = O(this.options.placement, e.offsets.reference, this.popper, this.reference, this.options.modifiers.flip.boundariesElement, this.options.modifiers.flip.padding), e.originalPlacement = e.placement, e.positionFixed = this.options.positionFixed, e.offsets.popper = C(this.popper, e.offsets.reference, e.placement), e.offsets.popper.position = this.options.positionFixed ? 'fixed' : 'absolute', e = P(this.modifiers, e), this.state.isCreated ? this.options.onUpdate(e) : (this.state.isCreated = !0, this.options.onCreate(e));
+    }
+  }
+
+  function W(e, t) {
+    return e.some(function (e) {
+      var o = e.name,
+          n = e.enabled;
+      return n && o === t;
+    });
+  }
+
+  function B(e) {
+    for (var t = [!1, 'ms', 'Webkit', 'Moz', 'O'], o = e.charAt(0).toUpperCase() + e.slice(1), n = 0; n < t.length; n++) {
+      var i = t[n],
+          r = i ? '' + i + o : e;
+      if ('undefined' != typeof document.body.style[r]) return r;
+    }
+
+    return null;
+  }
+
+  function H() {
+    return this.state.isDestroyed = !0, W(this.modifiers, 'applyStyle') && (this.popper.removeAttribute('x-placement'), this.popper.style.position = '', this.popper.style.top = '', this.popper.style.left = '', this.popper.style.right = '', this.popper.style.bottom = '', this.popper.style.willChange = '', this.popper.style[B('transform')] = ''), this.disableEventListeners(), this.options.removeOnDestroy && this.popper.parentNode.removeChild(this.popper), this;
+  }
+
+  function A(e) {
+    var t = e.ownerDocument;
+    return t ? t.defaultView : window;
+  }
+
+  function M(e, t, o, i) {
+    var r = 'BODY' === e.nodeName,
+        p = r ? e.ownerDocument.defaultView : e;
+    p.addEventListener(t, o, {
+      passive: !0
+    }), r || M(n(p.parentNode), t, o, i), i.push(p);
+  }
+
+  function F(e, t, o, i) {
+    o.updateBound = i, A(e).addEventListener('resize', o.updateBound, {
+      passive: !0
+    });
+    var r = n(e);
+    return M(r, 'scroll', o.updateBound, o.scrollParents), o.scrollElement = r, o.eventsEnabled = !0, o;
+  }
+
+  function I() {
+    this.state.eventsEnabled || (this.state = F(this.reference, this.options, this.state, this.scheduleUpdate));
+  }
+
+  function R(e, t) {
+    return A(e).removeEventListener('resize', t.updateBound), t.scrollParents.forEach(function (e) {
+      e.removeEventListener('scroll', t.updateBound);
+    }), t.updateBound = null, t.scrollParents = [], t.scrollElement = null, t.eventsEnabled = !1, t;
+  }
+
+  function U() {
+    this.state.eventsEnabled && (cancelAnimationFrame(this.scheduleUpdate), this.state = R(this.reference, this.state));
+  }
+
+  function Y(e) {
+    return '' !== e && !isNaN(parseFloat(e)) && isFinite(e);
+  }
+
+  function V(e, t) {
+    Object.keys(t).forEach(function (o) {
+      var n = '';
+      -1 !== ['width', 'height', 'top', 'right', 'bottom', 'left'].indexOf(o) && Y(t[o]) && (n = 'px'), e.style[o] = t[o] + n;
+    });
+  }
+
+  function j(e, t) {
+    Object.keys(t).forEach(function (o) {
+      var n = t[o];
+      !1 === n ? e.removeAttribute(o) : e.setAttribute(o, t[o]);
+    });
+  }
+
+  function q(e, t) {
+    var o = e.offsets,
+        n = o.popper,
+        i = o.reference,
+        r = $,
+        p = function p(e) {
+      return e;
+    },
+        s = r(i.width),
+        d = r(n.width),
+        a = -1 !== ['left', 'right'].indexOf(e.placement),
+        l = -1 !== e.placement.indexOf('-'),
+        f = t ? a || l || s % 2 == d % 2 ? r : Z : p,
+        m = t ? r : p;
+
+    return {
+      left: f(1 == s % 2 && 1 == d % 2 && !l && t ? n.left - 1 : n.left),
+      top: m(n.top),
+      bottom: m(n.bottom),
+      right: f(n.right)
+    };
+  }
+
+  function K(e, t, o) {
+    var n = D(e, function (e) {
+      var o = e.name;
+      return o === t;
+    }),
+        i = !!n && e.some(function (e) {
+      return e.name === o && e.enabled && e.order < n.order;
+    });
+
+    if (!i) {
+      var r = '`' + t + '`';
+      console.warn('`' + o + '`' + ' modifier is required by ' + r + ' modifier in order to work, be sure to include it before ' + r + '!');
+    }
+
+    return i;
+  }
+
+  function z(e) {
+    return 'end' === e ? 'start' : 'start' === e ? 'end' : e;
+  }
+
+  function G(e) {
+    var t = 1 < arguments.length && void 0 !== arguments[1] && arguments[1],
+        o = he.indexOf(e),
+        n = he.slice(o + 1).concat(he.slice(0, o));
+    return t ? n.reverse() : n;
+  }
+
+  function _(e, t, o, n) {
+    var i = e.match(/((?:\-|\+)?\d*\.?\d*)(.*)/),
+        r = +i[1],
+        p = i[2];
+    if (!r) return e;
+
+    if (0 === p.indexOf('%')) {
+      var s;
+
+      switch (p) {
+        case '%p':
+          s = o;
+          break;
+
+        case '%':
+        case '%r':
+        default:
+          s = n;
+      }
+
+      var d = g(s);
+      return d[t] / 100 * r;
+    }
+
+    if ('vh' === p || 'vw' === p) {
+      var a;
+      return a = 'vh' === p ? ee(document.documentElement.clientHeight, window.innerHeight || 0) : ee(document.documentElement.clientWidth, window.innerWidth || 0), a / 100 * r;
+    }
+
+    return r;
+  }
+
+  function X(e, t, o, n) {
+    var i = [0, 0],
+        r = -1 !== ['right', 'left'].indexOf(n),
+        p = e.split(/(\+|\-)/).map(function (e) {
+      return e.trim();
+    }),
+        s = p.indexOf(D(p, function (e) {
+      return -1 !== e.search(/,|\s/);
+    }));
+    p[s] && -1 === p[s].indexOf(',') && console.warn('Offsets separated by white space(s) are deprecated, use a comma (,) instead.');
+    var d = /\s*,\s*|\s+/,
+        a = -1 === s ? [p] : [p.slice(0, s).concat([p[s].split(d)[0]]), [p[s].split(d)[1]].concat(p.slice(s + 1))];
+    return a = a.map(function (e, n) {
+      var i = (1 === n ? !r : r) ? 'height' : 'width',
+          p = !1;
+      return e.reduce(function (e, t) {
+        return '' === e[e.length - 1] && -1 !== ['+', '-'].indexOf(t) ? (e[e.length - 1] = t, p = !0, e) : p ? (e[e.length - 1] += t, p = !1, e) : e.concat(t);
+      }, []).map(function (e) {
+        return _(e, i, t, o);
+      });
+    }), a.forEach(function (e, t) {
+      e.forEach(function (o, n) {
+        Y(o) && (i[t] += o * ('-' === e[n - 1] ? -1 : 1));
+      });
+    }), i;
+  }
+
+  function J(e, t) {
+    var o,
+        n = t.offset,
+        i = e.placement,
+        r = e.offsets,
+        p = r.popper,
+        s = r.reference,
+        d = i.split('-')[0];
+    return o = Y(+n) ? [+n, 0] : X(n, p, s, d), 'left' === d ? (p.top += o[0], p.left -= o[1]) : 'right' === d ? (p.top += o[0], p.left += o[1]) : 'top' === d ? (p.left += o[0], p.top -= o[1]) : 'bottom' === d && (p.left += o[0], p.top += o[1]), e.popper = p, e;
+  }
+
+  var Q = Math.min,
+      Z = Math.floor,
+      $ = Math.round,
+      ee = Math.max,
+      te = 'undefined' != typeof window && 'undefined' != typeof document && 'undefined' != typeof navigator,
+      oe = function () {
+    for (var e = ['Edge', 'Trident', 'Firefox'], t = 0; t < e.length; t += 1) {
+      if (te && 0 <= navigator.userAgent.indexOf(e[t])) return 1;
+    }
+
+    return 0;
+  }(),
+      ne = te && window.Promise,
+      ie = ne ? function (e) {
+    var t = !1;
+    return function () {
+      t || (t = !0, window.Promise.resolve().then(function () {
+        t = !1, e();
+      }));
+    };
+  } : function (e) {
+    var t = !1;
+    return function () {
+      t || (t = !0, setTimeout(function () {
+        t = !1, e();
+      }, oe));
+    };
+  },
+      re = te && !!(window.MSInputMethodContext && document.documentMode),
+      pe = te && /MSIE 10/.test(navigator.userAgent),
+      se = function se(e, t) {
+    if (!(e instanceof t)) throw new TypeError('Cannot call a class as a function');
+  },
+      de = function () {
+    function e(e, t) {
+      for (var o, n = 0; n < t.length; n++) {
+        o = t[n], o.enumerable = o.enumerable || !1, o.configurable = !0, 'value' in o && (o.writable = !0), Object.defineProperty(e, o.key, o);
+      }
+    }
+
+    return function (t, o, n) {
+      return o && e(t.prototype, o), n && e(t, n), t;
+    };
+  }(),
+      ae = function ae(e, t, o) {
+    return t in e ? Object.defineProperty(e, t, {
+      value: o,
+      enumerable: !0,
+      configurable: !0,
+      writable: !0
+    }) : e[t] = o, e;
+  },
+      le = Object.assign || function (e) {
+    for (var t, o = 1; o < arguments.length; o++) {
+      for (var n in t = arguments[o], t) {
+        Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+      }
+    }
+
+    return e;
+  },
+      fe = te && /Firefox/i.test(navigator.userAgent),
+      me = ['auto-start', 'auto', 'auto-end', 'top-start', 'top', 'top-end', 'right-start', 'right', 'right-end', 'bottom-end', 'bottom', 'bottom-start', 'left-end', 'left', 'left-start'],
+      he = me.slice(3),
+      ce = {
+    FLIP: 'flip',
+    CLOCKWISE: 'clockwise',
+    COUNTERCLOCKWISE: 'counterclockwise'
+  },
+      ge = function () {
+    function t(o, n) {
+      var i = this,
+          r = 2 < arguments.length && void 0 !== arguments[2] ? arguments[2] : {};
+      se(this, t), this.scheduleUpdate = function () {
+        return requestAnimationFrame(i.update);
+      }, this.update = ie(this.update.bind(this)), this.options = le({}, t.Defaults, r), this.state = {
+        isDestroyed: !1,
+        isCreated: !1,
+        scrollParents: []
+      }, this.reference = o && o.jquery ? o[0] : o, this.popper = n && n.jquery ? n[0] : n, this.options.modifiers = {}, Object.keys(le({}, t.Defaults.modifiers, r.modifiers)).forEach(function (e) {
+        i.options.modifiers[e] = le({}, t.Defaults.modifiers[e] || {}, r.modifiers ? r.modifiers[e] : {});
+      }), this.modifiers = Object.keys(this.options.modifiers).map(function (e) {
+        return le({
+          name: e
+        }, i.options.modifiers[e]);
+      }).sort(function (e, t) {
+        return e.order - t.order;
+      }), this.modifiers.forEach(function (t) {
+        t.enabled && e(t.onLoad) && t.onLoad(i.reference, i.popper, i.options, t, i.state);
+      }), this.update();
+      var p = this.options.eventsEnabled;
+      p && this.enableEventListeners(), this.state.eventsEnabled = p;
+    }
+
+    return de(t, [{
+      key: 'update',
+      value: function value() {
+        return k.call(this);
+      }
+    }, {
+      key: 'destroy',
+      value: function value() {
+        return H.call(this);
+      }
+    }, {
+      key: 'enableEventListeners',
+      value: function value() {
+        return I.call(this);
+      }
+    }, {
+      key: 'disableEventListeners',
+      value: function value() {
+        return U.call(this);
+      }
+    }]), t;
+  }();
+
+  return ge.Utils = ('undefined' == typeof window ? global : window).PopperUtils, ge.placements = me, ge.Defaults = {
+    placement: 'bottom',
+    positionFixed: !1,
+    eventsEnabled: !0,
+    removeOnDestroy: !1,
+    onCreate: function onCreate() {},
+    onUpdate: function onUpdate() {},
+    modifiers: {
+      shift: {
+        order: 100,
+        enabled: !0,
+        fn: function fn(e) {
+          var t = e.placement,
+              o = t.split('-')[0],
+              n = t.split('-')[1];
+
+          if (n) {
+            var i = e.offsets,
+                r = i.reference,
+                p = i.popper,
+                s = -1 !== ['bottom', 'top'].indexOf(o),
+                d = s ? 'left' : 'top',
+                a = s ? 'width' : 'height',
+                l = {
+              start: ae({}, d, r[d]),
+              end: ae({}, d, r[d] + r[a] - p[a])
+            };
+            e.offsets.popper = le({}, p, l[n]);
+          }
+
+          return e;
+        }
+      },
+      offset: {
+        order: 200,
+        enabled: !0,
+        fn: J,
+        offset: 0
+      },
+      preventOverflow: {
+        order: 300,
+        enabled: !0,
+        fn: function fn(e, t) {
+          var o = t.boundariesElement || p(e.instance.popper);
+          e.instance.reference === o && (o = p(o));
+          var n = B('transform'),
+              i = e.instance.popper.style,
+              r = i.top,
+              s = i.left,
+              d = i[n];
+          i.top = '', i.left = '', i[n] = '';
+          var a = v(e.instance.popper, e.instance.reference, t.padding, o, e.positionFixed);
+          i.top = r, i.left = s, i[n] = d, t.boundaries = a;
+          var l = t.priority,
+              f = e.offsets.popper,
+              m = {
+            primary: function primary(e) {
+              var o = f[e];
+              return f[e] < a[e] && !t.escapeWithReference && (o = ee(f[e], a[e])), ae({}, e, o);
+            },
+            secondary: function secondary(e) {
+              var o = 'right' === e ? 'left' : 'top',
+                  n = f[o];
+              return f[e] > a[e] && !t.escapeWithReference && (n = Q(f[o], a[e] - ('right' === e ? f.width : f.height))), ae({}, o, n);
+            }
+          };
+          return l.forEach(function (e) {
+            var t = -1 === ['left', 'top'].indexOf(e) ? 'secondary' : 'primary';
+            f = le({}, f, m[t](e));
+          }), e.offsets.popper = f, e;
+        },
+        priority: ['left', 'right', 'top', 'bottom'],
+        padding: 5,
+        boundariesElement: 'scrollParent'
+      },
+      keepTogether: {
+        order: 400,
+        enabled: !0,
+        fn: function fn(e) {
+          var t = e.offsets,
+              o = t.popper,
+              n = t.reference,
+              i = e.placement.split('-')[0],
+              r = Z,
+              p = -1 !== ['top', 'bottom'].indexOf(i),
+              s = p ? 'right' : 'bottom',
+              d = p ? 'left' : 'top',
+              a = p ? 'width' : 'height';
+          return o[s] < r(n[d]) && (e.offsets.popper[d] = r(n[d]) - o[a]), o[d] > r(n[s]) && (e.offsets.popper[d] = r(n[s])), e;
+        }
+      },
+      arrow: {
+        order: 500,
+        enabled: !0,
+        fn: function fn(e, o) {
+          var n;
+          if (!K(e.instance.modifiers, 'arrow', 'keepTogether')) return e;
+          var i = o.element;
+
+          if ('string' == typeof i) {
+            if (i = e.instance.popper.querySelector(i), !i) return e;
+          } else if (!e.instance.popper.contains(i)) return console.warn('WARNING: `arrow.element` must be child of its popper element!'), e;
+
+          var r = e.placement.split('-')[0],
+              p = e.offsets,
+              s = p.popper,
+              d = p.reference,
+              a = -1 !== ['left', 'right'].indexOf(r),
+              l = a ? 'height' : 'width',
+              f = a ? 'Top' : 'Left',
+              m = f.toLowerCase(),
+              h = a ? 'left' : 'top',
+              c = a ? 'bottom' : 'right',
+              u = S(i)[l];
+          d[c] - u < s[m] && (e.offsets.popper[m] -= s[m] - (d[c] - u)), d[m] + u > s[c] && (e.offsets.popper[m] += d[m] + u - s[c]), e.offsets.popper = g(e.offsets.popper);
+          var b = d[m] + d[l] / 2 - u / 2,
+              w = t(e.instance.popper),
+              y = parseFloat(w['margin' + f]),
+              E = parseFloat(w['border' + f + 'Width']),
+              v = b - e.offsets.popper[m] - y - E;
+          return v = ee(Q(s[l] - u, v), 0), e.arrowElement = i, e.offsets.arrow = (n = {}, ae(n, m, $(v)), ae(n, h, ''), n), e;
+        },
+        element: '[x-arrow]'
+      },
+      flip: {
+        order: 600,
+        enabled: !0,
+        fn: function fn(e, t) {
+          if (W(e.instance.modifiers, 'inner')) return e;
+          if (e.flipped && e.placement === e.originalPlacement) return e;
+          var o = v(e.instance.popper, e.instance.reference, t.padding, t.boundariesElement, e.positionFixed),
+              n = e.placement.split('-')[0],
+              i = T(n),
+              r = e.placement.split('-')[1] || '',
+              p = [];
+
+          switch (t.behavior) {
+            case ce.FLIP:
+              p = [n, i];
+              break;
+
+            case ce.CLOCKWISE:
+              p = G(n);
+              break;
+
+            case ce.COUNTERCLOCKWISE:
+              p = G(n, !0);
+              break;
+
+            default:
+              p = t.behavior;
+          }
+
+          return p.forEach(function (s, d) {
+            if (n !== s || p.length === d + 1) return e;
+            n = e.placement.split('-')[0], i = T(n);
+            var a = e.offsets.popper,
+                l = e.offsets.reference,
+                f = Z,
+                m = 'left' === n && f(a.right) > f(l.left) || 'right' === n && f(a.left) < f(l.right) || 'top' === n && f(a.bottom) > f(l.top) || 'bottom' === n && f(a.top) < f(l.bottom),
+                h = f(a.left) < f(o.left),
+                c = f(a.right) > f(o.right),
+                g = f(a.top) < f(o.top),
+                u = f(a.bottom) > f(o.bottom),
+                b = 'left' === n && h || 'right' === n && c || 'top' === n && g || 'bottom' === n && u,
+                w = -1 !== ['top', 'bottom'].indexOf(n),
+                y = !!t.flipVariations && (w && 'start' === r && h || w && 'end' === r && c || !w && 'start' === r && g || !w && 'end' === r && u),
+                E = !!t.flipVariationsByContent && (w && 'start' === r && c || w && 'end' === r && h || !w && 'start' === r && u || !w && 'end' === r && g),
+                v = y || E;
+            (m || b || v) && (e.flipped = !0, (m || b) && (n = p[d + 1]), v && (r = z(r)), e.placement = n + (r ? '-' + r : ''), e.offsets.popper = le({}, e.offsets.popper, C(e.instance.popper, e.offsets.reference, e.placement)), e = P(e.instance.modifiers, e, 'flip'));
+          }), e;
+        },
+        behavior: 'flip',
+        padding: 5,
+        boundariesElement: 'viewport',
+        flipVariations: !1,
+        flipVariationsByContent: !1
+      },
+      inner: {
+        order: 700,
+        enabled: !1,
+        fn: function fn(e) {
+          var t = e.placement,
+              o = t.split('-')[0],
+              n = e.offsets,
+              i = n.popper,
+              r = n.reference,
+              p = -1 !== ['left', 'right'].indexOf(o),
+              s = -1 === ['top', 'left'].indexOf(o);
+          return i[p ? 'left' : 'top'] = r[o] - (s ? i[p ? 'width' : 'height'] : 0), e.placement = T(t), e.offsets.popper = g(i), e;
+        }
+      },
+      hide: {
+        order: 800,
+        enabled: !0,
+        fn: function fn(e) {
+          if (!K(e.instance.modifiers, 'hide', 'preventOverflow')) return e;
+          var t = e.offsets.reference,
+              o = D(e.instance.modifiers, function (e) {
+            return 'preventOverflow' === e.name;
+          }).boundaries;
+
+          if (t.bottom < o.top || t.left > o.right || t.top > o.bottom || t.right < o.left) {
+            if (!0 === e.hide) return e;
+            e.hide = !0, e.attributes['x-out-of-boundaries'] = '';
+          } else {
+            if (!1 === e.hide) return e;
+            e.hide = !1, e.attributes['x-out-of-boundaries'] = !1;
+          }
+
+          return e;
+        }
+      },
+      computeStyle: {
+        order: 850,
+        enabled: !0,
+        fn: function fn(e, t) {
+          var o = t.x,
+              n = t.y,
+              i = e.offsets.popper,
+              r = D(e.instance.modifiers, function (e) {
+            return 'applyStyle' === e.name;
+          }).gpuAcceleration;
+          void 0 !== r && console.warn('WARNING: `gpuAcceleration` option moved to `computeStyle` modifier and will not be supported in future versions of Popper.js!');
+          var s,
+              d,
+              a = void 0 === r ? t.gpuAcceleration : r,
+              l = p(e.instance.popper),
+              f = u(l),
+              m = {
+            position: i.position
+          },
+              h = q(e, 2 > window.devicePixelRatio || !fe),
+              c = 'bottom' === o ? 'top' : 'bottom',
+              g = 'right' === n ? 'left' : 'right',
+              b = B('transform');
+          if (d = 'bottom' == c ? 'HTML' === l.nodeName ? -l.clientHeight + h.bottom : -f.height + h.bottom : h.top, s = 'right' == g ? 'HTML' === l.nodeName ? -l.clientWidth + h.right : -f.width + h.right : h.left, a && b) m[b] = 'translate3d(' + s + 'px, ' + d + 'px, 0)', m[c] = 0, m[g] = 0, m.willChange = 'transform';else {
+            var w = 'bottom' == c ? -1 : 1,
+                y = 'right' == g ? -1 : 1;
+            m[c] = d * w, m[g] = s * y, m.willChange = c + ', ' + g;
+          }
+          var E = {
+            "x-placement": e.placement
+          };
+          return e.attributes = le({}, E, e.attributes), e.styles = le({}, m, e.styles), e.arrowStyles = le({}, e.offsets.arrow, e.arrowStyles), e;
+        },
+        gpuAcceleration: !0,
+        x: 'bottom',
+        y: 'right'
+      },
+      applyStyle: {
+        order: 900,
+        enabled: !0,
+        fn: function fn(e) {
+          return V(e.instance.popper, e.styles), j(e.instance.popper, e.attributes), e.arrowElement && Object.keys(e.arrowStyles).length && V(e.arrowElement, e.arrowStyles), e;
+        },
+        onLoad: function onLoad(e, t, o, n, i) {
+          var r = L(i, t, e, o.positionFixed),
+              p = O(o.placement, r, t, e, o.modifiers.flip.boundariesElement, o.modifiers.flip.padding);
+          return t.setAttribute('x-placement', p), V(t, {
+            position: o.positionFixed ? 'fixed' : 'absolute'
+          }), o;
+        },
+        gpuAcceleration: void 0
+      }
+    }
+  }, ge;
+});
+/*!
+  * Bootstrap v4.4.1 (https://getbootstrap.com/)
+  * Copyright 2011-2019 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+  */
+
+
+!function (t, e) {
+  "object" == ( false ? undefined : _typeof(exports)) && "undefined" != typeof module ? e(exports, __WEBPACK_LOCAL_MODULE_0__, __webpack_require__(/*! popper.js */ "./node_modules/popper.js/dist/esm/popper.js")) :  true ? !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __WEBPACK_LOCAL_MODULE_0__, __webpack_require__(/*! popper.js */ "./node_modules/popper.js/dist/esm/popper.js")], __WEBPACK_AMD_DEFINE_FACTORY__ = (e),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)) : undefined;
+}(this, function (t, g, u) {
+  "use strict";
+
+  function i(t, e) {
+    for (var n = 0; n < e.length; n++) {
+      var i = e[n];
+      i.enumerable = i.enumerable || !1, i.configurable = !0, "value" in i && (i.writable = !0), Object.defineProperty(t, i.key, i);
+    }
+  }
+
+  function s(t, e, n) {
+    return e && i(t.prototype, e), n && i(t, n), t;
+  }
+
+  function e(e, t) {
+    var n = Object.keys(e);
+
+    if (Object.getOwnPropertySymbols) {
+      var i = Object.getOwnPropertySymbols(e);
+      t && (i = i.filter(function (t) {
+        return Object.getOwnPropertyDescriptor(e, t).enumerable;
+      })), n.push.apply(n, i);
+    }
+
+    return n;
+  }
+
+  function l(o) {
+    for (var t = 1; t < arguments.length; t++) {
+      var r = null != arguments[t] ? arguments[t] : {};
+      t % 2 ? e(Object(r), !0).forEach(function (t) {
+        var e, n, i;
+        e = o, i = r[n = t], n in e ? Object.defineProperty(e, n, {
+          value: i,
+          enumerable: !0,
+          configurable: !0,
+          writable: !0
+        }) : e[n] = i;
+      }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(o, Object.getOwnPropertyDescriptors(r)) : e(Object(r)).forEach(function (t) {
+        Object.defineProperty(o, t, Object.getOwnPropertyDescriptor(r, t));
+      });
+    }
+
+    return o;
+  }
+
+  g = g && g.hasOwnProperty("default") ? g["default"] : g, u = u && u.hasOwnProperty("default") ? u["default"] : u;
+  var n = "transitionend";
+
+  function o(t) {
+    var e = this,
+        n = !1;
+    return g(this).one(_.TRANSITION_END, function () {
+      n = !0;
+    }), setTimeout(function () {
+      n || _.triggerTransitionEnd(e);
+    }, t), this;
+  }
+
+  var _ = {
+    TRANSITION_END: "bsTransitionEnd",
+    getUID: function getUID(t) {
+      for (; t += ~~(1e6 * Math.random()), document.getElementById(t);) {
+        ;
+      }
+
+      return t;
+    },
+    getSelectorFromElement: function getSelectorFromElement(t) {
+      var e = t.getAttribute("data-target");
+
+      if (!e || "#" === e) {
+        var n = t.getAttribute("href");
+        e = n && "#" !== n ? n.trim() : "";
+      }
+
+      try {
+        return document.querySelector(e) ? e : null;
+      } catch (t) {
+        return null;
+      }
+    },
+    getTransitionDurationFromElement: function getTransitionDurationFromElement(t) {
+      if (!t) return 0;
+      var e = g(t).css("transition-duration"),
+          n = g(t).css("transition-delay"),
+          i = parseFloat(e),
+          o = parseFloat(n);
+      return i || o ? (e = e.split(",")[0], n = n.split(",")[0], 1e3 * (parseFloat(e) + parseFloat(n))) : 0;
+    },
+    reflow: function reflow(t) {
+      return t.offsetHeight;
+    },
+    triggerTransitionEnd: function triggerTransitionEnd(t) {
+      g(t).trigger(n);
+    },
+    supportsTransitionEnd: function supportsTransitionEnd() {
+      return Boolean(n);
+    },
+    isElement: function isElement(t) {
+      return (t[0] || t).nodeType;
+    },
+    typeCheckConfig: function typeCheckConfig(t, e, n) {
+      for (var i in n) {
+        if (Object.prototype.hasOwnProperty.call(n, i)) {
+          var o = n[i],
+              r = e[i],
+              s = r && _.isElement(r) ? "element" : (a = r, {}.toString.call(a).match(/\s([a-z]+)/i)[1].toLowerCase());
+          if (!new RegExp(o).test(s)) throw new Error(t.toUpperCase() + ': Option "' + i + '" provided type "' + s + '" but expected type "' + o + '".');
+        }
+      }
+
+      var a;
+    },
+    findShadowRoot: function findShadowRoot(t) {
+      if (!document.documentElement.attachShadow) return null;
+      if ("function" != typeof t.getRootNode) return t instanceof ShadowRoot ? t : t.parentNode ? _.findShadowRoot(t.parentNode) : null;
+      var e = t.getRootNode();
+      return e instanceof ShadowRoot ? e : null;
+    },
+    jQueryDetection: function jQueryDetection() {
+      if ("undefined" == typeof g) throw new TypeError("Bootstrap's JavaScript requires jQuery. jQuery must be included before Bootstrap's JavaScript.");
+      var t = g.fn.jquery.split(" ")[0].split(".");
+      if (t[0] < 2 && t[1] < 9 || 1 === t[0] && 9 === t[1] && t[2] < 1 || 4 <= t[0]) throw new Error("Bootstrap's JavaScript requires at least jQuery v1.9.1 but less than v4.0.0");
+    }
+  };
+  _.jQueryDetection(), g.fn.emulateTransitionEnd = o, g.event.special[_.TRANSITION_END] = {
+    bindType: n,
+    delegateType: n,
+    handle: function handle(t) {
+      if (g(t.target).is(this)) return t.handleObj.handler.apply(this, arguments);
+    }
+  };
+
+  var r = "alert",
+      a = "bs.alert",
+      c = "." + a,
+      h = g.fn[r],
+      f = {
+    CLOSE: "close" + c,
+    CLOSED: "closed" + c,
+    CLICK_DATA_API: "click" + c + ".data-api"
+  },
+      d = "alert",
+      m = "fade",
+      p = "show",
+      v = function () {
+    function i(t) {
+      this._element = t;
+    }
+
+    var t = i.prototype;
+    return t.close = function (t) {
+      var e = this._element;
+      t && (e = this._getRootElement(t)), this._triggerCloseEvent(e).isDefaultPrevented() || this._removeElement(e);
+    }, t.dispose = function () {
+      g.removeData(this._element, a), this._element = null;
+    }, t._getRootElement = function (t) {
+      var e = _.getSelectorFromElement(t),
+          n = !1;
+
+      return e && (n = document.querySelector(e)), n = n || g(t).closest("." + d)[0];
+    }, t._triggerCloseEvent = function (t) {
+      var e = g.Event(f.CLOSE);
+      return g(t).trigger(e), e;
+    }, t._removeElement = function (e) {
+      var n = this;
+
+      if (g(e).removeClass(p), g(e).hasClass(m)) {
+        var t = _.getTransitionDurationFromElement(e);
+
+        g(e).one(_.TRANSITION_END, function (t) {
+          return n._destroyElement(e, t);
+        }).emulateTransitionEnd(t);
+      } else this._destroyElement(e);
+    }, t._destroyElement = function (t) {
+      g(t).detach().trigger(f.CLOSED).remove();
+    }, i._jQueryInterface = function (n) {
+      return this.each(function () {
+        var t = g(this),
+            e = t.data(a);
+        e || (e = new i(this), t.data(a, e)), "close" === n && e[n](this);
+      });
+    }, i._handleDismiss = function (e) {
+      return function (t) {
+        t && t.preventDefault(), e.close(this);
+      };
+    }, s(i, null, [{
+      key: "VERSION",
+      get: function get() {
+        return "4.4.1";
+      }
+    }]), i;
+  }();
+
+  g(document).on(f.CLICK_DATA_API, '[data-dismiss="alert"]', v._handleDismiss(new v())), g.fn[r] = v._jQueryInterface, g.fn[r].Constructor = v, g.fn[r].noConflict = function () {
+    return g.fn[r] = h, v._jQueryInterface;
+  };
+
+  var y = "button",
+      E = "bs.button",
+      C = "." + E,
+      T = ".data-api",
+      b = g.fn[y],
+      S = "active",
+      D = "btn",
+      I = "focus",
+      w = '[data-toggle^="button"]',
+      A = '[data-toggle="buttons"]',
+      N = '[data-toggle="button"]',
+      O = '[data-toggle="buttons"] .btn',
+      k = 'input:not([type="hidden"])',
+      P = ".active",
+      L = ".btn",
+      j = {
+    CLICK_DATA_API: "click" + C + T,
+    FOCUS_BLUR_DATA_API: "focus" + C + T + " blur" + C + T,
+    LOAD_DATA_API: "load" + C + T
+  },
+      H = function () {
+    function n(t) {
+      this._element = t;
+    }
+
+    var t = n.prototype;
+    return t.toggle = function () {
+      var t = !0,
+          e = !0,
+          n = g(this._element).closest(A)[0];
+
+      if (n) {
+        var i = this._element.querySelector(k);
+
+        if (i) {
+          if ("radio" === i.type) {
+            if (i.checked && this._element.classList.contains(S)) t = !1;else {
+              var o = n.querySelector(P);
+              o && g(o).removeClass(S);
+            }
+          } else "checkbox" === i.type ? "LABEL" === this._element.tagName && i.checked === this._element.classList.contains(S) && (t = !1) : t = !1;
+          t && (i.checked = !this._element.classList.contains(S), g(i).trigger("change")), i.focus(), e = !1;
+        }
+      }
+
+      this._element.hasAttribute("disabled") || this._element.classList.contains("disabled") || (e && this._element.setAttribute("aria-pressed", !this._element.classList.contains(S)), t && g(this._element).toggleClass(S));
+    }, t.dispose = function () {
+      g.removeData(this._element, E), this._element = null;
+    }, n._jQueryInterface = function (e) {
+      return this.each(function () {
+        var t = g(this).data(E);
+        t || (t = new n(this), g(this).data(E, t)), "toggle" === e && t[e]();
+      });
+    }, s(n, null, [{
+      key: "VERSION",
+      get: function get() {
+        return "4.4.1";
+      }
+    }]), n;
+  }();
+
+  g(document).on(j.CLICK_DATA_API, w, function (t) {
+    var e = t.target;
+    if (g(e).hasClass(D) || (e = g(e).closest(L)[0]), !e || e.hasAttribute("disabled") || e.classList.contains("disabled")) t.preventDefault();else {
+      var n = e.querySelector(k);
+      if (n && (n.hasAttribute("disabled") || n.classList.contains("disabled"))) return void t.preventDefault();
+
+      H._jQueryInterface.call(g(e), "toggle");
+    }
+  }).on(j.FOCUS_BLUR_DATA_API, w, function (t) {
+    var e = g(t.target).closest(L)[0];
+    g(e).toggleClass(I, /^focus(in)?$/.test(t.type));
+  }), g(window).on(j.LOAD_DATA_API, function () {
+    for (var t = [].slice.call(document.querySelectorAll(O)), e = 0, n = t.length; e < n; e++) {
+      var i = t[e],
+          o = i.querySelector(k);
+      o.checked || o.hasAttribute("checked") ? i.classList.add(S) : i.classList.remove(S);
+    }
+
+    for (var r = 0, s = (t = [].slice.call(document.querySelectorAll(N))).length; r < s; r++) {
+      var a = t[r];
+      "true" === a.getAttribute("aria-pressed") ? a.classList.add(S) : a.classList.remove(S);
+    }
+  }), g.fn[y] = H._jQueryInterface, g.fn[y].Constructor = H, g.fn[y].noConflict = function () {
+    return g.fn[y] = b, H._jQueryInterface;
+  };
+
+  var R = "carousel",
+      x = "bs.carousel",
+      F = "." + x,
+      U = ".data-api",
+      W = g.fn[R],
+      q = {
+    interval: 5e3,
+    keyboard: !0,
+    slide: !1,
+    pause: "hover",
+    wrap: !0,
+    touch: !0
+  },
+      M = {
+    interval: "(number|boolean)",
+    keyboard: "boolean",
+    slide: "(boolean|string)",
+    pause: "(string|boolean)",
+    wrap: "boolean",
+    touch: "boolean"
+  },
+      K = "next",
+      Q = "prev",
+      B = "left",
+      V = "right",
+      Y = {
+    SLIDE: "slide" + F,
+    SLID: "slid" + F,
+    KEYDOWN: "keydown" + F,
+    MOUSEENTER: "mouseenter" + F,
+    MOUSELEAVE: "mouseleave" + F,
+    TOUCHSTART: "touchstart" + F,
+    TOUCHMOVE: "touchmove" + F,
+    TOUCHEND: "touchend" + F,
+    POINTERDOWN: "pointerdown" + F,
+    POINTERUP: "pointerup" + F,
+    DRAG_START: "dragstart" + F,
+    LOAD_DATA_API: "load" + F + U,
+    CLICK_DATA_API: "click" + F + U
+  },
+      z = "carousel",
+      X = "active",
+      $ = "slide",
+      G = "carousel-item-right",
+      J = "carousel-item-left",
+      Z = "carousel-item-next",
+      tt = "carousel-item-prev",
+      et = "pointer-event",
+      nt = ".active",
+      it = ".active.carousel-item",
+      ot = ".carousel-item",
+      rt = ".carousel-item img",
+      st = ".carousel-item-next, .carousel-item-prev",
+      at = ".carousel-indicators",
+      lt = "[data-slide], [data-slide-to]",
+      ct = '[data-ride="carousel"]',
+      ht = {
+    TOUCH: "touch",
+    PEN: "pen"
+  },
+      ut = function () {
+    function r(t, e) {
+      this._items = null, this._interval = null, this._activeElement = null, this._isPaused = !1, this._isSliding = !1, this.touchTimeout = null, this.touchStartX = 0, this.touchDeltaX = 0, this._config = this._getConfig(e), this._element = t, this._indicatorsElement = this._element.querySelector(at), this._touchSupported = "ontouchstart" in document.documentElement || 0 < navigator.maxTouchPoints, this._pointerEvent = Boolean(window.PointerEvent || window.MSPointerEvent), this._addEventListeners();
+    }
+
+    var t = r.prototype;
+    return t.next = function () {
+      this._isSliding || this._slide(K);
+    }, t.nextWhenVisible = function () {
+      !document.hidden && g(this._element).is(":visible") && "hidden" !== g(this._element).css("visibility") && this.next();
+    }, t.prev = function () {
+      this._isSliding || this._slide(Q);
+    }, t.pause = function (t) {
+      t || (this._isPaused = !0), this._element.querySelector(st) && (_.triggerTransitionEnd(this._element), this.cycle(!0)), clearInterval(this._interval), this._interval = null;
+    }, t.cycle = function (t) {
+      t || (this._isPaused = !1), this._interval && (clearInterval(this._interval), this._interval = null), this._config.interval && !this._isPaused && (this._interval = setInterval((document.visibilityState ? this.nextWhenVisible : this.next).bind(this), this._config.interval));
+    }, t.to = function (t) {
+      var e = this;
+      this._activeElement = this._element.querySelector(it);
+
+      var n = this._getItemIndex(this._activeElement);
+
+      if (!(t > this._items.length - 1 || t < 0)) if (this._isSliding) g(this._element).one(Y.SLID, function () {
+        return e.to(t);
+      });else {
+        if (n === t) return this.pause(), void this.cycle();
+        var i = n < t ? K : Q;
+
+        this._slide(i, this._items[t]);
+      }
+    }, t.dispose = function () {
+      g(this._element).off(F), g.removeData(this._element, x), this._items = null, this._config = null, this._element = null, this._interval = null, this._isPaused = null, this._isSliding = null, this._activeElement = null, this._indicatorsElement = null;
+    }, t._getConfig = function (t) {
+      return t = l({}, q, {}, t), _.typeCheckConfig(R, t, M), t;
+    }, t._handleSwipe = function () {
+      var t = Math.abs(this.touchDeltaX);
+
+      if (!(t <= 40)) {
+        var e = t / this.touchDeltaX;
+        (this.touchDeltaX = 0) < e && this.prev(), e < 0 && this.next();
+      }
+    }, t._addEventListeners = function () {
+      var e = this;
+      this._config.keyboard && g(this._element).on(Y.KEYDOWN, function (t) {
+        return e._keydown(t);
+      }), "hover" === this._config.pause && g(this._element).on(Y.MOUSEENTER, function (t) {
+        return e.pause(t);
+      }).on(Y.MOUSELEAVE, function (t) {
+        return e.cycle(t);
+      }), this._config.touch && this._addTouchEventListeners();
+    }, t._addTouchEventListeners = function () {
+      var e = this;
+
+      if (this._touchSupported) {
+        var n = function n(t) {
+          e._pointerEvent && ht[t.originalEvent.pointerType.toUpperCase()] ? e.touchStartX = t.originalEvent.clientX : e._pointerEvent || (e.touchStartX = t.originalEvent.touches[0].clientX);
+        },
+            i = function i(t) {
+          e._pointerEvent && ht[t.originalEvent.pointerType.toUpperCase()] && (e.touchDeltaX = t.originalEvent.clientX - e.touchStartX), e._handleSwipe(), "hover" === e._config.pause && (e.pause(), e.touchTimeout && clearTimeout(e.touchTimeout), e.touchTimeout = setTimeout(function (t) {
+            return e.cycle(t);
+          }, 500 + e._config.interval));
+        };
+
+        g(this._element.querySelectorAll(rt)).on(Y.DRAG_START, function (t) {
+          return t.preventDefault();
+        }), this._pointerEvent ? (g(this._element).on(Y.POINTERDOWN, function (t) {
+          return n(t);
+        }), g(this._element).on(Y.POINTERUP, function (t) {
+          return i(t);
+        }), this._element.classList.add(et)) : (g(this._element).on(Y.TOUCHSTART, function (t) {
+          return n(t);
+        }), g(this._element).on(Y.TOUCHMOVE, function (t) {
+          return function (t) {
+            t.originalEvent.touches && 1 < t.originalEvent.touches.length ? e.touchDeltaX = 0 : e.touchDeltaX = t.originalEvent.touches[0].clientX - e.touchStartX;
+          }(t);
+        }), g(this._element).on(Y.TOUCHEND, function (t) {
+          return i(t);
+        }));
+      }
+    }, t._keydown = function (t) {
+      if (!/input|textarea/i.test(t.target.tagName)) switch (t.which) {
+        case 37:
+          t.preventDefault(), this.prev();
+          break;
+
+        case 39:
+          t.preventDefault(), this.next();
+      }
+    }, t._getItemIndex = function (t) {
+      return this._items = t && t.parentNode ? [].slice.call(t.parentNode.querySelectorAll(ot)) : [], this._items.indexOf(t);
+    }, t._getItemByDirection = function (t, e) {
+      var n = t === K,
+          i = t === Q,
+          o = this._getItemIndex(e),
+          r = this._items.length - 1;
+
+      if ((i && 0 === o || n && o === r) && !this._config.wrap) return e;
+      var s = (o + (t === Q ? -1 : 1)) % this._items.length;
+      return -1 == s ? this._items[this._items.length - 1] : this._items[s];
+    }, t._triggerSlideEvent = function (t, e) {
+      var n = this._getItemIndex(t),
+          i = this._getItemIndex(this._element.querySelector(it)),
+          o = g.Event(Y.SLIDE, {
+        relatedTarget: t,
+        direction: e,
+        from: i,
+        to: n
+      });
+
+      return g(this._element).trigger(o), o;
+    }, t._setActiveIndicatorElement = function (t) {
+      if (this._indicatorsElement) {
+        var e = [].slice.call(this._indicatorsElement.querySelectorAll(nt));
+        g(e).removeClass(X);
+
+        var n = this._indicatorsElement.children[this._getItemIndex(t)];
+
+        n && g(n).addClass(X);
+      }
+    }, t._slide = function (t, e) {
+      var n,
+          i,
+          o,
+          r = this,
+          s = this._element.querySelector(it),
+          a = this._getItemIndex(s),
+          l = e || s && this._getItemByDirection(t, s),
+          c = this._getItemIndex(l),
+          h = Boolean(this._interval);
+
+      if (o = t === K ? (n = J, i = Z, B) : (n = G, i = tt, V), l && g(l).hasClass(X)) this._isSliding = !1;else if (!this._triggerSlideEvent(l, o).isDefaultPrevented() && s && l) {
+        this._isSliding = !0, h && this.pause(), this._setActiveIndicatorElement(l);
+        var u = g.Event(Y.SLID, {
+          relatedTarget: l,
+          direction: o,
+          from: a,
+          to: c
+        });
+
+        if (g(this._element).hasClass($)) {
+          g(l).addClass(i), _.reflow(l), g(s).addClass(n), g(l).addClass(n);
+          var f = parseInt(l.getAttribute("data-interval"), 10);
+          f ? (this._config.defaultInterval = this._config.defaultInterval || this._config.interval, this._config.interval = f) : this._config.interval = this._config.defaultInterval || this._config.interval;
+
+          var d = _.getTransitionDurationFromElement(s);
+
+          g(s).one(_.TRANSITION_END, function () {
+            g(l).removeClass(n + " " + i).addClass(X), g(s).removeClass(X + " " + i + " " + n), r._isSliding = !1, setTimeout(function () {
+              return g(r._element).trigger(u);
+            }, 0);
+          }).emulateTransitionEnd(d);
+        } else g(s).removeClass(X), g(l).addClass(X), this._isSliding = !1, g(this._element).trigger(u);
+
+        h && this.cycle();
+      }
+    }, r._jQueryInterface = function (i) {
+      return this.each(function () {
+        var t = g(this).data(x),
+            e = l({}, q, {}, g(this).data());
+        "object" == _typeof(i) && (e = l({}, e, {}, i));
+        var n = "string" == typeof i ? i : e.slide;
+        if (t || (t = new r(this, e), g(this).data(x, t)), "number" == typeof i) t.to(i);else if ("string" == typeof n) {
+          if ("undefined" == typeof t[n]) throw new TypeError('No method named "' + n + '"');
+          t[n]();
+        } else e.interval && e.ride && (t.pause(), t.cycle());
+      });
+    }, r._dataApiClickHandler = function (t) {
+      var e = _.getSelectorFromElement(this);
+
+      if (e) {
+        var n = g(e)[0];
+
+        if (n && g(n).hasClass(z)) {
+          var i = l({}, g(n).data(), {}, g(this).data()),
+              o = this.getAttribute("data-slide-to");
+          o && (i.interval = !1), r._jQueryInterface.call(g(n), i), o && g(n).data(x).to(o), t.preventDefault();
+        }
+      }
+    }, s(r, null, [{
+      key: "VERSION",
+      get: function get() {
+        return "4.4.1";
+      }
+    }, {
+      key: "Default",
+      get: function get() {
+        return q;
+      }
+    }]), r;
+  }();
+
+  g(document).on(Y.CLICK_DATA_API, lt, ut._dataApiClickHandler), g(window).on(Y.LOAD_DATA_API, function () {
+    for (var t = [].slice.call(document.querySelectorAll(ct)), e = 0, n = t.length; e < n; e++) {
+      var i = g(t[e]);
+
+      ut._jQueryInterface.call(i, i.data());
+    }
+  }), g.fn[R] = ut._jQueryInterface, g.fn[R].Constructor = ut, g.fn[R].noConflict = function () {
+    return g.fn[R] = W, ut._jQueryInterface;
+  };
+
+  var ft = "collapse",
+      dt = "bs.collapse",
+      gt = "." + dt,
+      _t = g.fn[ft],
+      mt = {
+    toggle: !0,
+    parent: ""
+  },
+      pt = {
+    toggle: "boolean",
+    parent: "(string|element)"
+  },
+      vt = {
+    SHOW: "show" + gt,
+    SHOWN: "shown" + gt,
+    HIDE: "hide" + gt,
+    HIDDEN: "hidden" + gt,
+    CLICK_DATA_API: "click" + gt + ".data-api"
+  },
+      yt = "show",
+      Et = "collapse",
+      Ct = "collapsing",
+      Tt = "collapsed",
+      bt = "width",
+      St = "height",
+      Dt = ".show, .collapsing",
+      It = '[data-toggle="collapse"]',
+      wt = function () {
+    function a(e, t) {
+      this._isTransitioning = !1, this._element = e, this._config = this._getConfig(t), this._triggerArray = [].slice.call(document.querySelectorAll('[data-toggle="collapse"][href="#' + e.id + '"],[data-toggle="collapse"][data-target="#' + e.id + '"]'));
+
+      for (var n = [].slice.call(document.querySelectorAll(It)), i = 0, o = n.length; i < o; i++) {
+        var r = n[i],
+            s = _.getSelectorFromElement(r),
+            a = [].slice.call(document.querySelectorAll(s)).filter(function (t) {
+          return t === e;
+        });
+
+        null !== s && 0 < a.length && (this._selector = s, this._triggerArray.push(r));
+      }
+
+      this._parent = this._config.parent ? this._getParent() : null, this._config.parent || this._addAriaAndCollapsedClass(this._element, this._triggerArray), this._config.toggle && this.toggle();
+    }
+
+    var t = a.prototype;
+    return t.toggle = function () {
+      g(this._element).hasClass(yt) ? this.hide() : this.show();
+    }, t.show = function () {
+      var t,
+          e,
+          n = this;
+
+      if (!this._isTransitioning && !g(this._element).hasClass(yt) && (this._parent && 0 === (t = [].slice.call(this._parent.querySelectorAll(Dt)).filter(function (t) {
+        return "string" == typeof n._config.parent ? t.getAttribute("data-parent") === n._config.parent : t.classList.contains(Et);
+      })).length && (t = null), !(t && (e = g(t).not(this._selector).data(dt)) && e._isTransitioning))) {
+        var i = g.Event(vt.SHOW);
+
+        if (g(this._element).trigger(i), !i.isDefaultPrevented()) {
+          t && (a._jQueryInterface.call(g(t).not(this._selector), "hide"), e || g(t).data(dt, null));
+
+          var o = this._getDimension();
+
+          g(this._element).removeClass(Et).addClass(Ct), this._element.style[o] = 0, this._triggerArray.length && g(this._triggerArray).removeClass(Tt).attr("aria-expanded", !0), this.setTransitioning(!0);
+
+          var r = "scroll" + (o[0].toUpperCase() + o.slice(1)),
+              s = _.getTransitionDurationFromElement(this._element);
+
+          g(this._element).one(_.TRANSITION_END, function () {
+            g(n._element).removeClass(Ct).addClass(Et).addClass(yt), n._element.style[o] = "", n.setTransitioning(!1), g(n._element).trigger(vt.SHOWN);
+          }).emulateTransitionEnd(s), this._element.style[o] = this._element[r] + "px";
+        }
+      }
+    }, t.hide = function () {
+      var t = this;
+
+      if (!this._isTransitioning && g(this._element).hasClass(yt)) {
+        var e = g.Event(vt.HIDE);
+
+        if (g(this._element).trigger(e), !e.isDefaultPrevented()) {
+          var n = this._getDimension();
+
+          this._element.style[n] = this._element.getBoundingClientRect()[n] + "px", _.reflow(this._element), g(this._element).addClass(Ct).removeClass(Et).removeClass(yt);
+          var i = this._triggerArray.length;
+          if (0 < i) for (var o = 0; o < i; o++) {
+            var r = this._triggerArray[o],
+                s = _.getSelectorFromElement(r);
+
+            if (null !== s) g([].slice.call(document.querySelectorAll(s))).hasClass(yt) || g(r).addClass(Tt).attr("aria-expanded", !1);
+          }
+          this.setTransitioning(!0);
+          this._element.style[n] = "";
+
+          var a = _.getTransitionDurationFromElement(this._element);
+
+          g(this._element).one(_.TRANSITION_END, function () {
+            t.setTransitioning(!1), g(t._element).removeClass(Ct).addClass(Et).trigger(vt.HIDDEN);
+          }).emulateTransitionEnd(a);
+        }
+      }
+    }, t.setTransitioning = function (t) {
+      this._isTransitioning = t;
+    }, t.dispose = function () {
+      g.removeData(this._element, dt), this._config = null, this._parent = null, this._element = null, this._triggerArray = null, this._isTransitioning = null;
+    }, t._getConfig = function (t) {
+      return (t = l({}, mt, {}, t)).toggle = Boolean(t.toggle), _.typeCheckConfig(ft, t, pt), t;
+    }, t._getDimension = function () {
+      return g(this._element).hasClass(bt) ? bt : St;
+    }, t._getParent = function () {
+      var t,
+          n = this;
+      _.isElement(this._config.parent) ? (t = this._config.parent, "undefined" != typeof this._config.parent.jquery && (t = this._config.parent[0])) : t = document.querySelector(this._config.parent);
+      var e = '[data-toggle="collapse"][data-parent="' + this._config.parent + '"]',
+          i = [].slice.call(t.querySelectorAll(e));
+      return g(i).each(function (t, e) {
+        n._addAriaAndCollapsedClass(a._getTargetFromElement(e), [e]);
+      }), t;
+    }, t._addAriaAndCollapsedClass = function (t, e) {
+      var n = g(t).hasClass(yt);
+      e.length && g(e).toggleClass(Tt, !n).attr("aria-expanded", n);
+    }, a._getTargetFromElement = function (t) {
+      var e = _.getSelectorFromElement(t);
+
+      return e ? document.querySelector(e) : null;
+    }, a._jQueryInterface = function (i) {
+      return this.each(function () {
+        var t = g(this),
+            e = t.data(dt),
+            n = l({}, mt, {}, t.data(), {}, "object" == _typeof(i) && i ? i : {});
+
+        if (!e && n.toggle && /show|hide/.test(i) && (n.toggle = !1), e || (e = new a(this, n), t.data(dt, e)), "string" == typeof i) {
+          if ("undefined" == typeof e[i]) throw new TypeError('No method named "' + i + '"');
+          e[i]();
+        }
+      });
+    }, s(a, null, [{
+      key: "VERSION",
+      get: function get() {
+        return "4.4.1";
+      }
+    }, {
+      key: "Default",
+      get: function get() {
+        return mt;
+      }
+    }]), a;
+  }();
+
+  g(document).on(vt.CLICK_DATA_API, It, function (t) {
+    "A" === t.currentTarget.tagName && t.preventDefault();
+
+    var n = g(this),
+        e = _.getSelectorFromElement(this),
+        i = [].slice.call(document.querySelectorAll(e));
+
+    g(i).each(function () {
+      var t = g(this),
+          e = t.data(dt) ? "toggle" : n.data();
+
+      wt._jQueryInterface.call(t, e);
+    });
+  }), g.fn[ft] = wt._jQueryInterface, g.fn[ft].Constructor = wt, g.fn[ft].noConflict = function () {
+    return g.fn[ft] = _t, wt._jQueryInterface;
+  };
+
+  var At = "dropdown",
+      Nt = "bs.dropdown",
+      Ot = "." + Nt,
+      kt = ".data-api",
+      Pt = g.fn[At],
+      Lt = new RegExp("38|40|27"),
+      jt = {
+    HIDE: "hide" + Ot,
+    HIDDEN: "hidden" + Ot,
+    SHOW: "show" + Ot,
+    SHOWN: "shown" + Ot,
+    CLICK: "click" + Ot,
+    CLICK_DATA_API: "click" + Ot + kt,
+    KEYDOWN_DATA_API: "keydown" + Ot + kt,
+    KEYUP_DATA_API: "keyup" + Ot + kt
+  },
+      Ht = "disabled",
+      Rt = "show",
+      xt = "dropup",
+      Ft = "dropright",
+      Ut = "dropleft",
+      Wt = "dropdown-menu-right",
+      qt = "position-static",
+      Mt = '[data-toggle="dropdown"]',
+      Kt = ".dropdown form",
+      Qt = ".dropdown-menu",
+      Bt = ".navbar-nav",
+      Vt = ".dropdown-menu .dropdown-item:not(.disabled):not(:disabled)",
+      Yt = "top-start",
+      zt = "top-end",
+      Xt = "bottom-start",
+      $t = "bottom-end",
+      Gt = "right-start",
+      Jt = "left-start",
+      Zt = {
+    offset: 0,
+    flip: !0,
+    boundary: "scrollParent",
+    reference: "toggle",
+    display: "dynamic",
+    popperConfig: null
+  },
+      te = {
+    offset: "(number|string|function)",
+    flip: "boolean",
+    boundary: "(string|element)",
+    reference: "(string|element)",
+    display: "string",
+    popperConfig: "(null|object)"
+  },
+      ee = function () {
+    function c(t, e) {
+      this._element = t, this._popper = null, this._config = this._getConfig(e), this._menu = this._getMenuElement(), this._inNavbar = this._detectNavbar(), this._addEventListeners();
+    }
+
+    var t = c.prototype;
+    return t.toggle = function () {
+      if (!this._element.disabled && !g(this._element).hasClass(Ht)) {
+        var t = g(this._menu).hasClass(Rt);
+        c._clearMenus(), t || this.show(!0);
+      }
+    }, t.show = function (t) {
+      if (void 0 === t && (t = !1), !(this._element.disabled || g(this._element).hasClass(Ht) || g(this._menu).hasClass(Rt))) {
+        var e = {
+          relatedTarget: this._element
+        },
+            n = g.Event(jt.SHOW, e),
+            i = c._getParentFromElement(this._element);
+
+        if (g(i).trigger(n), !n.isDefaultPrevented()) {
+          if (!this._inNavbar && t) {
+            if ("undefined" == typeof u) throw new TypeError("Bootstrap's dropdowns require Popper.js (https://popper.js.org/)");
+            var o = this._element;
+            "parent" === this._config.reference ? o = i : _.isElement(this._config.reference) && (o = this._config.reference, "undefined" != typeof this._config.reference.jquery && (o = this._config.reference[0])), "scrollParent" !== this._config.boundary && g(i).addClass(qt), this._popper = new u(o, this._menu, this._getPopperConfig());
+          }
+
+          "ontouchstart" in document.documentElement && 0 === g(i).closest(Bt).length && g(document.body).children().on("mouseover", null, g.noop), this._element.focus(), this._element.setAttribute("aria-expanded", !0), g(this._menu).toggleClass(Rt), g(i).toggleClass(Rt).trigger(g.Event(jt.SHOWN, e));
+        }
+      }
+    }, t.hide = function () {
+      if (!this._element.disabled && !g(this._element).hasClass(Ht) && g(this._menu).hasClass(Rt)) {
+        var t = {
+          relatedTarget: this._element
+        },
+            e = g.Event(jt.HIDE, t),
+            n = c._getParentFromElement(this._element);
+
+        g(n).trigger(e), e.isDefaultPrevented() || (this._popper && this._popper.destroy(), g(this._menu).toggleClass(Rt), g(n).toggleClass(Rt).trigger(g.Event(jt.HIDDEN, t)));
+      }
+    }, t.dispose = function () {
+      g.removeData(this._element, Nt), g(this._element).off(Ot), this._element = null, (this._menu = null) !== this._popper && (this._popper.destroy(), this._popper = null);
+    }, t.update = function () {
+      this._inNavbar = this._detectNavbar(), null !== this._popper && this._popper.scheduleUpdate();
+    }, t._addEventListeners = function () {
+      var e = this;
+      g(this._element).on(jt.CLICK, function (t) {
+        t.preventDefault(), t.stopPropagation(), e.toggle();
+      });
+    }, t._getConfig = function (t) {
+      return t = l({}, this.constructor.Default, {}, g(this._element).data(), {}, t), _.typeCheckConfig(At, t, this.constructor.DefaultType), t;
+    }, t._getMenuElement = function () {
+      if (!this._menu) {
+        var t = c._getParentFromElement(this._element);
+
+        t && (this._menu = t.querySelector(Qt));
+      }
+
+      return this._menu;
+    }, t._getPlacement = function () {
+      var t = g(this._element.parentNode),
+          e = Xt;
+      return t.hasClass(xt) ? (e = Yt, g(this._menu).hasClass(Wt) && (e = zt)) : t.hasClass(Ft) ? e = Gt : t.hasClass(Ut) ? e = Jt : g(this._menu).hasClass(Wt) && (e = $t), e;
+    }, t._detectNavbar = function () {
+      return 0 < g(this._element).closest(".navbar").length;
+    }, t._getOffset = function () {
+      var e = this,
+          t = {};
+      return "function" == typeof this._config.offset ? t.fn = function (t) {
+        return t.offsets = l({}, t.offsets, {}, e._config.offset(t.offsets, e._element) || {}), t;
+      } : t.offset = this._config.offset, t;
+    }, t._getPopperConfig = function () {
+      var t = {
+        placement: this._getPlacement(),
+        modifiers: {
+          offset: this._getOffset(),
+          flip: {
+            enabled: this._config.flip
+          },
+          preventOverflow: {
+            boundariesElement: this._config.boundary
+          }
+        }
+      };
+      return "static" === this._config.display && (t.modifiers.applyStyle = {
+        enabled: !1
+      }), l({}, t, {}, this._config.popperConfig);
+    }, c._jQueryInterface = function (e) {
+      return this.each(function () {
+        var t = g(this).data(Nt);
+
+        if (t || (t = new c(this, "object" == _typeof(e) ? e : null), g(this).data(Nt, t)), "string" == typeof e) {
+          if ("undefined" == typeof t[e]) throw new TypeError('No method named "' + e + '"');
+          t[e]();
+        }
+      });
+    }, c._clearMenus = function (t) {
+      if (!t || 3 !== t.which && ("keyup" !== t.type || 9 === t.which)) for (var e = [].slice.call(document.querySelectorAll(Mt)), n = 0, i = e.length; n < i; n++) {
+        var o = c._getParentFromElement(e[n]),
+            r = g(e[n]).data(Nt),
+            s = {
+          relatedTarget: e[n]
+        };
+
+        if (t && "click" === t.type && (s.clickEvent = t), r) {
+          var a = r._menu;
+
+          if (g(o).hasClass(Rt) && !(t && ("click" === t.type && /input|textarea/i.test(t.target.tagName) || "keyup" === t.type && 9 === t.which) && g.contains(o, t.target))) {
+            var l = g.Event(jt.HIDE, s);
+            g(o).trigger(l), l.isDefaultPrevented() || ("ontouchstart" in document.documentElement && g(document.body).children().off("mouseover", null, g.noop), e[n].setAttribute("aria-expanded", "false"), r._popper && r._popper.destroy(), g(a).removeClass(Rt), g(o).removeClass(Rt).trigger(g.Event(jt.HIDDEN, s)));
+          }
+        }
+      }
+    }, c._getParentFromElement = function (t) {
+      var e,
+          n = _.getSelectorFromElement(t);
+
+      return n && (e = document.querySelector(n)), e || t.parentNode;
+    }, c._dataApiKeydownHandler = function (t) {
+      if ((/input|textarea/i.test(t.target.tagName) ? !(32 === t.which || 27 !== t.which && (40 !== t.which && 38 !== t.which || g(t.target).closest(Qt).length)) : Lt.test(t.which)) && (t.preventDefault(), t.stopPropagation(), !this.disabled && !g(this).hasClass(Ht))) {
+        var e = c._getParentFromElement(this),
+            n = g(e).hasClass(Rt);
+
+        if (n || 27 !== t.which) if (n && (!n || 27 !== t.which && 32 !== t.which)) {
+          var i = [].slice.call(e.querySelectorAll(Vt)).filter(function (t) {
+            return g(t).is(":visible");
+          });
+
+          if (0 !== i.length) {
+            var o = i.indexOf(t.target);
+            38 === t.which && 0 < o && o--, 40 === t.which && o < i.length - 1 && o++, o < 0 && (o = 0), i[o].focus();
+          }
+        } else {
+          if (27 === t.which) {
+            var r = e.querySelector(Mt);
+            g(r).trigger("focus");
+          }
+
+          g(this).trigger("click");
+        }
+      }
+    }, s(c, null, [{
+      key: "VERSION",
+      get: function get() {
+        return "4.4.1";
+      }
+    }, {
+      key: "Default",
+      get: function get() {
+        return Zt;
+      }
+    }, {
+      key: "DefaultType",
+      get: function get() {
+        return te;
+      }
+    }]), c;
+  }();
+
+  g(document).on(jt.KEYDOWN_DATA_API, Mt, ee._dataApiKeydownHandler).on(jt.KEYDOWN_DATA_API, Qt, ee._dataApiKeydownHandler).on(jt.CLICK_DATA_API + " " + jt.KEYUP_DATA_API, ee._clearMenus).on(jt.CLICK_DATA_API, Mt, function (t) {
+    t.preventDefault(), t.stopPropagation(), ee._jQueryInterface.call(g(this), "toggle");
+  }).on(jt.CLICK_DATA_API, Kt, function (t) {
+    t.stopPropagation();
+  }), g.fn[At] = ee._jQueryInterface, g.fn[At].Constructor = ee, g.fn[At].noConflict = function () {
+    return g.fn[At] = Pt, ee._jQueryInterface;
+  };
+
+  var ne = "modal",
+      ie = "bs.modal",
+      oe = "." + ie,
+      re = g.fn[ne],
+      se = {
+    backdrop: !0,
+    keyboard: !0,
+    focus: !0,
+    show: !0
+  },
+      ae = {
+    backdrop: "(boolean|string)",
+    keyboard: "boolean",
+    focus: "boolean",
+    show: "boolean"
+  },
+      le = {
+    HIDE: "hide" + oe,
+    HIDE_PREVENTED: "hidePrevented" + oe,
+    HIDDEN: "hidden" + oe,
+    SHOW: "show" + oe,
+    SHOWN: "shown" + oe,
+    FOCUSIN: "focusin" + oe,
+    RESIZE: "resize" + oe,
+    CLICK_DISMISS: "click.dismiss" + oe,
+    KEYDOWN_DISMISS: "keydown.dismiss" + oe,
+    MOUSEUP_DISMISS: "mouseup.dismiss" + oe,
+    MOUSEDOWN_DISMISS: "mousedown.dismiss" + oe,
+    CLICK_DATA_API: "click" + oe + ".data-api"
+  },
+      ce = "modal-dialog-scrollable",
+      he = "modal-scrollbar-measure",
+      ue = "modal-backdrop",
+      fe = "modal-open",
+      de = "fade",
+      ge = "show",
+      _e = "modal-static",
+      me = ".modal-dialog",
+      pe = ".modal-body",
+      ve = '[data-toggle="modal"]',
+      ye = '[data-dismiss="modal"]',
+      Ee = ".fixed-top, .fixed-bottom, .is-fixed, .sticky-top",
+      Ce = ".sticky-top",
+      Te = function () {
+    function o(t, e) {
+      this._config = this._getConfig(e), this._element = t, this._dialog = t.querySelector(me), this._backdrop = null, this._isShown = !1, this._isBodyOverflowing = !1, this._ignoreBackdropClick = !1, this._isTransitioning = !1, this._scrollbarWidth = 0;
+    }
+
+    var t = o.prototype;
+    return t.toggle = function (t) {
+      return this._isShown ? this.hide() : this.show(t);
+    }, t.show = function (t) {
+      var e = this;
+
+      if (!this._isShown && !this._isTransitioning) {
+        g(this._element).hasClass(de) && (this._isTransitioning = !0);
+        var n = g.Event(le.SHOW, {
+          relatedTarget: t
+        });
+        g(this._element).trigger(n), this._isShown || n.isDefaultPrevented() || (this._isShown = !0, this._checkScrollbar(), this._setScrollbar(), this._adjustDialog(), this._setEscapeEvent(), this._setResizeEvent(), g(this._element).on(le.CLICK_DISMISS, ye, function (t) {
+          return e.hide(t);
+        }), g(this._dialog).on(le.MOUSEDOWN_DISMISS, function () {
+          g(e._element).one(le.MOUSEUP_DISMISS, function (t) {
+            g(t.target).is(e._element) && (e._ignoreBackdropClick = !0);
+          });
+        }), this._showBackdrop(function () {
+          return e._showElement(t);
+        }));
+      }
+    }, t.hide = function (t) {
+      var e = this;
+
+      if (t && t.preventDefault(), this._isShown && !this._isTransitioning) {
+        var n = g.Event(le.HIDE);
+
+        if (g(this._element).trigger(n), this._isShown && !n.isDefaultPrevented()) {
+          this._isShown = !1;
+          var i = g(this._element).hasClass(de);
+
+          if (i && (this._isTransitioning = !0), this._setEscapeEvent(), this._setResizeEvent(), g(document).off(le.FOCUSIN), g(this._element).removeClass(ge), g(this._element).off(le.CLICK_DISMISS), g(this._dialog).off(le.MOUSEDOWN_DISMISS), i) {
+            var o = _.getTransitionDurationFromElement(this._element);
+
+            g(this._element).one(_.TRANSITION_END, function (t) {
+              return e._hideModal(t);
+            }).emulateTransitionEnd(o);
+          } else this._hideModal();
+        }
+      }
+    }, t.dispose = function () {
+      [window, this._element, this._dialog].forEach(function (t) {
+        return g(t).off(oe);
+      }), g(document).off(le.FOCUSIN), g.removeData(this._element, ie), this._config = null, this._element = null, this._dialog = null, this._backdrop = null, this._isShown = null, this._isBodyOverflowing = null, this._ignoreBackdropClick = null, this._isTransitioning = null, this._scrollbarWidth = null;
+    }, t.handleUpdate = function () {
+      this._adjustDialog();
+    }, t._getConfig = function (t) {
+      return t = l({}, se, {}, t), _.typeCheckConfig(ne, t, ae), t;
+    }, t._triggerBackdropTransition = function () {
+      var t = this;
+
+      if ("static" === this._config.backdrop) {
+        var e = g.Event(le.HIDE_PREVENTED);
+        if (g(this._element).trigger(e), e.defaultPrevented) return;
+
+        this._element.classList.add(_e);
+
+        var n = _.getTransitionDurationFromElement(this._element);
+
+        g(this._element).one(_.TRANSITION_END, function () {
+          t._element.classList.remove(_e);
+        }).emulateTransitionEnd(n), this._element.focus();
+      } else this.hide();
+    }, t._showElement = function (t) {
+      var e = this,
+          n = g(this._element).hasClass(de),
+          i = this._dialog ? this._dialog.querySelector(pe) : null;
+      this._element.parentNode && this._element.parentNode.nodeType === Node.ELEMENT_NODE || document.body.appendChild(this._element), this._element.style.display = "block", this._element.removeAttribute("aria-hidden"), this._element.setAttribute("aria-modal", !0), g(this._dialog).hasClass(ce) && i ? i.scrollTop = 0 : this._element.scrollTop = 0, n && _.reflow(this._element), g(this._element).addClass(ge), this._config.focus && this._enforceFocus();
+
+      function o() {
+        e._config.focus && e._element.focus(), e._isTransitioning = !1, g(e._element).trigger(r);
+      }
+
+      var r = g.Event(le.SHOWN, {
+        relatedTarget: t
+      });
+
+      if (n) {
+        var s = _.getTransitionDurationFromElement(this._dialog);
+
+        g(this._dialog).one(_.TRANSITION_END, o).emulateTransitionEnd(s);
+      } else o();
+    }, t._enforceFocus = function () {
+      var e = this;
+      g(document).off(le.FOCUSIN).on(le.FOCUSIN, function (t) {
+        document !== t.target && e._element !== t.target && 0 === g(e._element).has(t.target).length && e._element.focus();
+      });
+    }, t._setEscapeEvent = function () {
+      var e = this;
+      this._isShown && this._config.keyboard ? g(this._element).on(le.KEYDOWN_DISMISS, function (t) {
+        27 === t.which && e._triggerBackdropTransition();
+      }) : this._isShown || g(this._element).off(le.KEYDOWN_DISMISS);
+    }, t._setResizeEvent = function () {
+      var e = this;
+      this._isShown ? g(window).on(le.RESIZE, function (t) {
+        return e.handleUpdate(t);
+      }) : g(window).off(le.RESIZE);
+    }, t._hideModal = function () {
+      var t = this;
+      this._element.style.display = "none", this._element.setAttribute("aria-hidden", !0), this._element.removeAttribute("aria-modal"), this._isTransitioning = !1, this._showBackdrop(function () {
+        g(document.body).removeClass(fe), t._resetAdjustments(), t._resetScrollbar(), g(t._element).trigger(le.HIDDEN);
+      });
+    }, t._removeBackdrop = function () {
+      this._backdrop && (g(this._backdrop).remove(), this._backdrop = null);
+    }, t._showBackdrop = function (t) {
+      var e = this,
+          n = g(this._element).hasClass(de) ? de : "";
+
+      if (this._isShown && this._config.backdrop) {
+        if (this._backdrop = document.createElement("div"), this._backdrop.className = ue, n && this._backdrop.classList.add(n), g(this._backdrop).appendTo(document.body), g(this._element).on(le.CLICK_DISMISS, function (t) {
+          e._ignoreBackdropClick ? e._ignoreBackdropClick = !1 : t.target === t.currentTarget && e._triggerBackdropTransition();
+        }), n && _.reflow(this._backdrop), g(this._backdrop).addClass(ge), !t) return;
+        if (!n) return void t();
+
+        var i = _.getTransitionDurationFromElement(this._backdrop);
+
+        g(this._backdrop).one(_.TRANSITION_END, t).emulateTransitionEnd(i);
+      } else if (!this._isShown && this._backdrop) {
+        g(this._backdrop).removeClass(ge);
+
+        var o = function o() {
+          e._removeBackdrop(), t && t();
+        };
+
+        if (g(this._element).hasClass(de)) {
+          var r = _.getTransitionDurationFromElement(this._backdrop);
+
+          g(this._backdrop).one(_.TRANSITION_END, o).emulateTransitionEnd(r);
+        } else o();
+      } else t && t();
+    }, t._adjustDialog = function () {
+      var t = this._element.scrollHeight > document.documentElement.clientHeight;
+      !this._isBodyOverflowing && t && (this._element.style.paddingLeft = this._scrollbarWidth + "px"), this._isBodyOverflowing && !t && (this._element.style.paddingRight = this._scrollbarWidth + "px");
+    }, t._resetAdjustments = function () {
+      this._element.style.paddingLeft = "", this._element.style.paddingRight = "";
+    }, t._checkScrollbar = function () {
+      var t = document.body.getBoundingClientRect();
+      this._isBodyOverflowing = t.left + t.right < window.innerWidth, this._scrollbarWidth = this._getScrollbarWidth();
+    }, t._setScrollbar = function () {
+      var o = this;
+
+      if (this._isBodyOverflowing) {
+        var t = [].slice.call(document.querySelectorAll(Ee)),
+            e = [].slice.call(document.querySelectorAll(Ce));
+        g(t).each(function (t, e) {
+          var n = e.style.paddingRight,
+              i = g(e).css("padding-right");
+          g(e).data("padding-right", n).css("padding-right", parseFloat(i) + o._scrollbarWidth + "px");
+        }), g(e).each(function (t, e) {
+          var n = e.style.marginRight,
+              i = g(e).css("margin-right");
+          g(e).data("margin-right", n).css("margin-right", parseFloat(i) - o._scrollbarWidth + "px");
+        });
+        var n = document.body.style.paddingRight,
+            i = g(document.body).css("padding-right");
+        g(document.body).data("padding-right", n).css("padding-right", parseFloat(i) + this._scrollbarWidth + "px");
+      }
+
+      g(document.body).addClass(fe);
+    }, t._resetScrollbar = function () {
+      var t = [].slice.call(document.querySelectorAll(Ee));
+      g(t).each(function (t, e) {
+        var n = g(e).data("padding-right");
+        g(e).removeData("padding-right"), e.style.paddingRight = n || "";
+      });
+      var e = [].slice.call(document.querySelectorAll("" + Ce));
+      g(e).each(function (t, e) {
+        var n = g(e).data("margin-right");
+        "undefined" != typeof n && g(e).css("margin-right", n).removeData("margin-right");
+      });
+      var n = g(document.body).data("padding-right");
+      g(document.body).removeData("padding-right"), document.body.style.paddingRight = n || "";
+    }, t._getScrollbarWidth = function () {
+      var t = document.createElement("div");
+      t.className = he, document.body.appendChild(t);
+      var e = t.getBoundingClientRect().width - t.clientWidth;
+      return document.body.removeChild(t), e;
+    }, o._jQueryInterface = function (n, i) {
+      return this.each(function () {
+        var t = g(this).data(ie),
+            e = l({}, se, {}, g(this).data(), {}, "object" == _typeof(n) && n ? n : {});
+
+        if (t || (t = new o(this, e), g(this).data(ie, t)), "string" == typeof n) {
+          if ("undefined" == typeof t[n]) throw new TypeError('No method named "' + n + '"');
+          t[n](i);
+        } else e.show && t.show(i);
+      });
+    }, s(o, null, [{
+      key: "VERSION",
+      get: function get() {
+        return "4.4.1";
+      }
+    }, {
+      key: "Default",
+      get: function get() {
+        return se;
+      }
+    }]), o;
+  }();
+
+  g(document).on(le.CLICK_DATA_API, ve, function (t) {
+    var e,
+        n = this,
+        i = _.getSelectorFromElement(this);
+
+    i && (e = document.querySelector(i));
+    var o = g(e).data(ie) ? "toggle" : l({}, g(e).data(), {}, g(this).data());
+    "A" !== this.tagName && "AREA" !== this.tagName || t.preventDefault();
+    var r = g(e).one(le.SHOW, function (t) {
+      t.isDefaultPrevented() || r.one(le.HIDDEN, function () {
+        g(n).is(":visible") && n.focus();
+      });
+    });
+
+    Te._jQueryInterface.call(g(e), o, this);
+  }), g.fn[ne] = Te._jQueryInterface, g.fn[ne].Constructor = Te, g.fn[ne].noConflict = function () {
+    return g.fn[ne] = re, Te._jQueryInterface;
+  };
+  var be = ["background", "cite", "href", "itemtype", "longdesc", "poster", "src", "xlink:href"],
+      Se = {
+    "*": ["class", "dir", "id", "lang", "role", /^aria-[\w-]*$/i],
+    a: ["target", "href", "title", "rel"],
+    area: [],
+    b: [],
+    br: [],
+    col: [],
+    code: [],
+    div: [],
+    em: [],
+    hr: [],
+    h1: [],
+    h2: [],
+    h3: [],
+    h4: [],
+    h5: [],
+    h6: [],
+    i: [],
+    img: ["src", "alt", "title", "width", "height"],
+    li: [],
+    ol: [],
+    p: [],
+    pre: [],
+    s: [],
+    small: [],
+    span: [],
+    sub: [],
+    sup: [],
+    strong: [],
+    u: [],
+    ul: []
+  },
+      De = /^(?:(?:https?|mailto|ftp|tel|file):|[^&:/?#]*(?:[/?#]|$))/gi,
+      Ie = /^data:(?:image\/(?:bmp|gif|jpeg|jpg|png|tiff|webp)|video\/(?:mpeg|mp4|ogg|webm)|audio\/(?:mp3|oga|ogg|opus));base64,[a-z0-9+/]+=*$/i;
+
+  function we(t, r, e) {
+    if (0 === t.length) return t;
+    if (e && "function" == typeof e) return e(t);
+
+    for (var n = new window.DOMParser().parseFromString(t, "text/html"), s = Object.keys(r), a = [].slice.call(n.body.querySelectorAll("*")), i = function i(t) {
+      var e = a[t],
+          n = e.nodeName.toLowerCase();
+      if (-1 === s.indexOf(e.nodeName.toLowerCase())) return e.parentNode.removeChild(e), "continue";
+      var i = [].slice.call(e.attributes),
+          o = [].concat(r["*"] || [], r[n] || []);
+      i.forEach(function (t) {
+        !function (t, e) {
+          var n = t.nodeName.toLowerCase();
+          if (-1 !== e.indexOf(n)) return -1 === be.indexOf(n) || Boolean(t.nodeValue.match(De) || t.nodeValue.match(Ie));
+
+          for (var i = e.filter(function (t) {
+            return t instanceof RegExp;
+          }), o = 0, r = i.length; o < r; o++) {
+            if (n.match(i[o])) return !0;
+          }
+
+          return !1;
+        }(t, o) && e.removeAttribute(t.nodeName);
+      });
+    }, o = 0, l = a.length; o < l; o++) {
+      i(o);
+    }
+
+    return n.body.innerHTML;
+  }
+
+  var Ae = "tooltip",
+      Ne = "bs.tooltip",
+      Oe = "." + Ne,
+      ke = g.fn[Ae],
+      Pe = "bs-tooltip",
+      Le = new RegExp("(^|\\s)" + Pe + "\\S+", "g"),
+      je = ["sanitize", "whiteList", "sanitizeFn"],
+      He = {
+    animation: "boolean",
+    template: "string",
+    title: "(string|element|function)",
+    trigger: "string",
+    delay: "(number|object)",
+    html: "boolean",
+    selector: "(string|boolean)",
+    placement: "(string|function)",
+    offset: "(number|string|function)",
+    container: "(string|element|boolean)",
+    fallbackPlacement: "(string|array)",
+    boundary: "(string|element)",
+    sanitize: "boolean",
+    sanitizeFn: "(null|function)",
+    whiteList: "object",
+    popperConfig: "(null|object)"
+  },
+      Re = {
+    AUTO: "auto",
+    TOP: "top",
+    RIGHT: "right",
+    BOTTOM: "bottom",
+    LEFT: "left"
+  },
+      xe = {
+    animation: !0,
+    template: '<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>',
+    trigger: "hover focus",
+    title: "",
+    delay: 0,
+    html: !1,
+    selector: !1,
+    placement: "top",
+    offset: 0,
+    container: !1,
+    fallbackPlacement: "flip",
+    boundary: "scrollParent",
+    sanitize: !0,
+    sanitizeFn: null,
+    whiteList: Se,
+    popperConfig: null
+  },
+      Fe = "show",
+      Ue = "out",
+      We = {
+    HIDE: "hide" + Oe,
+    HIDDEN: "hidden" + Oe,
+    SHOW: "show" + Oe,
+    SHOWN: "shown" + Oe,
+    INSERTED: "inserted" + Oe,
+    CLICK: "click" + Oe,
+    FOCUSIN: "focusin" + Oe,
+    FOCUSOUT: "focusout" + Oe,
+    MOUSEENTER: "mouseenter" + Oe,
+    MOUSELEAVE: "mouseleave" + Oe
+  },
+      qe = "fade",
+      Me = "show",
+      Ke = ".tooltip-inner",
+      Qe = ".arrow",
+      Be = "hover",
+      Ve = "focus",
+      Ye = "click",
+      ze = "manual",
+      Xe = function () {
+    function i(t, e) {
+      if ("undefined" == typeof u) throw new TypeError("Bootstrap's tooltips require Popper.js (https://popper.js.org/)");
+      this._isEnabled = !0, this._timeout = 0, this._hoverState = "", this._activeTrigger = {}, this._popper = null, this.element = t, this.config = this._getConfig(e), this.tip = null, this._setListeners();
+    }
+
+    var t = i.prototype;
+    return t.enable = function () {
+      this._isEnabled = !0;
+    }, t.disable = function () {
+      this._isEnabled = !1;
+    }, t.toggleEnabled = function () {
+      this._isEnabled = !this._isEnabled;
+    }, t.toggle = function (t) {
+      if (this._isEnabled) if (t) {
+        var e = this.constructor.DATA_KEY,
+            n = g(t.currentTarget).data(e);
+        n || (n = new this.constructor(t.currentTarget, this._getDelegateConfig()), g(t.currentTarget).data(e, n)), n._activeTrigger.click = !n._activeTrigger.click, n._isWithActiveTrigger() ? n._enter(null, n) : n._leave(null, n);
+      } else {
+        if (g(this.getTipElement()).hasClass(Me)) return void this._leave(null, this);
+
+        this._enter(null, this);
+      }
+    }, t.dispose = function () {
+      clearTimeout(this._timeout), g.removeData(this.element, this.constructor.DATA_KEY), g(this.element).off(this.constructor.EVENT_KEY), g(this.element).closest(".modal").off("hide.bs.modal", this._hideModalHandler), this.tip && g(this.tip).remove(), this._isEnabled = null, this._timeout = null, this._hoverState = null, this._activeTrigger = null, this._popper && this._popper.destroy(), this._popper = null, this.element = null, this.config = null, this.tip = null;
+    }, t.show = function () {
+      var e = this;
+      if ("none" === g(this.element).css("display")) throw new Error("Please use show on visible elements");
+      var t = g.Event(this.constructor.Event.SHOW);
+
+      if (this.isWithContent() && this._isEnabled) {
+        g(this.element).trigger(t);
+
+        var n = _.findShadowRoot(this.element),
+            i = g.contains(null !== n ? n : this.element.ownerDocument.documentElement, this.element);
+
+        if (t.isDefaultPrevented() || !i) return;
+
+        var o = this.getTipElement(),
+            r = _.getUID(this.constructor.NAME);
+
+        o.setAttribute("id", r), this.element.setAttribute("aria-describedby", r), this.setContent(), this.config.animation && g(o).addClass(qe);
+
+        var s = "function" == typeof this.config.placement ? this.config.placement.call(this, o, this.element) : this.config.placement,
+            a = this._getAttachment(s);
+
+        this.addAttachmentClass(a);
+
+        var l = this._getContainer();
+
+        g(o).data(this.constructor.DATA_KEY, this), g.contains(this.element.ownerDocument.documentElement, this.tip) || g(o).appendTo(l), g(this.element).trigger(this.constructor.Event.INSERTED), this._popper = new u(this.element, o, this._getPopperConfig(a)), g(o).addClass(Me), "ontouchstart" in document.documentElement && g(document.body).children().on("mouseover", null, g.noop);
+
+        var c = function c() {
+          e.config.animation && e._fixTransition();
+          var t = e._hoverState;
+          e._hoverState = null, g(e.element).trigger(e.constructor.Event.SHOWN), t === Ue && e._leave(null, e);
+        };
+
+        if (g(this.tip).hasClass(qe)) {
+          var h = _.getTransitionDurationFromElement(this.tip);
+
+          g(this.tip).one(_.TRANSITION_END, c).emulateTransitionEnd(h);
+        } else c();
+      }
+    }, t.hide = function (t) {
+      function e() {
+        n._hoverState !== Fe && i.parentNode && i.parentNode.removeChild(i), n._cleanTipClass(), n.element.removeAttribute("aria-describedby"), g(n.element).trigger(n.constructor.Event.HIDDEN), null !== n._popper && n._popper.destroy(), t && t();
+      }
+
+      var n = this,
+          i = this.getTipElement(),
+          o = g.Event(this.constructor.Event.HIDE);
+
+      if (g(this.element).trigger(o), !o.isDefaultPrevented()) {
+        if (g(i).removeClass(Me), "ontouchstart" in document.documentElement && g(document.body).children().off("mouseover", null, g.noop), this._activeTrigger[Ye] = !1, this._activeTrigger[Ve] = !1, this._activeTrigger[Be] = !1, g(this.tip).hasClass(qe)) {
+          var r = _.getTransitionDurationFromElement(i);
+
+          g(i).one(_.TRANSITION_END, e).emulateTransitionEnd(r);
+        } else e();
+
+        this._hoverState = "";
+      }
+    }, t.update = function () {
+      null !== this._popper && this._popper.scheduleUpdate();
+    }, t.isWithContent = function () {
+      return Boolean(this.getTitle());
+    }, t.addAttachmentClass = function (t) {
+      g(this.getTipElement()).addClass(Pe + "-" + t);
+    }, t.getTipElement = function () {
+      return this.tip = this.tip || g(this.config.template)[0], this.tip;
+    }, t.setContent = function () {
+      var t = this.getTipElement();
+      this.setElementContent(g(t.querySelectorAll(Ke)), this.getTitle()), g(t).removeClass(qe + " " + Me);
+    }, t.setElementContent = function (t, e) {
+      "object" != _typeof(e) || !e.nodeType && !e.jquery ? this.config.html ? (this.config.sanitize && (e = we(e, this.config.whiteList, this.config.sanitizeFn)), t.html(e)) : t.text(e) : this.config.html ? g(e).parent().is(t) || t.empty().append(e) : t.text(g(e).text());
+    }, t.getTitle = function () {
+      var t = this.element.getAttribute("data-original-title");
+      return t = t || ("function" == typeof this.config.title ? this.config.title.call(this.element) : this.config.title);
+    }, t._getPopperConfig = function (t) {
+      var e = this;
+      return l({}, {
+        placement: t,
+        modifiers: {
+          offset: this._getOffset(),
+          flip: {
+            behavior: this.config.fallbackPlacement
+          },
+          arrow: {
+            element: Qe
+          },
+          preventOverflow: {
+            boundariesElement: this.config.boundary
+          }
+        },
+        onCreate: function onCreate(t) {
+          t.originalPlacement !== t.placement && e._handlePopperPlacementChange(t);
+        },
+        onUpdate: function onUpdate(t) {
+          return e._handlePopperPlacementChange(t);
+        }
+      }, {}, this.config.popperConfig);
+    }, t._getOffset = function () {
+      var e = this,
+          t = {};
+      return "function" == typeof this.config.offset ? t.fn = function (t) {
+        return t.offsets = l({}, t.offsets, {}, e.config.offset(t.offsets, e.element) || {}), t;
+      } : t.offset = this.config.offset, t;
+    }, t._getContainer = function () {
+      return !1 === this.config.container ? document.body : _.isElement(this.config.container) ? g(this.config.container) : g(document).find(this.config.container);
+    }, t._getAttachment = function (t) {
+      return Re[t.toUpperCase()];
+    }, t._setListeners = function () {
+      var i = this;
+      this.config.trigger.split(" ").forEach(function (t) {
+        if ("click" === t) g(i.element).on(i.constructor.Event.CLICK, i.config.selector, function (t) {
+          return i.toggle(t);
+        });else if (t !== ze) {
+          var e = t === Be ? i.constructor.Event.MOUSEENTER : i.constructor.Event.FOCUSIN,
+              n = t === Be ? i.constructor.Event.MOUSELEAVE : i.constructor.Event.FOCUSOUT;
+          g(i.element).on(e, i.config.selector, function (t) {
+            return i._enter(t);
+          }).on(n, i.config.selector, function (t) {
+            return i._leave(t);
+          });
+        }
+      }), this._hideModalHandler = function () {
+        i.element && i.hide();
+      }, g(this.element).closest(".modal").on("hide.bs.modal", this._hideModalHandler), this.config.selector ? this.config = l({}, this.config, {
+        trigger: "manual",
+        selector: ""
+      }) : this._fixTitle();
+    }, t._fixTitle = function () {
+      var t = _typeof(this.element.getAttribute("data-original-title"));
+
+      !this.element.getAttribute("title") && "string" == t || (this.element.setAttribute("data-original-title", this.element.getAttribute("title") || ""), this.element.setAttribute("title", ""));
+    }, t._enter = function (t, e) {
+      var n = this.constructor.DATA_KEY;
+      (e = e || g(t.currentTarget).data(n)) || (e = new this.constructor(t.currentTarget, this._getDelegateConfig()), g(t.currentTarget).data(n, e)), t && (e._activeTrigger["focusin" === t.type ? Ve : Be] = !0), g(e.getTipElement()).hasClass(Me) || e._hoverState === Fe ? e._hoverState = Fe : (clearTimeout(e._timeout), e._hoverState = Fe, e.config.delay && e.config.delay.show ? e._timeout = setTimeout(function () {
+        e._hoverState === Fe && e.show();
+      }, e.config.delay.show) : e.show());
+    }, t._leave = function (t, e) {
+      var n = this.constructor.DATA_KEY;
+      (e = e || g(t.currentTarget).data(n)) || (e = new this.constructor(t.currentTarget, this._getDelegateConfig()), g(t.currentTarget).data(n, e)), t && (e._activeTrigger["focusout" === t.type ? Ve : Be] = !1), e._isWithActiveTrigger() || (clearTimeout(e._timeout), e._hoverState = Ue, e.config.delay && e.config.delay.hide ? e._timeout = setTimeout(function () {
+        e._hoverState === Ue && e.hide();
+      }, e.config.delay.hide) : e.hide());
+    }, t._isWithActiveTrigger = function () {
+      for (var t in this._activeTrigger) {
+        if (this._activeTrigger[t]) return !0;
+      }
+
+      return !1;
+    }, t._getConfig = function (t) {
+      var e = g(this.element).data();
+      return Object.keys(e).forEach(function (t) {
+        -1 !== je.indexOf(t) && delete e[t];
+      }), "number" == typeof (t = l({}, this.constructor.Default, {}, e, {}, "object" == _typeof(t) && t ? t : {})).delay && (t.delay = {
+        show: t.delay,
+        hide: t.delay
+      }), "number" == typeof t.title && (t.title = t.title.toString()), "number" == typeof t.content && (t.content = t.content.toString()), _.typeCheckConfig(Ae, t, this.constructor.DefaultType), t.sanitize && (t.template = we(t.template, t.whiteList, t.sanitizeFn)), t;
+    }, t._getDelegateConfig = function () {
+      var t = {};
+      if (this.config) for (var e in this.config) {
+        this.constructor.Default[e] !== this.config[e] && (t[e] = this.config[e]);
+      }
+      return t;
+    }, t._cleanTipClass = function () {
+      var t = g(this.getTipElement()),
+          e = t.attr("class").match(Le);
+      null !== e && e.length && t.removeClass(e.join(""));
+    }, t._handlePopperPlacementChange = function (t) {
+      var e = t.instance;
+      this.tip = e.popper, this._cleanTipClass(), this.addAttachmentClass(this._getAttachment(t.placement));
+    }, t._fixTransition = function () {
+      var t = this.getTipElement(),
+          e = this.config.animation;
+      null === t.getAttribute("x-placement") && (g(t).removeClass(qe), this.config.animation = !1, this.hide(), this.show(), this.config.animation = e);
+    }, i._jQueryInterface = function (n) {
+      return this.each(function () {
+        var t = g(this).data(Ne),
+            e = "object" == _typeof(n) && n;
+
+        if ((t || !/dispose|hide/.test(n)) && (t || (t = new i(this, e), g(this).data(Ne, t)), "string" == typeof n)) {
+          if ("undefined" == typeof t[n]) throw new TypeError('No method named "' + n + '"');
+          t[n]();
+        }
+      });
+    }, s(i, null, [{
+      key: "VERSION",
+      get: function get() {
+        return "4.4.1";
+      }
+    }, {
+      key: "Default",
+      get: function get() {
+        return xe;
+      }
+    }, {
+      key: "NAME",
+      get: function get() {
+        return Ae;
+      }
+    }, {
+      key: "DATA_KEY",
+      get: function get() {
+        return Ne;
+      }
+    }, {
+      key: "Event",
+      get: function get() {
+        return We;
+      }
+    }, {
+      key: "EVENT_KEY",
+      get: function get() {
+        return Oe;
+      }
+    }, {
+      key: "DefaultType",
+      get: function get() {
+        return He;
+      }
+    }]), i;
+  }();
+
+  g.fn[Ae] = Xe._jQueryInterface, g.fn[Ae].Constructor = Xe, g.fn[Ae].noConflict = function () {
+    return g.fn[Ae] = ke, Xe._jQueryInterface;
+  };
+
+  var $e = "popover",
+      Ge = "bs.popover",
+      Je = "." + Ge,
+      Ze = g.fn[$e],
+      tn = "bs-popover",
+      en = new RegExp("(^|\\s)" + tn + "\\S+", "g"),
+      nn = l({}, Xe.Default, {
+    placement: "right",
+    trigger: "click",
+    content: "",
+    template: '<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>'
+  }),
+      on = l({}, Xe.DefaultType, {
+    content: "(string|element|function)"
+  }),
+      rn = "fade",
+      sn = "show",
+      an = ".popover-header",
+      ln = ".popover-body",
+      cn = {
+    HIDE: "hide" + Je,
+    HIDDEN: "hidden" + Je,
+    SHOW: "show" + Je,
+    SHOWN: "shown" + Je,
+    INSERTED: "inserted" + Je,
+    CLICK: "click" + Je,
+    FOCUSIN: "focusin" + Je,
+    FOCUSOUT: "focusout" + Je,
+    MOUSEENTER: "mouseenter" + Je,
+    MOUSELEAVE: "mouseleave" + Je
+  },
+      hn = function (t) {
+    function i() {
+      return t.apply(this, arguments) || this;
+    }
+
+    !function (t, e) {
+      t.prototype = Object.create(e.prototype), (t.prototype.constructor = t).__proto__ = e;
+    }(i, t);
+    var e = i.prototype;
+    return e.isWithContent = function () {
+      return this.getTitle() || this._getContent();
+    }, e.addAttachmentClass = function (t) {
+      g(this.getTipElement()).addClass(tn + "-" + t);
+    }, e.getTipElement = function () {
+      return this.tip = this.tip || g(this.config.template)[0], this.tip;
+    }, e.setContent = function () {
+      var t = g(this.getTipElement());
+      this.setElementContent(t.find(an), this.getTitle());
+
+      var e = this._getContent();
+
+      "function" == typeof e && (e = e.call(this.element)), this.setElementContent(t.find(ln), e), t.removeClass(rn + " " + sn);
+    }, e._getContent = function () {
+      return this.element.getAttribute("data-content") || this.config.content;
+    }, e._cleanTipClass = function () {
+      var t = g(this.getTipElement()),
+          e = t.attr("class").match(en);
+      null !== e && 0 < e.length && t.removeClass(e.join(""));
+    }, i._jQueryInterface = function (n) {
+      return this.each(function () {
+        var t = g(this).data(Ge),
+            e = "object" == _typeof(n) ? n : null;
+
+        if ((t || !/dispose|hide/.test(n)) && (t || (t = new i(this, e), g(this).data(Ge, t)), "string" == typeof n)) {
+          if ("undefined" == typeof t[n]) throw new TypeError('No method named "' + n + '"');
+          t[n]();
+        }
+      });
+    }, s(i, null, [{
+      key: "VERSION",
+      get: function get() {
+        return "4.4.1";
+      }
+    }, {
+      key: "Default",
+      get: function get() {
+        return nn;
+      }
+    }, {
+      key: "NAME",
+      get: function get() {
+        return $e;
+      }
+    }, {
+      key: "DATA_KEY",
+      get: function get() {
+        return Ge;
+      }
+    }, {
+      key: "Event",
+      get: function get() {
+        return cn;
+      }
+    }, {
+      key: "EVENT_KEY",
+      get: function get() {
+        return Je;
+      }
+    }, {
+      key: "DefaultType",
+      get: function get() {
+        return on;
+      }
+    }]), i;
+  }(Xe);
+
+  g.fn[$e] = hn._jQueryInterface, g.fn[$e].Constructor = hn, g.fn[$e].noConflict = function () {
+    return g.fn[$e] = Ze, hn._jQueryInterface;
+  };
+
+  var un = "scrollspy",
+      fn = "bs.scrollspy",
+      dn = "." + fn,
+      gn = g.fn[un],
+      _n = {
+    offset: 10,
+    method: "auto",
+    target: ""
+  },
+      mn = {
+    offset: "number",
+    method: "string",
+    target: "(string|element)"
+  },
+      pn = {
+    ACTIVATE: "activate" + dn,
+    SCROLL: "scroll" + dn,
+    LOAD_DATA_API: "load" + dn + ".data-api"
+  },
+      vn = "dropdown-item",
+      yn = "active",
+      En = '[data-spy="scroll"]',
+      Cn = ".nav, .list-group",
+      Tn = ".nav-link",
+      bn = ".nav-item",
+      Sn = ".list-group-item",
+      Dn = ".dropdown",
+      In = ".dropdown-item",
+      wn = ".dropdown-toggle",
+      An = "offset",
+      Nn = "position",
+      On = function () {
+    function n(t, e) {
+      var n = this;
+      this._element = t, this._scrollElement = "BODY" === t.tagName ? window : t, this._config = this._getConfig(e), this._selector = this._config.target + " " + Tn + "," + this._config.target + " " + Sn + "," + this._config.target + " " + In, this._offsets = [], this._targets = [], this._activeTarget = null, this._scrollHeight = 0, g(this._scrollElement).on(pn.SCROLL, function (t) {
+        return n._process(t);
+      }), this.refresh(), this._process();
+    }
+
+    var t = n.prototype;
+    return t.refresh = function () {
+      var e = this,
+          t = this._scrollElement === this._scrollElement.window ? An : Nn,
+          o = "auto" === this._config.method ? t : this._config.method,
+          r = o === Nn ? this._getScrollTop() : 0;
+      this._offsets = [], this._targets = [], this._scrollHeight = this._getScrollHeight(), [].slice.call(document.querySelectorAll(this._selector)).map(function (t) {
+        var e,
+            n = _.getSelectorFromElement(t);
+
+        if (n && (e = document.querySelector(n)), e) {
+          var i = e.getBoundingClientRect();
+          if (i.width || i.height) return [g(e)[o]().top + r, n];
+        }
+
+        return null;
+      }).filter(function (t) {
+        return t;
+      }).sort(function (t, e) {
+        return t[0] - e[0];
+      }).forEach(function (t) {
+        e._offsets.push(t[0]), e._targets.push(t[1]);
+      });
+    }, t.dispose = function () {
+      g.removeData(this._element, fn), g(this._scrollElement).off(dn), this._element = null, this._scrollElement = null, this._config = null, this._selector = null, this._offsets = null, this._targets = null, this._activeTarget = null, this._scrollHeight = null;
+    }, t._getConfig = function (t) {
+      if ("string" != typeof (t = l({}, _n, {}, "object" == _typeof(t) && t ? t : {})).target) {
+        var e = g(t.target).attr("id");
+        e || (e = _.getUID(un), g(t.target).attr("id", e)), t.target = "#" + e;
+      }
+
+      return _.typeCheckConfig(un, t, mn), t;
+    }, t._getScrollTop = function () {
+      return this._scrollElement === window ? this._scrollElement.pageYOffset : this._scrollElement.scrollTop;
+    }, t._getScrollHeight = function () {
+      return this._scrollElement.scrollHeight || Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+    }, t._getOffsetHeight = function () {
+      return this._scrollElement === window ? window.innerHeight : this._scrollElement.getBoundingClientRect().height;
+    }, t._process = function () {
+      var t = this._getScrollTop() + this._config.offset,
+          e = this._getScrollHeight(),
+          n = this._config.offset + e - this._getOffsetHeight();
+
+      if (this._scrollHeight !== e && this.refresh(), n <= t) {
+        var i = this._targets[this._targets.length - 1];
+        this._activeTarget !== i && this._activate(i);
+      } else {
+        if (this._activeTarget && t < this._offsets[0] && 0 < this._offsets[0]) return this._activeTarget = null, void this._clear();
+
+        for (var o = this._offsets.length; o--;) {
+          this._activeTarget !== this._targets[o] && t >= this._offsets[o] && ("undefined" == typeof this._offsets[o + 1] || t < this._offsets[o + 1]) && this._activate(this._targets[o]);
+        }
+      }
+    }, t._activate = function (e) {
+      this._activeTarget = e, this._clear();
+
+      var t = this._selector.split(",").map(function (t) {
+        return t + '[data-target="' + e + '"],' + t + '[href="' + e + '"]';
+      }),
+          n = g([].slice.call(document.querySelectorAll(t.join(","))));
+
+      n.hasClass(vn) ? (n.closest(Dn).find(wn).addClass(yn), n.addClass(yn)) : (n.addClass(yn), n.parents(Cn).prev(Tn + ", " + Sn).addClass(yn), n.parents(Cn).prev(bn).children(Tn).addClass(yn)), g(this._scrollElement).trigger(pn.ACTIVATE, {
+        relatedTarget: e
+      });
+    }, t._clear = function () {
+      [].slice.call(document.querySelectorAll(this._selector)).filter(function (t) {
+        return t.classList.contains(yn);
+      }).forEach(function (t) {
+        return t.classList.remove(yn);
+      });
+    }, n._jQueryInterface = function (e) {
+      return this.each(function () {
+        var t = g(this).data(fn);
+
+        if (t || (t = new n(this, "object" == _typeof(e) && e), g(this).data(fn, t)), "string" == typeof e) {
+          if ("undefined" == typeof t[e]) throw new TypeError('No method named "' + e + '"');
+          t[e]();
+        }
+      });
+    }, s(n, null, [{
+      key: "VERSION",
+      get: function get() {
+        return "4.4.1";
+      }
+    }, {
+      key: "Default",
+      get: function get() {
+        return _n;
+      }
+    }]), n;
+  }();
+
+  g(window).on(pn.LOAD_DATA_API, function () {
+    for (var t = [].slice.call(document.querySelectorAll(En)), e = t.length; e--;) {
+      var n = g(t[e]);
+
+      On._jQueryInterface.call(n, n.data());
+    }
+  }), g.fn[un] = On._jQueryInterface, g.fn[un].Constructor = On, g.fn[un].noConflict = function () {
+    return g.fn[un] = gn, On._jQueryInterface;
+  };
+
+  var kn = "bs.tab",
+      Pn = "." + kn,
+      Ln = g.fn.tab,
+      jn = {
+    HIDE: "hide" + Pn,
+    HIDDEN: "hidden" + Pn,
+    SHOW: "show" + Pn,
+    SHOWN: "shown" + Pn,
+    CLICK_DATA_API: "click" + Pn + ".data-api"
+  },
+      Hn = "dropdown-menu",
+      Rn = "active",
+      xn = "disabled",
+      Fn = "fade",
+      Un = "show",
+      Wn = ".dropdown",
+      qn = ".nav, .list-group",
+      Mn = ".active",
+      Kn = "> li > .active",
+      Qn = '[data-toggle="tab"], [data-toggle="pill"], [data-toggle="list"]',
+      Bn = ".dropdown-toggle",
+      Vn = "> .dropdown-menu .active",
+      Yn = function () {
+    function i(t) {
+      this._element = t;
+    }
+
+    var t = i.prototype;
+    return t.show = function () {
+      var n = this;
+
+      if (!(this._element.parentNode && this._element.parentNode.nodeType === Node.ELEMENT_NODE && g(this._element).hasClass(Rn) || g(this._element).hasClass(xn))) {
+        var t,
+            i,
+            e = g(this._element).closest(qn)[0],
+            o = _.getSelectorFromElement(this._element);
+
+        if (e) {
+          var r = "UL" === e.nodeName || "OL" === e.nodeName ? Kn : Mn;
+          i = (i = g.makeArray(g(e).find(r)))[i.length - 1];
+        }
+
+        var s = g.Event(jn.HIDE, {
+          relatedTarget: this._element
+        }),
+            a = g.Event(jn.SHOW, {
+          relatedTarget: i
+        });
+
+        if (i && g(i).trigger(s), g(this._element).trigger(a), !a.isDefaultPrevented() && !s.isDefaultPrevented()) {
+          o && (t = document.querySelector(o)), this._activate(this._element, e);
+
+          var l = function l() {
+            var t = g.Event(jn.HIDDEN, {
+              relatedTarget: n._element
+            }),
+                e = g.Event(jn.SHOWN, {
+              relatedTarget: i
+            });
+            g(i).trigger(t), g(n._element).trigger(e);
+          };
+
+          t ? this._activate(t, t.parentNode, l) : l();
+        }
+      }
+    }, t.dispose = function () {
+      g.removeData(this._element, kn), this._element = null;
+    }, t._activate = function (t, e, n) {
+      function i() {
+        return o._transitionComplete(t, r, n);
+      }
+
+      var o = this,
+          r = (!e || "UL" !== e.nodeName && "OL" !== e.nodeName ? g(e).children(Mn) : g(e).find(Kn))[0],
+          s = n && r && g(r).hasClass(Fn);
+
+      if (r && s) {
+        var a = _.getTransitionDurationFromElement(r);
+
+        g(r).removeClass(Un).one(_.TRANSITION_END, i).emulateTransitionEnd(a);
+      } else i();
+    }, t._transitionComplete = function (t, e, n) {
+      if (e) {
+        g(e).removeClass(Rn);
+        var i = g(e.parentNode).find(Vn)[0];
+        i && g(i).removeClass(Rn), "tab" === e.getAttribute("role") && e.setAttribute("aria-selected", !1);
+      }
+
+      if (g(t).addClass(Rn), "tab" === t.getAttribute("role") && t.setAttribute("aria-selected", !0), _.reflow(t), t.classList.contains(Fn) && t.classList.add(Un), t.parentNode && g(t.parentNode).hasClass(Hn)) {
+        var o = g(t).closest(Wn)[0];
+
+        if (o) {
+          var r = [].slice.call(o.querySelectorAll(Bn));
+          g(r).addClass(Rn);
+        }
+
+        t.setAttribute("aria-expanded", !0);
+      }
+
+      n && n();
+    }, i._jQueryInterface = function (n) {
+      return this.each(function () {
+        var t = g(this),
+            e = t.data(kn);
+
+        if (e || (e = new i(this), t.data(kn, e)), "string" == typeof n) {
+          if ("undefined" == typeof e[n]) throw new TypeError('No method named "' + n + '"');
+          e[n]();
+        }
+      });
+    }, s(i, null, [{
+      key: "VERSION",
+      get: function get() {
+        return "4.4.1";
+      }
+    }]), i;
+  }();
+
+  g(document).on(jn.CLICK_DATA_API, Qn, function (t) {
+    t.preventDefault(), Yn._jQueryInterface.call(g(this), "show");
+  }), g.fn.tab = Yn._jQueryInterface, g.fn.tab.Constructor = Yn, g.fn.tab.noConflict = function () {
+    return g.fn.tab = Ln, Yn._jQueryInterface;
+  };
+
+  var zn = "toast",
+      Xn = "bs.toast",
+      $n = "." + Xn,
+      Gn = g.fn[zn],
+      Jn = {
+    CLICK_DISMISS: "click.dismiss" + $n,
+    HIDE: "hide" + $n,
+    HIDDEN: "hidden" + $n,
+    SHOW: "show" + $n,
+    SHOWN: "shown" + $n
+  },
+      Zn = "fade",
+      ti = "hide",
+      ei = "show",
+      ni = "showing",
+      ii = {
+    animation: "boolean",
+    autohide: "boolean",
+    delay: "number"
+  },
+      oi = {
+    animation: !0,
+    autohide: !0,
+    delay: 500
+  },
+      ri = '[data-dismiss="toast"]',
+      si = function () {
+    function i(t, e) {
+      this._element = t, this._config = this._getConfig(e), this._timeout = null, this._setListeners();
+    }
+
+    var t = i.prototype;
+    return t.show = function () {
+      var t = this,
+          e = g.Event(Jn.SHOW);
+
+      if (g(this._element).trigger(e), !e.isDefaultPrevented()) {
+        this._config.animation && this._element.classList.add(Zn);
+
+        var n = function n() {
+          t._element.classList.remove(ni), t._element.classList.add(ei), g(t._element).trigger(Jn.SHOWN), t._config.autohide && (t._timeout = setTimeout(function () {
+            t.hide();
+          }, t._config.delay));
+        };
+
+        if (this._element.classList.remove(ti), _.reflow(this._element), this._element.classList.add(ni), this._config.animation) {
+          var i = _.getTransitionDurationFromElement(this._element);
+
+          g(this._element).one(_.TRANSITION_END, n).emulateTransitionEnd(i);
+        } else n();
+      }
+    }, t.hide = function () {
+      if (this._element.classList.contains(ei)) {
+        var t = g.Event(Jn.HIDE);
+        g(this._element).trigger(t), t.isDefaultPrevented() || this._close();
+      }
+    }, t.dispose = function () {
+      clearTimeout(this._timeout), this._timeout = null, this._element.classList.contains(ei) && this._element.classList.remove(ei), g(this._element).off(Jn.CLICK_DISMISS), g.removeData(this._element, Xn), this._element = null, this._config = null;
+    }, t._getConfig = function (t) {
+      return t = l({}, oi, {}, g(this._element).data(), {}, "object" == _typeof(t) && t ? t : {}), _.typeCheckConfig(zn, t, this.constructor.DefaultType), t;
+    }, t._setListeners = function () {
+      var t = this;
+      g(this._element).on(Jn.CLICK_DISMISS, ri, function () {
+        return t.hide();
+      });
+    }, t._close = function () {
+      function t() {
+        e._element.classList.add(ti), g(e._element).trigger(Jn.HIDDEN);
+      }
+
+      var e = this;
+
+      if (this._element.classList.remove(ei), this._config.animation) {
+        var n = _.getTransitionDurationFromElement(this._element);
+
+        g(this._element).one(_.TRANSITION_END, t).emulateTransitionEnd(n);
+      } else t();
+    }, i._jQueryInterface = function (n) {
+      return this.each(function () {
+        var t = g(this),
+            e = t.data(Xn);
+
+        if (e || (e = new i(this, "object" == _typeof(n) && n), t.data(Xn, e)), "string" == typeof n) {
+          if ("undefined" == typeof e[n]) throw new TypeError('No method named "' + n + '"');
+          e[n](this);
+        }
+      });
+    }, s(i, null, [{
+      key: "VERSION",
+      get: function get() {
+        return "4.4.1";
+      }
+    }, {
+      key: "DefaultType",
+      get: function get() {
+        return ii;
+      }
+    }, {
+      key: "Default",
+      get: function get() {
+        return oi;
+      }
+    }]), i;
+  }();
+
+  g.fn[zn] = si._jQueryInterface, g.fn[zn].Constructor = si, g.fn[zn].noConflict = function () {
+    return g.fn[zn] = Gn, si._jQueryInterface;
+  }, t.Alert = v, t.Button = H, t.Carousel = ut, t.Collapse = wt, t.Dropdown = ee, t.Modal = Te, t.Popover = hn, t.Scrollspy = On, t.Tab = Yn, t.Toast = si, t.Tooltip = Xe, t.Util = _, Object.defineProperty(t, "__esModule", {
+    value: !0
+  });
+});
+/*!
+ * perfect-scrollbar v1.5.0
+ * Copyright 2020 Hyunje Jun, MDBootstrap and Contributors
+ * Licensed under MIT
+ */
+
+(function (a, b) {
+  "object" == ( false ? undefined : _typeof(exports)) && "undefined" != typeof module ? module.exports = b() :  true ? !(__WEBPACK_AMD_DEFINE_FACTORY__ = (b),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) :
+				__WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)) : (undefined);
+})(this, function () {
+  'use strict';
+
+  var u = Math.abs,
+      v = Math.floor;
+
+  function a(a) {
+    return getComputedStyle(a);
+  }
+
+  function b(a, b) {
+    for (var c in b) {
+      var d = b[c];
+      "number" == typeof d && (d += "px"), a.style[c] = d;
+    }
+
+    return a;
+  }
+
+  function c(a) {
+    var b = document.createElement("div");
+    return b.className = a, b;
+  }
+
+  function d(a, b) {
+    if (!w) throw new Error("No element matching method supported");
+    return w.call(a, b);
+  }
+
+  function e(a) {
+    a.remove ? a.remove() : a.parentNode && a.parentNode.removeChild(a);
+  }
+
+  function f(a, b) {
+    return Array.prototype.filter.call(a.children, function (a) {
+      return d(a, b);
+    });
+  }
+
+  function g(a, b) {
+    var c = a.element.classList,
+        d = z.state.scrolling(b);
+    c.contains(d) ? clearTimeout(A[b]) : c.add(d);
+  }
+
+  function h(a, b) {
+    A[b] = setTimeout(function () {
+      return a.isAlive && a.element.classList.remove(z.state.scrolling(b));
+    }, a.settings.scrollingThreshold);
+  }
+
+  function j(a, b) {
+    g(a, b), h(a, b);
+  }
+
+  function k(a) {
+    if ("function" == typeof window.CustomEvent) return new CustomEvent(a);
+    var b = document.createEvent("CustomEvent");
+    return b.initCustomEvent(a, !1, !1, void 0), b;
+  }
+
+  function l(a, b, c, d, e) {
+    void 0 === d && (d = !0), void 0 === e && (e = !1);
+    var f;
+    if ("top" === b) f = ["contentHeight", "containerHeight", "scrollTop", "y", "up", "down"];else if ("left" === b) f = ["contentWidth", "containerWidth", "scrollLeft", "x", "left", "right"];else throw new Error("A proper axis should be provided");
+    m(a, c, f, d, e);
+  }
+
+  function m(a, b, c, d, e) {
+    var f = c[0],
+        g = c[1],
+        h = c[2],
+        i = c[3],
+        l = c[4],
+        m = c[5];
+    void 0 === d && (d = !0), void 0 === e && (e = !1);
+    var n = a.element; // reset reach
+
+    a.reach[i] = null, 1 > n[h] && (a.reach[i] = "start"), n[h] > a[f] - a[g] - 1 && (a.reach[i] = "end"), b && (n.dispatchEvent(k("ps-scroll-" + i)), 0 > b ? n.dispatchEvent(k("ps-scroll-" + l)) : 0 < b && n.dispatchEvent(k("ps-scroll-" + m)), d && j(a, i)), a.reach[i] && (b || e) && n.dispatchEvent(k("ps-" + i + "-reach-" + a.reach[i]));
+  }
+
+  function n(a) {
+    return parseInt(a, 10) || 0;
+  }
+
+  function o(a) {
+    return d(a, "input,[contenteditable]") || d(a, "select,[contenteditable]") || d(a, "textarea,[contenteditable]") || d(a, "button,[contenteditable]");
+  }
+
+  function p(b) {
+    var c = a(b);
+    return n(c.width) + n(c.paddingLeft) + n(c.paddingRight) + n(c.borderLeftWidth) + n(c.borderRightWidth);
+  }
+
+  function q(a) {
+    var b = Math.ceil,
+        c = a.element,
+        d = v(c.scrollTop),
+        g = c.getBoundingClientRect();
+    a.containerWidth = b(g.width), a.containerHeight = b(g.height), a.contentWidth = c.scrollWidth, a.contentHeight = c.scrollHeight, c.contains(a.scrollbarXRail) || (f(c, z.element.rail("x")).forEach(function (a) {
+      return e(a);
+    }), c.appendChild(a.scrollbarXRail)), c.contains(a.scrollbarYRail) || (f(c, z.element.rail("y")).forEach(function (a) {
+      return e(a);
+    }), c.appendChild(a.scrollbarYRail)), !a.settings.suppressScrollX && a.containerWidth + a.settings.scrollXMarginOffset < a.contentWidth ? (a.scrollbarXActive = !0, a.railXWidth = a.containerWidth - a.railXMarginWidth, a.railXRatio = a.containerWidth / a.railXWidth, a.scrollbarXWidth = r(a, n(a.railXWidth * a.containerWidth / a.contentWidth)), a.scrollbarXLeft = n((a.negativeScrollAdjustment + c.scrollLeft) * (a.railXWidth - a.scrollbarXWidth) / (a.contentWidth - a.containerWidth))) : a.scrollbarXActive = !1, !a.settings.suppressScrollY && a.containerHeight + a.settings.scrollYMarginOffset < a.contentHeight ? (a.scrollbarYActive = !0, a.railYHeight = a.containerHeight - a.railYMarginHeight, a.railYRatio = a.containerHeight / a.railYHeight, a.scrollbarYHeight = r(a, n(a.railYHeight * a.containerHeight / a.contentHeight)), a.scrollbarYTop = n(d * (a.railYHeight - a.scrollbarYHeight) / (a.contentHeight - a.containerHeight))) : a.scrollbarYActive = !1, a.scrollbarXLeft >= a.railXWidth - a.scrollbarXWidth && (a.scrollbarXLeft = a.railXWidth - a.scrollbarXWidth), a.scrollbarYTop >= a.railYHeight - a.scrollbarYHeight && (a.scrollbarYTop = a.railYHeight - a.scrollbarYHeight), s(c, a), a.scrollbarXActive ? c.classList.add(z.state.active("x")) : (c.classList.remove(z.state.active("x")), a.scrollbarXWidth = 0, a.scrollbarXLeft = 0, c.scrollLeft = !0 === a.isRtl ? a.contentWidth : 0), a.scrollbarYActive ? c.classList.add(z.state.active("y")) : (c.classList.remove(z.state.active("y")), a.scrollbarYHeight = 0, a.scrollbarYTop = 0, c.scrollTop = 0);
+  }
+
+  function r(a, b) {
+    var c = Math.min,
+        d = Math.max;
+    return a.settings.minScrollbarLength && (b = d(b, a.settings.minScrollbarLength)), a.settings.maxScrollbarLength && (b = c(b, a.settings.maxScrollbarLength)), b;
+  }
+
+  function s(a, c) {
+    var d = {
+      width: c.railXWidth
+    },
+        e = v(a.scrollTop);
+    d.left = c.isRtl ? c.negativeScrollAdjustment + a.scrollLeft + c.containerWidth - c.contentWidth : a.scrollLeft, c.isScrollbarXUsingBottom ? d.bottom = c.scrollbarXBottom - e : d.top = c.scrollbarXTop + e, b(c.scrollbarXRail, d);
+    var f = {
+      top: e,
+      height: c.railYHeight
+    };
+    c.isScrollbarYUsingRight ? c.isRtl ? f.right = c.contentWidth - (c.negativeScrollAdjustment + a.scrollLeft) - c.scrollbarYRight - c.scrollbarYOuterWidth - 9 : f.right = c.scrollbarYRight - a.scrollLeft : c.isRtl ? f.left = c.negativeScrollAdjustment + a.scrollLeft + 2 * c.containerWidth - c.contentWidth - c.scrollbarYLeft - c.scrollbarYOuterWidth : f.left = c.scrollbarYLeft + a.scrollLeft, b(c.scrollbarYRail, f), b(c.scrollbarX, {
+      left: c.scrollbarXLeft,
+      width: c.scrollbarXWidth - c.railBorderXWidth
+    }), b(c.scrollbarY, {
+      top: c.scrollbarYTop,
+      height: c.scrollbarYHeight - c.railBorderYWidth
+    });
+  }
+
+  function t(a, b) {
+    function c(b) {
+      b.touches && b.touches[0] && (b[k] = b.touches[0].pageY), s[o] = t + v * (b[k] - u), g(a, p), q(a), b.stopPropagation(), b.preventDefault();
+    }
+
+    function d() {
+      h(a, p), a[r].classList.remove(z.state.clicking), a.event.unbind(a.ownerDocument, "mousemove", c);
+    }
+
+    function f(b, e) {
+      t = s[o], e && b.touches && (b[k] = b.touches[0].pageY), u = b[k], v = (a[j] - a[i]) / (a[l] - a[n]), e ? a.event.bind(a.ownerDocument, "touchmove", c) : (a.event.bind(a.ownerDocument, "mousemove", c), a.event.once(a.ownerDocument, "mouseup", d), b.preventDefault()), a[r].classList.add(z.state.clicking), b.stopPropagation();
+    }
+
+    var i = b[0],
+        j = b[1],
+        k = b[2],
+        l = b[3],
+        m = b[4],
+        n = b[5],
+        o = b[6],
+        p = b[7],
+        r = b[8],
+        s = a.element,
+        t = null,
+        u = null,
+        v = null;
+    a.event.bind(a[m], "mousedown", function (a) {
+      f(a);
+    }), a.event.bind(a[m], "touchstart", function (a) {
+      f(a, !0);
+    });
+  }
+
+  var w = "undefined" != typeof Element && (Element.prototype.matches || Element.prototype.webkitMatchesSelector || Element.prototype.mozMatchesSelector || Element.prototype.msMatchesSelector),
+      z = {
+    main: "ps",
+    rtl: "ps__rtl",
+    element: {
+      thumb: function thumb(a) {
+        return "ps__thumb-" + a;
+      },
+      rail: function rail(a) {
+        return "ps__rail-" + a;
+      },
+      consuming: "ps__child--consume"
+    },
+    state: {
+      focus: "ps--focus",
+      clicking: "ps--clicking",
+      active: function active(a) {
+        return "ps--active-" + a;
+      },
+      scrolling: function scrolling(a) {
+        return "ps--scrolling-" + a;
+      }
+    }
+  },
+      A = {
+    x: null,
+    y: null
+  },
+      B = function B(a) {
+    this.element = a, this.handlers = {};
+  },
+      C = {
+    isEmpty: {
+      configurable: !0
+    }
+  };
+
+  B.prototype.bind = function (a, b) {
+    "undefined" == typeof this.handlers[a] && (this.handlers[a] = []), this.handlers[a].push(b), this.element.addEventListener(a, b, !1);
+  }, B.prototype.unbind = function (a, b) {
+    var c = this;
+    this.handlers[a] = this.handlers[a].filter(function (d) {
+      return !!(b && d !== b) || (c.element.removeEventListener(a, d, !1), !1);
+    });
+  }, B.prototype.unbindAll = function () {
+    for (var a in this.handlers) {
+      this.unbind(a);
+    }
+  }, C.isEmpty.get = function () {
+    var a = this;
+    return Object.keys(this.handlers).every(function (b) {
+      return 0 === a.handlers[b].length;
+    });
+  }, Object.defineProperties(B.prototype, C);
+
+  var D = function D() {
+    this.eventElements = [];
+  };
+
+  D.prototype.eventElement = function (a) {
+    var b = this.eventElements.filter(function (b) {
+      return b.element === a;
+    })[0];
+    return b || (b = new B(a), this.eventElements.push(b)), b;
+  }, D.prototype.bind = function (a, b, c) {
+    this.eventElement(a).bind(b, c);
+  }, D.prototype.unbind = function (a, b, c) {
+    var d = this.eventElement(a);
+    d.unbind(b, c), d.isEmpty && this.eventElements.splice(this.eventElements.indexOf(d), 1);
+  }, D.prototype.unbindAll = function () {
+    this.eventElements.forEach(function (a) {
+      return a.unbindAll();
+    }), this.eventElements = [];
+  }, D.prototype.once = function (a, b, c) {
+    var d = this.eventElement(a),
+        e = function e(a) {
+      d.unbind(b, e), c(a);
+    };
+
+    d.bind(b, e);
+  };
+
+  var E = {
+    isWebKit: "undefined" != typeof document && "WebkitAppearance" in document.documentElement.style,
+    supportsTouch: "undefined" != typeof window && ("ontouchstart" in window || "maxTouchPoints" in window.navigator && 0 < window.navigator.maxTouchPoints || window.DocumentTouch && document instanceof window.DocumentTouch),
+    supportsIePointer: "undefined" != typeof navigator && navigator.msMaxTouchPoints,
+    isChrome: "undefined" != typeof navigator && /Chrome/i.test(navigator && navigator.userAgent)
+  },
+      F = function F() {
+    return {
+      handlers: ["click-rail", "drag-thumb", "keyboard", "wheel", "touch"],
+      maxScrollbarLength: null,
+      minScrollbarLength: null,
+      scrollingThreshold: 1e3,
+      scrollXMarginOffset: 0,
+      scrollYMarginOffset: 0,
+      suppressScrollX: !1,
+      suppressScrollY: !1,
+      swipeEasing: !0,
+      useBothWheelAxes: !1,
+      wheelPropagation: !0,
+      wheelSpeed: 1
+    };
+  },
+      G = {
+    "click-rail": function clickRail(a) {
+      a.element;
+      a.event.bind(a.scrollbarY, "mousedown", function (a) {
+        return a.stopPropagation();
+      }), a.event.bind(a.scrollbarYRail, "mousedown", function (b) {
+        var c = b.pageY - window.pageYOffset - a.scrollbarYRail.getBoundingClientRect().top,
+            d = c > a.scrollbarYTop ? 1 : -1;
+        a.element.scrollTop += d * a.containerHeight, q(a), b.stopPropagation();
+      }), a.event.bind(a.scrollbarX, "mousedown", function (a) {
+        return a.stopPropagation();
+      }), a.event.bind(a.scrollbarXRail, "mousedown", function (b) {
+        var c = b.pageX - window.pageXOffset - a.scrollbarXRail.getBoundingClientRect().left,
+            d = c > a.scrollbarXLeft ? 1 : -1;
+        a.element.scrollLeft += d * a.containerWidth, q(a), b.stopPropagation();
+      });
+    },
+    "drag-thumb": function dragThumb(a) {
+      t(a, ["containerWidth", "contentWidth", "pageX", "railXWidth", "scrollbarX", "scrollbarXWidth", "scrollLeft", "x", "scrollbarXRail"]), t(a, ["containerHeight", "contentHeight", "pageY", "railYHeight", "scrollbarY", "scrollbarYHeight", "scrollTop", "y", "scrollbarYRail"]);
+    },
+    keyboard: function keyboard(a) {
+      function b(b, d) {
+        var e = v(c.scrollTop);
+
+        if (0 === b) {
+          if (!a.scrollbarYActive) return !1;
+          if (0 === e && 0 < d || e >= a.contentHeight - a.containerHeight && 0 > d) return !a.settings.wheelPropagation;
+        }
+
+        var f = c.scrollLeft;
+
+        if (0 === d) {
+          if (!a.scrollbarXActive) return !1;
+          if (0 === f && 0 > b || f >= a.contentWidth - a.containerWidth && 0 < b) return !a.settings.wheelPropagation;
+        }
+
+        return !0;
+      }
+
+      var c = a.element,
+          f = function f() {
+        return d(c, ":hover");
+      },
+          g = function g() {
+        return d(a.scrollbarX, ":focus") || d(a.scrollbarY, ":focus");
+      };
+
+      a.event.bind(a.ownerDocument, "keydown", function (d) {
+        if (!(d.isDefaultPrevented && d.isDefaultPrevented() || d.defaultPrevented) && (f() || g())) {
+          var e = document.activeElement ? document.activeElement : a.ownerDocument.activeElement;
+
+          if (e) {
+            if ("IFRAME" === e.tagName) e = e.contentDocument.activeElement;else // go deeper if element is a webcomponent
+              for (; e.shadowRoot;) {
+                e = e.shadowRoot.activeElement;
+              }
+            if (o(e)) return;
+          }
+
+          var h = 0,
+              i = 0;
+
+          switch (d.which) {
+            case 37:
+              h = d.metaKey ? -a.contentWidth : d.altKey ? -a.containerWidth : -30;
+              break;
+
+            case 38:
+              i = d.metaKey ? a.contentHeight : d.altKey ? a.containerHeight : 30;
+              break;
+
+            case 39:
+              h = d.metaKey ? a.contentWidth : d.altKey ? a.containerWidth : 30;
+              break;
+
+            case 40:
+              i = d.metaKey ? -a.contentHeight : d.altKey ? -a.containerHeight : -30;
+              break;
+
+            case 32:
+              i = d.shiftKey ? a.containerHeight : -a.containerHeight;
+              break;
+
+            case 33:
+              i = a.containerHeight;
+              break;
+
+            case 34:
+              i = -a.containerHeight;
+              break;
+
+            case 36:
+              i = a.contentHeight;
+              break;
+
+            case 35:
+              i = -a.contentHeight;
+              break;
+
+            default:
+              return;
+          }
+
+          a.settings.suppressScrollX && 0 !== h || a.settings.suppressScrollY && 0 !== i || (c.scrollTop -= i, c.scrollLeft += h, q(a), b(h, i) && d.preventDefault());
+        }
+      });
+    },
+    wheel: function wheel(b) {
+      function c(a, c) {
+        var d,
+            e = v(h.scrollTop),
+            f = 0 === h.scrollTop,
+            g = e + h.offsetHeight === h.scrollHeight,
+            i = 0 === h.scrollLeft,
+            j = h.scrollLeft + h.offsetWidth === h.scrollWidth;
+        return d = u(c) > u(a) ? f || g : i || j, !d || !b.settings.wheelPropagation;
+      }
+
+      function d(a) {
+        var b = a.deltaX,
+            c = -1 * a.deltaY;
+        return ("undefined" == typeof b || "undefined" == typeof c) && (b = -1 * a.wheelDeltaX / 6, c = a.wheelDeltaY / 6), a.deltaMode && 1 === a.deltaMode && (b *= 10, c *= 10), b !== b && c !== c
+        /* NaN checks */
+        && (b = 0, c = a.wheelDelta), a.shiftKey ? [-c, -b] : [b, c];
+      }
+
+      function f(b, c, d) {
+        // FIXME: this is a workaround for <select> issue in FF and IE #571
+        if (!E.isWebKit && h.querySelector("select:focus")) return !0;
+        if (!h.contains(b)) return !1;
+
+        for (var e = b; e && e !== h;) {
+          if (e.classList.contains(z.element.consuming)) return !0;
+          var f = a(e); // if deltaY && vertical scrollable
+
+          if (d && f.overflowY.match(/(scroll|auto)/)) {
+            var g = e.scrollHeight - e.clientHeight;
+            if (0 < g && (0 < e.scrollTop && 0 > d || e.scrollTop < g && 0 < d)) return !0;
+          } // if deltaX && horizontal scrollable
+
+
+          if (c && f.overflowX.match(/(scroll|auto)/)) {
+            var i = e.scrollWidth - e.clientWidth;
+            if (0 < i && (0 < e.scrollLeft && 0 > c || e.scrollLeft < i && 0 < c)) return !0;
+          }
+
+          e = e.parentNode;
+        }
+
+        return !1;
+      }
+
+      function g(a) {
+        var e = d(a),
+            g = e[0],
+            i = e[1];
+
+        if (!f(a.target, g, i)) {
+          var j = !1;
+          b.settings.useBothWheelAxes ? b.scrollbarYActive && !b.scrollbarXActive ? (i ? h.scrollTop -= i * b.settings.wheelSpeed : h.scrollTop += g * b.settings.wheelSpeed, j = !0) : b.scrollbarXActive && !b.scrollbarYActive && (g ? h.scrollLeft += g * b.settings.wheelSpeed : h.scrollLeft -= i * b.settings.wheelSpeed, j = !0) : (h.scrollTop -= i * b.settings.wheelSpeed, h.scrollLeft += g * b.settings.wheelSpeed), q(b), j = j || c(g, i), j && !a.ctrlKey && (a.stopPropagation(), a.preventDefault());
+        }
+      }
+
+      var h = b.element;
+      "undefined" == typeof window.onwheel ? "undefined" != typeof window.onmousewheel && b.event.bind(h, "mousewheel", g) : b.event.bind(h, "wheel", g);
+    },
+    touch: function touch(b) {
+      function c(a, c) {
+        var d = v(l.scrollTop),
+            e = l.scrollLeft,
+            f = u(a),
+            g = u(c);
+
+        if (g > f) {
+          // user is perhaps trying to swipe up/down the page
+          if (0 > c && d === b.contentHeight - b.containerHeight || 0 < c && 0 === d) // set prevent for mobile Chrome refresh
+            return 0 === window.scrollY && 0 < c && E.isChrome;
+        } else if (f > g && (0 > a && e === b.contentWidth - b.containerWidth || 0 < a && 0 === e)) // user is perhaps trying to swipe left/right across the page
+          return !0;
+
+        return !0;
+      }
+
+      function d(a, c) {
+        l.scrollTop -= c, l.scrollLeft -= a, q(b);
+      }
+
+      function f(a) {
+        return a.targetTouches ? a.targetTouches[0] : a;
+      }
+
+      function g(a) {
+        return !(a.pointerType && "pen" === a.pointerType && 0 === a.buttons) && (!!(a.targetTouches && 1 === a.targetTouches.length) || !!(a.pointerType && "mouse" !== a.pointerType && a.pointerType !== a.MSPOINTER_TYPE_MOUSE));
+      }
+
+      function h(a) {
+        if (g(a)) {
+          var b = f(a);
+          m.pageX = b.pageX, m.pageY = b.pageY, n = new Date().getTime(), null !== p && clearInterval(p);
+        }
+      }
+
+      function i(b, c, d) {
+        if (!l.contains(b)) return !1;
+
+        for (var e = b; e && e !== l;) {
+          if (e.classList.contains(z.element.consuming)) return !0;
+          var f = a(e); // if deltaY && vertical scrollable
+
+          if (d && f.overflowY.match(/(scroll|auto)/)) {
+            var g = e.scrollHeight - e.clientHeight;
+            if (0 < g && (0 < e.scrollTop && 0 > d || e.scrollTop < g && 0 < d)) return !0;
+          } // if deltaX && horizontal scrollable
+
+
+          if (c && f.overflowX.match(/(scroll|auto)/)) {
+            var h = e.scrollWidth - e.clientWidth;
+            if (0 < h && (0 < e.scrollLeft && 0 > c || e.scrollLeft < h && 0 < c)) return !0;
+          }
+
+          e = e.parentNode;
+        }
+
+        return !1;
+      }
+
+      function j(a) {
+        if (g(a)) {
+          var b = f(a),
+              e = {
+            pageX: b.pageX,
+            pageY: b.pageY
+          },
+              h = e.pageX - m.pageX,
+              j = e.pageY - m.pageY;
+          if (i(a.target, h, j)) return;
+          d(h, j), m = e;
+          var k = new Date().getTime(),
+              l = k - n;
+          0 < l && (o.x = h / l, o.y = j / l, n = k), c(h, j) && a.preventDefault();
+        }
+      }
+
+      function k() {
+        b.settings.swipeEasing && (clearInterval(p), p = setInterval(function () {
+          return b.isInitialized ? void clearInterval(p) : o.x || o.y ? .01 > u(o.x) && .01 > u(o.y) ? void clearInterval(p) : void (d(30 * o.x, 30 * o.y), o.x *= .8, o.y *= .8) : void clearInterval(p);
+        }, 10));
+      }
+
+      if (E.supportsTouch || E.supportsIePointer) {
+        var l = b.element,
+            m = {},
+            n = 0,
+            o = {},
+            p = null;
+        E.supportsTouch ? (b.event.bind(l, "touchstart", h), b.event.bind(l, "touchmove", j), b.event.bind(l, "touchend", k)) : E.supportsIePointer && (window.PointerEvent ? (b.event.bind(l, "pointerdown", h), b.event.bind(l, "pointermove", j), b.event.bind(l, "pointerup", k)) : window.MSPointerEvent && (b.event.bind(l, "MSPointerDown", h), b.event.bind(l, "MSPointerMove", j), b.event.bind(l, "MSPointerUp", k)));
+      }
+    }
+  },
+      H = function H(d, e) {
+    var f = this;
+    if (void 0 === e && (e = {}), "string" == typeof d && (d = document.querySelector(d)), !d || !d.nodeName) throw new Error("no element is specified to initialize PerfectScrollbar");
+
+    for (var g in this.element = d, d.classList.add(z.main), this.settings = F(), e) {
+      this.settings[g] = e[g];
+    }
+
+    this.containerWidth = null, this.containerHeight = null, this.contentWidth = null, this.contentHeight = null;
+
+    var h = function h() {
+      return d.classList.add(z.state.focus);
+    },
+        i = function i() {
+      return d.classList.remove(z.state.focus);
+    };
+
+    this.isRtl = "rtl" === a(d).direction, !0 === this.isRtl && d.classList.add(z.rtl), this.isNegativeScroll = function () {
+      var a = d.scrollLeft,
+          b = null;
+      return d.scrollLeft = -1, b = 0 > d.scrollLeft, d.scrollLeft = a, b;
+    }(), this.negativeScrollAdjustment = this.isNegativeScroll ? d.scrollWidth - d.clientWidth : 0, this.event = new D(), this.ownerDocument = d.ownerDocument || document, this.scrollbarXRail = c(z.element.rail("x")), d.appendChild(this.scrollbarXRail), this.scrollbarX = c(z.element.thumb("x")), this.scrollbarXRail.appendChild(this.scrollbarX), this.scrollbarX.setAttribute("tabindex", 0), this.event.bind(this.scrollbarX, "focus", h), this.event.bind(this.scrollbarX, "blur", i), this.scrollbarXActive = null, this.scrollbarXWidth = null, this.scrollbarXLeft = null;
+    var j = a(this.scrollbarXRail);
+    this.scrollbarXBottom = parseInt(j.bottom, 10), isNaN(this.scrollbarXBottom) ? (this.isScrollbarXUsingBottom = !1, this.scrollbarXTop = n(j.top)) : this.isScrollbarXUsingBottom = !0, this.railBorderXWidth = n(j.borderLeftWidth) + n(j.borderRightWidth), b(this.scrollbarXRail, {
+      display: "block"
+    }), this.railXMarginWidth = n(j.marginLeft) + n(j.marginRight), b(this.scrollbarXRail, {
+      display: ""
+    }), this.railXWidth = null, this.railXRatio = null, this.scrollbarYRail = c(z.element.rail("y")), d.appendChild(this.scrollbarYRail), this.scrollbarY = c(z.element.thumb("y")), this.scrollbarYRail.appendChild(this.scrollbarY), this.scrollbarY.setAttribute("tabindex", 0), this.event.bind(this.scrollbarY, "focus", h), this.event.bind(this.scrollbarY, "blur", i), this.scrollbarYActive = null, this.scrollbarYHeight = null, this.scrollbarYTop = null;
+    var k = a(this.scrollbarYRail);
+    this.scrollbarYRight = parseInt(k.right, 10), isNaN(this.scrollbarYRight) ? (this.isScrollbarYUsingRight = !1, this.scrollbarYLeft = n(k.left)) : this.isScrollbarYUsingRight = !0, this.scrollbarYOuterWidth = this.isRtl ? p(this.scrollbarY) : null, this.railBorderYWidth = n(k.borderTopWidth) + n(k.borderBottomWidth), b(this.scrollbarYRail, {
+      display: "block"
+    }), this.railYMarginHeight = n(k.marginTop) + n(k.marginBottom), b(this.scrollbarYRail, {
+      display: ""
+    }), this.railYHeight = null, this.railYRatio = null, this.reach = {
+      x: 0 >= d.scrollLeft ? "start" : d.scrollLeft >= this.contentWidth - this.containerWidth ? "end" : null,
+      y: 0 >= d.scrollTop ? "start" : d.scrollTop >= this.contentHeight - this.containerHeight ? "end" : null
+    }, this.isAlive = !0, this.settings.handlers.forEach(function (a) {
+      return G[a](f);
+    }), this.lastScrollTop = v(d.scrollTop), this.lastScrollLeft = d.scrollLeft, this.event.bind(this.element, "scroll", function (a) {
+      return f.onScroll(a);
+    }), q(this);
+  };
+
+  return H.prototype.update = function () {
+    this.isAlive && ( // Recalcuate negative scrollLeft adjustment
+    // Recalculate rail margins
+    // Hide scrollbars not to affect scrollWidth and scrollHeight
+    this.negativeScrollAdjustment = this.isNegativeScroll ? this.element.scrollWidth - this.element.clientWidth : 0, b(this.scrollbarXRail, {
+      display: "block"
+    }), b(this.scrollbarYRail, {
+      display: "block"
+    }), this.railXMarginWidth = n(a(this.scrollbarXRail).marginLeft) + n(a(this.scrollbarXRail).marginRight), this.railYMarginHeight = n(a(this.scrollbarYRail).marginTop) + n(a(this.scrollbarYRail).marginBottom), b(this.scrollbarXRail, {
+      display: "none"
+    }), b(this.scrollbarYRail, {
+      display: "none"
+    }), q(this), l(this, "top", 0, !1, !0), l(this, "left", 0, !1, !0), b(this.scrollbarXRail, {
+      display: ""
+    }), b(this.scrollbarYRail, {
+      display: ""
+    }));
+  }, H.prototype.onScroll = function () {
+    this.isAlive && (q(this), l(this, "top", this.element.scrollTop - this.lastScrollTop), l(this, "left", this.element.scrollLeft - this.lastScrollLeft), this.lastScrollTop = v(this.element.scrollTop), this.lastScrollLeft = this.element.scrollLeft);
+  }, H.prototype.destroy = function () {
+    this.isAlive && ( // unset elements
+    this.event.unbindAll(), e(this.scrollbarX), e(this.scrollbarY), e(this.scrollbarXRail), e(this.scrollbarYRail), this.removePsClasses(), this.element = null, this.scrollbarX = null, this.scrollbarY = null, this.scrollbarXRail = null, this.scrollbarYRail = null, this.isAlive = !1);
+  }, H.prototype.removePsClasses = function () {
+    this.element.className = this.element.className.split(" ").filter(function (a) {
+      return !a.match(/^ps([-_].+|)$/);
+    }).join(" ");
+  }, H;
+});
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../node_modules/webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module), __webpack_require__(/*! ./../../../../node_modules/webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 

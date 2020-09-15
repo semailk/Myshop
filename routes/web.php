@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 Route::middleware(['auth'])->prefix('/admin')->group(function () {
-    Route::get('/console',[ConsoleController::class, 'index'])->name('console.index');
+    Route::get('/',[ConsoleController::class, 'index'])->name('console.index');
 });
 
 Route::get('/',[WelcomeController::class, 'index']);
@@ -25,8 +25,3 @@ Route::get('/',[WelcomeController::class, 'index']);
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'home'])->name('home');
-
-Route::get('/admin', function ()
-{
-    return view('layouts.admin');
-});

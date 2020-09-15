@@ -11,7 +11,7 @@ class ShopProduct extends Model
     use HasFactory;
 
     protected $table = 'shop_products';
-    protected $fillable = ['title', 'description'];
+    protected $fillable = ['category_id','title','description'];
 
     public function category()
     {
