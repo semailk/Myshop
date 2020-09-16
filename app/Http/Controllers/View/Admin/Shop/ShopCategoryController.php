@@ -5,12 +5,21 @@ namespace App\Http\Controllers\View\Admin\Shop;
 use App\Http\Controllers\Controller;
 use App\Models\Shop\ShopCategory;
 use App\Models\Shop\ShopProduct;
+use App\Repositories\Shop\ShopCategoryRepository;
+use http\Header;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
 class ShopCategoryController extends Controller
 {
+    protected $shopCategoryRepository;
+
+    public function __construct()
+    {
+        $this->shopCategoryRepository = app(ShopCategoryRepository::class);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,8 +27,8 @@ class ShopCategoryController extends Controller
      */
     public function index(): View
     {
-        $categories = ShopCategory::all();
-        return view('admin.shop.categories.index',compact('categories'));
+        $categories = $this->shopCategoryRepository->getAll();
+        return view('admin.shop.categories.index', compact('categories'));
     }
 
     /**
@@ -40,7 +49,7 @@ class ShopCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
@@ -60,9 +69,11 @@ class ShopCategoryController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id): View
     {
-        //
+        $categories = $this->shopCategoryRepository->getById($id);
+
+        return view('admin.shop.categories.edit', compact('categories'));
     }
 
     /**
@@ -72,9 +83,15 @@ class ShopCategoryController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): View
     {
-        //
+        $update = $this->shopCategoryRepository->getForUpdates($id);
+        $update->name = $request->name;
+        $update->slug = $request->slug;
+        $update->save();
+        print_r($request->input());
+        die();
+//        return \redirect(route('index'));
     }
 
     /**
@@ -83,9 +100,9 @@ class ShopCategoryController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id):View
+    public function destroy($id): View
     {
         ShopCategory::find($id)->delete();
-        return view('home');
+        return \view('home');
     }
 }

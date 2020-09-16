@@ -19,8 +19,8 @@ use Illuminate\Support\Facades\Auth;
 */
 Route::middleware(['auth'])->prefix('/admin')->group(function () {
     Route::get('/',[ConsoleController::class, 'index'])->name('console.index');
-    Route::resource('/categories', ShopCategoryController::class);
-
+    Route::resource('/categories',ShopCategoryController::class);
+    Route::post('/categories/{id}/update', [ShopCategoryController::class, 'update'])->name('categories.update');
 });
 
 

@@ -16,10 +16,14 @@
                 <th scope="row">{{$category->id}}</th>
                 <td>{{$category->name}}</td>
                 <td>{{$category->slug}}
-                    <a href="{{ route('categories.destroy', $id) }}">
-                        <img style="float: right" src="../../images/delete.png" width="40" height="40">
-                    </a>
-                    <a href="#">
+
+                        <form action="{{ route('categories.destroy', $category->id) }}" method="post">
+                            @csrf
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button class="btn btn-danger" type="submit"><i class="fa fa-trash"> </button>
+                        </form>
+
+                    <a href="{{route('categories.edit',$category->id)}}">
                         <img style="float: right" src="../../images/edit.png" width="40" height="40">
                     </a>
                 </td>

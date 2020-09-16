@@ -20,7 +20,10 @@ class CreateShopProductsTable extends Migration
             $table->longText('description');
             $table->timestamps();
 
-            $table->foreign('category_id')->on('shop_categories')->references('id');
+            $table->foreign('category_id')
+                ->references('id')->on('shop_categories')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

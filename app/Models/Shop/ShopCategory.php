@@ -13,7 +13,7 @@ class ShopCategory extends Model
     protected $table = 'shop_categories';
     protected $fillable = ['parent_id','name','slug'];
 
-    public function product()
+    public function products()
     {
         return $this->hasMany(ShopProduct::class);
     }
@@ -28,11 +28,4 @@ class ShopCategory extends Model
         return $this->belongsTo(ShopCategory::class,'parent_id');
     }
 
-    public static function boot()
-    {
-        ShopCategory::deleted(function ($category) {
-            $category->products()->delete();
-            $category->children()->delete();
-        });
-    }
 }

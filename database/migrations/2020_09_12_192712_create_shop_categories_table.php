@@ -20,7 +20,8 @@ class CreateShopCategoriesTable extends Migration
             $table->string('slug');
             $table->timestamps();
 
-            $table->foreign('parent_id')->on('shop_categories')->references('id');
+            $table->foreign('parent_id')->on('shop_categories')->references('id')->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 
