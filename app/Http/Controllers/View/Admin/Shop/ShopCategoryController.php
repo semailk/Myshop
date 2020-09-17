@@ -6,9 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Shop\ShopCategory;
 use App\Models\Shop\ShopProduct;
 use App\Repositories\Shop\ShopCategoryRepository;
-use http\Header;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
+use App\Http\Requests\Shop\ShopCategory\StoreShopCategoryRequest;
 use Illuminate\View\View;
 
 class ShopCategoryController extends Controller
@@ -36,9 +35,9 @@ class ShopCategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
-        //
+        return \view('admin.shop.categories.create');
     }
 
     /**
@@ -47,9 +46,14 @@ class ShopCategoryController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreShopCategoryRequest $request)
     {
-
+        $shop = new ShopCategory();
+        $shop->parent_id = null;
+        $shop->name = $request->name;
+        $shop->slug = $request->slug;
+        $shop->save();
+      return \redirect(route('categories.index'));
     }
 
     /**
@@ -83,15 +87,13 @@ class ShopCategoryController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id): View
+    public function update(Request $request, $id)
     {
-        $update = $this->shopCategoryRepository->getForUpdates($id);
+        $update = $this->shopCategoryRepository->getForUpdate($id);
         $update->name = $request->name;
         $update->slug = $request->slug;
         $update->save();
-        print_r($request->input());
-        die();
-//        return \redirect(route('index'));
+        return \redirect(route('categories.index'));
     }
 
     /**
@@ -100,9 +102,9 @@ class ShopCategoryController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id): View
+    public function destroy($id)
     {
         ShopCategory::find($id)->delete();
-        return \view('home');
+        return \redirect(route('categories.index'));
     }
 }

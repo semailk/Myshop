@@ -21,6 +21,9 @@ Route::middleware(['auth'])->prefix('/admin')->group(function () {
     Route::get('/',[ConsoleController::class, 'index'])->name('console.index');
     Route::resource('/categories',ShopCategoryController::class);
     Route::post('/categories/{id}/update', [ShopCategoryController::class, 'update'])->name('categories.update');
+    Route::get('/categories/{id}/destroy', [ShopCategoryController::class, 'destroy'])->name('categories.destroy');
+Route::get('category/create', [ShopCategoryController::class, 'create'])->name('categories.create');
+Route::post('categories/store', [ShopCategoryController::class, 'store'])->name('categories.store');
 });
 
 

@@ -29,4 +29,9 @@ class ShopCategoryRepository extends CoreRepository
     {
         return $this->startConditions()->find($id);
     }
+
+    public function createCategory($request)
+    {
+        return $this->startConditions()->create($request);
+    }
 }
