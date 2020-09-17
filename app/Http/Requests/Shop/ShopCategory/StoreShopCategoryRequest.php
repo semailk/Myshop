@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Shop\ShopCategory;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreShopCategoryRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class StoreShopCategoryRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+       return Auth::check();
     }
 
     /**
@@ -24,7 +25,8 @@ class StoreShopCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'min:5',
+            'name' => 'required|min:5',
+            'slug' => 'required|min:5',
         ];
     }
 }
