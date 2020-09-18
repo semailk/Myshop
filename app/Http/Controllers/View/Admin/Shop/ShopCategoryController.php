@@ -4,19 +4,22 @@ namespace App\Http\Controllers\View\Admin\Shop;
 
 use App\Http\Controllers\Controller;
 use App\Models\Shop\ShopCategory;
-use App\Models\Shop\ShopProduct;
 use App\Repositories\Shop\ShopCategoryRepository;
-use Illuminate\Http\Request;
 use App\Http\Requests\Shop\ShopCategory\StoreShopCategoryRequest;
 use Illuminate\View\View;
+use App\Services\Shop\ShopCategoryService;
 
 class ShopCategoryController extends Controller
 {
+    protected $ShopCategoryService;
+
+
     protected $shopCategoryRepository;
 
     public function __construct()
     {
         $this->shopCategoryRepository = app(ShopCategoryRepository::class);
+        $this->storeShopCategoryService = app(ShopCategoryService::class);
     }
 
     /**
@@ -48,12 +51,8 @@ class ShopCategoryController extends Controller
      */
     public function store(StoreShopCategoryRequest $request)
     {
-        $shop = new ShopCategory();
-        $shop->parent_id = null;
-        $shop->name = $request->name;
-        $shop->slug = $request->slug;
-        $shop->save();
-      return \redirect(route('categories.index'));
+
+        return \redirect(route('categories.index'));
     }
 
     /**
@@ -87,7 +86,7 @@ class ShopCategoryController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreShopCategoryRequest $request, $id)
     {
         $update = $this->shopCategoryRepository->getForUpdate($id);
         $update->name = $request->name;

@@ -12,7 +12,7 @@
                         <span class="count bg-success"></span>
                     </div>
                     <div class="profile-name">
-                        <h5 class="mb-0 font-weight-normal">Henry Klein</h5>
+                        <h5 class="mb-0 font-weight-normal">{{Auth::user()->name}}</h5>
                         <span>Gold Member</span>
                     </div>
                 </div>
@@ -57,21 +57,23 @@
             <span class="nav-link">Navigation</span>
         </li>
         <li class="nav-item menu-items">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="{{ route('categories.index') }}">
               <span class="menu-icon">
                 <i class="mdi mdi-speedometer"></i>
               </span>
-                <span class="menu-title">Dashboard</span>
+                <span class="menu-title">Категории</span>
             </a>
         </li>
         <li class="nav-item menu-items">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+{{--            <a class="nav-link" data-toggle="collapse" href="{{ route('products.index') }}" aria-expanded="false" aria-controls="ui-basic">--}}
+             <a class="nav-link" href="{{ route('products.index') }}">
               <span class="menu-icon">
                 <i class="mdi mdi-laptop"></i>
               </span>
-                <span class="menu-title">Basic UI Elements</span>
+                <span class="menu-title">Продукты</span>
                 <i class="menu-arrow"></i>
             </a>
+            <a href="{{ route('products.index') }}"></a>
             <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a></li>

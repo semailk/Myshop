@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\View\Admin\ConsoleController;
 use App\Http\Controllers\View\Admin\Shop\ShopCategoryController;
+use App\Http\Controllers\View\Admin\Shop\ShopProductController;
 use App\Http\Controllers\View\Main\WelcomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\View\Admin\HomeController;
@@ -24,6 +25,7 @@ Route::middleware(['auth'])->prefix('/admin')->group(function () {
     Route::get('/categories/{id}/destroy', [ShopCategoryController::class, 'destroy'])->name('categories.destroy');
 Route::get('category/create', [ShopCategoryController::class, 'create'])->name('categories.create');
 Route::post('categories/store', [ShopCategoryController::class, 'store'])->name('categories.store');
+Route::resource('products', ShopProductController::class);
 });
 
 

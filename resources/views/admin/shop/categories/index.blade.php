@@ -1,7 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-    {{\Illuminate\Support\Str::slug('ыфафафыафыафы')}}
-
     <table style="color: white" class="table table-dark">
         <thead>
         <tr>

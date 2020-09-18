@@ -6,6 +6,13 @@ use App\Models\Shop\ShopProduct;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class ShopCategory
+ * @package App\Models\Shop
+ * @property   $parent_id
+ * @property   $name
+ * @property   $slug
+ */
 class ShopCategory extends Model
 {
     use HasFactory;

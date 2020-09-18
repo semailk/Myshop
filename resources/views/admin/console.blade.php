@@ -330,7 +330,7 @@
                                     </td>
                                     <td>
                                         <img src="assets/images/faces/face1.jpg" alt="image" />
-                                        <span class="pl-2">Henry Klein</span>
+                                        <span class="pl-2">Henryss Klein</span>
                                     </td>
                                     <td> 02312 </td>
                                     <td> $14,500 </td>

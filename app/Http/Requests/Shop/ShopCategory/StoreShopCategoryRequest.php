@@ -29,4 +29,12 @@ class StoreShopCategoryRequest extends FormRequest
             'slug' => 'required|min:5',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'name не может быть пустым',
+            'slug.required' => 'slug не может быть пустым'
+        ];
+    }
 }
