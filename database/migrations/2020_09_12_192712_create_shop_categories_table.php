@@ -17,7 +17,7 @@ class CreateShopCategoriesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->string('name');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->timestamps();
 
             $table->foreign('parent_id')->on('shop_categories')->references('id')->onUpdate('cascade')

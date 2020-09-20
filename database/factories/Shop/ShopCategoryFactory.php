@@ -23,10 +23,12 @@ class ShopCategoryFactory extends Factory
      */
     public function definition()
     {
+        $name = $this->faker->words(2,true);
+
         return [
             'parent_id' => null,
-            'name' => $this->faker->name,
-            'slug' => $this->faker->streetName,
+            'name' => $name,
+            'slug' => rand(1,1000) .'-'.Str::slug($name),
         ];
     }
 }

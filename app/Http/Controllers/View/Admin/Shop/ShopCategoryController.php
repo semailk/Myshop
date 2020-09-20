@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\View\Admin\Shop;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Shop\ShopCategory\UpdateShopCategoryRequest;
 use App\Models\Shop\ShopCategory;
 use App\Repositories\Shop\ShopCategoryRepository;
 use App\Http\Requests\Shop\ShopCategory\StoreShopCategoryRequest;
@@ -19,7 +20,7 @@ class ShopCategoryController extends Controller
     public function __construct()
     {
         $this->shopCategoryRepository = app(ShopCategoryRepository::class);
-        $this->storeShopCategoryService = app(ShopCategoryService::class);
+        $this->ShopCategoryService = app(ShopCategoryService::class);
     }
 
     /**
@@ -29,30 +30,44 @@ class ShopCategoryController extends Controller
      */
     public function index(): View
     {
+
         $categories = $this->shopCategoryRepository->getAll();
+
         return view('admin.shop.categories.index', compact('categories'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|View
      */
-    public function create(): View
+    public function create()
     {
-        return \view('admin.shop.categories.create');
+        $categories = $this->shopCategoryRepository->getForSelect();
+
+        return \view('admin.shop.categories.create', compact('categories'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(StoreShopCategoryRequest $request)
     {
 
-        return \redirect(route('categories.index'));
+        $lastId = $this->shopCategoryRepository->getLastId();
+
+        $make = $this->ShopCategoryService->make($request, $lastId + 1);
+
+        if ($make) {
+            return back()->with(['success' => 'Категория успешная создана']);
+        } else {
+            return back()->withErrors(['error' => 'Ошибка , при создании категории']);
+        }
+
+//        return \redirect(route('categories.index'));
     }
 
     /**
@@ -74,25 +89,37 @@ class ShopCategoryController extends Controller
      */
     public function edit($id): View
     {
-        $categories = $this->shopCategoryRepository->getById($id);
+        $categories = $this->shopCategoryRepository->getForSelect($id);
+        $category = $this->shopCategoryRepository->getById($id);
 
-        return view('admin.shop.categories.edit', compact('categories'));
+        return view('admin.shop.categories.edit', compact('category'), compact('categories'));
     }
 
     /**
      * Update the specified resource in storage.
-     *
+     * Seed the application's database.
      * @param \Illuminate\Http\Request $request
      * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
      * @return \Illuminate\Http\Response
+     *
+     *
      */
-    public function update(StoreShopCategoryRequest $request, $id)
+
+    public function update(UpdateShopCategoryRequest $request, $id)
     {
-        $update = $this->shopCategoryRepository->getForUpdate($id);
-        $update->name = $request->name;
-        $update->slug = $request->slug;
-        $update->save();
-        return \redirect(route('categories.index'));
+
+        $category = $this->shopCategoryRepository->getForUpdate($id);
+        if (!$category) {
+            abort(404);
+        }
+        $update = $this->ShopCategoryService->update($request, $category);
+        if ($update) {
+            return back()->with(['success' => 'Категория успешная обновлена']);
+        } else {
+            return back()->withErrors(['error' => 'Ошибка , при обновлении категории']);
+        }
+
     }
 
     /**
@@ -104,6 +131,7 @@ class ShopCategoryController extends Controller
     public function destroy($id)
     {
         ShopCategory::find($id)->delete();
+
         return \redirect(route('categories.index'));
     }
 }

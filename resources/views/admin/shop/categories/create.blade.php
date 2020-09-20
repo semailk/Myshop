@@ -10,6 +10,12 @@
             <input name="name" type="text" class="form-control @error('name')is-invalid @enderror"
                    id="validationServer03" aria-describedby="validationServer03Feedback">
             <div id="validationServer03Feedback" class=" ">
+                @if(session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+
+                @endif
                 @error('name')
                 <h5 style="color: red;">{{ $message }}</h5>
                 @enderror
@@ -25,6 +31,16 @@
                 @enderror
             </div>
         </div>
+        <select name="parent_id" style="margin-top: 30px" class="custom-select">
+            <option value="0">Без категории</option>
+            @foreach($categories as $category)
+                <option value="{{$category->id}}">{{ $category->name }}</option>
+            @endforeach
+        </select>
         <button class="btn btn-primary" type="submit">Submit form</button>
+
+
     </form>
+
 @endsection
+

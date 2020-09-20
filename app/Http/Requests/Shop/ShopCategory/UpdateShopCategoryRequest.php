@@ -5,7 +5,7 @@ namespace App\Http\Requests\Shop\ShopCategory;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class StoreShopCategoryRequest extends FormRequest
+class UpdateShopCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +26,7 @@ class StoreShopCategoryRequest extends FormRequest
     {
         return [
             'name' => 'required|min:5|max:250',
-            'slug' => 'nullable|min:5|max:250|unique:shop_categories,slug'.$this->id,
-            'parent_id' => 'nullable|numeric'
+            'slug' => 'nullable|min:5|max:250|unique:shop_categories,slug,'.$this->id,
         ];
     }
 
@@ -35,6 +34,7 @@ class StoreShopCategoryRequest extends FormRequest
     {
         return [
             'name.required' => 'name не может быть пустым',
+
         ];
     }
 }
