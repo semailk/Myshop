@@ -6,6 +6,13 @@ use App\Models\Comment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class ShopProduct
+ * @package App\Models\Shop
+ * @property $category_id
+ * @property $title
+ * @property $description
+ */
 class ShopProduct extends Model
 {
     use HasFactory;

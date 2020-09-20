@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\View\Admin\Shop;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Shop\ShopCategory\UpdateShopCategoryRequest;
+use App\Http\Requests\Shop\ShopCategory\StoreShopCategoryRequest;
+use App\Http\Requests\Shop\ShopProduct\UpdateShopProductRequest;
 use App\Models\Shop\ShopCategory;
 use App\Repositories\Shop\ShopCategoryRepository;
-use App\Http\Requests\Shop\ShopCategory\StoreShopCategoryRequest;
 use Illuminate\View\View;
 use App\Services\Shop\ShopCategoryService;
 
@@ -31,7 +31,7 @@ class ShopCategoryController extends Controller
     public function index(): View
     {
 
-        $categories = $this->shopCategoryRepository->getAll();
+        $categories = $this->shopCategoryRepository->getAllPaginate();
 
         return view('admin.shop.categories.index', compact('categories'));
     }
@@ -106,7 +106,7 @@ class ShopCategoryController extends Controller
      *
      */
 
-    public function update(UpdateShopCategoryRequest $request, $id)
+    public function update(UpdateShopProductRequest $request, $id)
     {
 
         $category = $this->shopCategoryRepository->getForUpdate($id);

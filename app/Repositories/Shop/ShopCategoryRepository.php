@@ -16,9 +16,9 @@ class ShopCategoryRepository extends CoreRepository
         return Model::class;
     }
 
-    public function getAll()
+    public function getAllPaginate()
     {
-        return $this->startConditions()->with('children')->get();
+        return $this->startConditions()->with('children')->paginate(10);
     }
 
     public function getById($id)

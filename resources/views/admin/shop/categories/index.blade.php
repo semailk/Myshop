@@ -39,4 +39,7 @@
 
         @endforeach
     </table>
+    <div style="margin-left: auto; margin-right: auto" class="">
+    {{ $categories->links() }}
+    </div>
 @endsection

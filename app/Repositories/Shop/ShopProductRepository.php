@@ -18,4 +18,10 @@ class ShopProductRepository extends CoreRepository
     {
         return $this->startConditions()->paginate(10);
     }
+
+    public function getById($id)
+    {
+        return $this->startConditions()->find($id);
+    }
+
 }

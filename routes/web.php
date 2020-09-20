@@ -25,7 +25,9 @@ Route::middleware(['auth'])->prefix('/admin')->group(function () {
     Route::get('/categories/{id}/destroy', [ShopCategoryController::class, 'destroy'])->name('categories.destroy');
 Route::get('category/create', [ShopCategoryController::class, 'create'])->name('categories.create');
 Route::post('categories/store', [ShopCategoryController::class, 'store'])->name('categories.store');
-Route::resource('products', ShopProductController::class);
+Route::resource('/products', ShopProductController::class);
+    Route::get('/products/{id}/destroy', [ShopProductController::class, 'destroy'])->name('products.destroy');
+    Route::post('/products/{id}/update', [ShopProductController::class, 'update'])->name('products.update');
 });
 
 

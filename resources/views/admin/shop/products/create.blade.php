@@ -1,37 +1,38 @@
 @extends('layouts.admin')
 @section('content')
-    <h1>Добавления Категории</h1>
-
-    <form method="post" action="{{route('categories.store')}}">
+    <h1>Добавления товара</h1>
+    <form method="post" action="{{route('products.store')}}">
         @csrf
 
         <div class="col-md-6 mb-3">
-            <label for="validationServer03">Name</label>
-            <input name="name" type="text" class="form-control @error('name')is-invalid @enderror"
+            <label for="validationServer03">Название</label>
+            <input name="title" type="text" class="form-control @error('title')is-invalid @enderror"
                    id="validationServer03" aria-describedby="validationServer03Feedback">
             <div id="validationServer03Feedback" class=" ">
+
                 @if(session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}
                     </div>
-
                 @endif
-                @error('name')
+
+                @error('title')
                 <h5 style="color: red;">{{ $message }}</h5>
                 @enderror
+
             </div>
         </div>
         <div class="col-md-6 mb-3">
-            <label for="validationServer02">Slug</label>
-            <input name="slug" type="text" class="form-control @error('slug')is-invalid @enderror"
+            <label for="validationServer02">Описание</label>
+            <input name="description" type="text" class="form-control @error('description')is-invalid @enderror"
                    id="validationServer02" >
             <div class="is-invalid">
-                @error('slug')
+                @error('description')
                 <h5 style="color: red;">{{ $message }}</h5>
                 @enderror
             </div>
         </div>
-        <select name="parent_id" style="margin-top: 30px" class="custom-select">
+        <select name="category_id" style="margin-top: 30px" class="custom-select">
             <option value="0">Без категории</option>
             @foreach($categories as $category)
                 <option value="{{$category->id}}">{{ $category->name }}</option>
@@ -43,4 +44,3 @@
     </form>
 
 @endsection
-
