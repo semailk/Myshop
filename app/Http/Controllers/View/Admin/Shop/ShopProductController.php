@@ -17,11 +17,14 @@ class ShopProductController extends Controller
 {
     protected $shopProductRepository;
     protected $shopProductService;
+    protected $ShopCategoryRepository;
 
     public function __construct()
     {
         $this->shopProductRepository = app(ShopProductRepository::class);
         $this->shopProductService = app(ShopProductService::class);
+        $this->ShopCategoryRepository = app(ShopCategoryRepository::class);
+
     }
 
     /**
@@ -42,7 +45,7 @@ class ShopProductController extends Controller
      */
     public function create()
     {
-        $categories = ShopCategory::query()->get();
+        $categories = $this->ShopCategoryRepository->getAll();
         return \view('admin.shop.products.create', compact('categories'));
     }
 
@@ -82,7 +85,7 @@ class ShopProductController extends Controller
      */
     public function edit($id)
     {
-        $categories = ShopCategory::query()->get();
+        $categories = $this->ShopCategoryRepository->getAll();
         $product = $this->shopProductRepository->getById($id);
 
         return \view('admin.shop.products.edit', compact('categories'), compact('product'));

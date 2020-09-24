@@ -13,21 +13,12 @@ class ShopProductService
 {
 
 
-    public function make($request, $id): bool
+    public function make($request): bool
     {
         $product = new ShopProduct();
-        if($request->category_id == 0){
-            return false;
-        } else {
-            $product->category_id = $request->category_id;
-        }
+        $product->category_id = $request->category_id;
         $product->title = $request->title;
-
-        if($request->description){
-            $product->description = $request->description;
-        } else {
-            $product->description = $id.'-'.Str::slug($request->title);
-        }
+        $product->description = $request->description;
 
         return $product->save();
     }
@@ -36,18 +27,8 @@ class ShopProductService
     {
 
         $product->title = $request->title;
-
-        if($request->category_id == 0){
-            return false;
-        } else {
-            $product->category_id = $request->category_id;
-        }
-
-        if($request->description){
-            $product->description = $request->description;
-        } else {
-            $product->description = $product->id.'-'.Str::slug($request->title);
-        }
+        $product->category_id = $request->category_id;
+        $product->description = $request->description;
 
         return $product->save();
     }

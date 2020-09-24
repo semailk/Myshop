@@ -21,6 +21,11 @@ class ShopCategoryRepository extends CoreRepository
         return $this->startConditions()->with('children')->paginate(10);
     }
 
+    public function getAll()
+    {
+        return $this->startConditions()->all();
+    }
+
     public function getById($id)
     {
         return $this->startConditions()->find($id);
