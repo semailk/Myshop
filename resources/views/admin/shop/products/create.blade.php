@@ -1,8 +1,8 @@
 @extends('layouts.admin')
 @section('content')
     <h1>Добавления товара</h1>
-    <form method="post" action="{{route('products.store')}}">
-        @csrf
+    <form method="post" action="{{route('products.store')}}" enctype="multipart/form-data">
+        {{csrf_field()}}
 
         <div class="col-md-6 mb-3">
             <label for="validationServer03">Название</label>
@@ -32,6 +32,8 @@
                 @enderror
             </div>
         </div>
+        <input name="img" type="file" class="form-control-file">
+
         <select name="category_id" style="margin-top: 30px" class="custom-select">
             <option value="0">Без категории</option>
             @foreach($categories as $category)

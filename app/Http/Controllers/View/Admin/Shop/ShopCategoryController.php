@@ -12,7 +12,7 @@ use App\Services\Shop\ShopCategoryService;
 
 class ShopCategoryController extends Controller
 {
-    protected $ShopCategoryService;
+    protected $shopCategoryService;
 
 
     protected $shopCategoryRepository;
@@ -20,7 +20,7 @@ class ShopCategoryController extends Controller
     public function __construct()
     {
         $this->shopCategoryRepository = app(ShopCategoryRepository::class);
-        $this->ShopCategoryService = app(ShopCategoryService::class);
+        $this->shopCategoryService = app(ShopCategoryService::class);
     }
 
     /**
@@ -113,7 +113,7 @@ class ShopCategoryController extends Controller
         if (!$category) {
             abort(404);
         }
-        $update = $this->ShopCategoryService->update($request, $category);
+        $update = $this->shopCategoryService->update($request, $category);
         if ($update) {
             return back()->with(['success' => 'Категория успешная обновлена']);
         } else {

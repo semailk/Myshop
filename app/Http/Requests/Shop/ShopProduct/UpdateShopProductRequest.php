@@ -26,7 +26,8 @@ class UpdateShopProductRequest extends FormRequest
     {
         return [
             'title' => 'required|min:5|max:250',
-            'description' => 'nullable|min:5|max:250|unique:shop_categories,slug,'.$this->id,
+            'description' => 'nullable|min:5|max:1000',
+            'category_id' => 'nullable|numeric'
         ];
     }
 

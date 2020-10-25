@@ -5,8 +5,10 @@ namespace App\Http\Controllers\View\Admin\Shop;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Shop\ShopProduct\StoreShopProductRequest;
 use App\Http\Requests\Shop\ShopProduct\UpdateShopProductRequest;
+use App\Models\Image;
 use App\Models\Shop\ShopCategory;
 use App\Models\Shop\ShopProduct;
+use App\Models\User;
 use App\Repositories\Shop\ShopCategoryRepository;
 use App\Services\Shop\ShopProductService;
 use Illuminate\Http\Request;
@@ -34,8 +36,9 @@ class ShopProductController extends Controller
      */
     public function index(): View
     {
+        $img = Image::all();
         $products = $this->shopProductRepository->getAllPaginate();
-        return view('admin.shop.products.index', compact('products'));
+        return view('admin.shop.products.index', compact('products'), compact('img'));
     }
 
     /**
@@ -57,6 +60,11 @@ class ShopProductController extends Controller
      */
     public function store(StoreShopProductRequest $request)
     {
+        $path = $request->file('img')->store('upload', 'public');
+        Image::query()->create([
+            'user_id' => $request->user()->id,
+            'src' => $path
+        ]);
         $make = $this->shopProductService->make($request, $request->category_id);
 
         if ($make) {
@@ -64,6 +72,8 @@ class ShopProductController extends Controller
         } else {
             return back()->withErrors(['error' => 'Ошибка , при создании категории']);
         }
+
+
     }
 
     /**
@@ -81,14 +91,17 @@ class ShopProductController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|View
      */
     public function edit($id)
     {
         $categories = $this->ShopCategoryRepository->getAll();
         $product = $this->shopProductRepository->getById($id);
 
-        return \view('admin.shop.products.edit', compact('categories'), compact('product'));
+        return \view('admin.shop.products.edit',
+            compact('categories'), compact('product'),
+            compact('img'));
     }
 
     /**
@@ -104,8 +117,7 @@ class ShopProductController extends Controller
 
         $update = $this->shopProductService->update($request, $product);
 
-        if($update)
-        {
+        if ($update) {
             return back()->with(['success' => 'Товар успешно обновлен']);
         } else {
             return back()->withErrors(['error' => 'Ошибка , при обновлении товара']);
@@ -123,5 +135,18 @@ class ShopProductController extends Controller
         ShopProduct::find($id)->delete();
 
         return redirect(route('products.index'));
+    }
+
+    public function upload(Request $request)
+    {
+        $path = $request->file('img')->store('upload', 'public');
+
+        Image::query()->create(
+            [
+                'user_id' => 1,
+                'src' => $path
+            ]
+        );
+        return redirect()->route('products.index');
     }
 }

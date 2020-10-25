@@ -3,6 +3,7 @@
 namespace App\Models\Shop;
 
 use App\Models\Comment;
+use App\Models\Image;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -29,5 +30,10 @@ class ShopProduct extends Model
     {
         return $this->morphMany(Comment::class,'commentable');
 
+    }
+
+    public function images()
+    {
+        $this->belongsToMany(Image::class, 'shop_products_images');
     }
 }
