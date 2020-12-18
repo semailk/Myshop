@@ -11,6 +11,7 @@ class Comment extends Model
 
     protected $table = 'comments';
     protected $fillable = ['user_id', 'comment','commentable_id','commentable_type'];
+    public $timestamps = false;
 
     public function user()
     {

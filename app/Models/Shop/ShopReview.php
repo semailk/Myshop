@@ -12,6 +12,7 @@ class ShopReview extends Model
 
     protected $table = 'shop_reviews';
     protected $fillable = ['product_id','user_id','content','rating'];
+    public $timestamps = false;
 
     public function user()
     {

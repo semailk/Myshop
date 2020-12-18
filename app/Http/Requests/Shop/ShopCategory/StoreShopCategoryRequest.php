@@ -5,7 +5,7 @@ namespace App\Http\Requests\Shop\ShopCategory;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class StoreShopCategoryRequest extends FormRequest
+class  StoreShopCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,7 @@ class StoreShopCategoryRequest extends FormRequest
      */
     public function authorize()
     {
-       return Auth::check();
+       return false;
     }
 
     /**

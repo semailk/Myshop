@@ -20,6 +20,8 @@ class ShopCategory extends Model
     protected $table = 'shop_categories';
     protected $fillable = ['parent_id','name','slug'];
 
+    public $timestamps = false;
+
     public function products()
     {
         return $this->hasMany(ShopProduct::class);
