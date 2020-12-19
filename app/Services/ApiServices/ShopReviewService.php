@@ -1,12 +1,12 @@
 <?php
 
 
-namespace App\Services\ApiServise;
+namespace App\Services\ApiServices;
 
 
-class ShopCommentService
+
+class ShopReviewService
 {
-
     public function testForEmptiness($request)
     {
         if (empty($request)) {
@@ -18,5 +18,4 @@ class ShopCommentService
     {
         return response()->json(['error' => true, 'message' => 'not found'], 404);
     }
-
 }

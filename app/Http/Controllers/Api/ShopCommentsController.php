@@ -6,7 +6,7 @@ use App\Http\Requests\Shop\Comment\StoreCommentRequest;
 use App\Http\Requests\Shop\Comment\UpdateCommentRequest;
 use App\Models\Comment;
 use App\Repositories\Shop\ShopCommentRepository;
-use App\Services\ApiServise\ShopCommentService;
+use App\Services\ApiServices\ShopCommentService;
 
 class ShopCommentsController extends ApiController
 {

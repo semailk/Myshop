@@ -8,7 +8,7 @@ use App\Http\Requests\Shop\Users\StoreUserRequest;
 use App\Http\Requests\Shop\Users\UpdateUserRequest;
 use App\Models\User;
 use App\Repositories\Shop\ShopUserRepository;
-use App\Services\ApiServise\ShopUserService;
+use App\Services\ApiServices\ShopUserService;
 
 class ShopUsersController extends Controller
 {

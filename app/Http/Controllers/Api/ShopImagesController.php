@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\Shop\Image\StoreImageRequest;
 use App\Http\Requests\Shop\Image\UpdateImageRequest;
 use App\Repositories\Shop\ShopImageRepository;
-use App\Services\ApiServise\ShopImageService;
+use App\Services\ApiServices\ShopImageService;
 
 class ShopImagesController extends ApiController
 {

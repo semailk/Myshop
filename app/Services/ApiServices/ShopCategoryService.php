@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Services\ApiServise;
+namespace App\Services\ApiServices;
 
 
 use App\Models\Shop\ShopCategory;

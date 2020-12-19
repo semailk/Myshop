@@ -6,7 +6,7 @@ use App\Http\Requests\Shop\ShopProduct\StoreShopProductRequest;
 use App\Http\Requests\Shop\ShopProduct\UpdateShopProductRequest;
 use App\Models\Shop\ShopProduct;
 use App\Repositories\Shop\ShopProductRepository;
-use App\Services\ApiServise\ShopProductService;
+use App\Services\ApiServices\ShopProductService;
 
 class ShopProductsController extends ApiController
 {

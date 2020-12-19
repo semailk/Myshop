@@ -1,13 +1,12 @@
 <?php
 
 
-namespace App\Services\ApiServise;
+namespace App\Services\ApiServices;
 
 
 
-class ShopProductService
+class ShopUserService
 {
-
     public function testForEmptiness($request)
     {
         if (empty($request)) {

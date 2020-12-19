@@ -1,11 +1,11 @@
 <?php
 
 
-namespace App\Services\ApiServise;
+namespace App\Services\ApiServices;
 
 
 
-class ShopReviewService
+class ShopImageService
 {
     public function testForEmptiness($request)
     {

@@ -6,7 +6,7 @@ use App\Http\Requests\Shop\ShopCategory\StoreShopCategoryRequest;
 use App\Http\Requests\Shop\ShopCategory\UpdateShopCategoryRequest;
 use App\Models\Shop\ShopCategory;
 use App\Repositories\Shop\ShopCategoryRepository;
-use App\Services\ApiServise\ShopCategoryService;
+use App\Services\ApiServices\ShopCategoryService;
 
 
 class ShopCategoriesController extends ApiController
