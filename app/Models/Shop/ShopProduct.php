@@ -20,6 +20,7 @@ class ShopProduct extends Model
 
     protected $table = 'shop_products';
     protected $fillable = ['category_id','title','description'];
+    public $timestamps = false;
 
     public function category()
     {

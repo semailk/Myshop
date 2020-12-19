@@ -2,51 +2,52 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Http\Requests\Shop\Comment\StoreCommentRequest;
+use App\Http\Requests\Shop\Comment\UpdateCommentRequest;
 use App\Models\Comment;
-use Illuminate\Http\Request;
+use App\Repositories\Shop\ShopCommentRepository;
+use App\Services\ApiServise\ShopCommentService;
 
 class ShopCommentsController extends ApiController
 {
-    public function index(Comment $image)
+    public $shopCommentRepository;
+    public $shopCommentService;
+
+    public function __construct(ShopCommentRepository $commentRepository, ShopCommentService $commentService)
     {
-        if (empty($image)) {
-            return response()->json(['error' => true, 'message' => 'not found'], 404);
-        }
-        return response()->json($image->all(), 200);
+        $this->shopCommentRepository = $commentRepository;
+        $this->shopCommentService = $commentService;
+    }
+
+    public function index(Comment $comment)
+    {
+        $this->shopCommentService->testForEmptiness($comment);
+        return response()->json($this->shopCommentRepository->getAll(), 200);
     }
 
     public function edit($id)
     {
-        if (is_null(Comment::query()->find($id))) {
-            return response()->json(['error' => true, 'message' => 'not found'], 404);
+        if (!$this->shopCommentRepository->getById($id)) {
+            return $this->shopCommentService->checkOnId();
         }
-        return response(Comment::query()->find($id), 200);
+        return response($this->shopCommentRepository->getById($id), 200);
     }
 
-    public function store(Request $request)
+    public function store(StoreCommentRequest $request)
     {
-        $rules = ['comment' => 'min:5|max:250'];
-
-        $array = $this->validate($request, $rules);
-        Comment::query()->create($array);
-        return response()->json($array, 200);
+        $this->shopCommentRepository->createComment($request->input());
+        return response()->json($this->shopCommentRepository->getAll(), 200);
     }
 
     public function destroy($id)
     {
-        $userDelete = Comment::query()->find($id)->delete();
-        return response()->json($userDelete, 204);
+        $this->shopCommentRepository->getById($id)->delete();
+        return response()->json('', 204);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateCommentRequest $request, $id)
     {
-        $rules = ['comment' => 'min:5|max:250'];
-
-        $array = $this->validate($request, $rules);
-
-        $userUpdate = Comment::query()->find($id)->update($array);
-
-        return response()->json($userUpdate, 200);
+        $this->shopCommentRepository->getById($id)->update($request->input());
+        return response()->json($this->shopCommentRepository->getById($id), 200);
     }
 }

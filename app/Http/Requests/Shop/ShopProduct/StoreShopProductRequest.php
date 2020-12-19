@@ -14,7 +14,7 @@ class StoreShopProductRequest extends FormRequest
      */
     public function authorize()
     {
-       return Auth::check();
+       return true;
     }
 
     /**
@@ -27,8 +27,7 @@ class StoreShopProductRequest extends FormRequest
         return [
             'title' => 'required|min:5|max:250',
             'description' => 'nullable|min:5|max:1000',
-            'category_id' => 'nullable|numeric',
-            'img' => 'required'
+            'category_id' => 'nullable|numeric'
         ];
     }
 

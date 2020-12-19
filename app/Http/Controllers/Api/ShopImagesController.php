@@ -2,51 +2,53 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Models\Image;
-use App\Models\User;
-use Illuminate\Http\Request;
+use App\Http\Requests\Shop\Image\StoreImageRequest;
+use App\Http\Requests\Shop\Image\UpdateImageRequest;
+use App\Repositories\Shop\ShopImageRepository;
+use App\Services\ApiServise\ShopImageService;
 
 class ShopImagesController extends ApiController
 {
-    public function index(Image $image)
+    public $shopImageRepository;
+    public $shopImageService;
+    public function __construct(ShopImageRepository $imageRepository, ShopImageService $imageService)
     {
-        if (empty($image)){
-            return response()->json(['error' => true,'message' => 'not found'],404);
+        $this->shopImageRepository = $imageRepository;
+        $this->shopImageService = $imageService;
+    }
+
+    public function index()
+    {
+        if(!$this->shopImageRepository->getAll()){
+            return $this->shopImageService->checkOnId();
         }
-        return response()->json($image->all(),200);
+        return response()->json($this->shopImageRepository->getAll(), 200);
     }
 
     public function edit($id)
     {
-        if (is_null(Image::query()->find($id))) {
-            return response()->json(['error' => true, 'message' => 'not found'], 404);
+        if(!$this->shopImageRepository->getById($id)){
+            return $this->shopImageService->checkOnId();
         }
-        return response(Image::query()->find($id), 200);
+        return response($this->shopImageRepository->getById($id), 200);
     }
 
-    public function store(Request $request)
+    public function store(StoreImageRequest $request)
     {
-        $rules = ['src' => 'required'];
-        $array = $this->validate($request, $rules);
-
-        $data = Image::query()->create($array);
-        return response()->json($data,200);
+        $this->shopImageRepository->createImage($request->input());
+        return response()->json($this->shopImageRepository->getAll(), 200);
     }
 
     public function destroy($id)
     {
-        $userDelete = Image::query()->find($id)->delete();
-        return response()->json($userDelete,204);
+        $this->shopImageRepository->getById($id)->delete();
+        return response()->json('', 204);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateImageRequest $request, $id)
     {
-        $rules = ['src' => 'required'];
-        $array = $this->validate($request, $rules);
+        $this->shopImageRepository->getById($id)->update($request->input());
 
-        $userUpdate = Image::query()->find($id)->update($array);
-
-        return response()->json($userUpdate,200);
+        return response()->json($this->shopImageRepository->getById($id), 200);
     }
 }

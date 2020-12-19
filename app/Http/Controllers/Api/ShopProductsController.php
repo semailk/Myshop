@@ -2,53 +2,53 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Image;
+use App\Http\Requests\Shop\ShopProduct\StoreShopProductRequest;
+use App\Http\Requests\Shop\ShopProduct\UpdateShopProductRequest;
 use App\Models\Shop\ShopProduct;
-use App\Models\User;
-use Illuminate\Http\Request;
+use App\Repositories\Shop\ShopProductRepository;
+use App\Services\ApiServise\ShopProductService;
 
 class ShopProductsController extends ApiController
 {
+    public $productRepository;
+
+    public $shopProductService;
+
+    public function __construct(ShopProductRepository $productRepository, ShopProductService $productService)
+    {
+        $this->productRepository = $productRepository;
+        $this->shopProductService = $productService;
+    }
 
     public function index(ShopProduct $shopProduct)
     {
-        if (empty($shopProduct)) {
-            return response()->json(['error' => true, 'message' => 'not found'], 404);
-        }
-        return response()->json($shopProduct->all(), 200);
+        $this->shopProductService->testForEmptiness($shopProduct);
+        return response()->json($this->productRepository->getAll(), 200);
     }
 
     public function edit($id)
     {
-        if (is_null(ShopProduct::query()->find($id))) {
-            return response()->json(['error' => true, 'message' => 'not found'], 404);
+        if (!$this->productRepository->getById($id)) {
+            return $this->shopProductService->checkOnId();
         }
-        return response(ShopProduct::query()->find($id), 200);
+        return response($this->productRepository->getById($id), 200);
     }
 
-    public function store(Request $request)
+    public function store(StoreShopProductRequest $request)
     {
-        $rules = ['title' => 'required|min:2|max:155', 'description' => 'required|min:5|max:1000'];
-
-        $array = $this->validate($request,$rules);
-        $data = ShopProduct::query()->create($array);
-        return response()->json($data, 200);
+        $this->productRepository->createProduct($request->input());
+        return response()->json($this->productRepository->getall(), 200);
     }
 
     public function destroy($id)
     {
-        $userDelete = ShopProduct::query()->find($id)->delete();
-        return response()->json($userDelete, 204);
+        $this->productRepository->getById($id)->delete();
+        return response()->json('', 204);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateShopProductRequest $request, $id)
     {
-        $rules = ['title' => 'required|min:2|max:155', 'description' => 'required|min:5|max:1000'];
-
-        $array = $this->validate($request,$rules);
-
-        $userUpdate = ShopProduct::query()->find($id)->update($request->input());
-
-        return response()->json($userUpdate, 200);
+        $this->productRepository->getById($id)->update($request->input());
+        return response()->json($this->productRepository->getById($id), 200);
     }
 }

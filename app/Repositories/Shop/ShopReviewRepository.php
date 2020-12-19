@@ -5,9 +5,9 @@ namespace App\Repositories\Shop;
 
 
 use App\Repositories\CoreRepository;
-use App\Models\Shop\ShopProduct as Model;
+use App\Models\Shop\ShopReview as Model;
 
-class ShopProductRepository extends CoreRepository
+class ShopReviewRepository extends CoreRepository
 {
     public function getModelClass()
     {
@@ -24,9 +24,8 @@ class ShopProductRepository extends CoreRepository
         return $this->startConditions()->find($id);
     }
 
-    public function createProduct($request)
+    public function createReview($request)
     {
         return $this->startConditions()->create($request);
     }
-
 }

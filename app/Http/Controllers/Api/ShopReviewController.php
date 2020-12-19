@@ -2,52 +2,53 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Http\Requests\Shop\Review\StoreReviewRequest;
+use App\Http\Requests\Shop\Review\UpdateReviewRequest;
 use App\Models\Shop\ShopReview;
-use Illuminate\Http\Request;
+use App\Repositories\Shop\ShopReviewRepository;
+use App\Services\ApiServise\ShopReviewService;
 
 class ShopReviewController extends ApiController
 {
-    public function index(ShopReview $image)
+    public $shopReviewRepository;
+    public $shopReviewService;
+
+    public function __construct(ShopReviewRepository $reviewRepository, ShopReviewService $reviewService)
     {
-        if (empty($image)){
-            return response()->json(['error' => true,'message' => 'not found'],404);
+        $this->shopReviewRepository = $reviewRepository;
+        $this->shopReviewService = $reviewService;
+    }
+
+    public function index(ShopReview $review){
+        if (!$review){
+            return $this->shopReviewService->checkOnId();
         }
-        return response()->json($image->all(),200);
+        return response()->json($this->shopReviewRepository->getAll(),200);
     }
 
     public function edit($id)
     {
-        if (is_null(ShopReview::query()->find($id))) {
-            return response()->json(['error' => true, 'message' => 'not found'], 404);
+        if (!$this->shopReviewRepository->getById($id)) {
+            return $this->shopReviewService->checkOnId();
         }
-        return response(ShopReview::query()->find($id), 200);
+        return response($this->shopReviewRepository->getById($id), 200);
     }
 
-    public function store(Request $request)
+    public function store(StoreReviewRequest $request)
     {
-        $rules = ['content' => 'required|min:5|max:1000', 'rating' => 'required|int'];
-
-        $array = $this->validate($request, $rules);
-        $data = ShopReview::query()->create($array);
-
-        return response()->json($data,200);
+        $this->shopReviewRepository->createReview($request->input());
+        return response()->json($this->shopReviewRepository->getAll(),200);
     }
 
     public function destroy($id)
     {
-        $userDelete = ShopReview::query()->find($id)->delete();
-        return response()->json($userDelete,204);
+        $this->shopReviewRepository->getById($id)->delete();
+        return response()->json('',204);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateReviewRequest $request, $id)
     {
-        $rules = ['content' => 'required|min:5|max:1000', 'rating' => 'required|int'];
-
-        $array = $this->validate($request, $rules);
-
-        $userUpdate = ShopReview::query()->find($id)->update($array);
-
-        return response()->json($userUpdate,200);
+        $this->shopReviewRepository->getById($id)->update($request->input());
+        return response()->json($this->shopReviewRepository->getById($id),200);
     }
 }

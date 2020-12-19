@@ -3,10 +3,9 @@
 
 namespace App\Repositories\Shop;
 
-
-use App\Models\Shop\ShopCategory;
 use App\Repositories\CoreRepository;
 use App\Models\Shop\ShopCategory as Model;
+use http\Env\Request;
 
 class ShopCategoryRepository extends CoreRepository
 {
@@ -36,6 +35,7 @@ class ShopCategoryRepository extends CoreRepository
         return $this->startConditions()->find($id);
     }
 
+
     public function createCategory($request)
     {
         return $this->startConditions()->create($request);
@@ -53,5 +53,10 @@ class ShopCategoryRepository extends CoreRepository
     public function getForSelect($id=null)
     {
         return $this->startConditions()::select('id','name')->where('id', '!=', $id)->get();
+    }
+
+    public function deleteCategory($id)
+    {
+        return $this->startConditions()->find($id)->delete();
     }
 }

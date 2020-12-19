@@ -5,9 +5,9 @@ namespace App\Repositories\Shop;
 
 
 use App\Repositories\CoreRepository;
-use App\Models\Shop\ShopProduct as Model;
+use App\Models\Comment as Model;
 
-class ShopProductRepository extends CoreRepository
+class ShopCommentRepository extends CoreRepository
 {
     public function getModelClass()
     {
@@ -24,7 +24,7 @@ class ShopProductRepository extends CoreRepository
         return $this->startConditions()->find($id);
     }
 
-    public function createProduct($request)
+    public function createComment($request)
     {
         return $this->startConditions()->create($request);
     }
